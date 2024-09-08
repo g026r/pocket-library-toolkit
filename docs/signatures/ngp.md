@@ -1,0 +1,1 @@
+# Neo Geo Pocket CRC32s, cartridge signatures, and magic numbers

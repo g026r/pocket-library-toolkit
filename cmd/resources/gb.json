@@ -1,0 +1,548 @@
+[
+  {
+    "system": 0,
+    "name": "Exodus: Journey to the Promised Land",
+    "crc": "0x2e5497ef",
+    "signature": "0x66adc3af",
+    "magic": "0x00F1"
+  },
+  {
+    "system": 0,
+    "name": "GB Genjin",
+    "crc": "0x690227f6",
+    "signature": "0xf0e6a0ab",
+    "magic": "0x0307"
+  },
+  {
+    "system": 0,
+    "name": "Genki Bakuhatsu Gambaruger",
+    "crc": "0x6226d280",
+    "signature": "0xe3ec02fa",
+    "magic": "0x0311"
+  },
+  {
+    "system": 0,
+    "name": "Mani 4 in 1 - Irem",
+    "crc": "0xcb48b6d0",
+    "signature": "0xc4bdb30c",
+    "magic": "0x03EA"
+  },
+  {
+    "system": 0,
+    "name": "Mani 4 in 1 - Taito",
+    "crc": "0x5BFC3EF5",
+    "signature": "0x4B80FE56",
+    "magic": "0x03E8"
+  },
+  {
+    "system": 0,
+    "name": "Momotarou Collection 2",
+    "crc": "0x562c8f7f",
+    "signature": "0x4e27d264",
+    "magic": "0x0420"
+  },
+  {
+    "system": 0,
+    "name": "Super R.C. Pro-Am",
+    "crc": "0x7960F33F",
+    "signature": "0x4C453436",
+    "magic": "0x0013"
+  },
+  {
+    "system": 0,
+    "name": "Teenage Mutant Ninja Turtles: Fall of the Foot Clan",
+    "crc": "0x5A6984C3",
+    "signature": "0x03048A20",
+    "magic": "0x0022"
+  },
+  {
+    "system": 0,
+    "name": "Tetris 2",
+    "crc": "0xAA4A1EDB",
+    "signature": "0xE0EA84CA",
+    "magic": "0x0027"
+  },
+  {
+    "system": 0,
+    "name": "Tiny Toon Adventures: Babs' Big Break",
+    "crc": "0x9B5E6219",
+    "signature": "0x98CC3AAB",
+    "magic": "0x002E"
+  },
+  {
+    "system": 0,
+    "name": "Trax",
+    "crc": "0x4A38BE7D",
+    "signature": "0x8DFED08D",
+    "magic": "0x003D"
+  },
+  {
+    "system": 0,
+    "name": "Wario Land II",
+    "crc": "0x9C54358D",
+    "signature": "0x67AD6FEF",
+    "magic": "0x004A"
+  },
+  {
+    "system": 0,
+    "name": "Wave Race",
+    "crc": "0xA6595506",
+    "signature": "0x5379A582",
+    "magic": "0x004B"
+  },
+  {
+    "system": 0,
+    "name": "Amazing Penguin",
+    "crc": "0x3011D5CA",
+    "signature": "0xBBC5A35C",
+    "magic": "0x0079"
+  },
+  {
+    "system": 0,
+    "name": "The Amazing Spider-Man",
+    "crc": "0x2A4EAFE4",
+    "signature": "0xE1AFE549",
+    "magic": "0x007A"
+  },
+  {
+    "system": 0,
+    "name": "Balloon Kid",
+    "crc": "0xD4B655EC",
+    "signature": "0x83127D5D",
+    "magic": "0x0086"
+  },
+  {
+    "system": 0,
+    "name": "Batman: Return of the Joker",
+    "crc": "0x5124BBEC",
+    "signature": "0x49841F02",
+    "magic": "0x008A"
+  },
+  {
+    "system": 0,
+    "name": "DuckTales",
+    "crc": "0x2BBBB54D",
+    "signature": "0x74C30C50",
+    "magic": "0x00EC"
+  },
+  {
+    "system": 0,
+    "name": "Final Fantasy Adventure",
+    "crc": "0x18C78B3A",
+    "signature": "0xF9EE2B14",
+    "magic": "0x00FE"
+  },
+  {
+    "system": 0,
+    "name": "Final Fantasy Legend II",
+    "crc": "0x58314182",
+    "signature": "0x02197F3D",
+    "magic": "0x00FF"
+  },
+  {
+    "system": 0,
+    "name": "Final Fantasy Legend III",
+    "crc": "0x3E454710",
+    "signature": "0x9B1FAA5D",
+    "magic": "0x0100"
+  },
+  {
+    "system": 0,
+    "name": "The Final Fantasy Legend",
+    "crc": "0x8046148F",
+    "signature": "0xB41976AE",
+    "magic": "0x0101"
+  },
+  {
+    "system": 0,
+    "name": "Gargoyle's Quest",
+    "crc": "0x0030E61F",
+    "signature": "0xB5F8CF1D",
+    "magic": "0x0113"
+  },
+  {
+    "system": 0,
+    "name": "Ghostbusters II",
+    "crc": "0x5821ECD4",
+    "signature": "0xC3E50724",
+    "magic": "0x0118"
+  },
+  {
+    "system": 0,
+    "name": "Gradius: The Interstellar Assault",
+    "crc": "0x90F87D57",
+    "signature": "0x3A7B0909",
+    "magic": "0x011C"
+  },
+  {
+    "system": 0,
+    "name": "Kid Dracula",
+    "crc": "0xF27294B7",
+    "signature": "0x8B2A6066",
+    "magic": "0x014A"
+  },
+  {
+    "system": 0,
+    "name": "Kid Icarus: Of Myths and Monsters",
+    "crc": "0x0C042862",
+    "signature": "0x29E5332D",
+    "magic": "0x014B"
+  },
+  {
+    "system": 0,
+    "name": "Kirby's Dream Land",
+    "crc": "0x40F25740",
+    "signature": "0x36F4016F",
+    "magic": "0x0151"
+  },
+  {
+    "system": 0,
+    "name": "The Legend of Zelda: Link's Awakening",
+    "crc": "0x8CF27C90",
+    "signature": "0xBE6D75EF",
+    "magic": "0x0160"
+  },
+  {
+    "system": 0,
+    "name": "Mario's Picross",
+    "crc": "0xF2D652AD",
+    "signature": "0xA552159A",
+    "magic": "0x016D"
+  },
+  {
+    "system": 0,
+    "name": "Mercenary Force",
+    "crc": "0x9BB5BA03",
+    "signature": "0xA974DDB4",
+    "magic": "0x0176"
+  },
+  {
+    "system": 0,
+    "name": "Mole Mania",
+    "crc": "0x2C36C74C",
+    "signature": "0x0024E03A",
+    "magic": "0x0182"
+  },
+  {
+    "system": 0,
+    "name": "Nintendo World Cup",
+    "crc": "0x96C24E13",
+    "signature": "0x30149BAB",
+    "magic": "0x01A6"
+  },
+  {
+    "system": 0,
+    "name": "Pokemon: Blue Version",
+    "crc": "0xD6DA8A1A",
+    "signature": "0xBD38389E",
+    "magic": "0x01C0"
+  },
+  {
+    "system": 0,
+    "name": "Pokemon: Yellow Version: Special Pikachu Edition",
+    "crc": "0x7D527D62",
+    "signature": "0x0183202B",
+    "magic": "0x01C2"
+  },
+  {
+    "system": 0,
+    "name": "Space Invaders",
+    "crc": "0x7F0F5762",
+    "signature": "0xFDC2F429",
+    "magic": "0x01F7"
+  },
+  {
+    "system": 0,
+    "name": "Star Trek: 25th Anniversary",
+    "crc": "0x605DE43A",
+    "signature": "0x513007F6",
+    "magic": "0x0207"
+  },
+  {
+    "system": 0,
+    "name": "Batman: The Video Game",
+    "crc": "0x6C41D3CD",
+    "signature": "0xEAA1F4DC",
+    "magic": "0x0228"
+  },
+  {
+    "system": 0,
+    "name": "Bubble Bobble",
+    "crc": "0xAD9B300C",
+    "signature": "0x54E862C1",
+    "magic": "0x0255"
+  },
+  {
+    "system": 0,
+    "name": "Burai Senshi Deluxe",
+    "crc": "0x5A1A20F3",
+    "signature": "0xE2EB4E33",
+    "magic": "0x025B"
+  },
+  {
+    "system": 0,
+    "name": "Contra",
+    "crc": "0xCDE6DE15",
+    "signature": "0x8FA9502C",
+    "magic": "0x027F"
+  },
+  {
+    "system": 0,
+    "name": "Daiku no Gen-san: Ghost Building Company",
+    "crc": "0x9E0D2B45",
+    "signature": "0xE6E7691E",
+    "magic": "0x0290"
+  },
+  {
+    "system": 0,
+    "name": "Daiku no Gen-san: Robot Teikoku no Yabou",
+    "crc": "0x70819E03",
+    "signature": "0xFDB98647",
+    "magic": "0x0291"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong",
+    "crc": "0xF777A5D8",
+    "signature": "0xB85D0158",
+    "magic": "0x02A0"
+  },
+  {
+    "system": 0,
+    "name": "Double Dragon",
+    "crc": "0xA0645E8A",
+    "signature": "0xA4BCE057",
+    "magic": "0x02AC"
+  },
+  {
+    "system": 0,
+    "name": "Dr. Mario",
+    "crc": "0x10C98DD1",
+    "signature": "0x54346B63",
+    "magic": "0x02B5"
+  },
+  {
+    "system": 0,
+    "name": "Dracula Densetsu",
+    "crc": "0x4D57AF56",
+    "signature": "0x21CAABA8",
+    "magic": "0x02B6"
+  },
+  {
+    "system": 0,
+    "name": "Dracula Densetsu II",
+    "crc": "0x8709434B",
+    "signature": "0x8BD14307",
+    "magic": "0x02B8"
+  },
+  {
+    "system": 0,
+    "name": "Golf",
+    "crc": "0x6ED10383",
+    "signature": "0x998E6430",
+    "magic": "0x031E"
+  },
+  {
+    "system": 0,
+    "name": "Gremlins 2: The New Batch",
+    "crc": "0x3579E297",
+    "signature": "0xC26FEB08",
+    "magic": "0x0349"
+  },
+  {
+    "system": 0,
+    "name": "Hoshi no Kirby 2",
+    "crc": "0x4BEDF22C",
+    "signature": "0xA3148977",
+    "magic": "0x0361"
+  },
+  {
+    "system": 0,
+    "name": "Ikari no Yousai",
+    "crc": "0x1C2BA2A1",
+    "signature": "0xC9DC63D6",
+    "magic": "0x036A"
+  },
+  {
+    "system": 0,
+    "name": "Ikari no Yousai 2",
+    "crc": "0x6D4FD9AA",
+    "signature": "0xA3EAA843",
+    "magic": "0x036B"
+  },
+  {
+    "system": 0,
+    "name": "Kirby no Pinball",
+    "crc": "0x8B44FB7D",
+    "signature": "0xB64C97F0",
+    "magic": "0x03AA"
+  },
+  {
+    "system": 0,
+    "name": "Metroid II: Return of Samus",
+    "crc": "0xDEE05370",
+    "signature": "0x11474E07",
+    "magic": "0x0407"
+  },
+  {
+    "system": 0,
+    "name": "Nemesis",
+    "crc": "0xB338DAE7",
+    "signature": "0xC54DB109",
+    "magic": "0x0457"
+  },
+  {
+    "system": 0,
+    "name": "Parodius Da!",
+    "crc": "0x1791E952",
+    "signature": "0xDAC5143F",
+    "magic": "0x04A2"
+  },
+  {
+    "system": 0,
+    "name": "Penguin Land",
+    "crc": "0xA9E62E88",
+    "signature": "0x020DE12B",
+    "magic": "0x04A5"
+  },
+  {
+    "system": 0,
+    "name": "Picross 2",
+    "crc": "0xF5AA5902",
+    "signature": "0xCD78F3BD",
+    "magic": "0x04AA"
+  },
+  {
+    "system": 0,
+    "name": "Pinball: 66hiki no Wani Daikoushin!",
+    "crc": "0x1B3A89C6",
+    "signature": "0x69E0871D",
+    "magic": "0x04AC"
+  },
+  {
+    "system": 0,
+    "name": "Pocket Camera",
+    "crc": "0x73E8EF96",
+    "signature": "0x1D9A45CB",
+    "magic": "0x04B8"
+  },
+  {
+    "system": 0,
+    "name": "QIX",
+    "crc": "0x9185E89E",
+    "signature": "0xFE14AF44",
+    "magic": "0x0501"
+  },
+  {
+    "system": 0,
+    "name": "Quarth",
+    "crc": "0x40E5ADC9",
+    "signature": "0xB9C0B830",
+    "magic": "0x0502"
+  },
+  {
+    "system": 0,
+    "name": "Rockman World",
+    "crc": "0x3BE6AC04",
+    "signature": "0x16667989",
+    "magic": "0x051B"
+  },
+  {
+    "system": 0,
+    "name": "Rockman World 2",
+    "crc": "0xC34D265E",
+    "signature": "0xDA24118D",
+    "magic": "0x051C"
+  },
+  {
+    "system": 0,
+    "name": "Rockman World 3",
+    "crc": "0xE904484F",
+    "signature": "0x984EDCCF",
+    "magic": "0x051D"
+  },
+  {
+    "system": 0,
+    "name": "Rubble Saver",
+    "crc": "0xE8AEA452",
+    "signature": "0x02809FBC",
+    "magic": "0x0525"
+  },
+  {
+    "system": 0,
+    "name": "Rubble Saver II",
+    "crc": "0x92C95F2D",
+    "signature": "0x2EADFFB1",
+    "magic": "0x0526"
+  },
+  {
+    "system": 0,
+    "name": "Sa-Ga 3: Jikuu no Hasha",
+    "crc": "0x575D6D9D",
+    "signature": "0x8DF1C039",
+    "magic": "0x0529"
+  },
+  {
+    "system": 0,
+    "name": "Shippo de Bun",
+    "crc": "0x56410442",
+    "signature": "0xA21327FB",
+    "magic": "0x0550"
+  },
+  {
+    "system": 0,
+    "name": "SolarStriker",
+    "crc": "0x11817103",
+    "signature": "0x9D6225D9",
+    "magic": "0x0566"
+  },
+  {
+    "system": 0,
+    "name": "Super Mario Land",
+    "crc": "0x2C27EC70",
+    "signature": "0x191ABCF6",
+    "magic": "0x0596"
+  },
+  {
+    "system": 0,
+    "name": "Super Mario Land 2: 6-tsu no Kinka",
+    "crc": "0x29E0911A",
+    "signature": "0xCFD140E3",
+    "magic": "0x0599"
+  },
+  {
+    "system": 0,
+    "name": "Tetris",
+    "crc": "0x46DF91AD",
+    "signature": "0xFAF2FB52",
+    "magic": "0x05C2"
+  },
+  {
+    "system": 0,
+    "name": "TwinBee da!!",
+    "crc": "0x017FD6F5",
+    "signature": "0xC1520986",
+    "magic": "0x05EA"
+  },
+  {
+    "system": 0,
+    "name": "Vattle Giuce",
+    "crc": "0x956B603C",
+    "signature": "0x6F6F1D90",
+    "magic": "0x05FA"
+  },
+  {
+    "system": 0,
+    "name": "Wario Land: Super Mario Land 3",
+    "crc": "0x40BE3889",
+    "signature": "0xCC00592A",
+    "magic": "0x0603"
+  },
+  {
+    "system": 0,
+    "name": "X",
+    "crc": "0x75E1D268",
+    "signature": "0x86575C60",
+    "magic": "0x0618"
+  }
+]

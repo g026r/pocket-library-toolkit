@@ -1,0 +1,6 @@
+- error handling
+- can we do the text entry such that it checks each character & cancels if ESC is pressed? (+ Ctrl-C on Unix)
+- can we allow left + right arrow keys? Or will that cause trouble with delete?
+- can we update _thumbs.bin with a new image if we're adding & it doesn't exist?
+- delete the record from _thumbs.bin when we remove?
+- check a cart signature for Atari & PCE and see if I can generate it to check for conflicts. (Find unheadered ROMs?)
