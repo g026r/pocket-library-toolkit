@@ -3,6 +3,7 @@ package gocliselect
 import (
 	"fmt"
 	"log"
+	"os"
 	"runtime"
 
 	"github.com/buger/goterm"
@@ -107,7 +108,7 @@ func (m *Menu) Display(lAndR bool) string {
 			return ""
 		case ctrlC:
 			if runtime.GOOS != "windows" {
-				return ""
+				os.Exit(1)
 			}
 		case enter:
 			menuItem := m.MenuItems[m.CursorPos]
@@ -145,8 +146,8 @@ func getInput() byte {
 	readBytes := make([]byte, 3)
 	read, err = t.Read(readBytes)
 
-	t.Restore()
-	t.Close()
+	_ = t.Restore()
+	_ = t.Close()
 
 	// Arrow keys are prefixed with the ANSI escape code which take up the first two bytes.
 	// The third byte is the key specific value we are looking for.
