@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"slices"
+	"time"
 )
 
 var ErrUnrecognizedFileFormat = errors.New("not a pocket library file")
@@ -16,7 +17,9 @@ func ReadEntries(src string) ([]Entry, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		_ = f.Close()
+	}(f)
 
 	var header, num, unknown uint32
 	if err = binary.Read(f, binary.BigEndian, &header); err != nil {
@@ -87,23 +90,29 @@ func WriteFiles(infile string, entries []Entry, playtimes map[uint32]PlayTime) e
 	//}
 	//
 	//l, err := os.CreateTemp(dirStr, "tmp_")
-	l, err := os.Create("/Users/g026r/Downloads/list.bin")
+	l, err := os.Create("/Users/g026r/dev/list.bin")
 	if err != nil {
 		return err
 	}
-	defer l.Close()
+	defer func(l *os.File) {
+		_ = l.Close()
+	}(l)
 
-	p, err := os.Create("/Users/g026r/Downloads/playtimes.bin")
+	p, err := os.Create("/Users/g026r/dev/playtimes.bin")
 	if err != nil {
 		return err
 	}
-	defer p.Close()
+	defer func(p *os.File) {
+		_ = p.Close()
+	}(p)
 
+	// Prep list.bin
 	binary.Write(l, binary.BigEndian, LibraryHeader)
 	binary.Write(l, binary.LittleEndian, uint32(len(entries)))
-	binary.Write(l, binary.LittleEndian, uint32(0x10)) // TODO: I don't know what this value signifies
+	binary.Write(l, binary.LittleEndian, uint32(0x10)) // Not sure what this value signifies, but accidentally setting it to 1 caused the system to loop
 	binary.Write(l, binary.LittleEndian, firstOffset)  // This seems to be duplicated? I dunno
 
+	// Prep playtimes.bin
 	binary.Write(p, binary.BigEndian, PlaytimeHeader)
 	binary.Write(p, binary.LittleEndian, uint32(len(entries)))
 
@@ -121,14 +130,20 @@ func WriteFiles(infile string, entries []Entry, playtimes map[uint32]PlayTime) e
 
 	for _, e := range entries {
 		e.WriteTo(l)
-		binary.Write(p, binary.LittleEndian, e.Hash)
-		if t, ok := playtimes[e.Hash]; ok {
-			binary.Write(p, binary.LittleEndian, t.First)
-			binary.Write(p, binary.LittleEndian, t.Second)
+		binary.Write(p, binary.LittleEndian, e.Sig)
+		if t, ok := playtimes[e.Sig]; ok {
+			binary.Write(p, binary.LittleEndian, t.Added)
+			binary.Write(p, binary.LittleEndian, t.Played)
 		} else {
-			// TODO: What are sane defaults here?
-			binary.Write(p, binary.LittleEndian, uint32(0))
-			binary.Write(p, binary.LittleEndian, uint32(0))
+			// Pocket doesn't know about timezones, so we have to manually apply the
+			// offset to get the correct-ish time. Might get kind of funny around DST changeovers but I can't be bothered
+			// with anything fancier.
+			_, offset := time.Now().Zone()
+
+			// Time.Unix() is an int64 but the pocket uses a 32 bit int (hopefully unsigned)
+			// since we don't have played times for these games letting the zeros overflow into the played time word is
+			// a simple enough solution
+			binary.Write(p, binary.LittleEndian, time.Now().Add(time.Second*time.Duration(offset)).Unix())
 		}
 	}
 

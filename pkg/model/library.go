@@ -34,7 +34,7 @@ var SortFunc = func(a, b Entry) int {
 type Entry struct {
 	System
 	Crc32   uint32
-	Hash    uint32
+	Sig     uint32
 	Unknown uint32 // TODO: What is this?
 	Name    string
 }
@@ -121,7 +121,7 @@ func (e Entry) WriteTo(w io.Writer) (n int64, err error) {
 	}
 	n = n + 4
 
-	if err = binary.Write(w, binary.LittleEndian, e.Hash); err != nil {
+	if err = binary.Write(w, binary.LittleEndian, e.Sig); err != nil {
 		return
 	}
 	n = n + 4
@@ -163,7 +163,7 @@ func ReadEntry(r io.Reader) (e Entry, err error) {
 		return
 	}
 
-	if err = binary.Read(r, binary.LittleEndian, &(e.Hash)); err != nil {
+	if err = binary.Read(r, binary.LittleEndian, &(e.Sig)); err != nil {
 		return
 	}
 

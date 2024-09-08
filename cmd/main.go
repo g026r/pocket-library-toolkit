@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/g026r/pocket-library-editor/model"
-	"github.com/g026r/pocket-library-editor/util"
+	"github.com/g026r/pocket-library-editor/pkg"
+	"github.com/g026r/pocket-library-editor/pkg/model"
 )
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 		log.Fatal("ERROR: Entry count mismatch between playtimes.bin & list.bin!")
 	}
 
-	app := util.Application{Entries: entries, PlayTimes: playtimes}
+	app := pkg.Application{Entries: entries, PlayTimes: playtimes}
 	for {
 		switch app.Main() {
 		case "add":
