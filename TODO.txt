@@ -1,0 +1,2 @@
+TODO: can we do the text entry such that it checks each character & cancels if ESC is pressed? (+ Ctrl-C on Unix)
+TODO: can we allow left + right arrow keys? Or will that cause trouble with delete?
