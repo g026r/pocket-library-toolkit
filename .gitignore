@@ -27,3 +27,4 @@
 *.tar
 *.zip
 *.gz
+/build.sh
