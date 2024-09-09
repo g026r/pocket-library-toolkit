@@ -89,6 +89,8 @@ func (m *Menu) renderMenuItems(redraw bool) {
 
 // Display will display the current menu options and awaits user selection
 // It returns the users selected choice
+// lAndR indicates whether it should treat the left & right arrows as special cases where it returns "prev" and "next"
+// or whether it should ignore them.
 func (m *Menu) Display(lAndR bool) string {
 	defer func() {
 		// Show cursor again.
@@ -108,6 +110,7 @@ func (m *Menu) Display(lAndR bool) string {
 			return ""
 		case ctrlC:
 			if runtime.GOOS != "windows" {
+				fmt.Println()
 				os.Exit(1)
 			}
 		case enter:
@@ -124,10 +127,14 @@ func (m *Menu) Display(lAndR bool) string {
 			if lAndR {
 				return "next"
 			}
+			fallthrough
 		case left:
 			if lAndR {
 				return "prev"
 			}
+			fallthrough
+		default:
+			fmt.Printf("%c", 7) // Ring the bell
 		}
 	}
 }

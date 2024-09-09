@@ -40,11 +40,9 @@ func main() {
 				log.Fatal(err)
 			}
 			fallthrough
-		case "quit", "":
+		default:
 			fmt.Println()
 			os.Exit(0)
-		default:
-			// TODO: Can I flash the bell?
 		}
 	}
 

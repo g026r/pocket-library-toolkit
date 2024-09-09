@@ -99,73 +99,69 @@ func (a *Application) Add() {
 }
 
 func (a *Application) Edit() {
-	clone := slices.Clone(a.Entries) // For cancel
-	start := 0
-	for {
-		end := min(start+10, len(a.Entries))
-		switch x := a.displayEntries("Edit", start, end); x {
-		case "prev":
-			start = max(0, start-10)
-		case "next":
-			start = min(start+10, len(a.Entries)-len(a.Entries)%10)
-		case "cancel", "":
-			a.Entries = clone
-			return
-		case "done":
-			return
-		default:
-			i, err := strconv.Atoi(x)
-			if err != nil {
-				log.Fatal(err)
-			}
-			a.Entries[i] = editEntry(a.Entries[i])
-			slices.SortFunc(a.Entries, model.SortFunc)
-		}
-	}
+	a.pagedEntries("Edit", func(i int) {
+		a.Entries[i] = editEntry(a.Entries[i])
+		slices.SortFunc(a.Entries, model.SortFunc)
+	})
 }
 
 func (a *Application) Remove() {
+	a.pagedEntries("Delete", func(i int) {
+		slices.Delete(a.Entries, i, i+1)
+	})
+}
+
+func (a *Application) pagedEntries(title string, f func(i int)) {
 	clone := slices.Clone(a.Entries) // For cancel, since slices.Delete directly modifies the underlying slice
 	start := 0
 	for {
 		end := min(start+10, len(a.Entries))
-		switch x := a.displayEntries("Delete", start, end); x {
+		switch x := a.displayEntries(title, start, end); x {
 		case "prev":
-			start = max(0, start-10)
+			if newStart := max(0, start-10); newStart == start {
+				fmt.Printf("%c", 7) // We're at the first page. Ring the bell
+			} else {
+				start = newStart
+			}
 		case "next":
-			start = min(start+10, len(a.Entries)-len(a.Entries)%10)
-		case "cancel", "":
-			a.Entries = clone
-			return
+			if newStart := min(start+10, len(a.Entries)-len(a.Entries)%10); start == newStart {
+				fmt.Printf("%c", 7) // We're at the last page. Ring the bell
+			} else {
+				start = newStart
+			}
 		case "done":
+			return
+		case "":
+			a.Entries = clone // Restore the entries to the original copy
 			return
 		default:
 			i, err := strconv.Atoi(x)
 			if err != nil {
 				log.Fatal(err)
 			}
-			slices.Delete(a.Entries, i, i+1)
+			f(i)
 		}
 	}
 }
 
+// displayEntries is a simple function that uses gocliselect to fake multipage menus
 func (a *Application) displayEntries(title string, start, end int) string {
 	clearScreen()
 
-	menu := gocliselect.NewMenu(fmt.Sprintf("%s Entries [%d-%d]", title, start+1, end))
+	menu := gocliselect.NewMenu(fmt.Sprintf("%s Entry [%d-%d]", title, start+1, end))
 
 	for i := start; i < end; i++ {
 		menu.AddItem(fmt.Sprintf("%d. %s", i+1, a.Entries[i].Name), strconv.Itoa(i))
 	}
 
 	if start != 0 {
-		menu.AddItem(fmt.Sprintf("<- %d-%d", start-9, start), "prev")
+		menu.AddItem(fmt.Sprintf("<- %d-%d", max(start-9, 0), start), "prev")
 	}
 	if end < len(a.Entries) {
 		menu.AddItem(fmt.Sprintf("%d-%d ->", end+1, min(end+10, len(a.Entries))), "next")
 	}
 
-	menu.AddItem("Cancel", "cancel")
+	menu.AddItem("Cancel", "")
 	menu.AddItem("Done", "done")
 
 	return menu.Display(true)

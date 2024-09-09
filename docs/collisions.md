@@ -1,9 +1,9 @@
 # Games with Known Signature Collisions on the Analogue Pocket
 
-The Analogue Pocket uses only the first 512 bytes of the game's ROM to generate its cartridge signatures. For most
+The Analogue Pocket appears to use only the first 512 bytes of the game's ROM to generate its cartridge signatures. For
+most
 officially licensed games for Nintendo & SNK handhelds, which usually have a unique header at the
-start of the ROM, this is sufficient. (Unlicensed games sometimes shared the same header, so they are more likely to
-have collisions.)
+start of the ROM, this is sufficient.
 
 Sega's standard for the Game Gear & international releases of the Master System listed a number of different possible
 locations for the header, none of which are at the start of the file.
@@ -13,6 +13,9 @@ having a header & 32kiB being the maximum size of a Sega MyCard. This results in
 the first 512 bytes is not guaranteed to be unique between games. Mostly this results in the Pocket's library
 functionality being unable to detect whether a cartridge is using a revised ROM or confusing one region's release with
 another's. Though in a few cases it will confuse different games built on the same engine.
+
+TurboGrafx-16 & Lynx signatures do not appear to match with values I've been able to generate. Either the ROM is read
+differently by the Pocket or there is some extra data being added to it by the system.
 
 Collisions listed below are grouped under the signature that the Pocket generates for them. The games are listed in
 alphabetical order, which appears to be the order the Pocket stores its database of signatures in. As such, the first
@@ -301,8 +304,8 @@ No known collisions.
 
 ### PC Engine / TurboGrafx-16 / SuperGrafx
 
-// TODO: Check
+I've been unable to duplicate the PC Engine signatures, so at the moment there are no known collisions.
 
 ### Atari Lynx
 
-// TODO: Check
+I've been unable to duplicate the Atari Lynx signatures, so at the moment there are no known collisions.
