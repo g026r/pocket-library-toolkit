@@ -97,7 +97,7 @@ func (a *Application) thumbnailMenu() error {
 	menu := gocliselect.NewMenu("Edit Thumbnails", false)
 	menu.AddItem("Regenerate Game Thumbnail", "single")
 	menu.AddItem("Regenerate User Library", "library")
-	menu.AddItem("Remove Thumbnail", "rm") // TODO: Maybe? Maybe not?
+	//menu.AddItem("Remove Thumbnail", "rm") // TODO: Maybe? Maybe not? Has some
 	menu.AddItem("Prune Thumbnails", "prune")
 	menu.AddItem("Generate Complete System Thumbnails", "all")
 	menu.AddItem("Back", "")
@@ -110,7 +110,7 @@ func (a *Application) thumbnailMenu() error {
 		case "library":
 			a.regenerate()
 		case "rm":
-			a.removeThumb()
+			//a.removeThumb()
 		case "prune":
 			a.prune()
 		case "all":
