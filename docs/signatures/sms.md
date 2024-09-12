@@ -1,1 +1,1 @@
-# Neo Geo Pocket Color cartridge signatures & CRC32s
+# Sega Master System CRC32s, cartridge signatures, and magic numbers

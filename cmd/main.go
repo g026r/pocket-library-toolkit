@@ -16,14 +16,14 @@ func main() {
 	var err error
 	switch len(os.Args) {
 	case 1:
-		//if arg, err = os.Getwd(); err != nil {
-		//	// TODO error handling
-		//}
-		arg = "/Users/g026r/Downloads/working"
+		if arg, err = os.Executable(); err != nil { // TODO: Would it be better to use cwd instead?
+			log.Fatal(err)
+		}
 	case 2:
 		arg = os.Args[1]
 	default:
 		printUsage()
+		os.Exit(2)
 	}
 
 	app, err := verifyDir(arg)
@@ -35,8 +35,8 @@ func main() {
 }
 
 func printUsage() {
-
-	os.Exit(2)
+	fmt.Println("Usage: place in the root of your Pocket's SD card & run. Or run & pass it the path to the SD card root as an argument.")
+	fmt.Println("Outputs files in the current working directory.")
 }
 
 func verifyDir(d string) (pkg.Application, error) {

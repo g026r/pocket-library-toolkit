@@ -41,8 +41,9 @@ type MenuItem struct {
 
 func NewMenu(prompt string, leftRight bool) *Menu {
 	return &Menu{
-		Prompt:    prompt,
-		MenuItems: make([]*MenuItem, 0),
+		Prompt:       prompt,
+		MenuItems:    make([]*MenuItem, 0),
+		leftAndRight: leftRight,
 	}
 }
 

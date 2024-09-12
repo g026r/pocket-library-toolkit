@@ -11,3 +11,5 @@ The following pages list them all, except for PC Engine & Atari Lynx, where I've
 * [Sega Master System](./sms.md)
 * [Neo Geo Pocket](./ngp.md)
 * [Neo Geo Pocket Color](./ngpc.md)
+* [TurboGrafx-16](./pce.md)
+* [Atari Lynx](./lynx.md)

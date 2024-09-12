@@ -45,7 +45,7 @@ func (a *Application) Run() {
 	menu := gocliselect.NewMenu("Analogue Pocket Library Tool", false)
 
 	menu.AddItem("Library", "lib")
-	menu.AddItem("Thumdails", "thumb")
+	menu.AddItem("Thumbnails", "thumb")
 	menu.AddItem("Settings", "config")
 	menu.AddItem("Save & Quit", "save")
 	menu.AddItem("Quit without Saving", "")
@@ -495,14 +495,17 @@ func (a *Application) prune() error {
 }
 
 func (a *Application) writeFiles() error {
-	//l, err := os.CreateTemp(dirStr, "tmp_")
-	l, err := os.Create("/Users/g026r/dev/list.bin")
+	wd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	l, err := os.Create(fmt.Sprintf("%s/list.bin", wd))
 	if err != nil {
 		return err
 	}
 	defer l.Close()
 
-	p, err := os.Create("/Users/g026r/dev/playtimes.bin")
+	p, err := os.Create(fmt.Sprintf("%s/playtimes.bin", wd))
 	if err != nil {
 		return err
 	}
@@ -577,7 +580,7 @@ func (a *Application) writeFiles() error {
 
 	for k, v := range a.Thumbs {
 		if v.Modified {
-			t, err := os.Create(fmt.Sprintf("/Users/g026r/dev/%s_thumbs.bin", strings.ToLower(k.String())))
+			t, err := os.Create(fmt.Sprintf("%s/%s_thumbs.bin", wd, strings.ToLower(k.String())))
 			if err != nil {
 				return err
 			}
