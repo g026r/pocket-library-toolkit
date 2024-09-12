@@ -1,0 +1,1 @@
+# Game Gear cartridge signatures & CRC32s

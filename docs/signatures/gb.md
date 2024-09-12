@@ -1,0 +1,1 @@
+# Game Boy cartridge signatures & CRC32s

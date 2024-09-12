@@ -2,8 +2,10 @@ package model
 
 import (
 	"encoding/binary"
-	"errors"
+	"fmt"
 	"os"
+
+	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
 const PlaytimeHeader uint32 = 0x01545050
@@ -14,20 +16,18 @@ type PlayTime struct {
 }
 
 func ReadPlayTimes(src string) (map[uint32]PlayTime, error) {
-	f, err := os.Open(src)
-	defer func(f *os.File) {
-		_ = f.Close()
-	}(f)
+	f, err := os.Open(fmt.Sprintf("%s/playtimes.bin", src))
 	if err != nil {
 		return nil, err
 	}
+	defer f.Close()
 
 	var header uint32
 	if err := binary.Read(f, binary.BigEndian, &header); err != nil {
 		return nil, err
 	}
 	if header != PlaytimeHeader {
-		return nil, errors.New("not a valid Analogue play times file")
+		return nil, fmt.Errorf("%s: %w", f.Name(), util.ErrUnrecognizedFileFormat)
 	}
 
 	var num uint32
@@ -36,7 +36,7 @@ func ReadPlayTimes(src string) (map[uint32]PlayTime, error) {
 	}
 
 	playtimes := make(map[uint32]PlayTime, num)
-	for i := uint32(0); i < num; i++ {
+	for range num {
 		var k uint32
 		v := PlayTime{}
 

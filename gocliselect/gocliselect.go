@@ -17,6 +17,7 @@ const right byte = 0x43
 const left byte = 0x44
 const escape byte = 0x1B
 const enter byte = 0x0D
+const space byte = 0x20
 const ctrlC byte = 0x03
 
 var keys = map[byte]bool{
@@ -27,18 +28,18 @@ var keys = map[byte]bool{
 }
 
 type Menu struct {
-	Prompt    string
-	CursorPos int
-	MenuItems []*MenuItem
+	Prompt       string
+	CursorPos    int
+	MenuItems    []*MenuItem
+	leftAndRight bool
 }
 
 type MenuItem struct {
-	Text    string
-	ID      string
-	SubMenu *Menu
+	Text string
+	ID   string
 }
 
-func NewMenu(prompt string) *Menu {
+func NewMenu(prompt string, leftRight bool) *Menu {
 	return &Menu{
 		Prompt:    prompt,
 		MenuItems: make([]*MenuItem, 0),
@@ -89,9 +90,9 @@ func (m *Menu) renderMenuItems(redraw bool) {
 
 // Display will display the current menu options and awaits user selection
 // It returns the users selected choice
-// lAndR indicates whether it should treat the left & right arrows as special cases where it returns "prev" and "next"
+// lAndR indicates whether it should treat the left & right arrows as special cases where it returns "<" and ">"
 // or whether it should ignore them.
-func (m *Menu) Display(lAndR bool) string {
+func (m *Menu) Display() string {
 	defer func() {
 		// Show cursor again.
 		fmt.Printf("\033[?25h")
@@ -109,11 +110,11 @@ func (m *Menu) Display(lAndR bool) string {
 		case escape:
 			return ""
 		case ctrlC:
-			if runtime.GOOS != "windows" {
+			if runtime.GOOS != "windows" { // TODO Check if Ctrl-C also cancels on Windows
 				fmt.Println()
 				os.Exit(1)
 			}
-		case enter:
+		case enter, space:
 			menuItem := m.MenuItems[m.CursorPos]
 			fmt.Println("\r")
 			return menuItem.ID
@@ -124,16 +125,17 @@ func (m *Menu) Display(lAndR bool) string {
 			m.CursorPos = (m.CursorPos + 1) % len(m.MenuItems)
 			m.renderMenuItems(true)
 		case right:
-			if lAndR {
-				return "next"
+			if m.leftAndRight {
+				return ">"
 			}
 			fallthrough
 		case left:
-			if lAndR {
-				return "prev"
+			if m.leftAndRight {
+				return "<"
 			}
 			fallthrough
 		default:
+			fmt.Println(keyCode)
 			fmt.Printf("%c", 7) // Ring the bell
 		}
 	}

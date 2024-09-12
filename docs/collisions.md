@@ -85,8 +85,8 @@ All known collisions occur within unlicensed cartridges.
 
 ### Game Gear
 
-You can tell the cart signature was designed with Nintendo's consoles in mind, because the results for Sega consoles
-bad. 59 games share a cart signature with another game, or 12.6% of the Game Gear's library.
+You can tell the cart signature was designed with Nintendo's consoles in mind, as the results for Sega consoles
+are a mess. 59 Game Gear games share a cart signature with another game, or 12.6% of the Game Gear's library.
 
 * `0x72a45806`:
     * Battletoads _(Japan, Europe)_  `[0xcb3cd075]`
