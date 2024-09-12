@@ -140,18 +140,14 @@ func (e Entry) WriteTo(w io.Writer) (n int64, err error) {
 
 	// Write the string plus the terminator
 	zeroTerm := append([]byte(e.Name), 0x00)
+	if extra := len(zeroTerm) % 4; extra != 0 {
+		// Need to pad it out if it's not on a word boundary
+		zeroTerm = slices.Concat(zeroTerm, make([]byte, 4-extra))
+	}
 	if err = binary.Write(w, binary.BigEndian, zeroTerm); err != nil {
 		return
 	}
 	n = n + int64(len(zeroTerm))
-
-	if extra := n % 4; extra != 0 { // If we haven't finished on a word boundary then we need to pad it out
-		tmp, err := w.Write(make([]byte, 4-extra)) // it's filler and all 0s anyway, so don't care about endian-ness
-		n = n + int64(tmp)
-		if err != nil {
-			return n, err
-		}
-	}
 
 	return
 }
@@ -186,30 +182,16 @@ func ReadEntries(src string) ([]Entry, error) {
 		return nil, err
 	}
 
-	// Parse the library entries. blank entries are marked as 0s.
-	// TODO: If we remove an entry, does it replace the extra offsets with 0 or does it just shift everything & change the count?
-	offsets := make([]uint32, 0)
-	var offset uint32
-	offset = 0xFFFFFFFF
-	for offset != 0 {
-		if err = binary.Read(f, binary.LittleEndian, &offset); err != nil {
-			return nil, err
-		}
-		if offset != 0 {
-			offsets = append(offsets, offset)
-		}
-		if uint32(len(offsets)) > num {
-			break
-		}
-	}
-	if offset != 0 { // If we didn't end because of a 0, we have a problem
-		return nil, errors.New("entry count mismatch")
+	// Parse the library entry locations.
+	addresses := make([]uint32, int(num))
+	if err = binary.Read(f, binary.LittleEndian, &addresses); err != nil {
+		return nil, err
 	}
 
-	// Parse each of the library entries
+	// Parse each of the library entries. The addresses are supposed to be sequential, but we're not going to trust that.
 	entries := make([]Entry, num)
-	for i := range offsets {
-		if _, err := f.Seek(int64(offsets[i]), 0); err != nil {
+	for i := range addresses {
+		if _, err := f.Seek(int64(addresses[i]), 0); err != nil {
 			return entries, err
 		}
 

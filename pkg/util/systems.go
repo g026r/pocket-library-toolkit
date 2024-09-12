@@ -18,7 +18,7 @@ const (
 	GBA  System = iota
 	GG   System = iota
 	SMS  System = iota
-	NGP  System = iota // TODO: Verify
+	NGP  System = iota
 	NGPC System = iota
 	PCE  System = iota
 	Lynx System = iota

@@ -36,20 +36,20 @@ func ReadPlayTimes(src string) (map[uint32]PlayTime, error) {
 	}
 
 	playtimes := make(map[uint32]PlayTime, num)
+	var sig uint32
 	for range num {
-		var k uint32
 		v := PlayTime{}
 
-		if err := binary.Read(f, binary.LittleEndian, &k); err != nil {
+		if err := binary.Read(f, binary.LittleEndian, &sig); err != nil {
 			return nil, err
 		}
-		if err = binary.Read(f, binary.LittleEndian, &v.Added); err != nil {
+		if err := binary.Read(f, binary.LittleEndian, &v.Added); err != nil {
 			return nil, err
 		}
-		if err = binary.Read(f, binary.LittleEndian, &v.Played); err != nil {
+		if err := binary.Read(f, binary.LittleEndian, &v.Played); err != nil {
 			return nil, err
 		}
-		playtimes[k] = v
+		playtimes[sig] = v
 	}
 
 	return playtimes, nil

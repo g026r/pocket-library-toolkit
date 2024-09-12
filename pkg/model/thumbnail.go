@@ -29,9 +29,9 @@ type Thumbnails struct {
 	Images   []Image
 }
 type Image struct {
-	offset uint32 // offset is only used when initially loading the file // TODO: Replace this with an offset,crc32 tuple when loading?
-	Crc32  uint32
-	Image  []byte
+	address uint32 // address is only used when initially loading the file // TODO: Replace this with an address,crc32 tuple when loading?
+	Crc32   uint32
+	Image   []byte
 }
 
 func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
@@ -71,40 +71,37 @@ func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
 			Images:   make([]Image, 0),
 		}
 		if num != 0 { // Only perform these steps if there are images
+			// Read all of the image addresses
 			for range num {
-				var offset, crc32 uint32
-				if err := binary.Read(f, binary.LittleEndian, &crc32); err != nil {
+				img := Image{}
+				if err := binary.Read(f, binary.LittleEndian, &img.Crc32); err != nil {
 					return nil, err
 				}
-				if err := binary.Read(f, binary.LittleEndian, &offset); err != nil {
+				if err := binary.Read(f, binary.LittleEndian, &img.address); err != nil {
 					return nil, err
 				}
-				t.Images = append(t.Images, Image{
-					offset: offset,
-					Crc32:  crc32,
-				})
+				t.Images = append(t.Images, img)
 			}
 
-			if _, err := f.Seek(int64(t.Images[0].offset), 0); err != nil {
+			if _, err := f.Seek(int64(t.Images[0].address), 0); err != nil {
 				return nil, err
 			}
+			// Read each of the individual image entries.
 			for i := range t.Images {
-				var buf []byte
 				if i+1 < len(t.Images) {
-					buf = make([]byte, t.Images[i+1].offset-t.Images[i].offset)
+					t.Images[i].Image = make([]byte, t.Images[i+1].address-t.Images[i].address)
 				} else {
 					fi, _ := f.Stat()
-					buf = make([]byte, fi.Size()-int64(t.Images[i].offset))
+					t.Images[i].Image = make([]byte, fi.Size()-int64(t.Images[i].address))
 				}
-				if n, err := f.Read(buf); err != nil || n != len(buf) {
+				if n, err := f.Read(t.Images[i].Image); err != nil || n != len(t.Images[i].Image) {
 					return nil, fmt.Errorf("read error: %w", err)
 				}
-				t.Images[i].Image = buf
 			}
 		}
 		m[k] = t
 
-		f.Close()
+		_ = f.Close()
 	}
 
 	return m, nil
@@ -177,9 +174,8 @@ func GenerateThumbnail(dir string, sys util.System, crc32 uint32) (Image, error)
 	}
 
 	return Image{
-		offset: 0,
-		Crc32:  crc32,
-		Image:  pkt,
+		Crc32: crc32,
+		Image: pkt,
 	}, nil
 }
 

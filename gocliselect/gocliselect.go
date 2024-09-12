@@ -135,7 +135,6 @@ func (m *Menu) Display() string {
 			}
 			fallthrough
 		default:
-			fmt.Println(keyCode)
 			fmt.Printf("%c", 7) // Ring the bell
 		}
 	}

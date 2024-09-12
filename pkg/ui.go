@@ -82,11 +82,11 @@ func (a *Application) libraryMenu() error {
 		util.ClearScreen()
 		switch menu.Display() {
 		case "add":
-			return a.add()
+			a.add()
 		case "edit":
-			return a.edit()
+			a.edit()
 		case "remove":
-			return a.removeGame()
+			a.removeGame()
 		default:
 			return nil
 		}
@@ -123,16 +123,13 @@ func (a *Application) thumbnailMenu() error {
 
 func (a *Application) settingsMenu() {
 	s := gocliselect.NewMenu("Library Editor Options", false)
+	s.AddItem(fmt.Sprintf("[%s] Remove thumbnail when removing game", x(a.RemoveImages)), "rm")
+	s.AddItem(fmt.Sprintf("[%s] Show advanced library editing fields (Experimental)", x(a.AdvancedEditing)), "adv")
+	s.AddItem(fmt.Sprintf("[%s] Show add library entry (Experimental)", x(a.ShowAdd)), "add")
+	s.AddItem("Back", "")
 
 	for {
 		util.ClearScreen()
-		// A hack to allow us to update the menu entries with minimal code duplication
-		s.MenuItems = slices.Delete(s.MenuItems, 0, len(s.MenuItems))
-		s.AddItem(fmt.Sprintf("[%s] Remove thumbnail when removing game", x(a.RemoveImages)), "rm")
-		s.AddItem(fmt.Sprintf("[%s] Show advanced library editing fields (Experimental)", x(a.AdvancedEditing)), "adv")
-		s.AddItem(fmt.Sprintf("[%s] Show add library entry (Experimental)", x(a.ShowAdd)), "add")
-		s.AddItem("Back", "")
-
 		switch s.Display() {
 		case "rm":
 			a.RemoveImages = !a.RemoveImages
@@ -143,6 +140,11 @@ func (a *Application) settingsMenu() {
 		default:
 			return
 		}
+
+		// A hack to allow us to update the menu entries without creating an entirely new menu each time.
+		s.MenuItems[0].Text = fmt.Sprintf("[%s] Remove thumbnail when removing game", x(a.RemoveImages))
+		s.MenuItems[1].Text = fmt.Sprintf("[%s] Show advanced library editing fields (Experimental)", x(a.AdvancedEditing))
+		s.MenuItems[2].Text = fmt.Sprintf("[%s] Show add library entry (Experimental)", x(a.ShowAdd))
 	}
 }
 
@@ -528,17 +530,17 @@ func (a *Application) writeFiles() error {
 		return err
 	}
 
-	// Build the offset entries
+	// Build the address entries
 	slices.SortFunc(a.Entries, model.EntrySort)
-	offsets := make([]uint32, firstLibraryAddr/4-4)
-	offsets[0] = firstLibraryAddr
+	addresses := make([]uint32, firstLibraryAddr/4-4)
+	addresses[0] = firstLibraryAddr
 	last := firstLibraryAddr
 	for i := 1; i < len(a.Entries); i++ {
-		offsets[i] = last + uint32(a.Entries[i-1].CalculateLength())
-		last = offsets[i]
+		addresses[i] = last + uint32(a.Entries[i-1].CalculateLength())
+		last = addresses[i]
 	}
 
-	if err := binary.Write(l, binary.LittleEndian, offsets); err != nil {
+	if err := binary.Write(l, binary.LittleEndian, addresses); err != nil {
 		return err
 	}
 
@@ -546,6 +548,9 @@ func (a *Application) writeFiles() error {
 		if _, err := e.WriteTo(l); err != nil {
 			return err
 		}
+
+		// list.bin & playtimes.bin must be recorded in the same order.
+		// So write the playtimes.bin info now as well.
 		if err := binary.Write(p, binary.LittleEndian, e.Sig); err != nil {
 			return err
 		}
@@ -557,9 +562,8 @@ func (a *Application) writeFiles() error {
 				return err
 			}
 		} else {
-			// Pocket doesn't know about timezones, so we have to manually apply the
-			// offset to get the correct-ish time. Might get kind of funny around DST changeovers, but I can't be bothered
-			// with anything fancier.
+			// Pocket doesn't know about timezones, so we have to manually apply the offset to get the correct-ish time.
+			//Might get kind of funny around DST changeovers, but I can't be bothered with anything fancier.
 			_, offset := time.Now().Zone()
 
 			// Time.Unix() is an int64 but the pocket uses a 32 bit unsigned int
@@ -588,19 +592,21 @@ func (a *Application) writeFiles() error {
 			if err := binary.Write(t, binary.LittleEndian, uint32(len(v.Images))); err != nil {
 				return err
 			}
-			offset := firstThumbsAddr
+			addr := firstThumbsAddr
 			for i, j := range v.Images {
 				if err := binary.Write(t, binary.LittleEndian, j.Crc32); err != nil {
 					return err
 				}
-				if err := binary.Write(t, binary.LittleEndian, offset); err != nil {
+				if err := binary.Write(t, binary.LittleEndian, addr); err != nil {
 					return err
 				}
-				offset = offset + uint32(len(v.Images[i].Image))
+				addr = addr + uint32(len(v.Images[i].Image))
 			}
+			// write the unused addresses out as 0s
 			if _, err := t.Write(make([]byte, int(firstThumbsAddr)-0xC-8*len(v.Images))); err != nil {
 				return err
 			}
+			// write out the images
 			for _, j := range v.Images {
 				wrote := 0
 				for wrote < len(j.Image) {
