@@ -10,6 +10,8 @@ import (
 	"github.com/inancgumus/screen"
 )
 
+var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
+
 // ClearScreen clears the screen & moves the cursor back to the top left
 // Used as I had some issues with gocliselect's clearing & repositioning
 func ClearScreen() {
@@ -22,10 +24,13 @@ func ClearScreen() {
 func HexStringTransform(s string) (uint32, error) {
 	// take care of the many different ways a user might input this
 	s = strings.TrimPrefix(strings.ToLower(strings.TrimSpace(s)), "0x")
+	if s == "" {
+		return 0, fmt.Errorf("invalid string provided: %s", s)
+	}
 
 	// String should be exactly 32 bits. We can pad it out if too short, but can't handle too long.
 	if len(s) > 8 {
-		return 0, errors.New("hex string too long")
+		return 0, fmt.Errorf("hex string too long: %s", s)
 	} else if len(s) < 8 {
 		s = fmt.Sprintf("%08s", s) // binary.BigEndian.Uint32 fails if not padded out to 32 bits
 	}
@@ -36,18 +41,4 @@ func HexStringTransform(s string) (uint32, error) {
 	}
 
 	return binary.BigEndian.Uint32(h), nil
-}
-
-// determineThumbsFile
-func DetermineThumbsFile(sys System) System {
-	switch sys {
-	case GBC:
-		return GB
-	case SMS:
-		return GG
-	case NGPC:
-		return NGP
-	default:
-		return sys
-	}
 }

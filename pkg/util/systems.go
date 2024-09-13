@@ -1,12 +1,10 @@
 package util
 
 import (
-	"errors"
+	"fmt"
 	"math"
 	"strings"
 )
-
-var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
 
 var ValidThumbsFiles = []System{GB, GBA, GG, NGP, PCE, Lynx}
 
@@ -49,30 +47,41 @@ func (s System) String() string {
 	}
 }
 
+// ThumbFile maps certain systems that share thumbs.bin with others to the correct system
+func (s System) ThumbFile() System {
+	switch s {
+	case GBC:
+		return GB
+	case SMS:
+		return GG
+	case NGPC:
+		return NGP
+	default:
+		return s
+	}
+}
+
 func Parse(s string) (System, error) {
-	switch strings.ReplaceAll(strings.ToLower(s), " ", "") {
-	case "gameboy", "dmg", "gb":
+	switch strings.ToUpper(s) {
+	case "GB":
 		return GB, nil
-	case "gameboycolor", "gameboycolour", "gbcolor", "gbcolour", "gbc":
+	case "GBC":
 		return GBC, nil
-	case "gameboyadvance", "agb", "gba":
+	case "GBA":
 		return GBA, nil
-	case "gamegear", "segagamegear", "gg":
+	case "GG":
 		return GG, nil
-	case "segamastersystem", "mastersystem", "sms":
+	case "SMS":
 		return SMS, nil
-	case "neogeopocket", "ngp":
+	case "NGP":
 		return NGP, nil
-	case "neogeo", "neogeopocketcolor", "neogeopocketcolour", "ngpc":
+	case "NGPC":
 		return NGPC, nil
-	case "pcengine", "necpcengine", "necpce", "pce", "turbografx", "turbografx16", "necturbografx", "necturbografx16",
-		"turbografix", "turbografix16", "necturbografix", "necturbografix16", "turbographics", "turbographics16",
-		"necturbographics", "necturbographics16", "turbographix", "turbographix16", "necturbographix", "necturbographix16",
-		"tg16", "supergrafx", "supergrafix", "supergraphics", "supergraphix", "sgfx", "sfx", "sgx", "nec":
+	case "PCE":
 		return PCE, nil
-	case "atari", "lynx", "atarilynx", "lnx":
+	case "LYNX":
 		return Lynx, nil
 	default:
-		return math.MaxUint16, errors.New("unknown system")
+		return math.MaxUint16, fmt.Errorf("unknown system: %s", s)
 	}
 }

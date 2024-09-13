@@ -272,21 +272,21 @@ func (a *Application) add() error {
 		entry.Sig = h
 	}
 
-	fmt.Print("\rUnknown Value. Should probably just leave this blank: ")
+	fmt.Print("\rMagic Number: ")
 	in.Scan()
 	if h, err := util.HexStringTransform(in.Text()); err != nil {
 		return err
 	} else {
-		entry.Unknown = h
+		entry.Magic = h
 	}
 
 	a.Entries = append(a.Entries, entry)
 	slices.SortFunc(a.Entries, model.EntrySort)
 
-	if img, err := model.GenerateThumbnail(a.RootDir, util.DetermineThumbsFile(entry.System), entry.Crc32); err != nil {
+	if img, err := model.GenerateThumbnail(a.RootDir, entry.System.ThumbFile(), entry.Crc32); err != nil {
 		// Don't care that much
 	} else {
-		sys := util.DetermineThumbsFile(entry.System)
+		sys := entry.System.ThumbFile()
 		t := a.Thumbs[sys]
 		t.Images = append(t.Images, img)
 		t.Modified = true
@@ -298,14 +298,14 @@ func (a *Application) add() error {
 
 func (a *Application) edit() error {
 	return a.pagedEntries("Edit", func(i int) error {
-		e, err := a.Entries[i].Edit()
+		e, err := a.Entries[i].Edit(a.AdvancedEditing)
 		if err != nil {
 			return err
 		}
 		a.Entries[i] = e
 		slices.SortFunc(a.Entries, model.EntrySort)
 
-		sys := util.DetermineThumbsFile(e.System)
+		sys := e.System.ThumbFile()
 		for _, img := range a.Thumbs[sys].Images {
 			if img.Crc32 == a.Entries[i].Crc32 {
 				// Image already exists in the thumbs.bin. Don't do anything.
@@ -337,7 +337,7 @@ func (a *Application) removeGame() error {
 		}
 
 		// Delete the thumbnail entry if it exists
-		sys := util.DetermineThumbsFile(rm.System)
+		sys := rm.System.ThumbFile()
 		t := a.Thumbs[sys]
 		for j, img := range t.Images {
 			if rm.Crc32 == img.Crc32 {
@@ -354,7 +354,7 @@ func (a *Application) removeGame() error {
 func (a *Application) regenSingle() error {
 	return a.pagedEntries("Regenerate Thumbnail", func(i int) error {
 		e := a.Entries[i]
-		sys := util.DetermineThumbsFile(e.System)
+		sys := e.System.ThumbFile()
 		img, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
 		if err != nil {
 			return err
@@ -385,7 +385,7 @@ func (a *Application) regenerate() error {
 
 	clear(a.Thumbs)
 	for _, e := range a.Entries {
-		sys := util.DetermineThumbsFile(e.System)
+		sys := e.System.ThumbFile()
 
 		i, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
 		if err != nil {
@@ -486,7 +486,7 @@ func (a *Application) prune() error {
 		t := a.Thumbs[k]
 		t.Images = slices.DeleteFunc(v.Images, func(image model.Image) bool {
 			return !slices.ContainsFunc(a.Entries, func(entry model.Entry) bool {
-				return util.DetermineThumbsFile(entry.System) == k && entry.Crc32 == image.Crc32
+				return entry.System.ThumbFile() == k && entry.Crc32 == image.Crc32
 			})
 		})
 		a.Thumbs[k] = t

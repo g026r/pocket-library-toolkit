@@ -24,10 +24,10 @@ var EntrySort = func(a, b Entry) int {
 
 type Entry struct {
 	util.System
-	Crc32   uint32
-	Sig     uint32
-	Unknown uint32 // TODO: What is this?
-	Name    string
+	Crc32 uint32
+	Sig   uint32
+	Magic uint32 // TODO: Work out all possible mappings for this
+	Name  string
 }
 
 // CalculateLength returns the length in bytes of the library entry
@@ -41,7 +41,7 @@ func (e Entry) CalculateLength() uint16 {
 	return length
 }
 
-func (e Entry) Edit() (Entry, error) {
+func (e Entry) Edit(advanced bool) (Entry, error) {
 	clone := e // In case the user cancels
 	util.ClearScreen()
 
@@ -55,26 +55,28 @@ func (e Entry) Edit() (Entry, error) {
 		e.Name = s
 	}
 
-	// TODO: Don't really like this section thanks to gocliselect's bolding. Look into customizing it
-	sys := gocliselect.NewMenu("System:", false)
-	sys.AddItem("Game Boy", "GB")
-	sys.AddItem("Game Boy Color", "GBC")
-	sys.AddItem("Game Boy Advance", "GBA")
-	sys.AddItem("Game Gear", "GG")
-	sys.AddItem("Sega Master System", "SMS")
-	sys.AddItem("Neo Geo Pocket", "NGP")
-	sys.AddItem("Neo Geo Pocket Color", "NGPC")
-	sys.AddItem("TurboGrafx 16", "PCE")
-	sys.AddItem("Atari Lynx", "Lynx")
-	sys.CursorPos = int(e.System)
-	system := sys.Display()
-	if system == "" { // ESC or Ctrl-C pressed
-		return clone, nil
-	}
-	if s, err := util.Parse(system); err != nil {
-		return clone, err
-	} else {
-		e.System = s
+	if advanced {
+		// TODO: Don't really like this section thanks to gocliselect's bolding. Look into customizing it
+		sys := gocliselect.NewMenu("System:", false)
+		sys.AddItem("Game Boy", "GB")
+		sys.AddItem("Game Boy Color", "GBC")
+		sys.AddItem("Game Boy Advance", "GBA")
+		sys.AddItem("Game Gear", "GG")
+		sys.AddItem("Sega Master System", "SMS")
+		sys.AddItem("Neo Geo Pocket", "NGP")
+		sys.AddItem("Neo Geo Pocket Color", "NGPC")
+		sys.AddItem("TurboGrafx 16", "PCE")
+		sys.AddItem("Atari Lynx", "Lynx")
+		sys.CursorPos = int(e.System)
+		system := sys.Display()
+		if system == "" { // ESC or Ctrl-C pressed
+			return clone, nil
+		}
+		if s, err := util.Parse(system); err != nil {
+			return clone, err
+		} else {
+			e.System = s
+		}
 	}
 
 	fmt.Printf("\rCRC32 (%08x): ", e.Crc32)
@@ -87,25 +89,27 @@ func (e Entry) Edit() (Entry, error) {
 		e.Crc32 = h
 	}
 
-	// TODO: This seems a bit unsafe. Should it be enabled?
-	//fmt.Printf("\rSignature (%08x): ", e.Sig)
-	//in.Scan()
-	//if s := in.Text(); s != "" {
-	//	h, err := util.HexStringTransform(s)
-	//	if err != nil {
-	//		return clone, err
-	//	}
-	//	e.Sig = h
-	//}
-	//fmt.Printf("\rUnknown (%08x): ", e.Unknown)
-	//in.Scan()
-	//if s := in.Text(); s != "" {
-	//	h, err := util.HexStringTransform(s)
-	//	if err != nil {
-	//		return clone, err
-	//	}
-	//	e.Unknown = h
-	//}
+	if advanced {
+		// Just a bit unsafe. Leave it behind the advanced toggle
+		fmt.Printf("\rSignature (%08x): ", e.Sig)
+		in.Scan()
+		if s := in.Text(); s != "" {
+			h, err := util.HexStringTransform(s)
+			if err != nil {
+				return clone, err
+			}
+			e.Sig = h
+		}
+		fmt.Printf("\rMagic Number (%08x): ", e.Magic)
+		in.Scan()
+		if s := in.Text(); s != "" {
+			h, err := util.HexStringTransform(s)
+			if err != nil {
+				return clone, err
+			}
+			e.Magic = h
+		}
+	}
 
 	return e, nil
 }
@@ -133,7 +137,7 @@ func (e Entry) WriteTo(w io.Writer) (n int64, err error) {
 	}
 	n = n + 4
 
-	if err = binary.Write(w, binary.LittleEndian, e.Unknown); err != nil {
+	if err = binary.Write(w, binary.LittleEndian, e.Magic); err != nil {
 		return
 	}
 	n = n + 4
@@ -225,7 +229,7 @@ func readEntry(r io.Reader) (e Entry, err error) {
 		return
 	}
 
-	if err = binary.Read(r, binary.LittleEndian, &(e.Unknown)); err != nil {
+	if err = binary.Read(r, binary.LittleEndian, &(e.Magic)); err != nil {
 		return
 	}
 

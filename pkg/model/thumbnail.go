@@ -108,7 +108,7 @@ func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
 }
 
 func GenerateThumbnail(dir string, sys util.System, crc32 uint32) (Image, error) {
-	sys = util.DetermineThumbsFile(sys) // Just in case I forgot to determine the correct system
+	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
 
 	f, err := os.Open(fmt.Sprintf("%s/System/Library/Images/%s/%08x.bin", dir, sys.String(), crc32))
 	if err != nil {

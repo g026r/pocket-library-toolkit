@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -55,7 +54,7 @@ func verifyDir(d string) (pkg.Application, error) {
 		return pkg.Application{}, err
 	}
 	if len(playtimes) != len(entries) {
-		return pkg.Application{}, errors.New("entry count mismatch between list.bin & playtimes.bin")
+		return pkg.Application{}, fmt.Errorf("entry count mismatch between list.bin [%d] & playtimes.bin [%d]", len(entries), len(playtimes))
 	}
 
 	thumbs, err := model.LoadThumbnails(fmt.Sprintf("%s/System/Library/Images", d))
