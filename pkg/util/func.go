@@ -5,6 +5,8 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"io"
+	"io/fs"
 	"strings"
 
 	"github.com/inancgumus/screen"
@@ -41,4 +43,24 @@ func HexStringTransform(s string) (uint32, error) {
 	}
 
 	return binary.BigEndian.Uint32(h), nil
+}
+
+func ReadSeeker(fs fs.FS, filename string) (io.ReadSeekCloser, error) {
+	fileSys, err := fs.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := fileSys.Stat()
+	if err != nil {
+		return nil, err
+	} else if fi.IsDir() {
+		return nil, fmt.Errorf("file is a directory: %s", fi.Name())
+	}
+
+	if rs, ok := fileSys.(io.ReadSeekCloser); !ok { // fs.FS is such a half-assed interface
+		return nil, fmt.Errorf("cannot cast to io.ReadSeeker: %T", fileSys)
+	} else {
+		return rs, nil
+	}
 }

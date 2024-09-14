@@ -1,0 +1,387 @@
+[
+  {
+    "system": 7,
+    "name": "1943 Kai",
+    "crc": "0xFDE08D6D",
+    "signature": "0x79CD1A3E",
+    "magic": "0x1B94"
+  },
+  {
+    "system": 7,
+    "name": "Aero Blasters",
+    "crc": "0x25BE2B81",
+    "signature": "0xBC8F9AF1",
+    "magic": "0x1B97"
+  },
+  {
+    "system": 7,
+    "name": "Alien Crush",
+    "crc": "0x60EDF4E1",
+    "signature": "0x7BEC04A0",
+    "magic": "0x1B9C"
+  },
+  {
+    "system": 7,
+    "name": "Atomic Robo-Kid Special",
+    "crc": "0xDD175EFD",
+    "signature": "0x2FEC6B12",
+    "magic": "0x1BA5"
+  },
+  {
+    "system": 7,
+    "name": "Bomberman",
+    "crc": "0x9ABB4D1F",
+    "signature": "0xFA0C25CF",
+    "magic": "0x1BB6"
+  },
+  {
+    "system": 7,
+    "name": "Bomberman '93",
+    "crc": "0xB300C5D0",
+    "signature": "0x0F71E64C",
+    "magic": "0x1BB9"
+  },
+  {
+    "system": 7,
+    "name": "Bomberman '94",
+    "crc": "0x05362516",
+    "signature": "0x4197086F",
+    "magic": "0x1BBC"
+  },
+  {
+    "system": 7,
+    "name": "Bonk's Adventure",
+    "crc": "0x599EAD9B",
+    "signature": "0x6AA69A8B",
+    "magic": "0x1BBE"
+  },
+  {
+    "system": 7,
+    "name": "Bonk's Revenge",
+    "crc": "0x14250F9A",
+    "signature": "0x39357204",
+    "magic": "0x1BBF"
+  },
+  {
+    "system": 7,
+    "name": "Bull Fight - Ring no Hasha",
+    "crc": "0x5C4D1991",
+    "signature": "0x2E32DB1A",
+    "magic": "0x1BC5"
+  },
+  {
+    "system": 7,
+    "name": "Cyber Core",
+    "crc": "0xA98D276A",
+    "signature": "0x29BF33F",
+    "magic": "0x1BD8"
+  },
+  {
+    "system": 7,
+    "name": "Daimakaimura",
+    "crc": "0xB486A8ED",
+    "signature": "0x7EC915C2",
+    "magic": "0x1BDD"
+  },
+  {
+    "system": 7,
+    "name": "Darius Plus",
+    "crc": "0xBEBFE042",
+    "signature": "0xB7199271",
+    "magic": "0x1BE0"
+  },
+  {
+    "system": 7,
+    "name": "Detana!! TwinBee",
+    "crc": "0x5CF59D80",
+    "signature": "0xA94E3BB7",
+    "magic": "0x1BE7"
+  },
+  {
+    "system": 7,
+    "name": "Devil Crash - Naxat Pinball",
+    "crc": "0x4EC81A80",
+    "signature": "0x0AA2072F",
+    "magic": "0x1BE8"
+  },
+  {
+    "system": 7,
+    "name": "Doraemon - Meikyuu Daisakusen",
+    "crc": "0xDC760A07",
+    "signature": "0x4EAFE348",
+    "magic": "0x1BED"
+  },
+  {
+    "system": 7,
+    "name": "Dragon Spirit",
+    "crc": "0x01A76935",
+    "signature": "0x2838EE71",
+    "magic": "0x1BF4"
+  },
+  {
+    "system": 7,
+    "name": "Dragon's Curse",
+    "crc": "0x7D2C4B09",
+    "signature": "0x664F09AE",
+    "magic": "0x1BF6"
+  },
+  {
+    "system": 7,
+    "name": "F1 Circus",
+    "crc": "0xE14DEE08",
+    "signature": "0x72948B84",
+    "magic": "0x1C00"
+  },
+  {
+    "system": 7,
+    "name": "Fantasy Zone",
+    "crc": "0x72CB0F9D",
+    "signature": "0x387D85E2",
+    "magic": "0x1C05"
+  },
+  {
+    "system": 7,
+    "name": "Final Lap Twin",
+    "crc": "0x26408EA3",
+    "signature": "0x2B173AC5",
+    "magic": "0x1C0A"
+  },
+  {
+    "system": 7,
+    "name": "Final Match Tennis",
+    "crc": "0x560D2305",
+    "signature": "0xB249C013",
+    "magic": "0x1C0B"
+  },
+  {
+    "system": 7,
+    "name": "Final Soldier",
+    "crc": "0xAF2DD2AF",
+    "signature": "0x49C4D224",
+    "magic": "0x1C0C"
+  },
+  {
+    "system": 7,
+    "name": "Formation Soccer - Human Cup '90",
+    "crc": "0x85A1E7B6",
+    "signature": "0x052B0D59",
+    "magic": "0x1C11"
+  },
+  {
+    "system": 7,
+    "name": "Galaga '88",
+    "crc": "0x1A8393C6",
+    "signature": "0x80D5CD13",
+    "magic": "0x1C16"
+  },
+  {
+    "system": 7,
+    "name": "Gradius",
+    "crc": "0x0517DA65",
+    "signature": "0x9BD6124B",
+    "magic": "0x1C21"
+  },
+  {
+    "system": 7,
+    "name": "Gunhed",
+    "crc": "0xA17D4D7E",
+    "signature": "0x1E93DF4E",
+    "magic": "0x1C23"
+  },
+  {
+    "system": 7,
+    "name": "Heavy Unit",
+    "crc": "0xEB923DE5",
+    "signature": "0x626A1972",
+    "magic": "0x1C29"
+  },
+  {
+    "system": 7,
+    "name": "Image Fight",
+    "crc": "0xA80C565F",
+    "signature": "0xBB010DD0",
+    "magic": "0x1C2F"
+  },
+  {
+    "system": 7,
+    "name": "J.J. & Jeff",
+    "crc": "0xE01C5127",
+    "signature": "0x6C90326D",
+    "magic": "0x1C31"
+  },
+  {
+    "system": 7,
+    "name": "Jackie Chan",
+    "crc": "0xC6FA6373",
+    "signature": "0xD26F3729",
+    "magic": "0x1C35"
+  },
+  {
+    "system": 7,
+    "name": "Keith Courage in Alpha Zones",
+    "crc": "0x474D7A72",
+    "signature": "0xFEDD366B",
+    "magic": "0x1C3F"
+  },
+  {
+    "system": 7,
+    "name": "Kiki Kaikai",
+    "crc": "0xC0CB5ADD",
+    "signature": "0x4741FD87",
+    "magic": "0x1C41"
+  },
+  {
+    "system": 7,
+    "name": "Nectaris",
+    "crc": "0x0243453B",
+    "signature": "0xC9FD6D46",
+    "magic": "0x1C74"
+  },
+  {
+    "system": 7,
+    "name": "Nekketsu Koukou Dodgeball-bu - PC Bangai Hen",
+    "crc": "0x65FDB863",
+    "signature": "0x8623D919",
+    "magic": "0x1C75"
+  },
+  {
+    "system": 7,
+    "name": "NewZealand Story",
+    "crc": "0x8E4D75A8",
+    "signature": "0x5704F385",
+    "magic": "0x1C7C"
+  },
+  {
+    "system": 7,
+    "name": "Out Run",
+    "crc": "0xE203F223",
+    "signature": "0xBC6C5150",
+    "magic": "0x1C88"
+  },
+  {
+    "system": 7,
+    "name": "Pac-Land",
+    "crc": "0x14FAD3BA",
+    "signature": "0x25696E56",
+    "magic": "0x1C8B"
+  },
+  {
+    "system": 7,
+    "name": "Parasol Stars - The Story of Bubble Bobble III",
+    "crc": "0x51E86451",
+    "signature": "0xF6924C79",
+    "magic": "0x1C8F"
+  },
+  {
+    "system": 7,
+    "name": "Parodius Da! - Shinwa kara Owarai e",
+    "crc": "0x647718F9",
+    "signature": "0x7DEC5DF2",
+    "magic": "0x1C91"
+  },
+  {
+    "system": 7,
+    "name": "PC Genjin 3 - Pithecanthropus Computerurus",
+    "crc": "0xA170B60E",
+    "signature": "0xD56962E2",
+    "magic": "0x1C99"
+  },
+  {
+    "system": 7,
+    "name": "Power Eleven",
+    "crc": "0x3E647D8B",
+    "signature": "0xF193E7F6",
+    "magic": "0x1C9D"
+  },
+  {
+    "system": 7,
+    "name": "Power Golf",
+    "crc": "0xEA324F07",
+    "signature": "0xBC90582B",
+    "magic": "0x1C9F"
+  },
+  {
+    "system": 7,
+    "name": "Pro Yakyuu World Stadium",
+    "crc": "0x34E089A9",
+    "signature": "0x1F4E9B1A",
+    "magic": "0x1CAA"
+  },
+  {
+    "system": 7,
+    "name": "R-Type I",
+    "crc": "0xCEC3D28A",
+    "signature": "0x0163FB7B",
+    "magic": "0x1CB2"
+  },
+  {
+    "system": 7,
+    "name": "R-Type II",
+    "crc": "0xF207ECAE",
+    "signature": "0xB1D6A166",
+    "magic": "0x1CB4"
+  },
+  {
+    "system": 7,
+    "name": "Saigo no Nindou - Ninja Spirit",
+    "crc": "0x0590A156",
+    "signature": "0x038CDB6B",
+    "magic": "0x1CBD"
+  },
+  {
+    "system": 7,
+    "name": "Salamander",
+    "crc": "0xFAECCE20",
+    "signature": "0xE234BCBF",
+    "magic": "0x1CBE"
+  },
+  {
+    "system": 7,
+    "name": "Shinobi",
+    "crc": "0xBC655CF3",
+    "signature": "0xCF411E02",
+    "magic": "0x1CC3"
+  },
+  {
+    "system": 7,
+    "name": "SideArms",
+    "crc": "0xD1993C9F",
+    "signature": "0xFC5B5EA5",
+    "magic": "0x1CC8"
+  },
+  {
+    "system": 7,
+    "name": "Soldier Blade",
+    "crc": "0x8420B12B",
+    "signature": "0xCBA7AC1E",
+    "magic": "0x1CCF"
+  },
+  {
+    "system": 7,
+    "name": "Space Harrier",
+    "crc": "0x64580427",
+    "signature": "0x87E5E5AD",
+    "magic": "0x1CD6"
+  },
+  {
+    "system": 7,
+    "name": "Super Star Soldier",
+    "crc": "0x5D0E3105",
+    "signature": "0x0EEF6FAA",
+    "magic": "0x1CE4"
+  },
+  {
+    "system": 7,
+    "name": "Thunder Blade",
+    "crc": "0xDDC3E809",
+    "signature": "0x99E5921A",
+    "magic": "0x1CF2"
+  },
+  {
+    "system": 7,
+    "name": "Xevious - Fardraut Saga",
+    "crc": "0xF8F85EEC",
+    "signature": "0xD4C0EADC",
+    "magic": "0x1D1E"
+  }
+]

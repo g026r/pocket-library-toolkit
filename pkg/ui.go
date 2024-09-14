@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"io/fs"
 	"log"
 	"maps"
 	"os"
@@ -28,11 +29,12 @@ const (
 )
 
 type Application struct {
-	RootDir   string
+	RootDir   fs.FS
 	Entries   []model.Entry
 	PlayTimes map[uint32]model.PlayTime
 	Thumbs    map[util.System]model.Thumbnails
 	Config
+	Internal map[util.System][]model.Entry // Internal is a map of all known possible entries, grouped by system
 }
 
 type Config struct {
@@ -148,6 +150,8 @@ func (a *Application) settingsMenu() {
 	}
 }
 
+// x is a simple function that returns "X" is setting is true
+// Wouldn't ternary operators be great?
 func x(setting bool) string {
 	if setting {
 		return "X"
@@ -298,7 +302,7 @@ func (a *Application) add() error {
 
 func (a *Application) edit() error {
 	return a.pagedEntries("Edit", func(i int) error {
-		e, err := a.Entries[i].Edit(a.AdvancedEditing)
+		e, err := editEntry(a.Entries[i], a.AdvancedEditing)
 		if err != nil {
 			return err
 		}
@@ -316,7 +320,7 @@ func (a *Application) edit() error {
 		thumbs := a.Thumbs[sys]
 		t, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
 		if err != nil { // We don't consider this a blocker
-			fmt.Println(goterm.Color("ERROR: Could not parse thumbnail file", goterm.RED))
+			fmt.Println(goterm.Color("WARN: Could not parse thumbnail file", goterm.YELLOW))
 			time.Sleep(time.Second)
 			return nil
 		}
@@ -325,6 +329,79 @@ func (a *Application) edit() error {
 
 		return nil
 	})
+}
+
+func editEntry(e model.Entry, advanced bool) (model.Entry, error) {
+	clone := e // In case the user cancels
+	util.ClearScreen()
+
+	fmt.Printf("%s\n", goterm.Color(goterm.Bold("Edit Entry")+":", goterm.CYAN))
+	fmt.Printf("%s\n", goterm.Color("(Return to accept defaults)", goterm.CYAN))
+
+	in := bufio.NewScanner(os.Stdin)
+	fmt.Printf("\rName (%s): ", e.Name)
+	in.Scan()
+	if s := in.Text(); s != "" {
+		e.Name = s
+	}
+
+	if advanced {
+		// TODO: Don't really like this section thanks to gocliselect's bolding. Look into customizing it
+		sys := gocliselect.NewMenu("System:", false)
+		sys.AddItem("Game Boy", "GB")
+		sys.AddItem("Game Boy Color", "GBC")
+		sys.AddItem("Game Boy Advance", "GBA")
+		sys.AddItem("Game Gear", "GG")
+		sys.AddItem("Sega Master System", "SMS")
+		sys.AddItem("Neo Geo Pocket", "NGP")
+		sys.AddItem("Neo Geo Pocket Color", "NGPC")
+		sys.AddItem("TurboGrafx 16", "PCE")
+		sys.AddItem("Atari Lynx", "Lynx")
+		sys.CursorPos = int(e.System)
+		system := sys.Display()
+		if system == "" { // ESC or Ctrl-C pressed
+			return clone, nil
+		}
+		if s, err := util.Parse(system); err != nil {
+			return clone, err
+		} else {
+			e.System = s
+		}
+	}
+
+	fmt.Printf("\rCRC32 (%08x): ", e.Crc32)
+	in.Scan()
+	if s := in.Text(); s != "" {
+		h, err := util.HexStringTransform(s)
+		if err != nil {
+			return clone, err
+		}
+		e.Crc32 = h
+	}
+
+	if advanced {
+		// Just a bit unsafe. Leave it behind the advanced toggle
+		fmt.Printf("\rSignature (%08x): ", e.Sig)
+		in.Scan()
+		if s := in.Text(); s != "" {
+			h, err := util.HexStringTransform(s)
+			if err != nil {
+				return clone, err
+			}
+			e.Sig = h
+		}
+		fmt.Printf("\rMagic Number (%08x): ", e.Magic)
+		in.Scan()
+		if s := in.Text(); s != "" {
+			h, err := util.HexStringTransform(s)
+			if err != nil {
+				return clone, err
+			}
+			e.Magic = h
+		}
+	}
+
+	return e, nil
 }
 
 func (a *Application) removeGame() error {
@@ -557,71 +634,50 @@ func (a *Application) writeFiles() error {
 		if err := binary.Write(p, binary.LittleEndian, e.Sig); err != nil {
 			return err
 		}
-		if t, ok := a.PlayTimes[e.Sig]; ok {
-			if err := binary.Write(p, binary.LittleEndian, t.Added); err != nil {
-				return err
-			}
-			if err := binary.Write(p, binary.LittleEndian, t.Played); err != nil {
-				return err
-			}
-		} else {
-			// Pocket doesn't know about timezones, so we have to manually apply the offset to get the correct-ish time.
-			//Might get kind of funny around DST changeovers, but I can't be bothered with anything fancier.
-			_, offset := time.Now().Zone()
-
-			// Time.Unix() is an int64 but the pocket uses a 32 bit unsigned int
-			// Since we don't have played times for these games letting the zeros overflow into the played time word is
-			// a simple enough solution
-			if err := binary.Write(p, binary.LittleEndian, uint64(time.Now().Add(time.Second*time.Duration(offset)).Unix())); err != nil {
-				return err
-			}
+		if _, err := a.PlayTimes[e.Sig].WriteTo(p); err != nil {
+			return err
 		}
 	}
 
 	for k, v := range a.Thumbs {
-		if v.Modified {
-			t, err := os.Create(fmt.Sprintf("%s/%s_thumbs.bin", wd, strings.ToLower(k.String())))
-			if err != nil {
-				return err
-			}
-			defer t.Close() // For the early exits
-
-			if err := binary.Write(t, binary.LittleEndian, model.ThumbnailHeader); err != nil {
-				return err
-			}
-			if err := binary.Write(t, binary.LittleEndian, model.UnknownWord); err != nil {
-				return err
-			}
-			if err := binary.Write(t, binary.LittleEndian, uint32(len(v.Images))); err != nil {
-				return err
-			}
-			addr := firstThumbsAddr
-			for i, j := range v.Images {
-				if err := binary.Write(t, binary.LittleEndian, j.Crc32); err != nil {
-					return err
-				}
-				if err := binary.Write(t, binary.LittleEndian, addr); err != nil {
-					return err
-				}
-				addr = addr + uint32(len(v.Images[i].Image))
-			}
-			// write the unused addresses out as 0s
-			if _, err := t.Write(make([]byte, int(firstThumbsAddr)-0xC-8*len(v.Images))); err != nil {
-				return err
-			}
-			// write out the images
-			for _, j := range v.Images {
-				wrote := 0
-				for wrote < len(j.Image) {
-					n, err := t.Write(j.Image[wrote:])
-					if err != nil {
-						return err
-					}
-					wrote = wrote + n
-				}
-			}
-			t.Close()
+		//if v.Modified {
+		t, err := os.Create(fmt.Sprintf("%s/%s_thumbs.bin", wd, strings.ToLower(k.String())))
+		if err != nil {
+			return err
 		}
+		defer t.Close() // For the early exits
+
+		if err := binary.Write(t, binary.LittleEndian, model.ThumbnailHeader); err != nil {
+			return err
+		}
+		if err := binary.Write(t, binary.LittleEndian, model.UnknownWord); err != nil {
+			return err
+		}
+		if err := binary.Write(t, binary.LittleEndian, uint32(len(v.Images))); err != nil {
+			return err
+		}
+		addr := firstThumbsAddr
+		for i, j := range v.Images {
+			if err := binary.Write(t, binary.LittleEndian, j.Crc32); err != nil {
+				return err
+			}
+			if err := binary.Write(t, binary.LittleEndian, addr); err != nil {
+				return err
+			}
+			addr = addr + uint32(len(v.Images[i].Image))
+		}
+		// write the unused addresses out as 0s
+		if _, err := t.Write(make([]byte, int(firstThumbsAddr)-0xC-8*len(v.Images))); err != nil {
+			return err
+		}
+		// write out the images
+		for _, j := range v.Images {
+			if _, err := t.Write(j.Image); err != nil {
+				return err
+			}
+		}
+		t.Close()
+		//}
 	}
 
 	return nil

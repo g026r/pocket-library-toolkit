@@ -1,0 +1,128 @@
+[
+  {
+    "system": 3,
+    "name": "Castle of Illusion Starring Mickey Mouse",
+    "crc": "0x59840FD6",
+    "signature": "0x7C3D8290",
+    "magic": "0x1782"
+  },
+  {
+    "system": 3,
+    "name": "Columns",
+    "crc": "0x83FA26D9",
+    "signature": "0xB5EEC6CF",
+    "magic": "0x1793"
+  },
+  {
+    "system": 3,
+    "name": "Deep Duck Trouble Starring Donald Duck",
+    "crc": "0x5A136D7E",
+    "signature": "0xD8A8EED6",
+    "magic": "0x179B"
+  },
+  {
+    "system": 3,
+    "name": "Fantasy Zone",
+    "crc": "0xD69097E8",
+    "signature": "0xB9ADF48A",
+    "magic": "0x17C4"
+  },
+  {
+    "system": 3,
+    "name": "GG Aleste",
+    "crc": "0x1B80A75B",
+    "signature": "0x3B553337",
+    "magic": "0x17DB"
+  },
+  {
+    "system": 3,
+    "name": "Power Strike II",
+    "crc": "0x09DE1528",
+    "signature": "0x03DF1FF9",
+    "magic": "0x17DC"
+  },
+  {
+    "system": 3,
+    "name": "Gunstar Heroes",
+    "crc": "0xC3C52767",
+    "signature": "0xE2B366BB",
+    "magic": "0x17EC"
+  },
+  {
+    "system": 3,
+    "name": "In the Wake of Vampire",
+    "crc": "0xDAB0F265",
+    "signature": "0x41117E28",
+    "magic": "0x17F8"
+  },
+  {
+    "system": 3,
+    "name": "Kinetic Connection",
+    "crc": "0x4AF7F2AA",
+    "signature": "0x9BB34518",
+    "magic": "0x1817"
+  },
+  {
+    "system": 3,
+    "name": "Land of Illusion Starring Mickey Mouse",
+    "crc": "0x52DBF3E1",
+    "signature": "0xD646307E",
+    "magic": "0x181D"
+  },
+  {
+    "system": 3,
+    "name": "Lemmings",
+    "crc": "0x0FDE7BAA",
+    "signature": "0x1B39218D",
+    "magic": "0x1820"
+  },
+  {
+    "system": 3,
+    "name": "The Lion King",
+    "crc": "0x0CD9C20B",
+    "signature": "0x9062B5EC",
+    "magic": "0x1821"
+  },
+  {
+    "system": 3,
+    "name": "Sonic Chaos",
+    "crc": "0x663F2ABB",
+    "signature": "0x066E484D",
+    "magic": "0x18BE"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog",
+    "crc": "0x3E31CB8C",
+    "signature": "0xB512D08F",
+    "magic": "0x18C5"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog 2",
+    "crc": "0x95A18EC7",
+    "signature": "0x269AFD59",
+    "magic": "0x18C6"
+  },
+  {
+    "system": 3,
+    "name": "Tails Adventures",
+    "crc": "0x5BB6E5D6",
+    "signature": "0x8E602224",
+    "magic": "0x18E7"
+  },
+  {
+    "system": 3,
+    "name": "Wonder Boy: The Dragon's Trap",
+    "crc": "0xA74C97A7",
+    "signature": "0x07FCC33B",
+    "magic": "0x190B"
+  },
+  {
+    "system": 3,
+    "name": "Wonder Boy",
+    "crc": "0x9977FCB3",
+    "signature": "0x9FA70149",
+    "magic": "0x190D"
+  }
+]

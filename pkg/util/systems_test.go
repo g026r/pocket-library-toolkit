@@ -1,16 +1,30 @@
 package util
 
 import (
+	"slices"
 	"strings"
 	"testing"
 )
 
+var allSystems = []System{GB, GBC, GBA, GG, SMS, NGP, NGPC, PCE, Lynx}
+
+func TestSystem_ThumbFile(t *testing.T) {
+	t.Parallel()
+	for _, s := range allSystems {
+		t.Run(s.String(), func(t *testing.T) {
+			result := s.ThumbFile()
+			if !slices.Contains(ValidThumbsFiles, result) {
+				t.Error(s.ThumbFile().String())
+			}
+		})
+	}
+}
+
 func TestSystem_String(t *testing.T) {
 	// Test to make certain each system's String() results maps back to what we expect for Parse
 	t.Parallel()
-	cases := []System{GB, GBC, GBA, GG, SMS, NGP, NGPC, PCE, Lynx}
 
-	for _, tc := range cases {
+	for _, tc := range allSystems {
 		t.Run(tc.String(), func(t *testing.T) {
 			t.Parallel()
 			if s, err := Parse(tc.String()); err != nil {
@@ -37,8 +51,8 @@ func TestParse(t *testing.T) {
 		err bool
 	}{
 		{strings.ToLower(GB.String()), GB, false},
-		{"   ", 0, true}, // blank string
-		{"NES", 0, true}, // invalid string
+		{"   ", 0, true},     // blank string
+		{"unknown", 0, true}, // invalid string
 	}
 
 	for _, tc := range cases {

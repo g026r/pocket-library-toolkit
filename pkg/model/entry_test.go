@@ -2,17 +2,20 @@ package model
 
 import (
 	"bytes"
+	"io/fs"
 	"slices"
 	"testing"
 
 	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
-var raw = []byte{0x1C, 0x00, 0x00, 0x07, 0x6D, 0x8D, 0xE0, 0xFD, 0x3E, 0x1A, 0xCD, 0x79, 0x94, 0x1B, 0x00, 0x00, 0x31, 0x39, 0x34, 0x33, 0x20, 0x4B, 0x61, 0x69, 0x00, 0x45, 0x00, 0xA0}
+// rawEntry is the binary representation of entry, as copied from a valid list.bin
+var rawEntry = []byte{0x1C, 0x00, 0x00, 0x07, 0x6D, 0x8D, 0xE0, 0xFD, 0x3E, 0x1A, 0xCD, 0x79, 0x94, 0x1B, 0x00, 0x00, 0x31, 0x39, 0x34, 0x33, 0x20, 0x4B, 0x61, 0x69, 0x00, 0x45, 0x00, 0xA0}
 
-// clean is raw but with the last 3 padding bytes replaced by 0s, since Analogue sometimes just has garbage in there
-var clean = []byte{0x1C, 0x00, 0x00, 0x07, 0x6D, 0x8D, 0xE0, 0xFD, 0x3E, 0x1A, 0xCD, 0x79, 0x94, 0x1B, 0x00, 0x00, 0x31, 0x39, 0x34, 0x33, 0x20, 0x4B, 0x61, 0x69, 0x00, 0x00, 0x00, 0x00}
+// cleanEntry is rawEntry but with the last 3 padding bytes replaced by 0s, since Analogue sometimes just has garbage in there
+var cleanEntry = []byte{0x1C, 0x00, 0x00, 0x07, 0x6D, 0x8D, 0xE0, 0xFD, 0x3E, 0x1A, 0xCD, 0x79, 0x94, 0x1B, 0x00, 0x00, 0x31, 0x39, 0x34, 0x33, 0x20, 0x4B, 0x61, 0x69, 0x00, 0x00, 0x00, 0x00}
 
+// entry is rawEntry in properly parsed format
 var entry = Entry{
 	System: util.PCE,
 	Crc32:  0xfde08d6d,
@@ -24,7 +27,7 @@ var entry = Entry{
 func TestReadEntry(t *testing.T) {
 	t.Parallel()
 
-	e, err := readEntry(bytes.NewReader(raw))
+	e, err := readEntry(bytes.NewReader(rawEntry))
 	if err != nil {
 		t.Errorf("%v", err)
 	}
@@ -53,8 +56,8 @@ func TestEntry_WriteTo(t *testing.T) {
 	if _, err := entry.WriteTo(w); err != nil {
 		t.Fatalf("%v", err)
 	}
-	if b := w.Bytes(); slices.Compare(b, clean) != 0 {
-		t.Errorf("Expected %v; got %v", clean, b)
+	if b := w.Bytes(); slices.Compare(b, cleanEntry) != 0 {
+		t.Errorf("Expected %v; got %v", cleanEntry, b)
 	}
 }
 
@@ -88,7 +91,7 @@ func TestExtractName(t *testing.T) {
 	t.Parallel()
 	t.Run(entry.Name, func(t *testing.T) {
 		t.Parallel()
-		n, err := extractName(raw[16:])
+		n, err := extractName(rawEntry[16:])
 		if err != nil {
 			t.Errorf("%v", err)
 		}
@@ -105,4 +108,36 @@ func TestExtractName(t *testing.T) {
 			t.Error("Expected error; got nil")
 		}
 	})
+}
+
+func TestReadEntries(t *testing.T) {
+	t.Parallel()
+	cases := map[string]struct {
+		count int
+		err   bool
+	}{"tests/count_mismatch": {
+		count: 4,
+	},
+		"tests/invalid_header": {
+			err: true,
+		},
+		"tests/valid": {
+			count: 229,
+		}}
+
+	for k, v := range cases {
+		t.Run(k, func(t *testing.T) {
+			t.Parallel()
+			fsys, err := fs.Sub(files, k)
+			if err != nil {
+				t.Fatal(err)
+			}
+			pt, err := ReadEntries(fsys)
+			if (err != nil) != v.err {
+				t.Error(err)
+			} else if len(pt) != v.count {
+				t.Errorf("Expected %d entries; got %d", v.count, len(pt))
+			}
+		})
+	}
 }

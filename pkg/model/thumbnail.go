@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	"io"
+	"io/fs"
 	"os"
 	"strings"
 
@@ -15,11 +17,9 @@ import (
 
 const (
 	ThumbnailHeader uint32 = 0x41544602
-	UnknownWord     uint32 = 0x0000CE1C
-	ImageHeader32   uint32 = 0x41504920
-)
+	UnknownWord     uint32 = 0x0000CE1C // No idea what this is for. But it appears necessary.
+	ImageHeader32   uint32 = 0x41504920 // The 32bit colour header. There's a 16bit one as well, but it's unused.
 
-const (
 	maxHeight int = 121
 	maxWidth  int = 109
 )
@@ -34,12 +34,12 @@ type Image struct {
 	Image   []byte
 }
 
-func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
+func LoadThumbnails(fs fs.FS) (map[util.System]Thumbnails, error) {
 	// Initialize our map
 	m := make(map[util.System]Thumbnails)
 
 	for _, k := range util.ValidThumbsFiles { // We're going to modify the values, so only range over the keys
-		f, err := os.Open(fmt.Sprintf("%s/%s_thumbs.bin", dir, strings.ToLower(k.String())))
+		f, err := util.ReadSeeker(fs, fmt.Sprintf("%s_thumbs.bin", strings.ToLower(k.String())))
 		if errors.Is(err, os.ErrNotExist) {
 			continue // It's possible for some systems to not have thumbnails yet. Just continue
 		} else if err != nil {
@@ -52,13 +52,13 @@ func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
 			return nil, err
 		}
 		if header != ThumbnailHeader {
-			return nil, fmt.Errorf("%s: %w", f.Name(), util.ErrUnrecognizedFileFormat)
+			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), util.ErrUnrecognizedFileFormat)
 		}
 		if err := binary.Read(f, binary.LittleEndian, &header); err != nil {
 			return nil, err
 		}
 		if header != UnknownWord {
-			return nil, fmt.Errorf("%s: %w", f.Name(), util.ErrUnrecognizedFileFormat)
+			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), util.ErrUnrecognizedFileFormat)
 		}
 
 		var num uint32
@@ -71,7 +71,7 @@ func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
 			Images:   make([]Image, 0),
 		}
 		if num != 0 { // Only perform these steps if there are images
-			// Read all of the image addresses
+			// Read all the image addresses
 			for range num {
 				img := Image{}
 				if err := binary.Read(f, binary.LittleEndian, &img.Crc32); err != nil {
@@ -83,7 +83,7 @@ func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
 				t.Images = append(t.Images, img)
 			}
 
-			if _, err := f.Seek(int64(t.Images[0].address), 0); err != nil {
+			if _, err := f.Seek(int64(t.Images[0].address), io.SeekStart); err != nil {
 				return nil, err
 			}
 			// Read each of the individual image entries.
@@ -91,8 +91,11 @@ func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
 				if i+1 < len(t.Images) {
 					t.Images[i].Image = make([]byte, t.Images[i+1].address-t.Images[i].address)
 				} else {
-					fi, _ := f.Stat()
-					t.Images[i].Image = make([]byte, fi.Size()-int64(t.Images[i].address))
+					// This does present the problem that a file with the wrong number of entries in the count will wind up with one really weird
+					// entry. But not sure that can really be helped, since there isn't a terminator or image size field for the entries
+					end, _ := f.Seek(0, io.SeekEnd) // fs.FS is terrible & I wouldn't be using it if it wasn't easier to test this way
+					t.Images[i].Image = make([]byte, end-int64(t.Images[i].address))
+					_, _ = f.Seek(int64(t.Images[i].address), io.SeekStart)
 				}
 				if n, err := f.Read(t.Images[i].Image); err != nil || n != len(t.Images[i].Image) {
 					return nil, fmt.Errorf("read error: %w", err)
@@ -107,10 +110,10 @@ func LoadThumbnails(dir string) (map[util.System]Thumbnails, error) {
 	return m, nil
 }
 
-func GenerateThumbnail(dir string, sys util.System, crc32 uint32) (Image, error) {
+func GenerateThumbnail(dir fs.FS, sys util.System, crc32 uint32) (Image, error) {
 	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
 
-	f, err := os.Open(fmt.Sprintf("%s/System/Library/Images/%s/%08x.bin", dir, sys.String(), crc32))
+	f, err := dir.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", sys.String(), crc32))
 	if err != nil {
 		return Image{}, err
 	}
@@ -122,7 +125,7 @@ func GenerateThumbnail(dir string, sys util.System, crc32 uint32) (Image, error)
 		return Image{}, err
 	}
 	if header != ImageHeader32 {
-		return Image{}, fmt.Errorf("%s: %w", f.Name(), util.ErrUnrecognizedFileFormat)
+		return Image{}, fmt.Errorf("%08x.bin: %w", crc32, util.ErrUnrecognizedFileFormat)
 	}
 
 	if err := binary.Read(f, binary.LittleEndian, &height); err != nil {

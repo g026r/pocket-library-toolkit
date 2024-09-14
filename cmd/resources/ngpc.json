@@ -1,0 +1,51 @@
+[
+  {
+    "system": 6,
+    "name": "Fantastic Night Dreams Cotton (Japan):",
+    "crc": "0xB8A12409",
+    "signature": "0x74E36925",
+    "magic": "0x1B40"
+  },
+  {
+    "system": 6,
+    "name": "Metal Slug: 1st Mission",
+    "crc": "0x4FF91807",
+    "signature": "0x1725730D",
+    "magic": "0x1B4E"
+  },
+  {
+    "system": 6,
+    "name": "Metal Slug: 2nd Mission",
+    "crc": "0xAC549144",
+    "signature": "0xA9806EFE",
+    "magic": "0x1B4F"
+  },
+  {
+    "system": 6,
+    "name": "Neo Turf Masters / Big Tournament Golf",
+    "crc": "0x317A66D2",
+    "signature": "0x437A70DF",
+    "magic": "0x1B5B"
+  },
+  {
+    "system": 6,
+    "name": "Picture Puzzle",
+    "crc": "0x67E6DC56",
+    "signature": "0x925C9D1D",
+    "magic": "0x1B6A"
+  },
+  {
+    "system": 6,
+    "name": "Sonic the Hedgehog: Pocket Adventure",
+    "crc": "0x356F0849",
+    "signature": "0x56C79BB1",
+    "magic": "0x1B82"
+  },
+  {
+    "system": 6,
+    "name": "Dark Arms: Beast Buster 1999",
+    "crc": "0x6F353F34",
+    "signature": "0x05D460F5",
+    "magic": "0x1B90"
+  }
+]

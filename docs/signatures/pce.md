@@ -59,7 +59,11 @@
 - CRC32: `0x5C4D1991`
 - Signature: `0x2E32DB1A`
 - Magic Number: `0x1BC5`
-  0xA98D276A 0x29BF33F 0x1BD8 Cyber Core
+-
+## Cyber Core
+- CRC32: `0xA98D276A`
+- Signature: `0x29BF33F`
+- Magic Number: `0x1BD8` 
 
 ## Daimakaimura
 

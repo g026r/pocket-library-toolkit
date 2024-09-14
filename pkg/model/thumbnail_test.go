@@ -2,9 +2,12 @@ package model
 
 import (
 	"image"
+	"io/fs"
 	"testing"
 
 	"github.com/disintegration/imaging"
+
+	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
 func Test_determineResizing(t *testing.T) {
@@ -48,6 +51,45 @@ func Test_determineResizing(t *testing.T) {
 			}
 			if i.Rect.Max.X < maxWidth {
 				t.Errorf("Expected new width to be greater or equal to %d. Got %d", maxWidth, w)
+			}
+		})
+	}
+}
+
+func TestLoadThumbnails(t *testing.T) {
+	t.Parallel()
+	cases := map[string]struct {
+		count int
+		err   bool
+	}{"tests/count_mismatch": {
+		count: 2,
+	},
+		"tests/invalid_header": {
+			err: true,
+		},
+		"tests/valid": {
+			count: 7,
+		}}
+
+	for k, v := range cases {
+		t.Run(k, func(t *testing.T) {
+			t.Parallel()
+			fsys, err := fs.Sub(files, k)
+			if err != nil {
+				t.Fatal(err)
+			}
+			pt, err := LoadThumbnails(fsys)
+			if (err != nil) != v.err {
+				t.Error(err)
+			}
+			if !v.err {
+				if len(pt) != 1 {
+					t.Errorf("Expected 1 system entries; got %d", len(pt))
+				} else if tn, ok := pt[util.NGP]; !ok {
+					t.Errorf("Expected NGP entry to be present")
+				} else if len(tn.Images) != v.count {
+					t.Errorf("Expected %d images; got %d", v.count, len(tn.Images))
+				}
 			}
 		})
 	}

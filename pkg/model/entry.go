@@ -1,19 +1,15 @@
 package model
 
 import (
-	"bufio"
 	"cmp"
 	"encoding/binary"
 	"errors"
 	"fmt"
 	"io"
-	"os"
+	"io/fs"
 	"slices"
 
-	"github.com/buger/goterm"
-
 	"github.com/g026r/pocket-library-editor/pkg/util"
-	"github.com/nexidian/gocliselect"
 )
 
 const LibraryHeader uint32 = 0x01464154
@@ -26,7 +22,7 @@ type Entry struct {
 	util.System
 	Crc32 uint32
 	Sig   uint32
-	Magic uint32 // TODO: Work out all possible mappings for this
+	Magic uint32
 	Name  string
 }
 
@@ -39,79 +35,6 @@ func (e Entry) CalculateLength() uint16 {
 	}
 
 	return length
-}
-
-func (e Entry) Edit(advanced bool) (Entry, error) {
-	clone := e // In case the user cancels
-	util.ClearScreen()
-
-	fmt.Printf("%s\n", goterm.Color(goterm.Bold("Edit Entry")+":", goterm.CYAN))
-	fmt.Printf("%s\n", goterm.Color("(Return to accept defaults)", goterm.CYAN))
-
-	in := bufio.NewScanner(os.Stdin)
-	fmt.Printf("\rName (%s): ", e.Name)
-	in.Scan()
-	if s := in.Text(); s != "" {
-		e.Name = s
-	}
-
-	if advanced {
-		// TODO: Don't really like this section thanks to gocliselect's bolding. Look into customizing it
-		sys := gocliselect.NewMenu("System:", false)
-		sys.AddItem("Game Boy", "GB")
-		sys.AddItem("Game Boy Color", "GBC")
-		sys.AddItem("Game Boy Advance", "GBA")
-		sys.AddItem("Game Gear", "GG")
-		sys.AddItem("Sega Master System", "SMS")
-		sys.AddItem("Neo Geo Pocket", "NGP")
-		sys.AddItem("Neo Geo Pocket Color", "NGPC")
-		sys.AddItem("TurboGrafx 16", "PCE")
-		sys.AddItem("Atari Lynx", "Lynx")
-		sys.CursorPos = int(e.System)
-		system := sys.Display()
-		if system == "" { // ESC or Ctrl-C pressed
-			return clone, nil
-		}
-		if s, err := util.Parse(system); err != nil {
-			return clone, err
-		} else {
-			e.System = s
-		}
-	}
-
-	fmt.Printf("\rCRC32 (%08x): ", e.Crc32)
-	in.Scan()
-	if s := in.Text(); s != "" {
-		h, err := util.HexStringTransform(s)
-		if err != nil {
-			return clone, err
-		}
-		e.Crc32 = h
-	}
-
-	if advanced {
-		// Just a bit unsafe. Leave it behind the advanced toggle
-		fmt.Printf("\rSignature (%08x): ", e.Sig)
-		in.Scan()
-		if s := in.Text(); s != "" {
-			h, err := util.HexStringTransform(s)
-			if err != nil {
-				return clone, err
-			}
-			e.Sig = h
-		}
-		fmt.Printf("\rMagic Number (%08x): ", e.Magic)
-		in.Scan()
-		if s := in.Text(); s != "" {
-			h, err := util.HexStringTransform(s)
-			if err != nil {
-				return clone, err
-			}
-			e.Magic = h
-		}
-	}
-
-	return e, nil
 }
 
 func (e Entry) WriteTo(w io.Writer) (n int64, err error) {
@@ -156,8 +79,8 @@ func (e Entry) WriteTo(w io.Writer) (n int64, err error) {
 	return
 }
 
-func ReadEntries(src string) ([]Entry, error) {
-	f, err := os.Open(fmt.Sprintf("%s/list.bin", src))
+func ReadEntries(fs fs.FS) ([]Entry, error) {
+	f, err := util.ReadSeeker(fs, "list.bin")
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +91,7 @@ func ReadEntries(src string) ([]Entry, error) {
 		return nil, err
 	}
 	if header != LibraryHeader { // Missing the magic number = not a Pocket library file
-		return nil, fmt.Errorf("%s: %w", f.Name(), util.ErrUnrecognizedFileFormat)
+		return nil, fmt.Errorf("list.bin: %w", util.ErrUnrecognizedFileFormat)
 	}
 
 	if err = binary.Read(f, binary.LittleEndian, &num); err != nil {
@@ -195,7 +118,7 @@ func ReadEntries(src string) ([]Entry, error) {
 	// Parse each of the library entries. The addresses are supposed to be sequential, but we're not going to trust that.
 	entries := make([]Entry, num)
 	for i := range addresses {
-		if _, err := f.Seek(int64(addresses[i]), 0); err != nil {
+		if _, err := f.Seek(int64(addresses[i]), io.SeekStart); err != nil {
 			return entries, err
 		}
 

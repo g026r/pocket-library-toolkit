@@ -3,7 +3,9 @@ package model
 import (
 	"encoding/binary"
 	"fmt"
-	"os"
+	"io"
+	"io/fs"
+	"time"
 
 	"github.com/g026r/pocket-library-editor/pkg/util"
 )
@@ -15,8 +17,8 @@ type PlayTime struct {
 	Played uint32
 }
 
-func ReadPlayTimes(src string) (map[uint32]PlayTime, error) {
-	f, err := os.Open(fmt.Sprintf("%s/playtimes.bin", src))
+func ReadPlayTimes(fs fs.FS) (map[uint32]PlayTime, error) {
+	f, err := util.ReadSeeker(fs, "playtimes.bin")
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +29,7 @@ func ReadPlayTimes(src string) (map[uint32]PlayTime, error) {
 		return nil, err
 	}
 	if header != PlaytimeHeader {
-		return nil, fmt.Errorf("%s: %w", f.Name(), util.ErrUnrecognizedFileFormat)
+		return nil, fmt.Errorf("playtimes.bin: %w", util.ErrUnrecognizedFileFormat)
 	}
 
 	var num uint32
@@ -53,4 +55,28 @@ func ReadPlayTimes(src string) (map[uint32]PlayTime, error) {
 	}
 
 	return playtimes, nil
+}
+
+func (p PlayTime) WriteTo(w io.Writer) (int64, error) {
+	if p.Added != 0 {
+		if err := binary.Write(w, binary.LittleEndian, p.Added); err != nil {
+			return 0, err
+		}
+		if err := binary.Write(w, binary.LittleEndian, p.Played); err != nil {
+			return 4, err
+		}
+	} else {
+		// Pocket doesn't know about timezones, so we have to manually apply the offset to get the correct-ish time.
+		//Might get kind of funny around DST changeovers, but I can't be bothered with anything fancier.
+		_, offset := time.Now().Zone()
+
+		// Time.Unix() is an int64 but the pocket uses a 32 bit unsigned int
+		// Since we don't have played times for these games letting the zeros overflow into the played time word is
+		// a simple enough solution
+		if err := binary.Write(w, binary.LittleEndian, uint64(time.Now().Add(time.Second*time.Duration(offset)).Unix())); err != nil {
+			return 0, err
+		}
+	}
+
+	return 8, nil
 }
