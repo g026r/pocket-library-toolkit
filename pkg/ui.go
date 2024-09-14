@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"log"
 	"maps"
@@ -558,7 +559,7 @@ func (a *Application) generateAll() error {
 
 // prune removes entries from the thumbnails files that are no longer associated with any library entry
 // If you have a very large library or very large thumbnail files, this may take a while.
-func (a *Application) prune() error {
+func (a *Application) prune() {
 	for k, v := range a.Thumbs {
 		t := a.Thumbs[k]
 		t.Images = slices.DeleteFunc(v.Images, func(image model.Image) bool {
@@ -566,9 +567,11 @@ func (a *Application) prune() error {
 				return entry.System.ThumbFile() == k && entry.Crc32 == image.Crc32
 			})
 		})
+		if len(t.Images) != len(a.Thumbs[k].Images) {
+			t.Modified = true
+		}
 		a.Thumbs[k] = t
 	}
-	return nil
 }
 
 func (a *Application) writeFiles() error {
@@ -589,27 +592,54 @@ func (a *Application) writeFiles() error {
 	defer p.Close()
 
 	// Prep list.bin
-	if err := binary.Write(l, binary.BigEndian, model.LibraryHeader); err != nil {
+	if err := a.writeLibrary(l, p); err != nil {
 		return err
 	}
-	if err := binary.Write(l, binary.LittleEndian, uint32(len(a.Entries))); err != nil {
+
+	for k, v := range a.Thumbs {
+		if v.Modified {
+			t, err := os.Create(fmt.Sprintf("%s/%s_thumbs.bin", wd, strings.ToLower(k.String())))
+			if err != nil {
+				return err
+			}
+
+			err = writeThumbsFile(t, v.Images)
+			_ = t.Close() // Close explicitly rather than defer as defer in a loop is not best practice
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func (a *Application) writeLibrary(list, playtimes io.Writer) error {
+	if err := binary.Write(list, binary.BigEndian, model.LibraryHeader); err != nil {
 		return err
 	}
-	if err := binary.Write(l, binary.LittleEndian, uint32(0x10)); err != nil { // Not sure what this value signifies, but accidentally setting it to 1 caused the system to loop
+	if err := binary.Write(list, binary.LittleEndian, uint32(len(a.Entries))); err != nil {
 		return err
 	}
-	if err := binary.Write(l, binary.LittleEndian, firstLibraryAddr); err != nil { // This seems to be duplicated? I dunno
+	if err := binary.Write(list, binary.LittleEndian, uint32(0x10)); err != nil { // Not sure what this value signifies, but accidentally setting it to 1 caused the system to loop
+		return err
+	}
+	if err := binary.Write(list, binary.LittleEndian, firstLibraryAddr); err != nil { // Don't know why the first entry address appears twice
 		return err
 	}
 
 	// Prep playtimes.bin
-	if err := binary.Write(p, binary.BigEndian, model.PlaytimeHeader); err != nil {
+	if err := binary.Write(playtimes, binary.BigEndian, model.PlaytimeHeader); err != nil {
 		return err
 	}
-	if err := binary.Write(p, binary.LittleEndian, uint32(len(a.Entries))); err != nil {
+	if err := binary.Write(playtimes, binary.LittleEndian, uint32(len(a.Entries))); err != nil {
 		return err
 	}
 
+	return a.writeEntries(list, playtimes)
+}
+
+func (a *Application) writeEntries(list, playtimes io.Writer) error {
 	// Build the address entries
 	slices.SortFunc(a.Entries, model.EntrySort)
 	addresses := make([]uint32, firstLibraryAddr/4-4)
@@ -620,64 +650,56 @@ func (a *Application) writeFiles() error {
 		last = addresses[i]
 	}
 
-	if err := binary.Write(l, binary.LittleEndian, addresses); err != nil {
+	if err := binary.Write(list, binary.LittleEndian, addresses); err != nil {
 		return err
 	}
 
 	for _, e := range a.Entries {
-		if _, err := e.WriteTo(l); err != nil {
+		if _, err := e.WriteTo(list); err != nil {
 			return err
 		}
 
 		// list.bin & playtimes.bin must be recorded in the same order.
 		// So write the playtimes.bin info now as well.
-		if err := binary.Write(p, binary.LittleEndian, e.Sig); err != nil {
+		if err := binary.Write(playtimes, binary.LittleEndian, e.Sig); err != nil {
 			return err
 		}
-		if _, err := a.PlayTimes[e.Sig].WriteTo(p); err != nil {
+		if _, err := a.PlayTimes[e.Sig].WriteTo(playtimes); err != nil {
 			return err
 		}
 	}
+	return nil
+}
 
-	for k, v := range a.Thumbs {
-		//if v.Modified {
-		t, err := os.Create(fmt.Sprintf("%s/%s_thumbs.bin", wd, strings.ToLower(k.String())))
-		if err != nil {
+func writeThumbsFile(t io.Writer, img []model.Image) error {
+	if err := binary.Write(t, binary.LittleEndian, model.ThumbnailHeader); err != nil {
+		return err
+	}
+	if err := binary.Write(t, binary.LittleEndian, model.UnknownWord); err != nil {
+		return err
+	}
+	if err := binary.Write(t, binary.LittleEndian, uint32(len(img))); err != nil {
+		return err
+	}
+	addr := firstThumbsAddr
+	for i, j := range img {
+		if err := binary.Write(t, binary.LittleEndian, j.Crc32); err != nil {
 			return err
 		}
-		defer t.Close() // For the early exits
-
-		if err := binary.Write(t, binary.LittleEndian, model.ThumbnailHeader); err != nil {
+		if err := binary.Write(t, binary.LittleEndian, addr); err != nil {
 			return err
 		}
-		if err := binary.Write(t, binary.LittleEndian, model.UnknownWord); err != nil {
+		addr = addr + uint32(len(img[i].Image))
+	}
+	// write the unused addresses out as 0s
+	if _, err := t.Write(make([]byte, int(firstThumbsAddr)-0xC-8*len(img))); err != nil {
+		return err
+	}
+	// write out the images
+	for _, j := range img {
+		if _, err := t.Write(j.Image); err != nil {
 			return err
 		}
-		if err := binary.Write(t, binary.LittleEndian, uint32(len(v.Images))); err != nil {
-			return err
-		}
-		addr := firstThumbsAddr
-		for i, j := range v.Images {
-			if err := binary.Write(t, binary.LittleEndian, j.Crc32); err != nil {
-				return err
-			}
-			if err := binary.Write(t, binary.LittleEndian, addr); err != nil {
-				return err
-			}
-			addr = addr + uint32(len(v.Images[i].Image))
-		}
-		// write the unused addresses out as 0s
-		if _, err := t.Write(make([]byte, int(firstThumbsAddr)-0xC-8*len(v.Images))); err != nil {
-			return err
-		}
-		// write out the images
-		for _, j := range v.Images {
-			if _, err := t.Write(j.Image); err != nil {
-				return err
-			}
-		}
-		t.Close()
-		//}
 	}
 
 	return nil
