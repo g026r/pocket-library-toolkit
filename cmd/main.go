@@ -47,7 +47,9 @@ func main() {
 		app.Internal = library
 	}
 
-	app.Run()
+	if err := app.Run(); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func printUsage() {
@@ -69,7 +71,6 @@ func loadPocketDir(d string) (pkg.Application, error) {
 
 	root := os.DirFS(d)
 
-	//pg := os.DirFS(fmt.Sprintf("%s/System/Played Games/", d))
 	pg, _ := fs.Sub(root, "System/Played Games")
 	entries, err := model.ReadEntries(pg)
 	if err != nil {
@@ -84,7 +85,6 @@ func loadPocketDir(d string) (pkg.Application, error) {
 		return pkg.Application{}, fmt.Errorf("entry count mismatch between list.bin [%d] & playtimes.bin [%d]", len(entries), len(playtimes))
 	}
 
-	//tb := os.DirFS(fmt.Sprintf("%s/System/Library/Images", d))
 	tb, _ := fs.Sub(root, "System/Library/Images")
 	thumbs, err := model.LoadThumbnails(tb)
 	if err != nil {

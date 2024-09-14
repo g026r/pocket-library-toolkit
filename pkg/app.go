@@ -44,7 +44,7 @@ type Config struct {
 	ShowAdd         bool
 }
 
-func (a *Application) Run() {
+func (a *Application) Run() error {
 	menu := gocliselect.NewMenu("Analogue Pocket Library Tool", false)
 
 	menu.AddItem("Library", "lib")
@@ -56,18 +56,22 @@ func (a *Application) Run() {
 		util.ClearScreen()
 		switch menu.Display() {
 		case "lib":
-			a.libraryMenu()
+			if err := a.libraryMenu(); err != nil {
+				return err
+			}
 		case "thumb":
-			a.thumbnailMenu()
+			if err := a.thumbnailMenu(); err != nil {
+				return err
+			}
 		case "config":
 			a.settingsMenu()
 		case "save":
 			if err := a.writeFiles(); err != nil {
-				log.Fatal(err)
+				return err
 			}
 			fallthrough
 		default:
-			return
+			return nil
 		}
 	}
 }
@@ -85,11 +89,17 @@ func (a *Application) libraryMenu() error {
 		util.ClearScreen()
 		switch menu.Display() {
 		case "add":
-			a.add()
+			if err := a.add(); err != nil {
+				return err
+			}
 		case "edit":
-			a.edit()
+			if err := a.edit(); err != nil {
+				return err
+			}
 		case "remove":
-			a.removeGame()
+			if err := a.removeGame(); err != nil {
+				return err
+			}
 		default:
 			return nil
 		}
@@ -100,7 +110,7 @@ func (a *Application) thumbnailMenu() error {
 	menu := gocliselect.NewMenu("Edit Thumbnails", false)
 	menu.AddItem("Regenerate Game Thumbnail", "single")
 	menu.AddItem("Regenerate User Library", "library")
-	//menu.AddItem("Remove Thumbnail", "rm") // TODO: Maybe? Maybe not? Has some
+	//menu.AddItem("Remove Thumbnail", "rm") // TODO: Maybe? Maybe not? Has some issues around mapping the thumbnail CRC to a name
 	menu.AddItem("Prune Thumbnails", "prune")
 	menu.AddItem("Generate Complete System Thumbnails", "all")
 	menu.AddItem("Back", "")
@@ -109,11 +119,15 @@ func (a *Application) thumbnailMenu() error {
 		util.ClearScreen()
 		switch menu.Display() {
 		case "single":
-			a.regenSingle()
+			if err := a.regenSingle(); err != nil {
+				return err
+			}
 		case "library":
-			a.regenerate()
-		case "rm":
-			//a.removeThumb()
+			if err := a.regenerate(); err != nil {
+				return err
+			}
+		//case "rm":
+		//	a.removeThumb()
 		case "prune":
 			a.prune()
 		case "all":
@@ -151,8 +165,8 @@ func (a *Application) settingsMenu() {
 	}
 }
 
-// x is a simple function that returns "X" is setting is true
-// Wouldn't ternary operators be great?
+// x is a simple function that returns "X" if setting is true
+// Boy, doesn't "we don't have ternary operators because their syntax is difficult to read" seem ironic given the generics syntax.
 func x(setting bool) string {
 	if setting {
 		return "X"
@@ -332,6 +346,8 @@ func (a *Application) edit() error {
 	})
 }
 
+// editEntry pops up the edit entry dialog for a given model.Entry & returns the editted result.
+// It's in here rather than in model.Entry to keep the UI code out of the model package
 func editEntry(e model.Entry, advanced bool) (model.Entry, error) {
 	clone := e // In case the user cancels
 	util.ClearScreen()
@@ -636,10 +652,6 @@ func (a *Application) writeLibrary(list, playtimes io.Writer) error {
 		return err
 	}
 
-	return a.writeEntries(list, playtimes)
-}
-
-func (a *Application) writeEntries(list, playtimes io.Writer) error {
 	// Build the address entries
 	slices.SortFunc(a.Entries, model.EntrySort)
 	addresses := make([]uint32, firstLibraryAddr/4-4)
