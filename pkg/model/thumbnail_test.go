@@ -2,7 +2,7 @@ package model
 
 import (
 	"image"
-	"io/fs"
+	"os"
 	"testing"
 
 	"github.com/disintegration/imaging"
@@ -61,24 +61,22 @@ func TestLoadThumbnails(t *testing.T) {
 	cases := map[string]struct {
 		count int
 		err   bool
-	}{"tests/count_mismatch": {
-		count: 2,
-	},
-		"tests/invalid_header": {
+	}{
+		"testdata/count_mismatch": {
+			count: 2,
+		},
+		"testdata/invalid_header": {
 			err: true,
 		},
-		"tests/valid": {
+		"testdata/valid": {
 			count: 7,
-		}}
+		},
+	}
 
 	for k, v := range cases {
 		t.Run(k, func(t *testing.T) {
 			t.Parallel()
-			fsys, err := fs.Sub(files, k)
-			if err != nil {
-				t.Fatal(err)
-			}
-			pt, err := LoadThumbnails(fsys)
+			pt, err := LoadThumbnails(os.DirFS(k))
 			if (err != nil) != v.err {
 				t.Error(err)
 			}

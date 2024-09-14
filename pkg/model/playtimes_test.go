@@ -3,7 +3,7 @@ package model
 import (
 	"bytes"
 	"encoding/binary"
-	"io/fs"
+	"os"
 	"slices"
 	"testing"
 	"time"
@@ -57,24 +57,22 @@ func TestReadPlayTimes(t *testing.T) {
 	cases := map[string]struct {
 		count int
 		err   bool
-	}{"tests/count_mismatch": {
-		count: 4,
-	},
-		"tests/invalid_header": {
+	}{
+		"testdata/count_mismatch": {
+			count: 4,
+		},
+		"testdata/invalid_header": {
 			err: true,
 		},
-		"tests/valid": {
+		"testdata/valid": {
 			count: 229,
-		}}
+		},
+	}
 
 	for k, v := range cases {
 		t.Run(k, func(t *testing.T) {
 			t.Parallel()
-			fsys, err := fs.Sub(files, k)
-			if err != nil {
-				t.Fatal(err)
-			}
-			pt, err := ReadPlayTimes(fsys)
+			pt, err := ReadPlayTimes(os.DirFS(k))
 			if (err != nil) != v.err {
 				t.Error(err)
 			} else if len(pt) != v.count {

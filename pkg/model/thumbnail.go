@@ -93,7 +93,7 @@ func LoadThumbnails(fs fs.FS) (map[util.System]Thumbnails, error) {
 				} else {
 					// This does present the problem that a file with the wrong number of entries in the count will wind up with one really weird
 					// entry. But not sure that can really be helped, since there isn't a terminator or image size field for the entries
-					end, _ := f.Seek(0, io.SeekEnd) // fs.FS is terrible & I wouldn't be using it if it wasn't easier to test this way
+					end, _ := f.Seek(0, io.SeekEnd) // since a fs.File doesn't have a Size() func, we have to do it this way.
 					t.Images[i].Image = make([]byte, end-int64(t.Images[i].address))
 					_, _ = f.Seek(int64(t.Images[i].address), io.SeekStart)
 				}
