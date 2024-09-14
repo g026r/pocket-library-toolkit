@@ -1,6 +1,6 @@
 module github.com/g026r/pocket-library-editor
 
-go 1.23
+go 1.23.1
 
 require (
 	github.com/buger/goterm v1.0.4
