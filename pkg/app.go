@@ -102,8 +102,9 @@ func (a *Application) libraryMenu() error {
 
 func (a *Application) thumbnailMenu() error {
 	menu := gocliselect.NewMenu("Edit Thumbnails", false)
+	menu.AddItem("Generate Missing Thumbnails", "missing")
 	menu.AddItem("Regenerate Game Thumbnail", "single")
-	menu.AddItem("Regenerate User Library", "library")
+	menu.AddItem("Regenerate Complete Library", "library")
 	//menu.AddItem("Remove Thumbnail", "rm") // TODO: Maybe? Maybe not? Has some issues around mapping the thumbnail CRC to a name
 	menu.AddItem("Prune Thumbnails", "prune")
 	menu.AddItem("Generate Complete System Thumbnails", "all")
@@ -112,6 +113,10 @@ func (a *Application) thumbnailMenu() error {
 	for {
 		util.ClearScreen()
 		switch menu.Display() {
+		case "missing":
+			if err := a.regenMissing(); err != nil {
+				return err
+			}
 		case "single":
 			if err := a.regenSingle(); err != nil {
 				return err
@@ -177,7 +182,8 @@ func x(setting bool) string {
 }
 
 func (a *Application) pagedEntries(title string, f func(i int) error) error {
-	clone := slices.Clone(a.Entries) // For cancel
+	entriesClone := slices.Clone(a.Entries) // For cancel
+	thumbsClone := maps.Clone(a.Thumbs)
 	var start, pos int
 	var x string
 	for {
@@ -201,7 +207,9 @@ func (a *Application) pagedEntries(title string, f func(i int) error) error {
 		case "done":
 			return nil
 		case "":
-			a.Entries = clone // Restore the entries to the original copy
+			// Restore the original
+			a.Entries = entriesClone
+			a.Thumbs = thumbsClone
 			return nil
 		default:
 			i, err := strconv.Atoi(x)
@@ -209,7 +217,9 @@ func (a *Application) pagedEntries(title string, f func(i int) error) error {
 				return err
 			}
 			if err := f(i); err != nil {
-				a.Entries = clone // Restore the original
+				// Restore the original
+				a.Entries = entriesClone
+				a.Thumbs = thumbsClone
 				return err
 			}
 		}
@@ -456,21 +466,53 @@ func (a *Application) regenSingle() error {
 			return err
 		}
 
+		t := a.Thumbs[sys]
 		// Thumbnails aren't stored in the same order as entries
 		found := false
-		for j, old := range a.Thumbs[sys].Images {
+		for j, old := range t.Images {
 			if old.Crc32 == img.Crc32 {
-				a.Thumbs[sys].Images[j] = img
+				t.Images[j] = img
 				found = true
 				break
 			}
 		}
 		if !found { // Shouldn't happen. But append if it does
-			t := a.Thumbs[sys]
 			t.Images = append(t.Images, img)
 		}
+		t.Modified = true
+		a.Thumbs[sys] = t
+
 		return nil
 	})
+}
+
+func (a *Application) regenMissing() error {
+	clone := maps.Clone(a.Thumbs)
+
+	util.ClearScreen()
+	fmt.Println(goterm.Bold("Regenerating thumbnails. This may take a while..."))
+
+	for _, e := range a.Entries {
+		sys := e.System.ThumbFile()
+
+		if slices.ContainsFunc(a.Thumbs[sys].Images, func(image model.Image) bool {
+			return image.Crc32 == e.Crc32
+		}) {
+			continue // Already exists. Just continue
+		}
+
+		img, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
+		if err != nil {
+			a.Thumbs = clone
+			return err
+		}
+		i := a.Thumbs[sys]
+		i.Images = append(i.Images, img)
+		i.Modified = true
+		a.Thumbs[sys] = i
+	}
+
+	return nil
 }
 
 func (a *Application) regenerate() error {
@@ -574,6 +616,23 @@ func (a *Application) generateAll() error {
 	}
 	return nil
 }
+
+// TODO: How to deal with this
+//func (a *Application) removeThumb() error {
+//	clone := maps.Clone(a.Thumbs)
+//
+//	sys := gocliselect.NewMenu("System:", false)
+//	sys.AddItem("Game Boy / Game Boy Color", "GB")
+//	sys.AddItem("Game Boy Advance", "GBA")
+//	sys.AddItem("Game Gear / Sega Master System", "GG")
+//	sys.AddItem("Neo Geo Pocket / Neo Geo Pocket Color", "NGP")
+//	sys.AddItem("TurboGrafx 16", "PCE")
+//	sys.AddItem("Atari Lynx", "Lynx")
+//	system := sys.Display()
+//	if system == "" { // ESC or Ctrl-C pressed
+//		return nil
+//	}
+//}
 
 // prune removes entries from the thumbnails files that are no longer associated with any library entry
 // If you have a very large library or very large thumbnail files, this may take a while.
