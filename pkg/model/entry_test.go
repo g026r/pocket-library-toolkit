@@ -9,14 +9,6 @@ import (
 	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
-// Tests are as follows:
-// count_mismatch: contains 229 entries but the count value in the file is 4
-// invalid_header: header magic number is invalid; should not parse
-// valid: contains 229 entries, all valid
-//
-////go:embed testdata
-//var files embed.FS
-
 // rawEntry is the binary representation of entry, as copied from a valid list.bin
 var rawEntry = []byte{0x1C, 0x00, 0x00, 0x07, 0x6D, 0x8D, 0xE0, 0xFD, 0x3E, 0x1A, 0xCD, 0x79, 0x94, 0x1B, 0x00, 0x00, 0x31, 0x39, 0x34, 0x33, 0x20, 0x4B, 0x61, 0x69, 0x00, 0x45, 0x00, 0xA0}
 
