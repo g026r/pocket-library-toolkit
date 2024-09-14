@@ -3,16 +3,56 @@ package util
 import (
 	"encoding/binary"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"io/fs"
+	"os"
 	"strings"
 
 	"github.com/inancgumus/screen"
 )
 
 var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
+
+type Config struct {
+	RemoveImages    bool `json:"remove_images"`
+	AdvancedEditing bool `json:"advanced_editing"`
+	ShowAdd         bool `json:"show_add"`
+}
+
+func LoadConfig() (Config, error) {
+	c := Config{}
+	// FIXME: Use the program's dir rather than the cwd
+	// dir := filepath.Dir(os.Args[0])
+	dir, err := os.Getwd()
+	if err != nil {
+		return c, err
+	}
+
+	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-editor.json", dir))
+	if err != nil {
+		return c, err
+	}
+	err = json.Unmarshal(b, &c)
+	return c, err
+}
+
+func (c Config) SaveConfig() error {
+	b, err := json.Marshal(c)
+	if err != nil {
+		return err
+	}
+	// FIXME: Use the program's dir rather than the cwd
+	//dir := filepath.Dir(os.Args[0])
+	dir, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(fmt.Sprintf("%s/pocket-editor.json", dir), b, 0644)
+}
 
 // ClearScreen clears the screen & moves the cursor back to the top left
 // Used as I had some issues with gocliselect's clearing & repositioning

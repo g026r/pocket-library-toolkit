@@ -39,6 +39,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if c, err := util.LoadConfig(); err == nil {
+		app.Config = c
+	}
+
 	if app.ShowAdd { // Only need to load these for the add UI
 		library, err := loadInternal()
 		if err != nil {
@@ -102,7 +106,7 @@ func loadPocketDir(d string) (pkg.Application, error) {
 		Entries:   entries,
 		PlayTimes: playtimes,
 		Thumbs:    thumbs,
-		Config: pkg.Config{
+		Config: util.Config{
 			RemoveImages:    true,
 			AdvancedEditing: false,
 			ShowAdd:         true,

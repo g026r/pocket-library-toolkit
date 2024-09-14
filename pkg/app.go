@@ -34,14 +34,8 @@ type Application struct {
 	Entries   []model.Entry
 	PlayTimes map[uint32]model.PlayTime
 	Thumbs    map[util.System]model.Thumbnails
-	Config
+	util.Config
 	Internal map[util.System][]model.Entry // Internal is a map of all known possible entries, grouped by system
-}
-
-type Config struct {
-	RemoveImages    bool
-	AdvancedEditing bool
-	ShowAdd         bool
 }
 
 func (a *Application) Run() error {
@@ -139,6 +133,7 @@ func (a *Application) thumbnailMenu() error {
 }
 
 func (a *Application) settingsMenu() {
+	old := a.Config
 	s := gocliselect.NewMenu("Library Editor Options", false)
 	s.AddItem(fmt.Sprintf("[%s] Remove thumbnail when removing game", x(a.RemoveImages)), "rm")
 	s.AddItem(fmt.Sprintf("[%s] Show advanced library editing fields (Experimental)", x(a.AdvancedEditing)), "adv")
@@ -155,6 +150,13 @@ func (a *Application) settingsMenu() {
 		case "add":
 			a.ShowAdd = !a.ShowAdd
 		default:
+			if old.ShowAdd != a.ShowAdd ||
+				old.AdvancedEditing != a.AdvancedEditing ||
+				old.RemoveImages != a.RemoveImages {
+				if err := a.Config.SaveConfig(); err != nil {
+					// TODO: Something if it fails to save? It's not fatal though.
+				}
+			}
 			return
 		}
 
