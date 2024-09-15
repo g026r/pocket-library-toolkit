@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
 	"slices"
@@ -25,7 +24,7 @@ func main() {
 	switch len(os.Args) {
 	case 1:
 		if arg, err = os.Executable(); err != nil { // TODO: Would it be better to use cwd instead?
-			log.Fatal(err)
+			fatal(err)
 		}
 	case 2:
 		arg = os.Args[1]
@@ -36,24 +35,29 @@ func main() {
 
 	app, err := loadPocketDir(arg)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
-	if c, err := util.LoadConfig(); err == nil {
+	if c, err := model.LoadConfig(); err == nil {
 		app.Config = c
 	}
 
 	if app.ShowAdd { // Only need to load these for the add UI
 		library, err := loadInternal()
 		if err != nil {
-			log.Fatal(err)
+			fatal(err)
 		}
 		app.Internal = library
 	}
 
 	if err := app.Run(); err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
+}
+
+func fatal(err error) {
+	fmt.Printf("\nFATAL ERROR: %v\n", err)
+	os.Exit(1)
 }
 
 func printUsage() {
@@ -106,7 +110,7 @@ func loadPocketDir(d string) (pkg.Application, error) {
 		Entries:   entries,
 		PlayTimes: playtimes,
 		Thumbs:    thumbs,
-		Config: util.Config{
+		Config: model.Config{
 			RemoveImages:    true,
 			AdvancedEditing: false,
 			ShowAdd:         true,

@@ -58,3 +58,16 @@ func TestApplication_prune(t *testing.T) {
 		}
 	}
 }
+
+func TestApplication_fixPlayTimes(t *testing.T) {
+	sut := Application{PlayTimes: map[uint32]model.PlayTime{
+		0x0: {Played: 0x0000ABCD}, 0x1: {Played: 0x0100ABCD}, 0x40: {Played: 0x0400ABCD}, 0xF: {Played: 0xFF00ABCD},
+	}}
+
+	sut.fixPlayTimes()
+	for k, v := range sut.PlayTimes {
+		if v.Played != 0x0000ABCD {
+			t.Errorf("0x%02x Expected 0x0000ABCD; got 0x%08x", k, v.Played)
+		}
+	}
+}

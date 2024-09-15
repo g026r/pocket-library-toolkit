@@ -11,12 +11,14 @@ import (
 	"log"
 	"maps"
 	"os"
+	"regexp"
 	"slices"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/buger/goterm"
+	"github.com/inancgumus/screen"
 	"github.com/pkg/term"
 
 	"github.com/g026r/pocket-library-editor/pkg/model"
@@ -29,12 +31,14 @@ const (
 	firstThumbsAddr  uint32 = 0x1000C
 )
 
+var ptReg = regexp.MustCompile("^(\\d+[Hh])?\\s*(\\d+[Mm])?\\s*(\\d+[Ss])?$")
+
 type Application struct {
 	RootDir   fs.FS
 	Entries   []model.Entry
 	PlayTimes map[uint32]model.PlayTime
 	Thumbs    map[util.System]model.Thumbnails
-	util.Config
+	model.Config
 	Internal map[util.System][]model.Entry // Internal is a map of all known possible entries, grouped by system
 }
 
@@ -47,7 +51,7 @@ func (a *Application) Run() error {
 	menu.AddItem("Save & Quit", "save")
 	menu.AddItem("Quit without Saving", "")
 	for {
-		util.ClearScreen()
+		ClearScreen()
 		switch menu.Display() {
 		case "lib":
 			if err := a.libraryMenu(); err != nil {
@@ -77,10 +81,11 @@ func (a *Application) libraryMenu() error {
 	}
 	menu.AddItem("Edit Entry", "edit")
 	menu.AddItem("Remove Entry", "remove")
+	menu.AddItem("Fix Played Times", "played")
 	menu.AddItem("Back", "")
 
 	for {
-		util.ClearScreen()
+		ClearScreen()
 		switch menu.Display() {
 		case "add":
 			if err := a.add(); err != nil {
@@ -94,6 +99,8 @@ func (a *Application) libraryMenu() error {
 			if err := a.removeGame(); err != nil {
 				return err
 			}
+		case "played":
+			a.fixPlayTimes()
 		default:
 			return nil
 		}
@@ -111,7 +118,7 @@ func (a *Application) thumbnailMenu() error {
 	menu.AddItem("Back", "")
 
 	for {
-		util.ClearScreen()
+		ClearScreen()
 		switch menu.Display() {
 		case "missing":
 			if err := a.regenMissing(); err != nil {
@@ -146,7 +153,7 @@ func (a *Application) settingsMenu() {
 	s.AddItem("Back", "")
 
 	for {
-		util.ClearScreen()
+		ClearScreen()
 		switch s.Display() {
 		case "rm":
 			a.RemoveImages = !a.RemoveImages
@@ -228,7 +235,7 @@ func (a *Application) pagedEntries(title string, f func(i int) error) error {
 
 // displayEntries is a simple function that uses gocliselect to fake multipage menus
 func (a *Application) displayEntries(title string, pos, start, end int) (string, int) {
-	util.ClearScreen()
+	ClearScreen()
 
 	menu := gocliselect.NewMenu(fmt.Sprintf("%s Entry [%d-%d]", title, start+1, end), true)
 
@@ -253,7 +260,7 @@ func (a *Application) displayEntries(title string, pos, start, end int) (string,
 }
 
 func (a *Application) add() error {
-	util.ClearScreen()
+	ClearScreen()
 	entry := model.Entry{}
 
 	// Start with the system menu since this will otherwise clear the screen
@@ -277,7 +284,7 @@ func (a *Application) add() error {
 		entry.System = s
 	}
 
-	util.ClearScreen()
+	ClearScreen()
 	fmt.Printf("%s\n", goterm.Color(goterm.Bold(
 		fmt.Sprintf("New Entry (%s)", entry.System.String()),
 	)+":", goterm.CYAN))
@@ -329,11 +336,20 @@ func (a *Application) add() error {
 
 func (a *Application) edit() error {
 	return a.pagedEntries("Edit", func(i int) error {
+		p := a.PlayTimes[a.Entries[i].Sig] // Need to get the playtime now in case the signature changes during editing
+
 		e, err := editEntry(a.Entries[i], a.AdvancedEditing)
 		if err != nil {
 			return err
 		}
+
+		p, err = editPlaytime(p)
+		if err != nil {
+			return err
+		}
+
 		a.Entries[i] = e
+		a.PlayTimes[e.Sig] = p
 		slices.SortFunc(a.Entries, model.EntrySort)
 
 		sys := e.System.ThumbFile()
@@ -362,7 +378,7 @@ func (a *Application) edit() error {
 // It's in here rather than in model.Entry to keep the UI code out of the model package
 func editEntry(e model.Entry, advanced bool) (model.Entry, error) {
 	clone := e // In case the user cancels
-	util.ClearScreen()
+	ClearScreen()
 
 	fmt.Printf("%s\n", goterm.Color(goterm.Bold("Edit Entry")+":", goterm.CYAN))
 	fmt.Printf("%s\n", goterm.Color("(Return to accept defaults)", goterm.CYAN))
@@ -433,6 +449,48 @@ func editEntry(e model.Entry, advanced bool) (model.Entry, error) {
 	return e, nil
 }
 
+func editPlaytime(pt model.PlayTime) (model.PlayTime, error) {
+	added := time.Unix(int64(pt.Added), 0)
+
+	in := bufio.NewScanner(os.Stdin)
+	fmt.Printf("\rAdded Date (%v): ", added.UTC().Format("2006/01/02 15:04:05"))
+	in.Scan()
+	if s := in.Text(); s != "" {
+		t, err := time.Parse("2006/01/02 15:04:05", s)
+		if err != nil {
+			return pt, err
+		}
+		pt.Added = uint32(t.Unix())
+	}
+
+	hour := pt.Played / (60 * 60)
+	minute := (pt.Played - hour*60*60) / 60
+	sec := pt.Played - hour*60*60 - minute*60
+	fmt.Printf("\rPlay Time (%dh %dm %ds): ", hour, minute, sec)
+	in.Scan()
+	if s := in.Text(); s != "" {
+		parts := ptReg.FindStringSubmatch(s)
+		if len(parts) == 0 {
+			return pt, fmt.Errorf("invalid playtime %s", s)
+		}
+		var newPlay uint32
+		for _, play := range parts[1:] {
+			t, _ := strconv.Atoi(play[:len(play)-1]) // Can ignore the error here as the regex took care of that
+			switch play[len(play)-1:] {
+			case "h", "H":
+				newPlay = newPlay + uint32(t)*60*60
+			case "m", "M":
+				newPlay = newPlay + uint32(t)*60
+			case "s", "S":
+				newPlay = newPlay + uint32(t)
+			}
+		}
+		pt.Played = newPlay
+	}
+
+	return pt, nil
+}
+
 func (a *Application) removeGame() error {
 	return a.pagedEntries("Delete", func(i int) error {
 		rm := a.Entries[i]
@@ -457,13 +515,41 @@ func (a *Application) removeGame() error {
 	})
 }
 
+// fixPlayTimes zeroes out the two most significant bytes. They sometimes get garbage in them & since the Pocket sometimes
+// ignores them and sometimes doesn't, this can result in played times in the thousands of hours.
+// 0x01000000 equals more than 4660 hours, so it seemed a safe bet to zero those two.
+func (a *Application) fixPlayTimes() {
+	ClearScreen()
+	defer AnyKey()
+
+	fmt.Print("Fixing played times")
+	ctr := 0
+	for k, v := range a.PlayTimes {
+		fmt.Print(".")
+		p := v.Played &^ 0xFF000000
+		if p != v.Played {
+			ctr++
+		}
+		v.Played = p
+		a.PlayTimes[k] = v
+	}
+	fmt.Println(" done")
+	fmt.Printf("Fixed %d played times\n", ctr)
+}
+
 func (a *Application) regenSingle() error {
 	return a.pagedEntries("Regenerate Thumbnail", func(i int) error {
+		ClearScreen()
+		defer AnyKey()
+
 		e := a.Entries[i]
+		fmt.Printf("Regenerating thumbnail for %s...", a.Entries[i].Name)
+
 		sys := e.System.ThumbFile()
 		img, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
 		if errors.Is(err, os.ErrNotExist) {
-			return nil // TODO: Log?
+			fmt.Printf("\n%s\n", fmt.Sprintf(goterm.Color("Error: %s/%08x.bin does not exist", goterm.YELLOW), strings.ToLower(sys.String()), e.Crc32))
+			return nil
 		} else if err != nil {
 			return err
 		}
@@ -484,6 +570,7 @@ func (a *Application) regenSingle() error {
 		t.Modified = true
 		a.Thumbs[sys] = t
 
+		fmt.Println(" done")
 		return nil
 	})
 }
@@ -491,7 +578,7 @@ func (a *Application) regenSingle() error {
 func (a *Application) regenMissing() error {
 	clone := maps.Clone(a.Thumbs)
 
-	util.ClearScreen()
+	ClearScreen()
 	fmt.Println(goterm.Bold("Regenerating thumbnails. This may take a while..."))
 
 	for _, e := range a.Entries {
@@ -522,7 +609,7 @@ func (a *Application) regenMissing() error {
 func (a *Application) regenerate() error {
 	clone := maps.Clone(a.Thumbs)
 
-	util.ClearScreen()
+	ClearScreen()
 	fmt.Println(goterm.Bold("Regenerating thumbnails. This may take a while..."))
 
 	clear(a.Thumbs)
@@ -547,17 +634,18 @@ func (a *Application) regenerate() error {
 }
 
 func (a *Application) generateAll() error {
-	util.ClearScreen()
+	ClearScreen()
+	defer AnyKey()
 
-	fmt.Println(goterm.Bold("WARNING"))
+	fmt.Println(goterm.Bold("ATTENTION"))
 	fmt.Println("This option will generate full _thumbs.bin files for all images known to the Pocket.")
-	fmt.Print("Doing this may affect library performance. Are you sure you wish to proceed? (y/N) ")
+	fmt.Print("Doing this may affect library performance on your device. Are you sure you wish to proceed? (y/N) ")
 
 	t, _ := term.Open("/dev/tty")
 
 	err := term.RawMode(t)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	readBytes := make([]byte, 3)
@@ -573,7 +661,7 @@ func (a *Application) generateAll() error {
 		return nil // Anything other than y cancels
 	}
 
-	fmt.Println("\n\nThis is going to take a while. Maybe grab a coffee or something?")
+	fmt.Println("\n\nDepending on your disk, this might take a while. Maybe grab a coffee or something?")
 
 	fmt.Printf("\033[?25l")       // Turn the cursor off
 	defer fmt.Printf("\033[?25h") // Show it again
@@ -583,7 +671,7 @@ func (a *Application) generateAll() error {
 		fmt.Printf("Parsing %s", sys.String())
 		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", a.RootDir, strings.ToLower(sys.String())))
 		if errors.Is(err, os.ErrNotExist) {
-			// Not found. Just continue
+			// Directory doesn't exist. Just continue
 			continue
 		} else if err != nil {
 			return err
@@ -612,7 +700,7 @@ func (a *Application) generateAll() error {
 			i, err := model.GenerateThumbnail(a.RootDir, sys, binary.BigEndian.Uint32(b))
 			if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
 				a.Thumbs = clone
-				log.Fatal(err)
+				return err
 			}
 
 			thumbs.Images = append(thumbs.Images, i)
@@ -643,6 +731,10 @@ func (a *Application) generateAll() error {
 // prune removes entries from the thumbnails files that are no longer associated with any library entry
 // If you have a very large library or very large thumbnail files, this may take a while.
 func (a *Application) prune() {
+	ClearScreen()
+	defer AnyKey()
+
+	fmt.Printf("Removing orphaned thumbs.bin entries...")
 	for k, v := range a.Thumbs {
 		t := a.Thumbs[k]
 		t.Images = slices.DeleteFunc(v.Images, func(image model.Image) bool {
@@ -654,7 +746,9 @@ func (a *Application) prune() {
 			t.Modified = true
 		}
 		a.Thumbs[k] = t
+		fmt.Printf(".")
 	}
+	fmt.Println(" done")
 }
 
 func (a *Application) writeFiles() error {
@@ -675,12 +769,14 @@ func (a *Application) writeFiles() error {
 	defer p.Close()
 
 	// Prep list.bin
+	fmt.Printf("Saving list.bin & playtimes.bin\n")
 	if err := a.writeLibrary(l, p); err != nil {
 		return err
 	}
 
 	for k, v := range a.Thumbs {
 		if v.Modified {
+			fmt.Printf("Saving %s_thumbs.bin\n", strings.ToLower(k.String()))
 			t, err := os.Create(fmt.Sprintf("%s/%s_thumbs.bin", wd, strings.ToLower(k.String())))
 			if err != nil {
 				return err
@@ -691,9 +787,12 @@ func (a *Application) writeFiles() error {
 			if err != nil {
 				return err
 			}
+		} else {
+			fmt.Printf("%s_thumbs.bin not modified. Skipping.", strings.ToLower(k.String()))
 		}
 	}
 
+	fmt.Println("Saving complete.")
 	return nil
 }
 
@@ -782,4 +881,28 @@ func writeThumbsFile(t io.Writer, img []model.Image) error {
 	}
 
 	return nil
+}
+
+// ClearScreen clears the screen & moves the cursor back to the top left
+// Used as I had some issues with gocliselect's clearing & repositioning
+func ClearScreen() {
+	screen.Clear()
+	screen.MoveTopLeft()
+}
+
+func AnyKey() {
+	fmt.Println("Press any key to continue")
+	t, _ := term.Open("/dev/tty")
+
+	if err := term.RawMode(t); err != nil {
+		log.Fatal(err)
+	}
+
+	readBytes := make([]byte, 3)
+	if _, err := t.Read(readBytes); err != nil {
+		log.Fatal(err)
+	}
+
+	_ = t.Restore()
+	_ = t.Close()
 }
