@@ -1,6 +1,48 @@
 [
   {
     "system": 0,
+    "name": "Exodus: Journey to the Promised Land",
+    "crc": "0x2e5497ef",
+    "signature": "0x66adc3af",
+    "magic": "0x00F1"
+  },
+  {
+    "system": 0,
+    "name": "GB Genjin",
+    "crc": "0x690227f6",
+    "signature": "0xf0e6a0ab",
+    "magic": "0x0307"
+  },
+  {
+    "system": 0,
+    "name": "Genki Bakuhatsu Gambaruger",
+    "crc": "0x6226d280",
+    "signature": "0xe3ec02fa",
+    "magic": "0x0311"
+  },
+  {
+    "system": 0,
+    "name": "Mani 4 in 1 - Irem",
+    "crc": "0xcb48b6d0",
+    "signature": "0xc4bdb30c",
+    "magic": "0x03EA"
+  },
+  {
+    "system": 0,
+    "name": "Mani 4 in 1 - Taito",
+    "crc": "0x5BFC3EF5",
+    "signature": "0x4B80FE56",
+    "magic": "0x03E8"
+  },
+  {
+    "system": 0,
+    "name": "Momotarou Collection 2",
+    "crc": "0x562c8f7f",
+    "signature": "0x4e27d264",
+    "magic": "0x0420"
+  },
+  {
+    "system": 0,
     "name": "Super R.C. Pro-Am",
     "crc": "0x7960F33F",
     "signature": "0x4C453436",
@@ -334,13 +376,6 @@
     "crc": "0x8B44FB7D",
     "signature": "0xB64C97F0",
     "magic": "0x03AA"
-  },
-  {
-    "system": 0,
-    "name": "Mani 4 in 1 - Taito",
-    "crc": "0x5BFC3EF5",
-    "signature": "0x4B80FE56",
-    "magic": "0x03E8"
   },
   {
     "system": 0,

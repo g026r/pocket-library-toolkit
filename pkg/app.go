@@ -462,7 +462,9 @@ func (a *Application) regenSingle() error {
 		e := a.Entries[i]
 		sys := e.System.ThumbFile()
 		img, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
-		if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil // TODO: Log?
+		} else if err != nil {
 			return err
 		}
 
@@ -502,7 +504,9 @@ func (a *Application) regenMissing() error {
 		}
 
 		img, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
-		if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			continue // Doesn't exist is fine; just continue TODO: log?
+		} else if err != nil {
 			a.Thumbs = clone
 			return err
 		}
@@ -526,7 +530,9 @@ func (a *Application) regenerate() error {
 		sys := e.System.ThumbFile()
 
 		i, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
-		if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			continue // TODO: log?
+		} else if err != nil {
 			a.Thumbs = clone
 			return err
 		}
@@ -575,7 +581,7 @@ func (a *Application) generateAll() error {
 	clone := maps.Clone(a.Thumbs) // If something goes wrong, restore this
 	for _, sys := range util.ValidThumbsFiles {
 		fmt.Printf("Parsing %s", sys.String())
-		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", a.RootDir, sys.String()))
+		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", a.RootDir, strings.ToLower(sys.String())))
 		if errors.Is(err, os.ErrNotExist) {
 			// Not found. Just continue
 			continue
@@ -604,7 +610,7 @@ func (a *Application) generateAll() error {
 				continue
 			}
 			i, err := model.GenerateThumbnail(a.RootDir, sys, binary.BigEndian.Uint32(b))
-			if err != nil {
+			if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
 				a.Thumbs = clone
 				log.Fatal(err)
 			}

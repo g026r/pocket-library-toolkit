@@ -1,6 +1,34 @@
 [
   {
     "system": 1,
+    "name": "31 in 1",
+    "crc": "0x0EB8DDFB",
+    "signature": "0xACAAD162",
+    "magic": "0x0660"
+  },
+  {
+    "system": 1,
+    "name": "ATV Racing & Karate Joe",
+    "crc": "0x6908F4AF",
+    "signature": "0x79ADD746",
+    "magic": "0x0694"
+  },
+  {
+    "system": 1,
+    "name": "Action Replay Online",
+    "crc": "0x04C8C858",
+    "signature": "0x4C08F8E7",
+    "magic": "0x0669"
+  },
+  {
+    "system": 1,
+    "name":   "Rocman X Gold + 4 in 1",
+    "crc": "0x7e1351cf",
+    "signature": "0x4C08F8E7",
+    "magic": "0x0669"
+  },
+  {
+    "system": 1,
     "name": "Bakukyuu Renpatsu!! Super B-Daman: Gekitan! Rising Valkyrie!!",
     "crc": "0x5C95D5A2",
     "signature": "0x64B34B61",
@@ -131,5 +159,12 @@
     "crc": "0x480D0259",
     "signature": "0xBF38CA32",
     "magic": "0x0BA1"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon: Gold Version (USA, Europe)",
+    "crc": "0x6BDE3C3E",
+    "signature": "0x87CC1AD8",
+    "magic": "0x09FB"
   }
 ]

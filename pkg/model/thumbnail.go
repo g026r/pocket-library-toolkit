@@ -113,7 +113,7 @@ func LoadThumbnails(fs fs.FS) (map[util.System]Thumbnails, error) {
 func GenerateThumbnail(dir fs.FS, sys util.System, crc32 uint32) (Image, error) {
 	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
 
-	f, err := dir.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", sys.String(), crc32))
+	f, err := dir.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", strings.ToLower(sys.String()), crc32))
 	if err != nil {
 		return Image{}, err
 	}

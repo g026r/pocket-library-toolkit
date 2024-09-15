@@ -50,7 +50,7 @@ func TestParse(t *testing.T) {
 		System
 		err bool
 	}{
-		{strings.ToLower(GB.String()), GB, false},
+		{strings.ToLower(GB.String()), GB, false}, // lowercase
 		{"   ", 0, true},     // blank string
 		{"unknown", 0, true}, // invalid string
 	}
