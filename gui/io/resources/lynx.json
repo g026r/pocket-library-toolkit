@@ -2,36 +2,36 @@
   {
     "system": 8,
     "name": "Chip's Challenge",
-    "crc": "0xF45F784A",
-    "signature": "0x7876E6EC",
-    "magic": "0x1D34"
+    "crc": "0xf45f784a",
+    "signature": "0x7876e6ec",
+    "magic": "0x1d34"
   },
   {
     "system": 8,
     "name": "Crystal Mines II",
-    "crc": "0x0535E6C9",
-    "signature": "0xD9B3509C",
-    "magic": "0x1D36"
+    "crc": "0x0535e6c9",
+    "signature": "0xd9b3509c",
+    "magic": "0x1d36"
   },
   {
     "system": 8,
     "name": "Dracula the Undead",
-    "crc": "0x0F4B4071",
-    "signature": "0x27D7EF77",
-    "magic": "0x1D3C"
+    "crc": "0x0f4b4071",
+    "signature": "0x27d7ef77",
+    "magic": "0x1d3c"
   },
   {
     "system": 8,
     "name": "Gates of Zendocon",
-    "crc": "0xD852DBA7",
-    "signature": "0x36A5818E",
-    "magic": "0x1D42"
+    "crc": "0xd852dba7",
+    "signature": "0x36a5818e",
+    "magic": "0x1d42"
   },
   {
     "system": 8,
     "name": "S.T.U.N. Runner",
-    "crc": "0x4B3BF84F",
-    "signature": "0xEF95C9BC",
-    "Magic": "0x1D66"
+    "crc": "0x4b3bf84f",
+    "signature": "0xef95c9bc",
+    "magic": "0x1d66"
   }
 ]

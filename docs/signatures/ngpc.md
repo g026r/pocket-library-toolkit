@@ -2,38 +2,43 @@
 
 ## Fantastic Night Dreams Cotton (Japan):
 
-- CRC32: `0xB8A12409`
-- Signature: `0x74E36925`
-- Magic Number: `0x1B40`
+- CRC32: `0xb8a12409`
+- Signature: `0x74e36925`
+- Magic Number: `0x1b40`
 
 ## Metal Slug: 1st Mission
 
-- CRC32: `0x4FF91807`
-- Signature: `0x1725730D`
-- Magic Number: `0x1B4E`
+- CRC32: `0x4ff91807`
+- Signature: `0x1725730d`
+- Magic Number: `0x1b4e`
 
 ## Metal Slug: 2nd Mission
 
-- CRC32: `0xAC549144`
-- Signature: `0xA9806EFE`
-- Magic Number: `0x1B4F`
+- CRC32: `0xac549144`
+- Signature: `0xa9806efe`
+- Magic Number: `0x1b4f`
 
-## Neo Turf Masters / Big Tournament Golf
-- CRC32: `0x317A66D2`
-- Signature: `0x437A70DF`
-- Magic Number: `0x1B5B` 
+## Neo Turf Masters
+
+- CRC32: `0x317a66d2`
+- Signature: `0x437a70df`
+- Magic Number: `0x1b5b`
 
 ## Picture Puzzle
-- CRC32: `0x67E6DC56`
-- Signature: `0x925C9D1D`
-- Magic Number: `0x1B6A`
 
-##  Sonic the Hedgehog: Pocket Adventure
-- CRC32: `0x356F0849`
-- Signature: `0x56C79BB1`
-- Magic Number: `0x1B82`
+- CRC32: `0x67e6dc56`
+- Signature: `0x925c9d1d`
+- Magic Number: `0x1b6a`
+
+## Sonic the Hedgehog: Pocket Adventure
+
+- CRC32: `0x356f0849`
+- Signature: `0x56c79bb1`
+- Magic Number: `0x1b82`
 
 ## Dark Arms: Beast Buster 1999
-- CRC32: `0x6F353F34`
-- Signature: `0x05D460F5`
-- Magic Number: `0x1B90` 
+
+- CRC32: `0x6f353f34`
+- Signature: `0x05d460f5`
+- Magic Number: `0x1b90`
+

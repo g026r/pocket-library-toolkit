@@ -447,14 +447,9 @@ func SaveConfig(config Config) error {
 // SaveInternal saves one system's entries to a json file
 // If it finds that it has more than one system, it throws an error.
 func SaveInternal(i io.Writer, entries []model.Entry) error {
-	if len(entries) == 0 {
-		return nil
-	}
-	sys := entries[0].System
-
 	j := make([]jsonEntry, 0)
-	for _, e := range entries {
-		if e.System != sys {
+	for i, e := range entries {
+		if i != 0 && entries[i].System != entries[i-1].System {
 			return fmt.Errorf("multiple systems found")
 		}
 		j = append(j,
@@ -467,7 +462,7 @@ func SaveInternal(i io.Writer, entries []model.Entry) error {
 			})
 	}
 
-	b, err := json.Marshal(j)
+	b, err := json.MarshalIndent(j, "", "  ")
 	if err != nil {
 		return err
 	}

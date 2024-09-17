@@ -2,386 +2,386 @@
   {
     "system": 7,
     "name": "1943 Kai",
-    "crc": "0xFDE08D6D",
-    "signature": "0x79CD1A3E",
-    "magic": "0x1B94"
+    "crc": "0xfde08d6d",
+    "signature": "0x79cd1a3e",
+    "magic": "0x1b94"
   },
   {
     "system": 7,
     "name": "Aero Blasters",
-    "crc": "0x25BE2B81",
-    "signature": "0xBC8F9AF1",
-    "magic": "0x1B97"
+    "crc": "0x25be2b81",
+    "signature": "0xbc8f9af1",
+    "magic": "0x1b97"
   },
   {
     "system": 7,
     "name": "Alien Crush",
-    "crc": "0x60EDF4E1",
-    "signature": "0x7BEC04A0",
-    "magic": "0x1B9C"
+    "crc": "0x60edf4e1",
+    "signature": "0x7bec04a0",
+    "magic": "0x1b9c"
   },
   {
     "system": 7,
     "name": "Atomic Robo-Kid Special",
-    "crc": "0xDD175EFD",
-    "signature": "0x2FEC6B12",
-    "magic": "0x1BA5"
+    "crc": "0xdd175efd",
+    "signature": "0x2fec6b12",
+    "magic": "0x1ba5"
   },
   {
     "system": 7,
     "name": "Bomberman",
-    "crc": "0x9ABB4D1F",
-    "signature": "0xFA0C25CF",
-    "magic": "0x1BB6"
+    "crc": "0x9abb4d1f",
+    "signature": "0xfa0c25cf",
+    "magic": "0x1bb6"
   },
   {
     "system": 7,
     "name": "Bomberman '93",
-    "crc": "0xB300C5D0",
-    "signature": "0x0F71E64C",
-    "magic": "0x1BB9"
+    "crc": "0xb300c5d0",
+    "signature": "0x0f71e64c",
+    "magic": "0x1bb9"
   },
   {
     "system": 7,
     "name": "Bomberman '94",
     "crc": "0x05362516",
-    "signature": "0x4197086F",
-    "magic": "0x1BBC"
+    "signature": "0x4197086f",
+    "magic": "0x1bbc"
   },
   {
     "system": 7,
     "name": "Bonk's Adventure",
-    "crc": "0x599EAD9B",
-    "signature": "0x6AA69A8B",
-    "magic": "0x1BBE"
+    "crc": "0x599ead9b",
+    "signature": "0x6aa69a8b",
+    "magic": "0x1bbe"
   },
   {
     "system": 7,
     "name": "Bonk's Revenge",
-    "crc": "0x14250F9A",
+    "crc": "0x14250f9a",
     "signature": "0x39357204",
-    "magic": "0x1BBF"
+    "magic": "0x1bbf"
   },
   {
     "system": 7,
     "name": "Bull Fight - Ring no Hasha",
-    "crc": "0x5C4D1991",
-    "signature": "0x2E32DB1A",
-    "magic": "0x1BC5"
+    "crc": "0x5c4d1991",
+    "signature": "0x2e32db1a",
+    "magic": "0x1bc5"
   },
   {
     "system": 7,
     "name": "Cyber Core",
-    "crc": "0xA98D276A",
-    "signature": "0x29BF33F",
-    "magic": "0x1BD8"
+    "crc": "0xa98d276a",
+    "signature": "0x029bf33f",
+    "magic": "0x1bd8"
   },
   {
     "system": 7,
     "name": "Daimakaimura",
-    "crc": "0xB486A8ED",
-    "signature": "0x7EC915C2",
-    "magic": "0x1BDD"
+    "crc": "0xb486a8ed",
+    "signature": "0x7ec915c2",
+    "magic": "0x1bdd"
   },
   {
     "system": 7,
     "name": "Darius Plus",
-    "crc": "0xBEBFE042",
-    "signature": "0xB7199271",
-    "magic": "0x1BE0"
+    "crc": "0xbebfe042",
+    "signature": "0xb7199271",
+    "magic": "0x1be0"
   },
   {
     "system": 7,
     "name": "Detana!! TwinBee",
-    "crc": "0x5CF59D80",
-    "signature": "0xA94E3BB7",
-    "magic": "0x1BE7"
+    "crc": "0x5cf59d80",
+    "signature": "0xa94e3bb7",
+    "magic": "0x1be7"
   },
   {
     "system": 7,
     "name": "Devil Crash - Naxat Pinball",
-    "crc": "0x4EC81A80",
-    "signature": "0x0AA2072F",
-    "magic": "0x1BE8"
+    "crc": "0x4ec81a80",
+    "signature": "0x0aa2072f",
+    "magic": "0x1be8"
   },
   {
     "system": 7,
     "name": "Doraemon - Meikyuu Daisakusen",
-    "crc": "0xDC760A07",
-    "signature": "0x4EAFE348",
-    "magic": "0x1BED"
+    "crc": "0xdc760a07",
+    "signature": "0x4eafe348",
+    "magic": "0x1bed"
   },
   {
     "system": 7,
     "name": "Dragon Spirit",
-    "crc": "0x01A76935",
-    "signature": "0x2838EE71",
-    "magic": "0x1BF4"
+    "crc": "0x01a76935",
+    "signature": "0x2838ee71",
+    "magic": "0x1bf4"
   },
   {
     "system": 7,
     "name": "Dragon's Curse",
-    "crc": "0x7D2C4B09",
-    "signature": "0x664F09AE",
-    "magic": "0x1BF6"
+    "crc": "0x7d2c4b09",
+    "signature": "0x664f09ae",
+    "magic": "0x1bf6"
   },
   {
     "system": 7,
     "name": "F1 Circus",
-    "crc": "0xE14DEE08",
-    "signature": "0x72948B84",
-    "magic": "0x1C00"
+    "crc": "0xe14dee08",
+    "signature": "0x72948b84",
+    "magic": "0x1c00"
   },
   {
     "system": 7,
     "name": "Fantasy Zone",
-    "crc": "0x72CB0F9D",
-    "signature": "0x387D85E2",
-    "magic": "0x1C05"
+    "crc": "0x72cb0f9d",
+    "signature": "0x387d85e2",
+    "magic": "0x1c05"
   },
   {
     "system": 7,
     "name": "Final Lap Twin",
-    "crc": "0x26408EA3",
-    "signature": "0x2B173AC5",
-    "magic": "0x1C0A"
+    "crc": "0x26408ea3",
+    "signature": "0x2b173ac5",
+    "magic": "0x1c0a"
   },
   {
     "system": 7,
     "name": "Final Match Tennis",
-    "crc": "0x560D2305",
-    "signature": "0xB249C013",
-    "magic": "0x1C0B"
+    "crc": "0x560d2305",
+    "signature": "0xb249c013",
+    "magic": "0x1c0b"
   },
   {
     "system": 7,
     "name": "Final Soldier",
-    "crc": "0xAF2DD2AF",
-    "signature": "0x49C4D224",
-    "magic": "0x1C0C"
+    "crc": "0xaf2dd2af",
+    "signature": "0x49c4d224",
+    "magic": "0x1c0c"
   },
   {
     "system": 7,
     "name": "Formation Soccer - Human Cup '90",
-    "crc": "0x85A1E7B6",
-    "signature": "0x052B0D59",
-    "magic": "0x1C11"
+    "crc": "0x85a1e7b6",
+    "signature": "0x052b0d59",
+    "magic": "0x1c11"
   },
   {
     "system": 7,
     "name": "Galaga '88",
-    "crc": "0x1A8393C6",
-    "signature": "0x80D5CD13",
-    "magic": "0x1C16"
+    "crc": "0x1a8393c6",
+    "signature": "0x80d5cd13",
+    "magic": "0x1c16"
   },
   {
     "system": 7,
     "name": "Gradius",
-    "crc": "0x0517DA65",
-    "signature": "0x9BD6124B",
-    "magic": "0x1C21"
+    "crc": "0x0517da65",
+    "signature": "0x9bd6124b",
+    "magic": "0x1c21"
   },
   {
     "system": 7,
     "name": "Gunhed",
-    "crc": "0xA17D4D7E",
-    "signature": "0x1E93DF4E",
-    "magic": "0x1C23"
+    "crc": "0xa17d4d7e",
+    "signature": "0x1e93df4e",
+    "magic": "0x1c23"
   },
   {
     "system": 7,
     "name": "Heavy Unit",
-    "crc": "0xEB923DE5",
-    "signature": "0x626A1972",
-    "magic": "0x1C29"
+    "crc": "0xeb923de5",
+    "signature": "0x626a1972",
+    "magic": "0x1c29"
   },
   {
     "system": 7,
     "name": "Image Fight",
-    "crc": "0xA80C565F",
-    "signature": "0xBB010DD0",
-    "magic": "0x1C2F"
+    "crc": "0xa80c565f",
+    "signature": "0xbb010dd0",
+    "magic": "0x1c2f"
   },
   {
     "system": 7,
-    "name": "J.J. & Jeff",
-    "crc": "0xE01C5127",
-    "signature": "0x6C90326D",
-    "magic": "0x1C31"
+    "name": "J.J. \u0026 Jeff",
+    "crc": "0xe01c5127",
+    "signature": "0x6c90326d",
+    "magic": "0x1c31"
   },
   {
     "system": 7,
     "name": "Jackie Chan",
-    "crc": "0xC6FA6373",
-    "signature": "0xD26F3729",
-    "magic": "0x1C35"
+    "crc": "0xc6fa6373",
+    "signature": "0xd26f3729",
+    "magic": "0x1c35"
   },
   {
     "system": 7,
     "name": "Keith Courage in Alpha Zones",
-    "crc": "0x474D7A72",
-    "signature": "0xFEDD366B",
-    "magic": "0x1C3F"
+    "crc": "0x474d7a72",
+    "signature": "0xfedd366b",
+    "magic": "0x1c3f"
   },
   {
     "system": 7,
     "name": "Kiki Kaikai",
-    "crc": "0xC0CB5ADD",
-    "signature": "0x4741FD87",
-    "magic": "0x1C41"
+    "crc": "0xc0cb5add",
+    "signature": "0x4741fd87",
+    "magic": "0x1c41"
   },
   {
     "system": 7,
     "name": "Nectaris",
-    "crc": "0x0243453B",
-    "signature": "0xC9FD6D46",
-    "magic": "0x1C74"
+    "crc": "0x0243453b",
+    "signature": "0xc9fd6d46",
+    "magic": "0x1c74"
   },
   {
     "system": 7,
     "name": "Nekketsu Koukou Dodgeball-bu - PC Bangai Hen",
-    "crc": "0x65FDB863",
-    "signature": "0x8623D919",
-    "magic": "0x1C75"
+    "crc": "0x65fdb863",
+    "signature": "0x8623d919",
+    "magic": "0x1c75"
   },
   {
     "system": 7,
-    "name": "NewZealand Story",
-    "crc": "0x8E4D75A8",
-    "signature": "0x5704F385",
-    "magic": "0x1C7C"
+    "name": "NewZealand Story, The",
+    "crc": "0x8e4d75a8",
+    "signature": "0x5704f385",
+    "magic": "0x1c7c"
   },
   {
     "system": 7,
     "name": "Out Run",
-    "crc": "0xE203F223",
-    "signature": "0xBC6C5150",
-    "magic": "0x1C88"
+    "crc": "0xe203f223",
+    "signature": "0xbc6c5150",
+    "magic": "0x1c88"
   },
   {
     "system": 7,
     "name": "Pac-Land",
-    "crc": "0x14FAD3BA",
-    "signature": "0x25696E56",
-    "magic": "0x1C8B"
+    "crc": "0x14fad3ba",
+    "signature": "0x25696e56",
+    "magic": "0x1c8b"
   },
   {
     "system": 7,
     "name": "Parasol Stars - The Story of Bubble Bobble III",
-    "crc": "0x51E86451",
-    "signature": "0xF6924C79",
-    "magic": "0x1C8F"
+    "crc": "0x51e86451",
+    "signature": "0xf6924c79",
+    "magic": "0x1c8f"
   },
   {
     "system": 7,
     "name": "Parodius Da! - Shinwa kara Owarai e",
-    "crc": "0x647718F9",
-    "signature": "0x7DEC5DF2",
-    "magic": "0x1C91"
+    "crc": "0x647718f9",
+    "signature": "0x7dec5df2",
+    "magic": "0x1c91"
   },
   {
     "system": 7,
     "name": "PC Genjin 3 - Pithecanthropus Computerurus",
-    "crc": "0xA170B60E",
-    "signature": "0xD56962E2",
-    "magic": "0x1C99"
+    "crc": "0xa170b60e",
+    "signature": "0xd56962e2",
+    "magic": "0x1c99"
   },
   {
     "system": 7,
     "name": "Power Eleven",
-    "crc": "0x3E647D8B",
-    "signature": "0xF193E7F6",
-    "magic": "0x1C9D"
+    "crc": "0x3e647d8b",
+    "signature": "0xf193e7f6",
+    "magic": "0x1c9d"
   },
   {
     "system": 7,
     "name": "Power Golf",
-    "crc": "0xEA324F07",
-    "signature": "0xBC90582B",
-    "magic": "0x1C9F"
+    "crc": "0xea324f07",
+    "signature": "0xbc90582b",
+    "magic": "0x1c9f"
   },
   {
     "system": 7,
     "name": "Pro Yakyuu World Stadium",
-    "crc": "0x34E089A9",
-    "signature": "0x1F4E9B1A",
-    "magic": "0x1CAA"
+    "crc": "0x34e089a9",
+    "signature": "0x1f4e9b1a",
+    "magic": "0x1caa"
   },
   {
     "system": 7,
     "name": "R-Type I",
-    "crc": "0xCEC3D28A",
-    "signature": "0x0163FB7B",
-    "magic": "0x1CB2"
+    "crc": "0xcec3d28a",
+    "signature": "0x0163fb7b",
+    "magic": "0x1cb2"
   },
   {
     "system": 7,
     "name": "R-Type II",
-    "crc": "0xF207ECAE",
-    "signature": "0xB1D6A166",
-    "magic": "0x1CB4"
+    "crc": "0xf207ecae",
+    "signature": "0xb1d6a166",
+    "magic": "0x1cb4"
   },
   {
     "system": 7,
     "name": "Saigo no Nindou - Ninja Spirit",
-    "crc": "0x0590A156",
-    "signature": "0x038CDB6B",
-    "magic": "0x1CBD"
+    "crc": "0x0590a156",
+    "signature": "0x038cdb6b",
+    "magic": "0x1cbd"
   },
   {
     "system": 7,
     "name": "Salamander",
-    "crc": "0xFAECCE20",
-    "signature": "0xE234BCBF",
-    "magic": "0x1CBE"
+    "crc": "0xfaecce20",
+    "signature": "0xe234bcbf",
+    "magic": "0x1cbe"
   },
   {
     "system": 7,
     "name": "Shinobi",
-    "crc": "0xBC655CF3",
-    "signature": "0xCF411E02",
-    "magic": "0x1CC3"
+    "crc": "0xbc655cf3",
+    "signature": "0xcf411e02",
+    "magic": "0x1cc3"
   },
   {
     "system": 7,
     "name": "SideArms",
-    "crc": "0xD1993C9F",
-    "signature": "0xFC5B5EA5",
-    "magic": "0x1CC8"
+    "crc": "0xd1993c9f",
+    "signature": "0xfc5b5ea5",
+    "magic": "0x1cc8"
   },
   {
     "system": 7,
     "name": "Soldier Blade",
-    "crc": "0x8420B12B",
-    "signature": "0xCBA7AC1E",
-    "magic": "0x1CCF"
+    "crc": "0x8420b12b",
+    "signature": "0xcba7ac1e",
+    "magic": "0x1ccf"
   },
   {
     "system": 7,
     "name": "Space Harrier",
     "crc": "0x64580427",
-    "signature": "0x87E5E5AD",
-    "magic": "0x1CD6"
+    "signature": "0x87e5e5ad",
+    "magic": "0x1cd6"
   },
   {
     "system": 7,
     "name": "Super Star Soldier",
-    "crc": "0x5D0E3105",
-    "signature": "0x0EEF6FAA",
-    "magic": "0x1CE4"
+    "crc": "0x5d0e3105",
+    "signature": "0x0eef6faa",
+    "magic": "0x1ce4"
   },
   {
     "system": 7,
     "name": "Thunder Blade",
-    "crc": "0xDDC3E809",
-    "signature": "0x99E5921A",
-    "magic": "0x1CF2"
+    "crc": "0xddc3e809",
+    "signature": "0x99e5921a",
+    "magic": "0x1cf2"
   },
   {
     "system": 7,
     "name": "Xevious - Fardraut Saga",
-    "crc": "0xF8F85EEC",
-    "signature": "0xD4C0EADC",
-    "magic": "0x1D1E"
+    "crc": "0xf8f85eec",
+    "signature": "0xd4c0eadc",
+    "magic": "0x1d1e"
   }
 ]

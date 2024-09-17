@@ -2,438 +2,468 @@
 
 ## Super R.C. Pro-Am
 
-- CRC32: `0x7960F33F`
-- Signature: `0x4C453436`
+- CRC32: `0x7960f33f`
+- Signature: `0x4c453436`
 - Magic Number: `0x0013`
 
 ## Teenage Mutant Ninja Turtles: Fall of the Foot Clan
 
-- CRC32: `0x5A6984C3`
-- Signature: `0x03048A20`
+- CRC32: `0x5a6984c3`
+- Signature: `0x03048a20`
 - Magic Number: `0x0022`
 
 ## Tetris 2
 
-- CRC32: `0xAA4A1EDB`
-- Signature: `0xE0EA84CA`
+- CRC32: `0xaa4a1edb`
+- Signature: `0xe0ea84ca`
 - Magic Number: `0x0027`
 
 ## Tiny Toon Adventures: Babs' Big Break
 
-- CRC32: `0x9B5E6219`
-- Signature: `0x98CC3AAB`
-- Magic Number: `0x002E`
+- CRC32: `0x9b5e6219`
+- Signature: `0x98cc3aab`
+- Magic Number: `0x002e`
 
 ## Trax
 
-- CRC32: `0x4A38BE7D`
-- Signature: `0x8DFED08D`
-- Magic Number: `0x003D`
+- CRC32: `0x4a38be7d`
+- Signature: `0x8dfed08d`
+- Magic Number: `0x003d`
 
 ## Wario Land II
 
-- CRC32: `0x9C54358D`
-- Signature: `0x67AD6FEF`
-- Magic Number: `0x004A`
+- CRC32: `0x9c54358d`
+- Signature: `0x67ad6fef`
+- Magic Number: `0x004a`
 
 ## Wave Race
 
-- CRC32: `0xA6595506`
-- Signature: `0x5379A582`
-- Magic Number: `0x004B`
+- CRC32: `0xa6595506`
+- Signature: `0x5379a582`
+- Magic Number: `0x004b`
 
 ## Amazing Penguin
 
-- CRC32: `0x3011D5CA`
-- Signature: `0xBBC5A35C`
+- CRC32: `0x3011d5ca`
+- Signature: `0xbbc5a35c`
 - Magic Number: `0x0079`
 
 ## The Amazing Spider-Man
 
-- CRC32: `0x2A4EAFE4`
-- Signature: `0xE1AFE549`
-- Magic Number: `0x007A`
+- CRC32: `0x2a4eafe4`
+- Signature: `0xe1afe549`
+- Magic Number: `0x007a`
 
 ## Balloon Kid
 
-- CRC32: `0xD4B655EC`
-- Signature: `0x83127D5D`
+- CRC32: `0xd4b655ec`
+- Signature: `0x83127d5d`
 - Magic Number: `0x0086`
 
 ## Batman: Return of the Joker
 
-- CRC32: `0x5124BBEC`
-- Signature: `0x49841F02`
-- Magic Number: `0x008A`
+- CRC32: `0x5124bbec`
+- Signature: `0x49841f02`
+- Magic Number: `0x008a`
 
 ## DuckTales
 
-- CRC32: `0x2BBBB54D`
-- Signature: `0x74C30C50`
-- Magic Number: `0x00EC`
+- CRC32: `0x2bbbb54d`
+- Signature: `0x74c30c50`
+- Magic Number: `0x00ec`
+
+## Exodus: Journey to the Promised Land
+
+- CRC32: `0x2e5497ef`
+- Signature: `0x66adc3af`
+- Magic Number: `0x00f1`
 
 ## Final Fantasy Adventure
 
-- CRC32: `0x18C78B3A`
-- Signature: `0xF9EE2B14`
-- Magic Number: `0x00FE`
+- CRC32: `0x18c78b3a`
+- Signature: `0xf9ee2b14`
+- Magic Number: `0x00fe`
 
 ## Final Fantasy Legend II
 
 - CRC32: `0x58314182`
-- Signature: `0x02197F3D`
-- Magic Number: `0x00FF`
+- Signature: `0x02197f3d`
+- Magic Number: `0x00ff`
 
 ## Final Fantasy Legend III
 
-- CRC32: `0x3E454710`
-- Signature: `0x9B1FAA5D`
+- CRC32: `0x3e454710`
+- Signature: `0x9b1faa5d`
 - Magic Number: `0x0100`
 
 ## The Final Fantasy Legend
 
-- CRC32: `0x8046148F`
-- Signature: `0xB41976AE`
+- CRC32: `0x8046148f`
+- Signature: `0xb41976ae`
 - Magic Number: `0x0101`
 
 ## Gargoyle's Quest
 
-- CRC32: `0x0030E61F`
-- Signature: `0xB5F8CF1D`
+- CRC32: `0x0030e61f`
+- Signature: `0xb5f8cf1d`
 - Magic Number: `0x0113`
 
 ## Ghostbusters II
 
-- CRC32: `0x5821ECD4`
-- Signature: `0xC3E50724`
+- CRC32: `0x5821ecd4`
+- Signature: `0xc3e50724`
 - Magic Number: `0x0118`
 
 ## Gradius: The Interstellar Assault
 
-- CRC32: `0x90F87D57`
-- Signature: `0x3A7B0909`
-- Magic Number: `0x011C`
+- CRC32: `0x90f87d57`
+- Signature: `0x3a7b0909`
+- Magic Number: `0x011c`
 
 ## Kid Dracula
 
-- CRC32: `0xF27294B7`
-- Signature: `0x8B2A6066`
-- Magic Number: `0x014A`
+- CRC32: `0xf27294b7`
+- Signature: `0x8b2a6066`
+- Magic Number: `0x014a`
 
 ## Kid Icarus: Of Myths and Monsters
 
-- CRC32: `0x0C042862`
-- Signature: `0x29E5332D`
-- Magic Number: `0x014B`
+- CRC32: `0x0c042862`
+- Signature: `0x29e5332d`
+- Magic Number: `0x014b`
 
 ## Kirby's Dream Land
 
-- CRC32: `0x40F25740`
-- Signature: `0x36F4016F`
+- CRC32: `0x40f25740`
+- Signature: `0x36f4016f`
 - Magic Number: `0x0151`
 
 ## The Legend of Zelda: Link's Awakening
 
-- CRC32: `0x8CF27C90`
-- Signature: `0xBE6D75EF`
+- CRC32: `0x8cf27c90`
+- Signature: `0xbe6d75ef`
 - Magic Number: `0x0160`
 
 ## Mario's Picross
 
-- CRC32: `0xF2D652AD`
-- Signature: `0xA552159A`
-- Magic Number: `0x016D`
+- CRC32: `0xf2d652ad`
+- Signature: `0xa552159a`
+- Magic Number: `0x016d`
 
 ## Mercenary Force
 
-- CRC32: `0x9BB5BA03`
-- Signature: `0xA974DDB4`
+- CRC32: `0x9bb5ba03`
+- Signature: `0xa974ddb4`
 - Magic Number: `0x0176`
 
 ## Mole Mania
 
-- CRC32: `0x2C36C74C`
-- Signature: `0x0024E03A`
+- CRC32: `0x2c36c74c`
+- Signature: `0x0024e03a`
 - Magic Number: `0x0182`
 
 ## Nintendo World Cup
 
-- CRC32: `0x96C24E13`
-- Signature: `0x30149BAB`
-- Magic Number: `0x01A6`
+- CRC32: `0x96c24e13`
+- Signature: `0x30149bab`
+- Magic Number: `0x01a6`
 
 ## Pokemon: Blue Version
 
-- CRC32: `0xD6DA8A1A`
-- Signature: `0xBD38389E`
-- Magic Number: `0x01C0`
+- CRC32: `0xd6da8a1a`
+- Signature: `0xbd38389e`
+- Magic Number: `0x01c0`
 
 ## Pokemon: Yellow Version: Special Pikachu Edition
 
-- CRC32: `0x7D527D62`
-- Signature: `0x0183202B`
-- Magic Number: `0x01C2`
+- CRC32: `0x7d527d62`
+- Signature: `0x0183202b`
+- Magic Number: `0x01c2`
 
 ## Space Invaders
 
-- CRC32: `0x7F0F5762`
-- Signature: `0xFDC2F429`
-- Magic Number: `0x01F7`
+- CRC32: `0x7f0f5762`
+- Signature: `0xfdc2f429`
+- Magic Number: `0x01f7`
 
 ## Star Trek: 25th Anniversary
 
-- CRC32: `0x605DE43A`
-- Signature: `0x513007F6`
+- CRC32: `0x605de43a`
+- Signature: `0x513007f6`
 - Magic Number: `0x0207`
 
 ## Batman: The Video Game
 
-- CRC32: `0x6C41D3CD`
-- Signature: `0xEAA1F4DC`
+- CRC32: `0x6c41d3cd`
+- Signature: `0xeaa1f4dc`
 - Magic Number: `0x0228`
 
 ## Bubble Bobble
 
-- CRC32: `0xAD9B300C`
-- Signature: `0x54E862C1`
+- CRC32: `0xad9b300c`
+- Signature: `0x54e862c1`
 - Magic Number: `0x0255`
 
 ## Burai Senshi Deluxe
 
-- CRC32: `0x5A1A20F3`
-- Signature: `0xE2EB4E33`
-- Magic Number: `0x025B`
+- CRC32: `0x5a1a20f3`
+- Signature: `0xe2eb4e33`
+- Magic Number: `0x025b`
 
 ## Contra
 
-- CRC32: `0xCDE6DE15`
-- Signature: `0x8FA9502C`
-- Magic Number: `0x027F`
+- CRC32: `0xcde6de15`
+- Signature: `0x8fa9502c`
+- Magic Number: `0x027f`
 
 ## Daiku no Gen-san: Ghost Building Company
 
-- CRC32: `0x9E0D2B45`
-- Signature: `0xE6E7691E`
+- CRC32: `0x9e0d2b45`
+- Signature: `0xe6e7691e`
 - Magic Number: `0x0290`
 
 ## Daiku no Gen-san: Robot Teikoku no Yabou
 
-- CRC32: `0x70819E03`
-- Signature: `0xFDB98647`
+- CRC32: `0x70819e03`
+- Signature: `0xfdb98647`
 - Magic Number: `0x0291`
 
 ## Donkey Kong
 
-- CRC32: `0xF777A5D8`
-- Signature: `0xB85D0158`
-- Magic Number: `0x02A0`
+- CRC32: `0xf777a5d8`
+- Signature: `0xb85d0158`
+- Magic Number: `0x02a0`
 
 ## Double Dragon
 
-- CRC32: `0xA0645E8A`
-- Signature: `0xA4BCE057`
-- Magic Number: `0x02AC`
+- CRC32: `0xa0645e8a`
+- Signature: `0xa4bce057`
+- Magic Number: `0x02ac`
 
 ## Dr. Mario
 
-- CRC32: `0x10C98DD1`
-- Signature: `0x54346B63`
-- Magic Number: `0x02B5`
+- CRC32: `0x10c98dd1`
+- Signature: `0x54346b63`
+- Magic Number: `0x02b5`
 
 ## Dracula Densetsu
 
-- CRC32: `0x4D57AF56`
-- Signature: `0x21CAABA8`
-- Magic Number: `0x02B6`
+- CRC32: `0x4d57af56`
+- Signature: `0x21caaba8`
+- Magic Number: `0x02b6`
 
 ## Dracula Densetsu II
 
-- CRC32: `0x8709434B`
-- Signature: `0x8BD14307`
-- Magic Number: `0x02B8`
+- CRC32: `0x8709434b`
+- Signature: `0x8bd14307`
+- Magic Number: `0x02b8`
+
+## GB Genjin
+
+- CRC32: `0x690227f6`
+- Signature: `0xf0e6a0ab`
+- Magic Number: `0x0307`
+
+## Genki Bakuhatsu Gambaruger
+
+- CRC32: `0x6226d280`
+- Signature: `0x5690030f`
+- Magic Number: `0x0311`
 
 ## Golf
 
-- CRC32: `0x6ED10383`
-- Signature: `0x998E6430`
-- Magic Number: `0x031E`
+- CRC32: `0x6ed10383`
+- Signature: `0x998e6430`
+- Magic Number: `0x031e`
 
 ## Gremlins 2: The New Batch
 
-- CRC32: `0x3579E297`
-- Signature: `0xC26FEB08`
+- CRC32: `0x3579e297`
+- Signature: `0xc26feb08`
 - Magic Number: `0x0349`
 
 ## Hoshi no Kirby 2
 
-- CRC32: `0x4BEDF22C`
-- Signature: `0xA3148977`
+- CRC32: `0x4bedf22c`
+- Signature: `0xa3148977`
 - Magic Number: `0x0361`
 
 ## Ikari no Yousai
 
-- CRC32: `0x1C2BA2A1`
-- Signature: `0xC9DC63D6`
-- Magic Number: `0x036A`
+- CRC32: `0x1c2ba2a1`
+- Signature: `0xc9dc63d6`
+- Magic Number: `0x036a`
 
 ## Ikari no Yousai 2
 
-- CRC32: `0x6D4FD9AA`
-- Signature: `0xA3EAA843`
-- Magic Number: `0x036B`
+- CRC32: `0x6d4fd9aa`
+- Signature: `0xa3eaa843`
+- Magic Number: `0x036b`
 
 ## Kirby no Pinball
 
-- CRC32: `0x8B44FB7D`
-- Signature: `0xB64C97F0`
-- Magic Number: `0x03AA`
+- CRC32: `0x8b44fb7d`
+- Signature: `0xb64c97f0`
+- Magic Number: `0x03aa`
 
 ## Mani 4 in 1 - Taito
 
-- CRC32: `0x5BFC3EF5`
-- Signature: `0x4B80FE56`
-- Magic Number: `0x03E8`
+- CRC32: `0x5bfc3ef5`
+- Signature: `0x4b80fe56`
+- Magic Number: `0x03e8`
+
+## Mani 4 in 1 - Irem
+
+- CRC32: `0xcb48b6d0`
+- Signature: `0xc4bdb30c`
+- Magic Number: `0x03ea`
 
 ## Metroid II: Return of Samus
 
-- CRC32: `0xDEE05370`
-- Signature: `0x11474E07`
+- CRC32: `0xdee05370`
+- Signature: `0x11474e07`
 - Magic Number: `0x0407`
+
+## Momotarou Collection 2
+
+- CRC32: `0x562c8f7f`
+- Signature: `0x4e27d264`
+- Magic Number: `0x0420`
 
 ## Nemesis
 
-- CRC32: `0xB338DAE7`
-- Signature: `0xC54DB109`
+- CRC32: `0xb338dae7`
+- Signature: `0xc54db109`
 - Magic Number: `0x0457`
 
 ## Parodius Da!
 
-- CRC32: `0x1791E952`
-- Signature: `0xDAC5143F`
-- Magic Number: `0x04A2`
+- CRC32: `0x1791e952`
+- Signature: `0xdac5143f`
+- Magic Number: `0x04a2`
 
 ## Penguin Land
 
-- CRC32: `0xA9E62E88`
-- Signature: `0x020DE12B`
-- Magic Number: `0x04A5`
+- CRC32: `0xa9e62e88`
+- Signature: `0x020de12b`
+- Magic Number: `0x04a5`
 
 ## Picross 2
 
-- CRC32: `0xF5AA5902`
-- Signature: `0xCD78F3BD`
-- Magic Number: `0x04AA`
+- CRC32: `0xf5aa5902`
+- Signature: `0xcd78f3bd`
+- Magic Number: `0x04aa`
 
 ## Pinball: 66hiki no Wani Daikoushin!
 
-- CRC32: `0x1B3A89C6`
-- Signature: `0x69E0871D`
-- Magic Number: `0x04AC`
+- CRC32: `0x1b3a89c6`
+- Signature: `0x69e0871d`
+- Magic Number: `0x04ac`
 
 ## Pocket Camera
 
-- CRC32: `0x73E8EF96`
-- Signature: `0x1D9A45CB`
-- Magic Number: `0x04B8`
+- CRC32: `0x73e8ef96`
+- Signature: `0x1d9a45cb`
+- Magic Number: `0x04b8`
 
 ## QIX
 
-- CRC32: `0x9185E89E`
-- Signature: `0xFE14AF44`
+- CRC32: `0x9185e89e`
+- Signature: `0xfe14af44`
 - Magic Number: `0x0501`
 
 ## Quarth
 
-- CRC32: `0x40E5ADC9`
-- Signature: `0xB9C0B830`
+- CRC32: `0x40e5adc9`
+- Signature: `0xb9c0b830`
 - Magic Number: `0x0502`
 
 ## Rockman World
 
-- CRC32: `0x3BE6AC04`
+- CRC32: `0x3be6ac04`
 - Signature: `0x16667989`
-- Magic Number: `0x051B`
+- Magic Number: `0x051b`
 
 ## Rockman World 2
 
-- CRC32: `0xC34D265E`
-- Signature: `0xDA24118D`
-- Magic Number: `0x051C`
+- CRC32: `0xc34d265e`
+- Signature: `0xda24118d`
+- Magic Number: `0x051c`
 
 ## Rockman World 3
 
-- CRC32: `0xE904484F`
-- Signature: `0x984EDCCF`
-- Magic Number: `0x051D`
+- CRC32: `0xe904484f`
+- Signature: `0x984edccf`
+- Magic Number: `0x051d`
 
 ## Rubble Saver
 
-- CRC32: `0xE8AEA452`
-- Signature: `0x02809FBC`
+- CRC32: `0xe8aea452`
+- Signature: `0x02809fbc`
 - Magic Number: `0x0525`
 
 ## Rubble Saver II
 
-- CRC32: `0x92C95F2D`
-- Signature: `0x2EADFFB1`
+- CRC32: `0x92c95f2d`
+- Signature: `0x2eadffb1`
 - Magic Number: `0x0526`
 
 ## Sa-Ga 3: Jikuu no Hasha
 
-- CRC32: `0x575D6D9D`
-- Signature: `0x8DF1C039`
+- CRC32: `0x575d6d9d`
+- Signature: `0x8df1c039`
 - Magic Number: `0x0529`
 
 ## Shippo de Bun
 
 - CRC32: `0x56410442`
-- Signature: `0xA21327FB`
+- Signature: `0xa21327fb`
 - Magic Number: `0x0550`
 
 ## SolarStriker
 
 - CRC32: `0x11817103`
-- Signature: `0x9D6225D9`
+- Signature: `0x9d6225d9`
 - Magic Number: `0x0566`
 
 ## Super Mario Land
 
-- CRC32: `0x2C27EC70`
-- Signature: `0x191ABCF6`
+- CRC32: `0x2c27ec70`
+- Signature: `0x191abcf6`
 - Magic Number: `0x0596`
 
 ## Super Mario Land 2: 6-tsu no Kinka
 
-- CRC32: `0x29E0911A`
-- Signature: `0xCFD140E3`
+- CRC32: `0x29e0911a`
+- Signature: `0xcfd140e3`
 - Magic Number: `0x0599`
 
 ## Tetris
 
-- CRC32: `0x46DF91AD`
-- Signature: `0xFAF2FB52`
-- Magic Number: `0x05C2`
+- CRC32: `0x46df91ad`
+- Signature: `0xfaf2fb52`
+- Magic Number: `0x05c2`
 
 ## TwinBee da!!
 
-- CRC32: `0x017FD6F5`
-- Signature: `0xC1520986`
-- Magic Number: `0x05EA`
+- CRC32: `0x017fd6f5`
+- Signature: `0xc1520986`
+- Magic Number: `0x05ea`
 
 ## Vattle Giuce
 
-- CRC32: `0x956B603C`
-- Signature: `0x6F6F1D90`
-- Magic Number: `0x05FA`
+- CRC32: `0x956b603c`
+- Signature: `0x6f6f1d90`
+- Magic Number: `0x05fa`
 
 ## Wario Land: Super Mario Land 3
 
-- CRC32: `0x40BE3889`
-- Signature: `0xCC00592A`
+- CRC32: `0x40be3889`
+- Signature: `0xcc00592a`
 - Magic Number: `0x0603`
 
 ## X
 
-- CRC32: `0x75E1D268`
-- Signature: `0x86575C60`
+- CRC32: `0x75e1d268`
+- Signature: `0x86575c60`
 - Magic Number: `0x0618`

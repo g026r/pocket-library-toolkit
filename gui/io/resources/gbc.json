@@ -2,169 +2,169 @@
   {
     "system": 1,
     "name": "31 in 1",
-    "crc": "0x0EB8DDFB",
-    "signature": "0xACAAD162",
+    "crc": "0x0eb8ddfb",
+    "signature": "0xacaad162",
     "magic": "0x0660"
   },
   {
     "system": 1,
-    "name": "ATV Racing & Karate Joe",
-    "crc": "0x6908F4AF",
-    "signature": "0x79ADD746",
+    "name": "Action Replay Online",
+    "crc": "0x04c8c858",
+    "signature": "0x4c08f8e7",
+    "magic": "0x0669"
+  },
+  {
+    "system": 1,
+    "name": "ATV Racing \u0026 Karate Joe",
+    "crc": "0x6908f4af",
+    "signature": "0x79add746",
     "magic": "0x0694"
   },
   {
     "system": 1,
-    "name": "Action Replay Online",
-    "crc": "0x04C8C858",
-    "signature": "0x4C08F8E7",
-    "magic": "0x0669"
-  },
-  {
-    "system": 1,
-    "name":   "Rocman X Gold + 4 in 1",
-    "crc": "0x7e1351cf",
-    "signature": "0x4C08F8E7",
-    "magic": "0x0669"
-  },
-  {
-    "system": 1,
     "name": "Bakukyuu Renpatsu!! Super B-Daman: Gekitan! Rising Valkyrie!!",
-    "crc": "0x5C95D5A2",
-    "signature": "0x64B34B61",
-    "magic": "0x06A5"
+    "crc": "0x5c95d5a2",
+    "signature": "0x64b34b61",
+    "magic": "0x06a5"
   },
   {
     "system": 1,
     "name": "Crystalis",
-    "crc": "0x909BB02D",
-    "signature": "0x3E16F9DE",
-    "magic": "0x072F"
+    "crc": "0x909bb02d",
+    "signature": "0x3e16f9de",
+    "magic": "0x072f"
   },
   {
     "system": 1,
     "name": "Doraemon no Quiz Boy",
-    "crc": "0x3BBF9EA8",
-    "signature": "0x9B1B3096",
-    "magic": "0x076B"
+    "crc": "0x3bbf9ea8",
+    "signature": "0x9b1b3096",
+    "magic": "0x076b"
   },
   {
     "system": 1,
-    "name": "Dragon Warrior I & II",
-    "crc": "0x71D693DA",
-    "signature": "0xE8743318",
-    "magic": "0x078A"
+    "name": "Dragon Warrior I \u0026 II",
+    "crc": "0x71d693da",
+    "signature": "0xe8743318",
+    "magic": "0x078a"
   },
   {
     "system": 1,
     "name": "Dragon Warrior III",
-    "crc": "0x0FD9C59C",
-    "signature": "0xFD55EBF8",
-    "magic": "0x078B"
+    "crc": "0x0fd9c59c",
+    "signature": "0xfd55ebf8",
+    "magic": "0x078b"
   },
   {
     "system": 1,
     "name": "Harvest Moon 2 GBC",
     "crc": "0x08906220",
-    "signature": "0x8BBEC1E3",
-    "magic": "0x082C"
+    "signature": "0x8bbec1e3",
+    "magic": "0x082c"
   },
   {
     "system": 1,
     "name": "Harvest Moon 3 GBC",
-    "crc": "0xA0D67417",
-    "signature": "0xBA2AEEF7",
-    "magic": "0x082D"
+    "crc": "0xa0d67417",
+    "signature": "0xba2aeef7",
+    "magic": "0x082d"
   },
   {
     "system": 1,
     "name": "Harvest Moon GB",
-    "crc": "0xC8A6F68A",
-    "signature": "0xB17319F3",
-    "magic": "0x082E"
+    "crc": "0xc8a6f68a",
+    "signature": "0xb17319f3",
+    "magic": "0x082e"
   },
   {
     "system": 1,
     "name": "Harvest Moon GB",
-    "crc": "0xAB5738A1",
-    "signature": "0xAF3F157C",
+    "crc": "0xab5738a1",
+    "signature": "0xaf3f157c",
     "magic": "0x0830"
   },
   {
     "system": 1,
     "name": "Korokoro Kirby",
-    "crc": "0xC0FACE3D",
-    "signature": "0xBB5E9BEE",
-    "magic": "0x08B2"
+    "crc": "0xc0face3d",
+    "signature": "0xbb5e9bee",
+    "magic": "0x08b2"
   },
   {
     "system": 1,
     "name": "Legend of the River King GB",
-    "crc": "0x87EF9530",
-    "signature": "0xC9310BC1",
-    "magic": "0x08BD"
+    "crc": "0x87ef9530",
+    "signature": "0xc9310bc1",
+    "magic": "0x08bd"
   },
   {
     "system": 1,
     "name": "The Legend of Zelda: Link's Awakening DX",
     "crc": "0x97822948",
-    "signature": "0x8DF72475",
-    "magic": "0x08C6"
+    "signature": "0x8df72475",
+    "magic": "0x08c6"
   },
   {
     "system": 1,
     "name": "The Legend of Zelda: Oracle of Ages",
-    "crc": "0x3800A387",
-    "signature": "0x117B9089",
-    "magic": "0x08C8"
+    "crc": "0x3800a387",
+    "signature": "0x117b9089",
+    "magic": "0x08c8"
   },
   {
     "system": 1,
     "name": "The Legend of Zelda: Oracle of Seasons",
-    "crc": "0xD7E9F5D7",
-    "signature": "0x5355F407",
-    "magic": "0x08CA"
+    "crc": "0xd7e9f5d7",
+    "signature": "0x5355f407",
+    "magic": "0x08ca"
   },
   {
     "system": 1,
     "name": "Medarot 4: Kuwagata Version",
-    "crc": "0x6A29B9D8",
-    "signature": "0xCB142D26",
+    "crc": "0x6a29b9d8",
+    "signature": "0xcb142d26",
     "magic": "0x0930"
   },
   {
     "system": 1,
     "name": "Mega Man Xtreme",
-    "crc": "0x3A4D94D5",
-    "signature": "0x4D39C324",
+    "crc": "0x3a4d94d5",
+    "signature": "0x4d39c324",
     "magic": "0x0935"
   },
   {
     "system": 1,
     "name": "Mega Man Xtreme 2",
-    "crc": "0x8FEDB6D8",
-    "signature": "0xA4982BA3",
+    "crc": "0x8fedb6d8",
+    "signature": "0xa4982ba3",
     "magic": "0x0936"
   },
   {
     "system": 1,
+    "name": "Pokemon: Gold Version",
+    "crc": "0x6bde3c3e",
+    "signature": "0x87cc1ad8",
+    "magic": "0x09fb"
+  },
+  {
+    "system": 1,
+    "name": "Rocman X Gold + 4 in 1",
+    "crc": "0x7e1351cf",
+    "signature": "0xe3ec02fa",
+    "magic": "0x0a7f"
+  },
+  {
+    "system": 1,
     "name": "R-Type DX",
-    "crc": "0xFC1D4089",
-    "signature": "0x2573FB55",
-    "magic": "0x0A8C"
+    "crc": "0xfc1d4089",
+    "signature": "0x2573fb55",
+    "magic": "0x0a8c"
   },
   {
     "system": 1,
     "name": "Wario Land 3",
-    "crc": "0x480D0259",
-    "signature": "0xBF38CA32",
-    "magic": "0x0BA1"
-  },
-  {
-    "system": 1,
-    "name": "Pokemon: Gold Version (USA, Europe)",
-    "crc": "0x6BDE3C3E",
-    "signature": "0x87CC1AD8",
-    "magic": "0x09FB"
+    "crc": "0x480d0259",
+    "signature": "0xbf38ca32",
+    "magic": "0x0ba1"
   }
 ]

@@ -2,365 +2,365 @@
   {
     "system": 2,
     "name": "Advance Wars",
-    "crc": "0x26FD0FC9",
-    "signature": "0x902C19B9",
-    "magic": "0x0C81"
+    "crc": "0x26fd0fc9",
+    "signature": "0x902c19b9",
+    "magic": "0x0c81"
   },
   {
     "system": 2,
     "name": "Advance Wars 2: Black Hole Rising",
-    "crc": "0x5AD0E571",
-    "signature": "0xE0848197",
-    "magic": "0x0C84"
+    "crc": "0x5ad0e571",
+    "signature": "0xe0848197",
+    "magic": "0x0c84"
   },
   {
     "system": 2,
     "name": "Castlevania: Aria of Sorrow",
     "crc": "0x35536183",
-    "signature": "0x1495B6CE",
-    "magic": "0x0DB4"
+    "signature": "0x1495b6ce",
+    "magic": "0x0db4"
   },
   {
     "system": 2,
     "name": "Castlevania: Circle of the Moon",
-    "crc": "0x1CC059A4",
-    "signature": "0x3A50CA77",
-    "magic": "0x0DB6"
+    "crc": "0x1cc059a4",
+    "signature": "0x3a50ca77",
+    "magic": "0x0db6"
   },
   {
     "system": 2,
     "name": "Castlevania: Harmony of Dissonance",
-    "crc": "0x88C1B562",
-    "signature": "0x4BAF4E18",
-    "magic": "0x0DB8"
+    "crc": "0x88c1b562",
+    "signature": "0x4baf4e18",
+    "magic": "0x0db8"
   },
   {
     "system": 2,
     "name": "Classic NES Series - Metroid",
-    "crc": "0x9A243B9B",
-    "signature": "0x00A4AE05",
-    "magic": "0x0DEB"
+    "crc": "0x9a243b9b",
+    "signature": "0x00a4ae05",
+    "magic": "0x0deb"
   },
   {
     "system": 2,
     "name": "Classic NES Series - Super Mario Bros.",
-    "crc": "0xF7129225",
-    "signature": "0x0353C27A",
-    "magic": "0x0DED"
+    "crc": "0xf7129225",
+    "signature": "0x0353c27a",
+    "magic": "0x0ded"
   },
   {
     "system": 2,
     "name": "Classic NES Series - The Legend of Zelda",
-    "crc": "0x6D49CABF",
-    "signature": "0x7EC67F29",
-    "magic": "0x0DEE"
+    "crc": "0x6d49cabf",
+    "signature": "0x7ec67f29",
+    "magic": "0x0dee"
   },
   {
     "system": 2,
     "name": "Classic NES Series - Zelda II - The Adventure of Link",
-    "crc": "0x0B6CA48A",
-    "signature": "0x2C6A3ADE",
-    "magic": "0x0DF0"
+    "crc": "0x0b6ca48a",
+    "signature": "0x2c6a3ade",
+    "magic": "0x0df0"
   },
   {
     "system": 2,
     "name": "Darius R",
-    "crc": "0x51BEEED7",
-    "signature": "0x80817F8E",
-    "magic": "0x0E41"
+    "crc": "0x51beeed7",
+    "signature": "0x80817f8e",
+    "magic": "0x0e41"
   },
   {
     "system": 2,
     "name": "Donkey Kong Country",
-    "crc": "0x12F7A968",
-    "signature": "0xC5D23096",
-    "magic": "0x0EA2"
+    "crc": "0x12f7a968",
+    "signature": "0xc5d23096",
+    "magic": "0x0ea2"
   },
   {
     "system": 2,
     "name": "Donkey Kong Country 2",
-    "crc": "0x11417FC1",
-    "signature": "0xBAF0DC49",
-    "magic": "0x0EA4"
+    "crc": "0x11417fc1",
+    "signature": "0xbaf0dc49",
+    "magic": "0x0ea4"
   },
   {
     "system": 2,
     "name": "Donkey Kong Country 3",
-    "crc": "0xFE03E5AF",
-    "signature": "0x5F92E540",
-    "magic": "0x0EA6"
+    "crc": "0xfe03e5af",
+    "signature": "0x5f92e540",
+    "magic": "0x0ea6"
   },
   {
     "system": 2,
     "name": "Famicom Mini 02 - Donkey Kong",
-    "crc": "0x071C3F2B",
-    "signature": "0xB2F00993",
-    "magic": "0x0F3E"
+    "crc": "0x071c3f2b",
+    "signature": "0xb2f00993",
+    "magic": "0x0f3e"
   },
   {
     "system": 2,
     "name": "Famicom Mini 06 - Pac-Man",
-    "crc": "0x91ACF642",
-    "signature": "0x04ACEBD6",
-    "magic": "0x0F42"
+    "crc": "0x91acf642",
+    "signature": "0x04acebd6",
+    "magic": "0x0f42"
   },
   {
     "system": 2,
     "name": "Famicom Mini 07 - Xevious",
-    "crc": "0xF54EEB0E",
-    "signature": "0xDF80F99A",
-    "magic": "0x0F43"
+    "crc": "0xf54eeb0e",
+    "signature": "0xdf80f99a",
+    "magic": "0x0f43"
   },
   {
     "system": 2,
     "name": "Famicom Mini 08 - Mappy",
-    "crc": "0xC29E4A08",
-    "signature": "0x977D319D",
-    "magic": "0x0F44"
+    "crc": "0xc29e4a08",
+    "signature": "0x977d319d",
+    "magic": "0x0f44"
   },
   {
     "system": 2,
     "name": "Famicom Mini 10 - Star Soldier",
-    "crc": "0x1E23BAD4",
-    "signature": "0x4A6AA234",
-    "magic": "0x0F46"
+    "crc": "0x1e23bad4",
+    "signature": "0x4a6aa234",
+    "magic": "0x0f46"
   },
   {
     "system": 2,
     "name": "Famicom Mini 11 - Mario Bros.",
-    "crc": "0x42A027AB",
-    "signature": "0x6D0563A3",
-    "magic": "0x0F47"
+    "crc": "0x42a027ab",
+    "signature": "0x6d0563a3",
+    "magic": "0x0f47"
   },
   {
     "system": 2,
     "name": "Famicom Mini 13 - Balloon Fight",
-    "crc": "0xA01F014A",
+    "crc": "0xa01f014a",
     "signature": "0x59723945",
-    "magic": "0x0F49"
+    "magic": "0x0f49"
   },
   {
     "system": 2,
     "name": "Famicom Mini 16 - Dig Dug",
-    "crc": "0xEE4C3504",
-    "signature": "0x4A57126B",
-    "magic": "0x0F4C"
+    "crc": "0xee4c3504",
+    "signature": "0x4a57126b",
+    "magic": "0x0f4c"
   },
   {
     "system": 2,
     "name": "Famicom Mini 19 - Twin Bee",
-    "crc": "0x2F390212",
-    "signature": "0x4C2FF45F",
-    "magic": "0x0F4F"
+    "crc": "0x2f390212",
+    "signature": "0x4c2ff45f",
+    "magic": "0x0f4f"
   },
   {
     "system": 2,
     "name": "Famicom Mini 21 - Super Mario Bros. 2",
-    "crc": "0xEF18F7B2",
-    "signature": "0x7B906354",
-    "magic": "0x0F51"
+    "crc": "0xef18f7b2",
+    "signature": "0x7b906354",
+    "magic": "0x0f51"
   },
   {
     "system": 2,
     "name": "Famicom Mini 22: Nazo no Murasame Jou",
-    "crc": "0x8233349C",
-    "signature": "0x792D6333",
-    "magic": "0x0F52"
+    "crc": "0x8233349c",
+    "signature": "0x792d6333",
+    "magic": "0x0f52"
   },
   {
     "system": 2,
     "name": "Famicom Mini 24: Hikari Shinwa: Palthena no Kagami",
-    "crc": "0xF311EDAC",
-    "signature": "0x98569E72",
-    "magic": "0x0F54"
+    "crc": "0xf311edac",
+    "signature": "0x98569e72",
+    "magic": "0x0f54"
   },
   {
     "system": 2,
     "name": "Famicom Mini 29 - Akumajou Dracula",
-    "crc": "0x11419D8B",
-    "signature": "0xE0D8E468",
-    "magic": "0x0F59"
+    "crc": "0x11419d8b",
+    "signature": "0xe0d8e468",
+    "magic": "0x0f59"
   },
   {
     "system": 2,
-    "name": "Final Fantasy I & II: Dawn of Souls",
-    "crc": "0x1B39CDAB",
-    "signature": "0xA46DCCC4",
-    "magic": "0x0F73"
+    "name": "Final Fantasy I \u0026 II: Dawn of Souls",
+    "crc": "0x1b39cdab",
+    "signature": "0xa46dccc4",
+    "magic": "0x0f73"
   },
   {
     "system": 2,
     "name": "Final Fantasy V Advance",
-    "crc": "0x7A24AB0C",
-    "signature": "0xB179BE43",
-    "magic": "0x0F7E"
+    "crc": "0x7a24ab0c",
+    "signature": "0xb179be43",
+    "magic": "0x0f7e"
   },
   {
     "system": 2,
     "name": "Golden Sun",
-    "crc": "0xE1FB68E8",
-    "signature": "0xDABDF0DA",
+    "crc": "0xe1fb68e8",
+    "signature": "0xdabdf0da",
     "magic": "0x1036"
   },
   {
     "system": 2,
     "name": "Gradius Galaxies",
-    "crc": "0x8103428D",
+    "crc": "0x8103428d",
     "signature": "0x33283863",
     "magic": "0x1038"
   },
   {
     "system": 2,
     "name": "Gunstar Super Heroes",
-    "crc": "0x7CD86B02",
-    "signature": "0xB2323B7F",
+    "crc": "0x7cd86b02",
+    "signature": "0xb2323b7f",
     "magic": "0x1051"
   },
   {
     "system": 2,
     "name": "Kirby: Nightmare in Dream Land",
-    "crc": "0x20EF3F64",
-    "signature": "0xCD3D87A1",
-    "magic": "0x114A"
+    "crc": "0x20ef3f64",
+    "signature": "0xcd3d87a1",
+    "magic": "0x114a"
   },
   {
     "system": 2,
-    "name": "Kirby & the Amazing Mirror",
-    "crc": "0x9F2A3048",
-    "signature": "0x5C81854D",
-    "magic": "0x114C"
+    "name": "Kirby \u0026 the Amazing Mirror",
+    "crc": "0x9f2a3048",
+    "signature": "0x5c81854d",
+    "magic": "0x114c"
   },
   {
     "system": 2,
-    "name": "The Legend of Zelda: A Link to the Past & Four Swords",
-    "crc": "0x8E91CD13",
-    "signature": "0x541AB1C4",
-    "magic": "0x118F"
+    "name": "The Legend of Zelda: A Link to the Past \u0026 Four Swords",
+    "crc": "0x8e91cd13",
+    "signature": "0x541ab1c4",
+    "magic": "0x118f"
   },
   {
     "system": 2,
     "name": "The Legend of Zelda: The Minish Cap",
-    "crc": "0xABCEBBB1",
-    "signature": "0x1507FC7B",
+    "crc": "0xabcebbb1",
+    "signature": "0x1507fc7b",
     "magic": "0x1191"
   },
   {
     "system": 2,
     "name": "Lufia: The Ruins of Lore",
-    "crc": "0xDE5FFCBC",
-    "signature": "0x17C753AB",
-    "magic": "0x11CC"
+    "crc": "0xde5ffcbc",
+    "signature": "0x17c753ab",
+    "magic": "0x11cc"
   },
   {
     "system": 2,
-    "name": "Mario & Luigi: Superstar Saga",
-    "crc": "0xE718D850",
-    "signature": "0x341E13A9",
-    "magic": "0x11FF"
+    "name": "Mario \u0026 Luigi: Superstar Saga",
+    "crc": "0xe718d850",
+    "signature": "0x341e13a9",
+    "magic": "0x11ff"
   },
   {
     "system": 2,
     "name": "Mario Kart: Super Circuit",
-    "crc": "0xED316E37",
-    "signature": "0x6D4C5B1D",
-    "magic": "0x120A"
+    "crc": "0xed316e37",
+    "signature": "0x6d4c5b1d",
+    "magic": "0x120a"
   },
   {
     "system": 2,
-    "name": "Mega Man & Bass",
-    "crc": "0xEEA68C2E",
-    "signature": "0x8815CE82",
+    "name": "Mega Man \u0026 Bass",
+    "crc": "0xeea68c2e",
+    "signature": "0x8815ce82",
     "magic": "0x1244"
   },
   {
     "system": 2,
     "name": "Mega Man Zero",
-    "crc": "0x9707D2A1",
-    "signature": "0x29A3B388",
+    "crc": "0x9707d2a1",
+    "signature": "0x29a3b388",
     "magic": "0x1259"
   },
   {
     "system": 2,
     "name": "Mega Man Zero 2",
-    "crc": "0xCE1E37BB",
-    "signature": "0x3758E58C",
-    "magic": "0x125B"
+    "crc": "0xce1e37bb",
+    "signature": "0x3758e58c",
+    "magic": "0x125b"
   },
   {
     "system": 2,
     "name": "Metal Slug Advance",
-    "crc": "0x3806F4AE",
-    "signature": "0xD7A286F7",
-    "magic": "0x126B"
+    "crc": "0x3806f4ae",
+    "signature": "0xd7a286f7",
+    "magic": "0x126b"
   },
   {
     "system": 2,
     "name": "Metroid: Zero Mission",
-    "crc": "0x5C61A844",
-    "signature": "0xB0C026F5",
+    "crc": "0x5c61a844",
+    "signature": "0xb0c026f5",
     "magic": "0x1271"
   },
   {
     "system": 2,
     "name": "Metroid Fusion",
-    "crc": "0x6C75479C",
-    "signature": "0x028EEB93",
+    "crc": "0x6c75479c",
+    "signature": "0x028eeb93",
     "magic": "0x1274"
   },
   {
     "system": 2,
     "name": "River City Ransom EX",
-    "crc": "0x8686436E",
-    "signature": "0x74C9940C",
+    "crc": "0x8686436e",
+    "signature": "0x74c9940c",
     "magic": "0x1449"
   },
   {
     "system": 2,
     "name": "R-Type III: The Third Lightning",
-    "crc": "0x41BB7F8A",
-    "signature": "0x137D6FB3",
+    "crc": "0x41bb7f8a",
+    "signature": "0x137d6fb3",
     "magic": "0x1473"
   },
   {
     "system": 2,
     "name": "Super Mario Advance",
-    "crc": "0x1E4C6D6A",
-    "signature": "0x4E543B6A",
-    "magic": "0x15C0"
+    "crc": "0x1e4c6d6a",
+    "signature": "0x4e543b6a",
+    "magic": "0x15c0"
   },
   {
     "system": 2,
     "name": "Super Mario Advance 2: Super Mario World",
-    "crc": "0x5206880A",
-    "signature": "0x5D818F7B",
-    "magic": "0x15C2"
+    "crc": "0x5206880a",
+    "signature": "0x5d818f7b",
+    "magic": "0x15c2"
   },
   {
     "system": 2,
     "name": "Super Mario Advance 3: Yoshi's Island",
-    "crc": "0x40A48276",
-    "signature": "0x8D181803",
-    "magic": "0x15C5"
+    "crc": "0x40a48276",
+    "signature": "0x8d181803",
+    "magic": "0x15c5"
   },
   {
     "system": 2,
     "name": "Super Mario Advance 4: Super Mario Bros. 3",
-    "crc": "0x88DAB27F",
-    "signature": "0xDA960A92",
-    "magic": "0x15CD"
+    "crc": "0x88dab27f",
+    "signature": "0xda960a92",
+    "magic": "0x15cd"
   },
   {
     "system": 2,
     "name": "Sword of Mana",
-    "crc": "0x7F1EAC75",
-    "signature": "0xC9C464B2",
-    "magic": "0x15EF"
+    "crc": "0x7f1eac75",
+    "signature": "0xc9c464b2",
+    "magic": "0x15ef"
   },
   {
     "system": 2,
     "name": "Wario Land 4",
-    "crc": "0xD6141609",
-    "signature": "0x7AC2020A",
-    "magic": "0x16D0"
+    "crc": "0xd6141609",
+    "signature": "0x7ac2020a",
+    "magic": "0x16d0"
   }
 ]

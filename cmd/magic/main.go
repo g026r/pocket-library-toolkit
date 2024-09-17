@@ -57,10 +57,10 @@ func writeNewFiles(internal map[util.System][]model.Entry) error {
 		}
 		j, err := os.Create(fmt.Sprintf("%s/%s.json", d, strings.ToLower(k.String())))
 		if err := io.SaveInternal(j, v); err != nil {
-			j.Close()
+			_ = j.Close()
 			return err
 		}
-		j.Close()
+		_ = j.Close()
 
 		m, err := os.Create(fmt.Sprintf("%s/%s.md", d, strings.ToLower(k.String())))
 		if err != nil {
@@ -71,20 +71,20 @@ func writeNewFiles(internal map[util.System][]model.Entry) error {
 				m.Close()
 				return err
 			}
-			if _, err := m.WriteString(fmt.Sprintf("- CRC32: `%08x`\n", e.Crc32)); err != nil {
-				m.Close()
+			if _, err := m.WriteString(fmt.Sprintf("- CRC32: `0x%08x`\n", e.Crc32)); err != nil {
+				_ = m.Close()
 				return err
 			}
-			if _, err := m.WriteString(fmt.Sprintf("- Signature: `%08x`\n", e.Sig)); err != nil {
-				m.Close()
+			if _, err := m.WriteString(fmt.Sprintf("- Signature: `0x%08x`\n", e.Sig)); err != nil {
+				_ = m.Close()
 				return err
 			}
-			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `%04x`\n\n", e.Magic)); err != nil {
+			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `0x%04x`\n\n", e.Magic)); err != nil {
 				m.Close()
 				return err
 			}
 		}
-		m.Close()
+		_ = m.Close()
 	}
 	return nil
 }
