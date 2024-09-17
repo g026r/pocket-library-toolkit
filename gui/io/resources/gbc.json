@@ -36,6 +36,13 @@
   },
   {
     "system": 1,
+    "name": "Donkey Kong 2001",
+    "crc": "0xcb065eba",
+    "signature": "0xc8271fcb",
+    "magic": "0x0763"
+  },
+  {
+    "system": 1,
     "name": "Doraemon no Quiz Boy",
     "crc": "0x3bbf9ea8",
     "signature": "0x9b1b3096",

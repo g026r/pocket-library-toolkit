@@ -30,6 +30,12 @@
 - Signature: `0x3e16f9de`
 - Magic Number: `0x072f`
 
+## Donkey Kong 2001
+
+- CRC32: `0xcb065eba`
+- Signature: `0xc8271fcb`
+- Magic Number: `0x0763`
+
 ## Doraemon no Quiz Boy
 
 - CRC32: `0x3bbf9ea8`
@@ -143,3 +149,4 @@
 - CRC32: `0x480d0259`
 - Signature: `0xbf38ca32`
 - Magic Number: `0x0ba1`
+
