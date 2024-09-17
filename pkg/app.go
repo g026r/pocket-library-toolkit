@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/binary"
 	"encoding/hex"
-	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -547,7 +546,7 @@ func (a *Application) regenSingle() error {
 
 		sys := e.System.ThumbFile()
 		img, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
-		if errors.Is(err, os.ErrNotExist) {
+		if os.IsNotExist(err) {
 			fmt.Printf("\n%s\n", fmt.Sprintf(goterm.Color("Error: %s/%08x.bin does not exist", goterm.YELLOW), strings.ToLower(sys.String()), e.Crc32))
 			return nil
 		} else if err != nil {
@@ -591,7 +590,7 @@ func (a *Application) regenMissing() error {
 		}
 
 		img, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
-		if errors.Is(err, os.ErrNotExist) {
+		if os.IsNotExist(err) {
 			continue // Doesn't exist is fine; just continue TODO: log?
 		} else if err != nil {
 			a.Thumbs = clone
@@ -617,7 +616,7 @@ func (a *Application) regenerate() error {
 		sys := e.System.ThumbFile()
 
 		i, err := model.GenerateThumbnail(a.RootDir, sys, e.Crc32)
-		if errors.Is(err, os.ErrNotExist) {
+		if os.IsNotExist(err) {
 			continue // TODO: log?
 		} else if err != nil {
 			a.Thumbs = clone
@@ -670,7 +669,7 @@ func (a *Application) generateAll() error {
 	for _, sys := range util.ValidThumbsFiles {
 		fmt.Printf("Parsing %s", sys.String())
 		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", a.RootDir, strings.ToLower(sys.String())))
-		if errors.Is(err, os.ErrNotExist) {
+		if os.IsNotExist(err) {
 			// Directory doesn't exist. Just continue
 			continue
 		} else if err != nil {

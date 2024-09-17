@@ -2,12 +2,9 @@ package model
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"image"
-	"io"
 	"io/fs"
-	"os"
 	"strings"
 
 	"github.com/disintegration/imaging"
@@ -29,85 +26,8 @@ type Thumbnails struct {
 	Images   []Image
 }
 type Image struct {
-	address uint32 // address is only used when initially loading the file // TODO: Replace this with an address,crc32 tuple when loading?
-	Crc32   uint32
-	Image   []byte
-}
-
-func LoadThumbnails(fs fs.FS) (map[util.System]Thumbnails, error) {
-	// Initialize our map
-	m := make(map[util.System]Thumbnails)
-
-	for _, k := range util.ValidThumbsFiles { // We're going to modify the values, so only range over the keys
-		f, err := util.ReadSeeker(fs, fmt.Sprintf("%s_thumbs.bin", strings.ToLower(k.String())))
-		if errors.Is(err, os.ErrNotExist) {
-			continue // It's possible for some systems to not have thumbnails yet. Just continue
-		} else if err != nil {
-			return nil, err
-		}
-		defer f.Close() // We will close this manually as well, due to being in a loop. But this is for the early returns.
-
-		var header uint32
-		if err := binary.Read(f, binary.LittleEndian, &header); err != nil {
-			return nil, err
-		}
-		if header != ThumbnailHeader {
-			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), util.ErrUnrecognizedFileFormat)
-		}
-		if err := binary.Read(f, binary.LittleEndian, &header); err != nil {
-			return nil, err
-		}
-		if header != UnknownWord {
-			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), util.ErrUnrecognizedFileFormat)
-		}
-
-		var num uint32
-		if err := binary.Read(f, binary.LittleEndian, &num); err != nil {
-			return nil, err
-		}
-
-		t := Thumbnails{
-			Modified: false,
-			Images:   make([]Image, 0),
-		}
-		if num != 0 { // Only perform these steps if there are images
-			// Read all the image addresses
-			for range num {
-				img := Image{}
-				if err := binary.Read(f, binary.LittleEndian, &img.Crc32); err != nil {
-					return nil, err
-				}
-				if err := binary.Read(f, binary.LittleEndian, &img.address); err != nil {
-					return nil, err
-				}
-				t.Images = append(t.Images, img)
-			}
-
-			if _, err := f.Seek(int64(t.Images[0].address), io.SeekStart); err != nil {
-				return nil, err
-			}
-			// Read each of the individual image entries.
-			for i := range t.Images {
-				if i+1 < len(t.Images) {
-					t.Images[i].Image = make([]byte, t.Images[i+1].address-t.Images[i].address)
-				} else {
-					// This does present the problem that a file with the wrong number of entries in the count will wind up with one really weird
-					// entry. But not sure that can really be helped, since there isn't a terminator or image size field for the entries
-					end, _ := f.Seek(0, io.SeekEnd) // since a fs.File doesn't have a Size() func, we have to do it this way.
-					t.Images[i].Image = make([]byte, end-int64(t.Images[i].address))
-					_, _ = f.Seek(int64(t.Images[i].address), io.SeekStart)
-				}
-				if n, err := f.Read(t.Images[i].Image); err != nil || n != len(t.Images[i].Image) {
-					return nil, fmt.Errorf("read error: %w", err)
-				}
-			}
-		}
-		m[k] = t
-
-		_ = f.Close()
-	}
-
-	return m, nil
+	Crc32 uint32
+	Image []byte
 }
 
 func GenerateThumbnail(dir fs.FS, sys util.System, crc32 uint32) (Image, error) {

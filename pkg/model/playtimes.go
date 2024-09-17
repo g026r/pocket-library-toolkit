@@ -2,12 +2,8 @@ package model
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
-	"io/fs"
 	"time"
-
-	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
 const PlaytimeHeader uint32 = 0x01545050
@@ -17,44 +13,15 @@ type PlayTime struct {
 	Played uint32
 }
 
-func ReadPlayTimes(fs fs.FS) (map[uint32]PlayTime, error) {
-	f, err := util.ReadSeeker(fs, "playtimes.bin")
-	if err != nil {
-		return nil, err
+func (p *PlayTime) ReadFrom(r io.Reader) (int64, error) {
+	if err := binary.Read(r, binary.LittleEndian, &p.Added); err != nil {
+		return 0, err
 	}
-	defer f.Close()
-
-	var header uint32
-	if err := binary.Read(f, binary.BigEndian, &header); err != nil {
-		return nil, err
-	}
-	if header != PlaytimeHeader {
-		return nil, fmt.Errorf("playtimes.bin: %w", util.ErrUnrecognizedFileFormat)
+	if err := binary.Read(r, binary.LittleEndian, &p.Played); err != nil {
+		return 4, err
 	}
 
-	var num uint32
-	if err := binary.Read(f, binary.LittleEndian, &num); err != nil {
-		return nil, err
-	}
-
-	playtimes := make(map[uint32]PlayTime, num)
-	var sig uint32
-	for range num {
-		v := PlayTime{}
-
-		if err := binary.Read(f, binary.LittleEndian, &sig); err != nil {
-			return nil, err
-		}
-		if err := binary.Read(f, binary.LittleEndian, &v.Added); err != nil {
-			return nil, err
-		}
-		if err := binary.Read(f, binary.LittleEndian, &v.Played); err != nil {
-			return nil, err
-		}
-		playtimes[sig] = v
-	}
-
-	return playtimes, nil
+	return 8, nil
 }
 
 func (p PlayTime) WriteTo(w io.Writer) (int64, error) {

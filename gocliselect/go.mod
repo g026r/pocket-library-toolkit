@@ -1,6 +1,6 @@
 module github.com/nexidian/gocliselect
 
-go 1.23.1
+go 1.22
 
 require (
 	github.com/buger/goterm v1.0.4
