@@ -26,3 +26,5 @@ go.work.sum
 /pocket-library-editor.iml
 /vendor/
 /.idea/
+/library-editor/
+/pocket-editor.json

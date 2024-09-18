@@ -9,7 +9,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/g026r/pocket-library-editor/gui/io"
+	"github.com/g026r/pocket-library-editor/pkg/io"
 	"github.com/g026r/pocket-library-editor/pkg/model"
 	"github.com/g026r/pocket-library-editor/pkg/util"
 )

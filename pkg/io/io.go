@@ -295,7 +295,7 @@ func LoadInternal() (map[util.System][]model.Entry, error) {
 	return library, nil
 }
 
-func SaveLibrary(e []model.Entry, t map[uint32]model.PlayTime) error {
+func SaveLibrary(e []model.Entry, t map[uint32]model.PlayTime, tick chan any) error {
 	wd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -361,12 +361,15 @@ func SaveLibrary(e []model.Entry, t map[uint32]model.PlayTime) error {
 		if _, err := t[entry.Sig].WriteTo(p); err != nil {
 			return err
 		}
+		if tick != nil {
+			tick <- true
+		}
 	}
 
 	return nil
 }
 
-func SaveThumbs(t map[util.System]model.Thumbnails) error {
+func SaveThumbs(t map[util.System]model.Thumbnails, tick chan any) error {
 	wd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -382,7 +385,7 @@ func SaveThumbs(t map[util.System]model.Thumbnails) error {
 			return err
 		}
 
-		err = writeThumbsFile(f, thumbs.Images)
+		err = writeThumbsFile(f, thumbs.Images, tick)
 		_ = f.Close() // Close explicitly rather than defer as defer in a loop is not best practice
 		if err != nil {
 			return err
@@ -391,7 +394,7 @@ func SaveThumbs(t map[util.System]model.Thumbnails) error {
 	return nil
 }
 
-func writeThumbsFile(t io.Writer, img []model.Image) error {
+func writeThumbsFile(t io.Writer, img []model.Image, tick chan any) error {
 	if err := binary.Write(t, binary.LittleEndian, ThumbnailHeader); err != nil {
 		return err
 	}
@@ -419,6 +422,9 @@ func writeThumbsFile(t io.Writer, img []model.Image) error {
 	for _, j := range img {
 		if _, err := t.Write(j.Image); err != nil {
 			return err
+		}
+		if tick != nil {
+			tick <- true
 		}
 	}
 

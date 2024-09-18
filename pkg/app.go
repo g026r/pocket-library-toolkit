@@ -374,7 +374,7 @@ func (a *Application) edit() error {
 }
 
 // editEntry pops up the edit entry dialog for a given model.Entry & returns the editted result.
-// It's in here rather than in model.Entry to keep the UI code out of the model package
+// It's in here rather than in model.Entry to keep the UI code out of the ui package
 func editEntry(e model.Entry, advanced bool) (model.Entry, error) {
 	clone := e // In case the user cancels
 	ClearScreen()
