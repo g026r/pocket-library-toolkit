@@ -84,6 +84,7 @@ func NewModel() tea.Model {
 	prog := progress.New(progress.WithScaledGradient("#FF7CCB", "#FDFF8C"))
 	prog.Width = 100
 	return model{
+		stack:    &stack{make([]screen, 0)},
 		spinner:  spinner.New(spinner.WithSpinner(spinner.MiniDot)),
 		progress: prog,
 	}
