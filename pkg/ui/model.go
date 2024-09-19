@@ -31,7 +31,6 @@ const (
 	GameList    screen = iota
 	AddScreen   screen = iota
 	EditScreen  screen = iota
-	GenerateAll screen = iota
 	Saving      screen = iota
 	Waiting     screen = iota
 	FatalError  screen = iota
@@ -41,12 +40,12 @@ var (
 	selected = lipgloss.NewStyle().Bold(true)
 
 	mainMenuOptions = []string{"Library", "Thumbnails", "Settings", "Save & Quit", "Quit"}
-	libraryOptions  = []string{"Add entry", "Edit entry", "Remove entry", "Fix played times"}
-	thumbOptions    = []string{"Generate missing thumbnails", "Regenerate game thumbnail", "Regenerate complete library", "Prune orphaned thumbnails", "Generate complete system thumbnails"}
+	libraryOptions  = []string{"Add entry", "Edit entry", "Remove entry", "Fix played times", "Back"}
+	thumbOptions    = []string{"Generate missing thumbnails", "Regenerate game thumbnail", "Regenerate complete library", "Prune orphaned thumbnails", "Generate complete system thumbnails", "Back"}
 
 	// updates is used for passing changes to the internal objects (library, played times, thumbnails))
-	// It could probably have been made simpler, except we're also using it on the init call, which is when the config &
-	// root dir also get updated
+	// It could probably have been made simpler — a struct containing only the lists & maps — except we're also using it
+	// on the init call, which is when the config & root dir also get updated
 	updates = make(chan model, 1)
 )
 
@@ -61,10 +60,6 @@ type updateMsg struct{}
 
 type tickMsg time.Time
 
-type stack struct {
-	s []screen
-}
-
 type model struct {
 	RootDir   fs.FS
 	Entries   []model2.Entry
@@ -72,7 +67,7 @@ type model struct {
 	Thumbs    map[util.System]model2.Thumbnails
 	io.Config
 	Internal map[util.System][]model2.Entry // Internal is a map of all known possible entries, grouped by system. For eventual use with add, maybe.
-	stack                                   // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
+	*stack                                  // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
 	spinner  spinner.Model                  // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
 	progress progress.Model                 // progress is used for calls where we do know the percentage
 	percent  *float64
@@ -85,8 +80,93 @@ type model struct {
 	thumb    int    // thumb stores the position of the cursor on the thumbnails menu for when we go back up to it
 }
 
+func NewModel() tea.Model {
+	prog := progress.New(progress.WithScaledGradient("#FF7CCB", "#FDFF8C"))
+	prog.Width = 100
+	return model{
+		spinner:  spinner.New(spinner.WithSpinner(spinner.MiniDot)),
+		progress: prog,
+	}
+}
+
 func (m model) Init() tea.Cmd {
 	return tea.Batch(m.spinner.Tick, m.initSystem)
+}
+
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	// Make sure these keys always quit
+	switch msg := msg.(type) {
+	case updateMsg:
+		m = <-updates
+		m.anyKey = true
+	case tea.KeyMsg:
+		return keyMsg(m, msg)
+	case spinner.TickMsg:
+		if m.percent != nil {
+			break // percent gets set as the last step of initialization. If it's not nil, we can stop the spinner.
+		}
+		var cmd tea.Cmd
+		m.spinner, cmd = m.spinner.Update(msg)
+		return m, cmd
+	case tickMsg:
+		if *m.percent < 1.0 {
+			return m, tea.Batch(m.progress.SetPercent(*m.percent), tickCmd())
+		}
+		return m, m.progress.SetPercent(1.0)
+	case progress.FrameMsg:
+		progressModel, cmd := m.progress.Update(msg)
+		m.progress = progressModel.(progress.Model)
+		return m, cmd
+	case tea.WindowSizeMsg:
+		m.progress.Width = msg.Width - 8 // FIXME: This doesn't seem to fire unless I actually resize the window?
+		return m, nil
+	case initDoneMsg:
+		m = <-updates    // Replace the ui we have with the new, initialized one. Fine in this case as we return m further down the method.
+		m.Push(MainMenu) // Finished initializing. Replace the stack with a new one containing only the main menu
+		return m, tea.ClearScreen
+	case errMsg:
+		m.err = msg.err
+		if msg.fatal {
+			m.Push(FatalError)
+			return m, tea.Sequence(tea.ExitAltScreen, tea.Quit) // Need to exit alt screen first or the error message doesn't appear for long enough
+		}
+		tea.Println()
+	}
+
+	return m, nil
+}
+
+func (m model) View() (s string) {
+	switch m.Peek() {
+	case Waiting:
+		s = fmt.Sprintf("%s\n\n%s", m.wait, m.progress.ViewAs(*m.percent))
+		if m.anyKey {
+			s = fmt.Sprintf("%s\n\nPress any key to continue.", s)
+		}
+	case Saving:
+		s = fmt.Sprintf("Saving your Pocket library\n\n%s", m.progress.ViewAs(*m.percent))
+	case FatalError:
+		s = fmt.Sprintf("FATAL ERROR: %v\n", m.err)
+	case MainMenu:
+		s = menuView(m, "Welcome to the Analogue Pocket library editor", mainMenuOptions)
+	case LibraryMenu:
+		opt := libraryOptions
+		if !m.ShowAdd {
+			opt = libraryOptions[1:]
+		}
+		s = menuView(m, "Main > Library", opt)
+	case ThumbMenu:
+		s = menuView(m, "Main > Thumbs", thumbOptions)
+	case ConfigMenu:
+		s = settingsView(m, "Main > Settings")
+
+	case GameList, AddScreen, EditScreen:
+		fallthrough
+	default:
+		s = fmt.Sprintf("Welcome to the default zone!")
+	}
+
+	return
 }
 
 // initSystem loads all our data from disk
@@ -362,49 +442,6 @@ func (m model) regenLib() tea.Msg {
 	return updateMsg{}
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	// Make sure these keys always quit
-	switch msg := msg.(type) {
-	case updateMsg:
-		m = <-updates
-		m.anyKey = true
-	case tea.KeyMsg:
-		return keyMsg(m, msg)
-	case spinner.TickMsg:
-		if m.percent != nil {
-			break // percent gets set as the last step of initialization. If it's not nil, we can stop the spinner.
-		}
-		var cmd tea.Cmd
-		m.spinner, cmd = m.spinner.Update(msg)
-		return m, cmd
-	case tickMsg:
-		if *m.percent < 1.0 {
-			return m, tea.Batch(m.progress.SetPercent(*m.percent), tickCmd())
-		}
-		return m, m.progress.SetPercent(1.0)
-	case progress.FrameMsg:
-		progressModel, cmd := m.progress.Update(msg)
-		m.progress = progressModel.(progress.Model)
-		return m, cmd
-	case tea.WindowSizeMsg:
-		m.progress.Width = msg.Width - 8 // FIXME: This doesn't seem to fire unless I actually resize the window?
-		return m, nil
-	case initDoneMsg:
-		m = <-updates    // Replace the ui we have with the new, initialized one. Fine in this case as we return m further down the method.
-		m.Push(MainMenu) // Finished initializing. Replace the stack with a new one containing only the main menu
-		return m, tea.ClearScreen
-	case errMsg:
-		m.err = msg.err
-		if msg.fatal {
-			m.Push(FatalError)
-			return m, tea.Sequence(tea.ExitAltScreen, tea.Quit) // Need to exit alt screen first or the error message doesn't appear for long enough
-		}
-		tea.Println()
-	}
-
-	return m, nil
-}
-
 // keyMsg handles all the Update logic for key presses
 func keyMsg(m model, msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch k := msg.String(); k {
@@ -444,19 +481,13 @@ func keyMsg(m model, msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		case ThumbMenu:
 			return thumbMenu(m)
 		case ConfigMenu:
-			switch m.pos {
-			case 0:
-				m.RemoveImages = !m.RemoveImages
-			case 1:
-				m.AdvancedEditing = !m.AdvancedEditing
-			case 2:
-				m.ShowAdd = !m.ShowAdd
-			}
+			return configMenu(m)
 		}
 	}
 	return m, nil
 }
 
+// back handles moving the UI back up one screen
 func back(m model) (tea.Model, tea.Cmd) {
 	switch m.Pop() {
 	//case MainMenu:
@@ -475,6 +506,7 @@ func back(m model) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
+// mainMenu handles enter / space on the main menu
 func mainMenu(m model) (tea.Model, tea.Cmd) {
 	m.main = m.pos
 	switch m.pos {
@@ -489,13 +521,14 @@ func mainMenu(m model) (tea.Model, tea.Cmd) {
 		m.Push(ConfigMenu)
 	case 3: // Save & Quit
 		m.Push(Saving)
-		return m, tea.Batch(m.save, tickCmd()) // TODO: Progress bar?
+		return m, tea.Batch(m.save, tickCmd())
 	case 4: // Quit
 		return m, tea.Quit
 	}
 	return m, nil
 }
 
+// libMenu handles enter / space on the library menu
 func libMenu(m model) (tea.Model, tea.Cmd) {
 	m.lib = m.pos
 	pos := m.pos
@@ -517,10 +550,13 @@ func libMenu(m model) (tea.Model, tea.Cmd) {
 		m.Push(Waiting)
 		m.wait = "Fixing played times"
 		return m, tea.Batch(m.playfix, tickCmd())
+	case 4: // back
+		return back(m)
 	}
 	return m, nil
 }
 
+// thumbMenu handles enter / space on the thumbnails menu
 func thumbMenu(m model) (tea.Model, tea.Cmd) {
 	m.thumb = m.pos
 	switch m.pos {
@@ -543,11 +579,28 @@ func thumbMenu(m model) (tea.Model, tea.Cmd) {
 		m.Push(Waiting)
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
+	case 5: // Back
+		return back(m)
 	}
 	return m, nil
 }
 
-// moves the cursor up or down in a menu, with code to prevent it from going beyond the boundaries
+// configMenu handles enter / space on the settings menu
+func configMenu(m model) (tea.Model, tea.Cmd) {
+	switch m.pos {
+	case 0:
+		m.RemoveImages = !m.RemoveImages
+	case 1:
+		m.AdvancedEditing = !m.AdvancedEditing
+	case 2:
+		m.ShowAdd = !m.ShowAdd
+	case 3:
+		return back(m)
+	}
+	return m, nil
+}
+
+// adjustCursor moves the cursor up or down in a menu, with code to prevent it from going beyond the boundaries
 func adjustCursor(m model, i int) int {
 	pos := m.pos + i
 	if pos <= 0 {
@@ -573,48 +626,15 @@ func adjustCursor(m model, i int) int {
 				}
 			}
 		case ConfigMenu:
-			if pos > 2 {
-				pos = 2
+			if pos > 3 {
+				pos = 3
 			}
 		}
 	}
-
 	return pos
 }
 
-func (m model) View() (s string) {
-	switch m.Peek() {
-	case Waiting:
-		s = fmt.Sprintf("%s\n\n%s", m.wait, m.progress.ViewAs(*m.percent))
-		if m.anyKey {
-			s = fmt.Sprintf("%s\n\nPress any key to continue.", s)
-		}
-	case Saving:
-		s = fmt.Sprintf("Saving your Pocket library\n\n%s", m.progress.ViewAs(*m.percent))
-	case FatalError:
-		s = fmt.Sprintf("FATAL ERROR: %v\n", m.err)
-	case MainMenu:
-		s = menuView(m, "Welcome to the Analogue Pocket library editor", mainMenuOptions)
-	case LibraryMenu:
-		opt := libraryOptions
-		if !m.ShowAdd {
-			opt = libraryOptions[1:]
-		}
-		s = menuView(m, "Main > Library", opt)
-	case ThumbMenu:
-		s = menuView(m, "Main > Thumbs", thumbOptions)
-	case ConfigMenu:
-		s = settingsView(m, "Main > Settings")
-
-	case GameList, AddScreen, EditScreen, GenerateAll:
-		fallthrough
-	default:
-		s = fmt.Sprintf("Welcome to the default zone!")
-	}
-
-	return
-}
-
+// menuView is code for rendering a generic menu; used by the main, library, and thumbnail menus but not the settings
 func menuView(m model, title string, options []string) string {
 	tpl := "%s\n\n%s\n"
 
@@ -626,11 +646,13 @@ func menuView(m model, title string, options []string) string {
 	return fmt.Sprintf(tpl, title, choices)
 }
 
+// settingsView is used for rendering the settings menu. It is slightly different in that it needs to have visual checkboxes
 func settingsView(m model, title string) string {
 	configOptions := []string{
 		"[%s] Remove thumbnail when removing game",
 		"[%s] Show advanced library editing fields (Experimental)",
-		"[%s] Show add library entry (Experimental)"}
+		"[%s] Show add library entry (Experimental)",
+		"Back"}
 	if m.RemoveImages {
 		configOptions[0] = fmt.Sprintf(configOptions[0], "X")
 	} else {
@@ -650,6 +672,7 @@ func settingsView(m model, title string) string {
 	return menuView(m, title, configOptions)
 }
 
+// pointer renders the carat that points to the currently selected menu option.
 func pointer(label string, checked bool) string {
 	if checked {
 		return selected.Render("> " + label)
@@ -657,10 +680,18 @@ func pointer(label string, checked bool) string {
 	return fmt.Sprintf("  %s", label)
 }
 
+// tickCmd is used by the progress bar. It fires 1/5 of a second after it's started, and is necessary to call again if
+// another tick is desired
 func tickCmd() tea.Cmd {
 	return tea.Tick(time.Second/5, func(t time.Time) tea.Msg {
 		return tickMsg(t)
 	})
+}
+
+// stack is a simple struct for keeping track of the screen we are currently on & the ones that came before it.
+// It's probably overkill. Could have just used a different constant for the edit game, remove game, & regen thumbnail screens.
+type stack struct {
+	s []screen
 }
 
 func (s *stack) Peek() screen {
@@ -681,13 +712,4 @@ func (s *stack) Pop() screen {
 
 func (s *stack) Push(v screen) {
 	s.s = append(s.s, v)
-}
-
-func NewModel() tea.Model {
-	prog := progress.New(progress.WithScaledGradient("#FF7CCB", "#FDFF8C"))
-	prog.Width = 100
-	return model{
-		spinner:  spinner.New(spinner.WithSpinner(spinner.MiniDot)),
-		progress: prog,
-	}
 }
