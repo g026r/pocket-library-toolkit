@@ -2,6 +2,8 @@ package ui
 
 import (
 	"testing"
+
+	model2 "github.com/g026r/pocket-library-editor/pkg/model"
 )
 
 func TestStack_Peek(t *testing.T) {
@@ -79,5 +81,30 @@ func TestStack_Push(t *testing.T) {
 	}
 	if sut.Peek() != EditScreen {
 		t.Errorf("Expected %d got %d", EditScreen, sut.Peek())
+	}
+}
+
+func TestApplication_fixPlayTimes(t *testing.T) {
+	t.Parallel()
+	var p float64
+	sut := model{
+		updates: make(chan model, 1),
+		percent: &p,
+		PlayTimes: map[uint32]model2.PlayTime{
+			0x0: {Played: 0x0000ABCD}, 0x1: {Played: 0x0100ABCD}, 0x40: {Played: 0x0400ABCD}, 0xF: {Played: 0xFF00ABCD},
+		}}
+
+	msg := sut.playfix()
+	switch msg.(type) {
+	case updateMsg: // Don't need to do anything
+	default:
+		t.Errorf("Expected updateMsg got %v", msg)
+	}
+
+	sut = <-sut.updates
+	for k, v := range sut.PlayTimes {
+		if v.Played != 0x0000ABCD {
+			t.Errorf("0x%02x Expected 0x0000ABCD; got 0x%08x", k, v.Played)
+		}
 	}
 }

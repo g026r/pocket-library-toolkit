@@ -24,6 +24,10 @@ type Entry struct {
 	Name  string
 }
 
+func (e Entry) String() string {
+	return e.Name
+}
+
 // CalculateLength returns the length in bytes of the library entry
 // includes any extra padding needed to get it to a word boundary & can be used to calculate offsets
 func (e Entry) CalculateLength() uint16 {

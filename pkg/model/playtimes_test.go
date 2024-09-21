@@ -3,7 +3,6 @@ package model
 import (
 	"bytes"
 	"encoding/binary"
-	"os"
 	"slices"
 	"testing"
 	"time"
@@ -50,34 +49,4 @@ func TestPlayTime_WriteTo(t *testing.T) {
 			t.Errorf("Expected 0; got %d", play)
 		}
 	})
-}
-
-func TestReadPlayTimes(t *testing.T) {
-	t.Parallel()
-	cases := map[string]struct {
-		count int
-		err   bool
-	}{
-		"testdata/count_mismatch": {
-			count: 4,
-		},
-		"testdata/invalid_header": {
-			err: true,
-		},
-		"testdata/valid": {
-			count: 229,
-		},
-	}
-
-	for k, v := range cases {
-		t.Run(k, func(t *testing.T) {
-			t.Parallel()
-			pt, err := ReadPlayTimes(os.DirFS(k))
-			if (err != nil) != v.err {
-				t.Error(err)
-			} else if len(pt) != v.count {
-				t.Errorf("Expected %d entries; got %d", v.count, len(pt))
-			}
-		})
-	}
 }

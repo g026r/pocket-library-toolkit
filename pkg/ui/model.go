@@ -24,29 +24,35 @@ import (
 type screen int
 
 const (
-	MainMenu    screen = iota
-	LibraryMenu screen = iota
-	ThumbMenu   screen = iota
-	ConfigMenu  screen = iota
-	GameList    screen = iota
-	AddScreen   screen = iota
-	EditScreen  screen = iota
-	Saving      screen = iota
-	Waiting     screen = iota
-	FatalError  screen = iota
+	MainMenu     screen = iota
+	LibraryMenu  screen = iota
+	ThumbMenu    screen = iota
+	ConfigMenu   screen = iota
+	GameList     screen = iota
+	AddScreen    screen = iota
+	EditScreen   screen = iota
+	Saving       screen = iota
+	Waiting      screen = iota
+	Initializing screen = iota
+	FatalError   screen = iota
 )
 
+type menuItem struct {
+	text string
+	key  menuKey
+}
+
+func (m menuItem) String() string { // TODO: Keep this? Was originally for odd config stuff
+	return m.text
+}
+
 var (
-	selected = lipgloss.NewStyle().Bold(true)
+	caption  = lipgloss.NewStyle().Bold(true)
+	selected = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"})
 
-	mainMenuOptions = []string{"Library", "Thumbnails", "Settings", "Save & Quit", "Quit"}
-	libraryOptions  = []string{"Add entry", "Edit entry", "Remove entry", "Fix played times", "Back"}
-	thumbOptions    = []string{"Generate missing thumbnails", "Regenerate game thumbnail", "Regenerate complete library", "Prune orphaned thumbnails", "Generate complete system thumbnails", "Back"}
-
-	// updates is used for passing changes to the internal objects (library, played times, thumbnails))
-	// It could probably have been made simpler — a struct containing only the lists & maps — except we're also using it
-	// on the init call, which is when the config & root dir also get updated
-	updates = make(chan model, 1)
+	mainMenuOptions = []menuItem{{"Library", lib}, {"Thumbnails", thumbs}, {"Settings", config}, {"Save & Quit", save}, {"Quit", quit}}
+	libraryOptions  = []menuItem{{"Add entry", add}, {"Edit entry", edit}, {"Remove entry", rm}, {"Fix played times", fix}, {"Back", back}}
+	thumbOptions    = []menuItem{{"Generate missing thumbnails", missing}, {"Regenerate game thumbnail", single}, {"Regenerate complete library", lib}, {"Prune orphaned thumbnails", prune}, {"Generate complete system thumbnails", all}, {"Back", back}}
 )
 
 type errMsg struct {
@@ -61,6 +67,7 @@ type updateMsg struct{}
 type tickMsg time.Time
 
 type model struct {
+	updates   chan model // updates is used for passing updates to the model rather than using pointers
 	RootDir   fs.FS
 	Entries   []model2.Entry
 	PlayTimes map[uint32]model2.PlayTime
@@ -84,7 +91,8 @@ func NewModel() tea.Model {
 	prog := progress.New(progress.WithScaledGradient("#FF7CCB", "#FDFF8C"))
 	prog.Width = 100
 	return model{
-		stack:    &stack{make([]screen, 0)},
+		updates:  make(chan model, 1),
+		stack:    &stack{[]screen{Initializing}},
 		spinner:  spinner.New(spinner.WithSpinner(spinner.MiniDot)),
 		progress: prog,
 	}
@@ -98,7 +106,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	// Make sure these keys always quit
 	switch msg := msg.(type) {
 	case updateMsg:
-		m = <-updates
+		m = <-m.updates
 		m.anyKey = true
 	case tea.KeyMsg:
 		return keyMsg(m, msg)
@@ -122,7 +130,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.progress.Width = msg.Width - 8 // FIXME: This doesn't seem to fire unless I actually resize the window?
 		return m, nil
 	case initDoneMsg:
-		m = <-updates    // Replace the ui we have with the new, initialized one. Fine in this case as we return m further down the method.
+		m = <-m.updates // Replace the ui we have with the new, initialized one. Fine in this case as we return m further down the method.
+		m.Clear()
 		m.Push(MainMenu) // Finished initializing. Replace the stack with a new one containing only the main menu
 		return m, tea.ClearScreen
 	case errMsg:
@@ -139,6 +148,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() (s string) {
 	switch m.Peek() {
+	case Initializing:
+		s = fmt.Sprintf(" %s Loading your library. Please wait.", m.spinner.View())
 	case Waiting:
 		s = fmt.Sprintf("%s\n\n%s", m.wait, m.progress.ViewAs(*m.percent))
 		if m.anyKey {
@@ -238,7 +249,7 @@ func (m model) initSystem() tea.Msg {
 	per := 0.0
 	m.percent = &per // Setting this value both prevents nil pointer dereferences & is used as the signal to stop the spinner
 
-	updates <- m
+	m.updates <- m
 	return initDoneMsg{}
 }
 
@@ -248,8 +259,8 @@ func (m model) save() tea.Msg {
 	if err != nil {
 		return err
 	}
-	err = os.Mkdir(fmt.Sprintf("%s/library-editor", wd), 755)
-	if !os.IsExist(err) {
+	err = os.Mkdir(fmt.Sprintf("%s/library-editor", wd), os.ModePerm)
+	if err != nil && !os.IsExist(err) {
 		return errMsg{err, true}
 	}
 
@@ -305,7 +316,7 @@ func (m model) playfix() tea.Msg {
 		*m.percent = ctr / float64(len(m.PlayTimes))
 	}
 	*m.percent = 100.0
-	updates <- m
+	m.updates <- m
 	return updateMsg{}
 }
 
@@ -331,7 +342,7 @@ func (m model) prune() tea.Msg {
 		*m.percent = ctr / total
 	}
 	*m.percent = 100.0
-	updates <- m
+	m.updates <- m
 	return updateMsg{}
 }
 
@@ -388,7 +399,7 @@ func (m model) genFull() tea.Msg {
 		m.Thumbs[sys] = thumbs
 	}
 	*m.percent = 100.0
-	updates <- m
+	m.updates <- m
 	return updateMsg{}
 }
 
@@ -416,7 +427,7 @@ func (m model) genMissing() tea.Msg {
 		*m.percent = ctr / float64(len(m.Entries))
 	}
 	*m.percent = 100.0
-	updates <- m
+	m.updates <- m
 	return updateMsg{}
 }
 
@@ -439,7 +450,7 @@ func (m model) regenLib() tea.Msg {
 		*m.percent = ctr / float64(len(m.Entries))
 	}
 	*m.percent = 100.0
-	updates <- m
+	m.updates <- m
 	return updateMsg{}
 }
 
@@ -455,7 +466,7 @@ func keyMsg(m model, msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		*m.percent = 0.0
 		return m, nil
 	}
-	if m.Peek() == Saving || m.Peek() == Waiting {
+	if m.Peek() == Saving || m.Peek() == Waiting || m.Peek() == Initializing {
 		return m, nil
 	}
 	switch k := msg.String(); k {
@@ -464,13 +475,13 @@ func keyMsg(m model, msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		}
 	case "esc", "backspace": // ESC or backspace always lets us go up a screen. Unless we're at the top screen. Then it quits without saving
-		return back(m)
+		return goBack(m)
 	case "up", "w", "i":
 		m.pos = adjustCursor(m, -1)
 	case "down", "s", "k":
 		m.pos = adjustCursor(m, 1)
 	case "left", "a", "j": // left functions the same as backspace
-		return back(m)
+		return goBack(m)
 	case "right", "d", "l":
 	case "enter", " ":
 		//fmt.Println(m.pos) // FIXME: Debug statement
@@ -489,7 +500,7 @@ func keyMsg(m model, msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 }
 
 // back handles moving the UI back up one screen
-func back(m model) (tea.Model, tea.Cmd) {
+func goBack(m model) (tea.Model, tea.Cmd) {
 	switch m.Pop() {
 	//case MainMenu:
 	//	return m, tea.Quit
@@ -510,20 +521,36 @@ func back(m model) (tea.Model, tea.Cmd) {
 // mainMenu handles enter / space on the main menu
 func mainMenu(m model) (tea.Model, tea.Cmd) {
 	m.main = m.pos
-	switch m.pos {
-	case 0: // Library
+	//switch m.pos {
+	//case 0: // Library
+	//	m.pos = 0
+	//	m.Push(LibraryMenu)
+	//case 1: // Thumbnails
+	//	m.pos = 0
+	//	m.Push(ThumbMenu)
+	//case 2: // Config
+	//	m.pos = 0
+	//	m.Push(ConfigMenu)
+	//case 3: // Save & Quit
+	//	m.Push(Saving)
+	//	return m, tea.Batch(m.save, tickCmd())
+	//case 4: // Quit
+	//	return m, tea.Quit
+	//}
+	switch mainMenuOptions[m.pos].key {
+	case lib:
 		m.pos = 0
 		m.Push(LibraryMenu)
-	case 1: // Thumbnails
+	case thumbs:
 		m.pos = 0
 		m.Push(ThumbMenu)
-	case 2: // Config
+	case config:
 		m.pos = 0
 		m.Push(ConfigMenu)
-	case 3: // Save & Quit
+	case save:
 		m.Push(Saving)
 		return m, tea.Batch(m.save, tickCmd())
-	case 4: // Quit
+	case quit:
 		return m, tea.Quit
 	}
 	return m, nil
@@ -536,23 +563,23 @@ func libMenu(m model) (tea.Model, tea.Cmd) {
 	if !m.ShowAdd { // If the add menu is hidden, bump everything up by 1
 		pos = pos + 1
 	}
-	switch pos {
-	case 0: // Add
+	switch libraryOptions[pos].key {
+	case add: // Add
 		// TODO
-	case 1: // Edit
+	case edit: // Edit
 		m.pos = 0
 		// TODO
 		//m.Push(ThumbMenu)
-	case 2: // Remove
+	case rm: // Remove
 		m.pos = 0
 		// TODO
 		//m.Push(ConfigMenu)
-	case 3: // Fix played times
+	case fix: // Fix played times
 		m.Push(Waiting)
 		m.wait = "Fixing played times"
 		return m, tea.Batch(m.playfix, tickCmd())
-	case 4: // back
-		return back(m)
+	case back: // back
+		return goBack(m)
 	}
 	return m, nil
 }
@@ -560,33 +587,34 @@ func libMenu(m model) (tea.Model, tea.Cmd) {
 // thumbMenu handles enter / space on the thumbnails menu
 func thumbMenu(m model) (tea.Model, tea.Cmd) {
 	m.thumb = m.pos
-	switch m.pos {
-	case 0: // Generate missing
+	switch thumbOptions[m.pos].key {
+	case missing: // Generate missing
 		m.Push(Waiting)
 		m.wait = "Generating missing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
-	case 1: // Generate single
+	case single: // Generate single
 		m.pos = 0
 		//m.Push(ThumbMenu)
-	case 2: // Regenerate library
+	case lib: // Regenerate library
 		m.Push(Waiting)
 		m.wait = "Regenerating all thumbnails for library"
 		return m, tea.Batch(m.regenLib, tickCmd())
-	case 3: // Prune orphaned
+	case prune: // Prune orphaned
 		m.Push(Waiting)
 		m.wait = "Removing orphaned thumbs.bin entries"
 		return m, tea.Batch(m.prune, tickCmd())
-	case 4: // Generate full library
+	case all: // Generate full library
 		m.Push(Waiting)
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
-	case 5: // Back
-		return back(m)
+	case back: // Back
+		return goBack(m)
 	}
 	return m, nil
 }
 
 // configMenu handles enter / space on the settings menu
+// TODO: Use keys instead?
 func configMenu(m model) (tea.Model, tea.Cmd) {
 	switch m.pos {
 	case 0:
@@ -596,7 +624,7 @@ func configMenu(m model) (tea.Model, tea.Cmd) {
 	case 2:
 		m.ShowAdd = !m.ShowAdd
 	case 3:
-		return back(m)
+		return goBack(m)
 	}
 	return m, nil
 }
@@ -636,44 +664,44 @@ func adjustCursor(m model, i int) int {
 }
 
 // menuView is code for rendering a generic menu; used by the main, library, and thumbnail menus but not the settings
-func menuView(m model, title string, options []string) string {
+func menuView(m model, title string, options []menuItem) string {
 	tpl := "%s\n\n%s\n"
 
 	var choices string
 	for i, s := range options {
-		choices = choices + fmt.Sprintf("%s\n", pointer(s, m.pos == i))
+		choices = choices + fmt.Sprintf("%s\n", pointer(s.String(), m.pos == i))
 	}
 
-	return fmt.Sprintf(tpl, title, choices)
+	return fmt.Sprintf(tpl, caption.Render(title), choices)
 }
 
 // settingsView is used for rendering the settings menu. It is slightly different in that it needs to have visual checkboxes
 func settingsView(m model, title string) string {
-	configOptions := []string{
-		"[%s] Remove thumbnail when removing game",
-		"[%s] Show advanced library editing fields (Experimental)",
-		"[%s] Show add library entry (Experimental)",
-		"Back"}
+	configOptions := []menuItem{
+		{"[%s] Remove thumbnail when removing game", "rm"},
+		{"[%s] Show advanced library editing fields (Experimental)", "advanced"},
+		{"[%s] Show add library entry (Experimental)", "add"},
+		{"Back", "back"}}
 	if m.RemoveImages {
-		configOptions[0] = fmt.Sprintf(configOptions[0], "X")
+		configOptions[0].text = fmt.Sprintf(configOptions[0].text, "X")
 	} else {
-		configOptions[0] = fmt.Sprintf(configOptions[0], " ")
+		configOptions[0].text = fmt.Sprintf(configOptions[0].text, " ")
 	}
 	if m.AdvancedEditing {
-		configOptions[1] = fmt.Sprintf(configOptions[1], "X")
+		configOptions[1].text = fmt.Sprintf(configOptions[1].text, "X")
 	} else {
-		configOptions[1] = fmt.Sprintf(configOptions[1], " ")
+		configOptions[1].text = fmt.Sprintf(configOptions[1].text, " ")
 	}
 	if m.ShowAdd {
-		configOptions[2] = fmt.Sprintf(configOptions[2], "X")
+		configOptions[2].text = fmt.Sprintf(configOptions[2].text, "X")
 	} else {
-		configOptions[2] = fmt.Sprintf(configOptions[2], " ")
+		configOptions[2].text = fmt.Sprintf(configOptions[2].text, " ")
 	}
 
 	return menuView(m, title, configOptions)
 }
 
-// pointer renders the carat that points to the currently selected menu option.
+// pointer renders the carat that points to the currently title menu option.
 func pointer(label string, checked bool) string {
 	if checked {
 		return selected.Render("> " + label)
@@ -713,4 +741,8 @@ func (s *stack) Pop() screen {
 
 func (s *stack) Push(v screen) {
 	s.s = append(s.s, v)
+}
+
+func (s *stack) Clear() {
+	s.s = make([]screen, 0)
 }
