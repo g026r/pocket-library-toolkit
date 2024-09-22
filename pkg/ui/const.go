@@ -31,7 +31,6 @@ const (
 	LibraryMenu
 	ThumbMenu
 	ConfigMenu
-	//GameList
 	EditList
 	RemoveList
 	GenerateList

@@ -11,15 +11,15 @@ var ValidThumbsFiles = []System{GB, GBA, GG, NGP, PCE, Lynx}
 type System uint16
 
 const (
-	GB   System = iota
-	GBC  System = iota
-	GBA  System = iota
-	GG   System = iota
-	SMS  System = iota
-	NGP  System = iota
-	NGPC System = iota
-	PCE  System = iota
-	Lynx System = iota
+	GB System = iota
+	GBC
+	GBA
+	GG
+	SMS
+	NGP
+	NGPC
+	PCE
+	Lynx
 )
 
 func (s System) String() string {

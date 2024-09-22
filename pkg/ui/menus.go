@@ -9,6 +9,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
+	"github.com/g026r/pocket-library-editor/pkg/io"
 	model2 "github.com/g026r/pocket-library-editor/pkg/model"
 )
 
@@ -18,6 +19,8 @@ var (
 	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"})
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
+
+	italicStyle = lipgloss.NewStyle().Italic(true)
 )
 
 type menuItem struct {
@@ -29,7 +32,7 @@ func (m menuItem) FilterValue() string {
 	return m.text
 }
 
-func (m menuItem) String() string { // TODO: Keep this? Was originally for odd config stuff
+func (m menuItem) String() string {
 	return m.text
 }
 
@@ -37,6 +40,11 @@ var (
 	mainMenuOptions = []list.Item{menuItem{"Library", lib}, menuItem{"Thumbnails", thumbs}, menuItem{"Settings", config}, menuItem{"Save & Quit", save}, menuItem{"Quit", quit}}
 	libraryOptions  = []list.Item{menuItem{"Add entry", add}, menuItem{"Edit entry", edit}, menuItem{"Remove entry", rm}, menuItem{"Fix played times", fix}, menuItem{"Back", back}}
 	thumbOptions    = []list.Item{menuItem{"Generate missing thumbnails", missing}, menuItem{"Regenerate game thumbnail", single}, menuItem{"Regenerate complete library", genlib}, menuItem{"Prune orphaned thumbnails", prune}, menuItem{"Generate complete system thumbnails", all}, menuItem{"Back", back}}
+	configOptions   = []list.Item{
+		menuItem{"Remove thumbnail when removing game", rmThumbs},
+		menuItem{"Show advanced library editing fields " + lipgloss.NewStyle().Italic(true).Render("(Experimental)"), advEdit},
+		menuItem{"Show add library entry " + lipgloss.NewStyle().Italic(true).Render("(Experimental)"), showAdd},
+		menuItem{"Back", back}}
 )
 
 type itemDelegate struct{}
@@ -51,6 +59,77 @@ func (d itemDelegate) Render(w goio.Writer, m list.Model, index int, listItem li
 	}
 
 	str := fmt.Sprintf("%d. %s", index+1, i)
+
+	fn := itemStyle.Render
+	if index == m.Index() {
+		fn = func(s ...string) string {
+			return selectedItemStyle.Render("> " + strings.Join(s, " "))
+		}
+	}
+
+	fmt.Fprint(w, fn(str))
+}
+
+type entryDelegate struct{}
+
+func (d entryDelegate) Height() int                             { return 1 }
+func (d entryDelegate) Spacing() int                            { return 0 }
+func (d entryDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd { return nil }
+func (d entryDelegate) Render(w goio.Writer, m list.Model, index int, listItem list.Item) {
+	i, ok := listItem.(model2.Entry)
+	if !ok {
+		return
+	}
+
+	str := fmt.Sprintf("%d. %s %s", index+1, i.Name, italicStyle.Render(fmt.Sprintf("(%s)", i.System)))
+
+	fn := itemStyle.Render
+	if index == m.Index() {
+		fn = func(s ...string) string {
+			return selectedItemStyle.Render("> " + strings.Join(s, " "))
+		}
+	}
+
+	fmt.Fprint(w, fn(str))
+}
+
+type configDelegate struct {
+	*io.Config
+}
+
+func (d configDelegate) Height() int                             { return 1 }
+func (d configDelegate) Spacing() int                            { return 0 }
+func (d configDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd { return nil }
+func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem list.Item) {
+	i, ok := listItem.(menuItem)
+	if !ok {
+		return
+	}
+
+	var str string
+	if i.key == back {
+		str = fmt.Sprintf("%d. %s", index+1, i)
+	} else {
+		str = fmt.Sprintf("%d. [%%s] %s", index+1, i)
+		var b bool
+		switch i.key {
+		case advEdit:
+			b = d.AdvancedEditing
+		case showAdd:
+			b = d.ShowAdd
+		case rmThumbs:
+			b = d.RemoveImages
+		default:
+			// Don't know what this is. Return
+			return
+		}
+
+		if b {
+			str = fmt.Sprintf(str, "X")
+		} else {
+			str = fmt.Sprintf(str, " ")
+		}
+	}
 
 	fn := itemStyle.Render
 	if index == m.Index() {
@@ -104,7 +183,7 @@ func NewThumbMenu() *list.Model {
 }
 
 func NewGameMenu(title string) *list.Model {
-	gm := list.New([]list.Item{}, itemDelegate{}, 0, 0) // Empty to start with
+	gm := list.New([]list.Item{}, entryDelegate{}, 0, 0) // Empty to start with
 	gm.Title = title
 	gm.SetShowStatusBar(false)
 	gm.Styles.Title = titleStyle
@@ -118,8 +197,8 @@ func NewGameMenu(title string) *list.Model {
 	return &gm
 }
 
-func NewConfigMenu() *list.Model {
-	cm := list.New([]list.Item{}, itemDelegate{}, 0, 0) // Empty to start with; replaced when called
+func NewConfigMenu(config *io.Config) *list.Model {
+	cm := list.New(configOptions, configDelegate{Config: config}, 0, 0) // Empty to start with; replaced when called
 	cm.Title = "Main > Settings"
 	cm.SetShowStatusBar(false)
 	cm.Styles.Title = titleStyle
@@ -215,4 +294,22 @@ func menuHandler(m model, msg tea.Msg) (tea.Model, tea.Cmd) {
 		m, cmd = processMenuItem(m, opt)
 	}
 	return m, cmd
+}
+
+func generateGameList(l *list.Model, entries []model2.Entry, width, height int) *list.Model {
+	items := make([]list.Item, 0)
+	for _, e := range entries {
+		items = append(items, e)
+	}
+
+	l.ResetSelected()
+	l.ResetFilter()
+	l.SetItems(items)
+	// Need to reset height & width or it doesn't display right the first time since the number of items in the list
+	// has changed from the initial WindowSizeMsg that's fired on startup
+	// It's overkill after it's displayed once, but an issue until then.
+	l.SetWidth(width)
+	l.SetHeight(height)
+
+	return l
 }

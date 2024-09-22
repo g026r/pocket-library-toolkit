@@ -38,7 +38,7 @@ type model struct {
 	Entries   []model2.Entry
 	PlayTimes map[uint32]model2.PlayTime
 	Thumbs    map[util.System]model2.Thumbnails
-	io.Config
+	*io.Config
 	Internal     map[util.System][]model2.Entry // Internal is a map of all known possible entries, grouped by system. For eventual use with add, maybe.
 	*stack                                      // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
 	spinner      spinner.Model                  // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
@@ -59,6 +59,7 @@ type model struct {
 
 func NewModel() tea.Model {
 	prog := progress.New(progress.WithScaledGradient("#006699", "#00ccff"), progress.WithWidth(100))
+	config := io.Config{}
 	return model{
 		updates:      make(chan model, 1),
 		stack:        &stack{[]screen{Initializing}},
@@ -67,7 +68,8 @@ func NewModel() tea.Model {
 		mainMenu:     NewMainMenu(),
 		libMenu:      NewLibraryMenu(),
 		thumbMenu:    NewThumbMenu(),
-		configMenu:   NewConfigMenu(),
+		configMenu:   NewConfigMenu(&config),
+		Config:       &config,
 		editList:     NewGameMenu("Main > Library > Edit Game"),
 		removeList:   NewGameMenu("Main > Library > Remove Game"),
 		generateList: NewGameMenu("Main > Thumbnails > Regenerate Thumbnail"),
@@ -160,7 +162,6 @@ func processMenuItem(m model, key menuKey) (model, tea.Cmd) {
 		m.Push(ThumbMenu)
 	case config:
 		m.configMenu.ResetSelected()
-		//m.configMenu.SetItems(m.generateConfigOptions())
 		m.Push(ConfigMenu)
 	case quit:
 		return m, tea.Quit
@@ -172,14 +173,10 @@ func processMenuItem(m model, key menuKey) (model, tea.Cmd) {
 	case add:
 		// TODO: Add menu?
 	case edit:
-		m.editList.ResetSelected() // TODO: Reset the actual menu items
-		m.editList.ResetFilter()
-		m.editList.SetItems(m.generateGameListView())
+		m.editList = generateGameList(m.editList, m.Entries, m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(EditList)
 	case rm:
-		m.removeList.ResetSelected() // TODO: Reset the actual menu items
-		m.removeList.ResetFilter()
-		m.removeList.SetItems(m.generateGameListView())
+		m.removeList = generateGameList(m.removeList, m.Entries, m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(RemoveList)
 	case fix:
 		m.Push(Waiting)
@@ -190,9 +187,7 @@ func processMenuItem(m model, key menuKey) (model, tea.Cmd) {
 		m.wait = "Generating missing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
 	case single:
-		m.generateList.ResetSelected() // TODO: Reset the actual menu items
-		m.generateList.ResetFilter()
-		m.generateList.SetItems(m.generateGameListView())
+		m.generateList = generateGameList(m.generateList, m.Entries, m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(GenerateList)
 	case genlib:
 		m.Push(Waiting)
@@ -243,7 +238,7 @@ func (m model) View() (s string) {
 		s = m.thumbMenu.View()
 	case ConfigMenu:
 		//s = settingsView(m, "Main > Settings")
-		m.configMenu.SetItems(m.generateConfigView())
+		//m.configMenu.SetItems(m.generateConfigView())
 		s = m.configMenu.View()
 	case RemoveList:
 		s = m.removeList.View()
@@ -251,22 +246,15 @@ func (m model) View() (s string) {
 		s = m.editList.View()
 	case GenerateList:
 		s = m.generateList.View()
-	case AddScreen, EditScreen:
+	case EditScreen:
+		s = m.editScreenView()
+	case AddScreen:
 		fallthrough
 	default:
 		panic("Panic! At the switch statement")
 	}
 
 	return
-}
-
-func (m model) generateGameListView() []list.Item {
-	items := make([]list.Item, 0)
-	for _, e := range m.Entries {
-		items = append(items, e)
-	}
-
-	return items
 }
 
 // initSystem loads all our data from disk
@@ -302,7 +290,7 @@ func (m model) initSystem() tea.Msg {
 	if err != nil {
 		return errMsg{err, true}
 	}
-	m.Config = c
+	*m.Config = c
 
 	e, err := io.LoadEntries(m.RootDir)
 	if err != nil {
@@ -372,7 +360,7 @@ func (m model) save() tea.Msg {
 			tick <- err
 			return
 		}
-		if err := io.SaveConfig(m.Config); err != nil {
+		if err := io.SaveConfig(*m.Config); err != nil {
 			tick <- err
 			return
 		}
@@ -408,6 +396,7 @@ func (m model) playfix() tea.Msg {
 	return updateMsg{}
 }
 
+// prune removes all thumbnail entries that don't have a corresponding entry in the library
 func (m model) prune() tea.Msg {
 	ctr := 0.0
 	total := 0.0
@@ -435,7 +424,7 @@ func (m model) prune() tea.Msg {
 }
 
 // genFull generates thumbnail images for all files in the Images/<system>/ directories. It can take a while.
-// TODO: Should some of this be moved into the io package?
+// TODO: Should some of this be moved into the io package? We'd lose the progress bar though
 func (m model) genFull() tea.Msg {
 	ctr := 0.0
 	total := 0.0
@@ -546,12 +535,17 @@ func (m model) regenLib() tea.Msg {
 func (m model) genSingle(e model2.Entry) tea.Cmd {
 	return func() tea.Msg {
 		*m.percent = 0.0
-		img, err := model2.GenerateThumbnail(m.RootDir, e.System, e.Crc32)
-		*m.percent = .50 // These percentages are just made up.
-		if err != nil && !os.IsNotExist(err) {
+		sys := e.System.ThumbFile()
+		img, err := model2.GenerateThumbnail(m.RootDir, sys, e.Crc32)
+		*m.percent = .50        // These percentages are just made up.
+		if os.IsNotExist(err) { // Doesn't exist. That's fine.
+			*m.percent = 1.0
+			m.updates <- m
+			return updateMsg{}
+		} else if err != nil {
 			return errMsg{err, true}
 		}
-		t := m.Thumbs[e.System]
+		t := m.Thumbs[sys]
 		for i, c := range t.Images {
 			if c.Crc32 == e.Crc32 {
 				t.Images[i] = img
@@ -564,7 +558,7 @@ func (m model) genSingle(e model2.Entry) tea.Cmd {
 			t.Modified = true
 		}
 
-		m.Thumbs[e.System] = t
+		m.Thumbs[sys] = t
 
 		*m.percent = 1.0
 		m.updates <- m
@@ -587,42 +581,11 @@ func configMenu(m model, key menuKey) (model, tea.Cmd) {
 	return m, nil
 }
 
-func (m model) generateConfigView() []list.Item {
-	configOptions := []list.Item{
-		menuItem{"[%s] Remove thumbnail when removing game", rmThumbs},
-		menuItem{"[%s] Show advanced library editing fields (Experimental)", advEdit},
-		menuItem{"[%s] Show add library entry (Experimental)", showAdd},
-		menuItem{"Back", back}}
-	var item menuItem
-	if m.RemoveImages {
-		item = configOptions[0].(menuItem)
-		item.text = fmt.Sprintf(item.text, "X")
-		configOptions[0] = item
-	} else {
-		item = configOptions[0].(menuItem)
-		item.text = fmt.Sprintf(item.text, " ")
-		configOptions[0] = item
-	}
-	if m.AdvancedEditing {
-		item = configOptions[1].(menuItem)
-		item.text = fmt.Sprintf(item.text, "X")
-		configOptions[1] = item
-	} else {
-		item = configOptions[1].(menuItem)
-		item.text = fmt.Sprintf(item.text, " ")
-		configOptions[1] = item
-	}
-	if m.ShowAdd {
-		item = configOptions[2].(menuItem)
-		item.text = fmt.Sprintf(item.text, "X")
-		configOptions[2] = item
-	} else {
-		item = configOptions[2].(menuItem)
-		item.text = fmt.Sprintf(item.text, " ")
-		configOptions[2] = item
-	}
+func (m model) editScreenView() string {
+	s := ""
+	//e := m.Entries[m.editList.Index()]
 
-	return configOptions
+	return s
 }
 
 // removeEntry removes an entry from the library. if Config.RemoveImages is set to true, it also removes any thumbnails
