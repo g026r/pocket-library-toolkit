@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"io"
 	"slices"
 
@@ -25,7 +26,7 @@ type Entry struct {
 }
 
 func (e Entry) FilterValue() string {
-	return e.Name
+	return fmt.Sprintf("%s (%s)", e.Name, e.System)
 }
 
 func (e Entry) String() string {
