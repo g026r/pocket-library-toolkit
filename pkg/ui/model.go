@@ -39,40 +39,34 @@ type model struct {
 	PlayTimes map[uint32]model2.PlayTime
 	Thumbs    map[util.System]model2.Thumbnails
 	*io.Config
-	Internal     map[util.System][]model2.Entry // Internal is a map of all known possible entries, grouped by system. For eventual use with add, maybe.
-	*stack                                      // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
-	spinner      spinner.Model                  // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
-	progress     *progress.Model                // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the model
-	percent      *float64                       // the percent of the progress bar
-	err          error                          // err is used to print out an error if the program has to exit early
-	wait         string                         // wait is the message to display while waiting
-	anyKey       bool                           // anyKey tells View whether we're waiting for a key input or not
-	page         int                            // page stores the page of game entries we are currently on
-	mainMenu     *list.Model
-	libMenu      *list.Model
-	thumbMenu    *list.Model
-	configMenu   *list.Model
-	removeList   *list.Model
-	generateList *list.Model
-	editList     *list.Model
+	Internal   map[util.System][]model2.Entry // Internal is a map of all known possible entries, grouped by system. For eventual use with add, maybe.
+	*stack                                    // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
+	spinner    spinner.Model                  // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
+	progress   *progress.Model                // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the model
+	percent    *float64                       // the percent of the progress bar
+	err        error                          // err is used to print out an error if the program has to exit early
+	wait       string                         // wait is the message to display while waiting
+	anyKey     bool                           // anyKey tells View whether we're waiting for a key input or not
+	page       int                            // page stores the page of game entries we are currently on
+	mainMenu   *list.Model
+	subMenu    *list.Model
+	configMenu *list.Model
+	gameList   *list.Model
 }
 
 func NewModel() tea.Model {
 	prog := progress.New(progress.WithScaledGradient("#006699", "#00ccff"), progress.WithWidth(100))
 	config := io.Config{}
 	return model{
-		updates:      make(chan model, 1),
-		stack:        &stack{[]screen{Initializing}},
-		spinner:      spinner.New(spinner.WithSpinner(spinner.MiniDot)),
-		progress:     &prog,
-		mainMenu:     NewMainMenu(),
-		libMenu:      NewLibraryMenu(),
-		thumbMenu:    NewThumbMenu(),
-		configMenu:   NewConfigMenu(&config),
-		Config:       &config,
-		editList:     NewGameMenu("Main > Library > Edit Game"),
-		removeList:   NewGameMenu("Main > Library > Remove Game"),
-		generateList: NewGameMenu("Main > Thumbnails > Regenerate Thumbnail"),
+		updates:    make(chan model, 1),
+		stack:      &stack{[]screen{Initializing}},
+		spinner:    spinner.New(spinner.WithSpinner(spinner.MiniDot)),
+		progress:   &prog,
+		Config:     &config,
+		mainMenu:   NewMainMenu(),
+		subMenu:    NewSubMenu(),
+		configMenu: NewConfigMenu(&config),
+		gameList:   NewGameMenu(),
 	}
 }
 
@@ -118,18 +112,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.progress.Width = msg.Width - 8
 		m.mainMenu.SetHeight(msg.Height)
 		m.mainMenu.SetWidth(msg.Width)
-		m.libMenu.SetHeight(msg.Height)
-		m.libMenu.SetWidth(msg.Width)
-		m.thumbMenu.SetHeight(msg.Height)
-		m.thumbMenu.SetWidth(msg.Width)
+		m.subMenu.SetHeight(msg.Height)
+		m.subMenu.SetWidth(msg.Width)
 		m.configMenu.SetHeight(msg.Height)
 		m.configMenu.SetWidth(msg.Width)
-		m.generateList.SetHeight(msg.Height)
-		m.generateList.SetWidth(msg.Width)
-		m.removeList.SetHeight(msg.Height)
-		m.removeList.SetWidth(msg.Width)
-		m.editList.SetHeight(msg.Height)
-		m.editList.SetWidth(msg.Width)
+		m.gameList.SetHeight(msg.Height)
+		m.gameList.SetWidth(msg.Width)
 		return m, nil
 	case initDoneMsg:
 		m = <-m.updates // Replace the ui we have with the new, initialized one. Fine in this case as we return m further down the method.
@@ -150,15 +138,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func processMenuItem(m model, key menuKey) (model, tea.Cmd) {
 	switch key {
 	case lib:
-		m.libMenu.ResetSelected()
+		*m.subMenu = generateSubMenu(*m.subMenu, libraryOptions, "Main > Library", m.mainMenu.Width(), m.mainMenu.Height())
 		if !m.ShowAdd {
-			m.libMenu.SetItems(libraryOptions[1:])
-		} else {
-			m.libMenu.SetItems(libraryOptions)
+			m.subMenu.SetItems(m.subMenu.Items()[1:])
 		}
 		m.Push(LibraryMenu)
 	case thumbs:
-		m.thumbMenu.ResetSelected()
+		*m.subMenu = generateSubMenu(*m.subMenu, thumbOptions, "Main > Thumbnails", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(ThumbMenu)
 	case config:
 		m.configMenu.ResetSelected()
@@ -173,10 +159,10 @@ func processMenuItem(m model, key menuKey) (model, tea.Cmd) {
 	case add:
 		// TODO: Add menu?
 	case edit:
-		m.editList = generateGameList(m.editList, m.Entries, m.mainMenu.Width(), m.mainMenu.Height())
+		*m.gameList = generateGameList(*m.gameList, m.Entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(EditList)
 	case rm:
-		m.removeList = generateGameList(m.removeList, m.Entries, m.mainMenu.Width(), m.mainMenu.Height())
+		*m.gameList = generateGameList(*m.gameList, m.Entries, "Main > Library > Remove Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(RemoveList)
 	case fix:
 		m.Push(Waiting)
@@ -187,7 +173,7 @@ func processMenuItem(m model, key menuKey) (model, tea.Cmd) {
 		m.wait = "Generating missing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
 	case single:
-		m.generateList = generateGameList(m.generateList, m.Entries, m.mainMenu.Width(), m.mainMenu.Height())
+		*m.gameList = generateGameList(*m.gameList, m.Entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(GenerateList)
 	case genlib:
 		m.Push(Waiting)
@@ -223,29 +209,13 @@ func (m model) View() (s string) {
 	case FatalError:
 		s = fmt.Sprintf("FATAL ERROR: %v\n", m.err)
 	case MainMenu:
-		//s = menuView(m, "Welcome to the Analogue Pocket library editor", mainMenuOptions)
 		s = m.mainMenu.View()
-	case LibraryMenu:
-		opt := libraryOptions // TODO: Show do this when we swap screens. Not here.
-		if !m.ShowAdd {
-			opt = libraryOptions[1:]
-		}
-		m.libMenu.SetItems(opt)
-		s = m.libMenu.View()
-		//s = menuView(m, "Main > Library", opt)
-	case ThumbMenu:
-		//s = menuView(m, "Main > Thumbnails", thumbOptions)
-		s = m.thumbMenu.View()
+	case LibraryMenu, ThumbMenu:
+		s = m.subMenu.View()
 	case ConfigMenu:
-		//s = settingsView(m, "Main > Settings")
-		//m.configMenu.SetItems(m.generateConfigView())
 		s = m.configMenu.View()
-	case RemoveList:
-		s = m.removeList.View()
-	case EditList:
-		s = m.editList.View()
-	case GenerateList:
-		s = m.generateList.View()
+	case RemoveList, EditList, GenerateList:
+		s = m.gameList.View()
 	case EditScreen:
 		s = m.editScreenView()
 	case AddScreen:
