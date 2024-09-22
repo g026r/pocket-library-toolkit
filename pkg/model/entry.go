@@ -24,6 +24,10 @@ type Entry struct {
 	Name  string
 }
 
+func (e Entry) FilterValue() string {
+	return e.Name
+}
+
 func (e Entry) String() string {
 	return e.Name
 }
