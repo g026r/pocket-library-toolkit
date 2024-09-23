@@ -3,6 +3,7 @@ package ui
 import (
 	"fmt"
 	goio "io"
+	"runtime"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/list"
@@ -10,7 +11,30 @@ import (
 	"github.com/charmbracelet/lipgloss"
 
 	"github.com/g026r/pocket-library-editor/pkg/io"
-	model2 "github.com/g026r/pocket-library-editor/pkg/model"
+	"github.com/g026r/pocket-library-editor/pkg/models"
+)
+
+type menuKey string
+
+const (
+	lib      menuKey = "lib"
+	thumbs   menuKey = "thumbs"
+	config   menuKey = "config"
+	save     menuKey = "save"
+	quit     menuKey = "quit"
+	add      menuKey = "add"
+	edit     menuKey = "edit"
+	rm       menuKey = "rm"
+	fix      menuKey = "fix"
+	back     menuKey = "back"
+	missing  menuKey = "missing"
+	single   menuKey = "single"
+	genlib   menuKey = "genlib"
+	all      menuKey = "all"
+	prune    menuKey = "prune"
+	showAdd  menuKey = "showAdd"
+	advEdit  menuKey = "advEdit"
+	rmThumbs menuKey = "rmThumbs"
 )
 
 var (
@@ -19,7 +43,8 @@ var (
 	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"})
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
-	italicStyle       = lipgloss.NewStyle().Italic(true)
+	italic            = lipgloss.NewStyle().Italic(true)
+	darkGray          = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "#ababab", Dark: "#545454"})
 )
 
 type menuItem struct {
@@ -50,27 +75,28 @@ var (
 		menuItem{"Back", back}}
 	thumbOptions = []list.Item{
 		menuItem{"Generate missing thumbnails", missing},
-		menuItem{"Regenerate game thumbnail", single},
-		menuItem{"Regenerate complete library", genlib},
+		menuItem{"Regenerate single game", single},
+		menuItem{"Regenerate full library", genlib},
 		menuItem{"Prune orphaned thumbnails", prune},
 		menuItem{"Generate complete system thumbnails", all},
 		menuItem{"Back", back}}
 	configOptions = []list.Item{
 		menuItem{"Remove thumbnail when removing game", rmThumbs},
-		menuItem{"Show advanced library editing fields " + italicStyle.Render("(Experimental)"), advEdit},
-		menuItem{"Show 'Add to Library' " + italicStyle.Render("(Experimental)"), showAdd},
+		menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), advEdit},
+		menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), showAdd},
 		menuItem{"Back", back}}
 
 	// pop is the ESC action for basically everything but main menu
 	// It removes the latest item from the stack, allowing the rendering to go up one level
-	pop = func(m model, msg tea.Msg) (model, tea.Cmd) {
+	pop = func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 		m.Pop()
+		runtime.GC() // Not ideal. Probably also not necessary.
 		return m, nil
 	}
 
 	// esc consists of the items to be performed if esc is typed
-	esc = map[screen]func(m model, msg tea.Msg) (model, tea.Cmd){
-		MainMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
+	esc = map[screen]func(m Model, msg tea.Msg) (Model, tea.Cmd){
+		MainMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			return m, nil // No op
 		},
 		LibraryMenu:  pop,
@@ -82,33 +108,33 @@ var (
 	}
 
 	// enter consists of the actions to be performed when an item is selected
-	enter = map[screen]func(m model, msg tea.Msg) (model, tea.Cmd){
-		MainMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
-			return processMenuItem(m, m.mainMenu.SelectedItem().(menuItem).key)
+	enter = map[screen]func(m Model, msg tea.Msg) (Model, tea.Cmd){
+		MainMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+			return m.processMenuItem(m.mainMenu.SelectedItem().(menuItem).key)
 		},
-		LibraryMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
-			return processMenuItem(m, m.subMenu.SelectedItem().(menuItem).key)
+		LibraryMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+			return m.processMenuItem(m.subMenu.SelectedItem().(menuItem).key)
 		},
-		ThumbMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
-			return processMenuItem(m, m.subMenu.SelectedItem().(menuItem).key)
+		ThumbMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+			return m.processMenuItem(m.subMenu.SelectedItem().(menuItem).key)
 		},
-		ConfigMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
-			return processMenuItem(m, m.configMenu.SelectedItem().(menuItem).key)
+		ConfigMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+			return m.processMenuItem(m.configMenu.SelectedItem().(menuItem).key)
 		},
-		EditList: func(m model, msg tea.Msg) (model, tea.Cmd) {
-			entry := m.gameList.SelectedItem().(model2.Entry)
+		EditList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+			entry := m.gameList.SelectedItem().(models.Entry)
 			m.Push(EditScreen)
 			return m, func() tea.Msg { // TODO: Need to find a way to pass this back. Or can I just use the menu idx instead?
 				return entry
 			}
 		},
-		GenerateList: func(m model, msg tea.Msg) (model, tea.Cmd) {
-			entry := m.gameList.SelectedItem().(model2.Entry)
+		GenerateList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+			entry := m.gameList.SelectedItem().(models.Entry)
 			m.Push(Waiting)
 			m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", entry.Name, entry.System)
 			return m, tea.Batch(m.genSingle(entry), tickCmd())
 		},
-		RemoveList: func(m model, msg tea.Msg) (model, tea.Cmd) {
+		RemoveList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			idx := m.gameList.Index()
 			m = m.removeEntry(idx)
 			m.gameList.RemoveItem(idx)
@@ -120,38 +146,38 @@ var (
 	}
 
 	// def consists of the default actions when nothing else is to be done
-	def = map[screen]func(m model, msg tea.Msg) (model, tea.Cmd){
-		MainMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
+	def = map[screen]func(m Model, msg tea.Msg) (Model, tea.Cmd){
+		MainMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			var cmd tea.Cmd
 			*m.mainMenu, cmd = m.mainMenu.Update(msg)
 			return m, cmd
 		},
-		LibraryMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
+		LibraryMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			var cmd tea.Cmd
 			*m.subMenu, cmd = m.subMenu.Update(msg)
 			return m, cmd
 		},
-		ThumbMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
+		ThumbMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			var cmd tea.Cmd
 			*m.subMenu, cmd = m.subMenu.Update(msg)
 			return m, cmd
 		},
-		ConfigMenu: func(m model, msg tea.Msg) (model, tea.Cmd) {
+		ConfigMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			var cmd tea.Cmd
 			*m.configMenu, cmd = m.configMenu.Update(msg)
 			return m, cmd
 		},
-		EditList: func(m model, msg tea.Msg) (model, tea.Cmd) {
+		EditList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			var cmd tea.Cmd
 			*m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
-		GenerateList: func(m model, msg tea.Msg) (model, tea.Cmd) {
+		GenerateList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			var cmd tea.Cmd
 			*m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
-		RemoveList: func(m model, msg tea.Msg) (model, tea.Cmd) {
+		RemoveList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			var cmd tea.Cmd
 			*m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
@@ -159,6 +185,8 @@ var (
 	}
 )
 
+// itemDelegate is the default rendered for menuItem instances that aren't io.Config values.
+// Though it can take anything that implements fmt.Stringer if need be.
 type itemDelegate struct{}
 
 func (d itemDelegate) Height() int                             { return 1 }
@@ -182,18 +210,19 @@ func (d itemDelegate) Render(w goio.Writer, m list.Model, index int, listItem li
 	fmt.Fprint(w, fn(str))
 }
 
+// entryDelegate is the default renderer for models.Entry instances
 type entryDelegate struct{}
 
 func (d entryDelegate) Height() int                             { return 1 }
 func (d entryDelegate) Spacing() int                            { return 0 }
 func (d entryDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd { return nil }
 func (d entryDelegate) Render(w goio.Writer, m list.Model, index int, listItem list.Item) {
-	i, ok := listItem.(model2.Entry)
+	i, ok := listItem.(models.Entry)
 	if !ok {
 		return
 	}
 
-	str := fmt.Sprintf("%d. %s (%s)", index+1, i.Name, i.System) //italicStyle.Render(fmt.Sprintf("(%s)", i.System)))
+	str := fmt.Sprintf("%d. %s (%s)", index+1, i.Name, i.System)
 
 	fn := itemStyle.Render
 	if index == m.Index() {
@@ -205,6 +234,7 @@ func (d entryDelegate) Render(w goio.Writer, m list.Model, index int, listItem l
 	fmt.Fprint(w, fn(str))
 }
 
+// configDelegate is the default renderer for menuItem instances that represent io.Config values.
 type configDelegate struct {
 	*io.Config
 }
@@ -309,34 +339,7 @@ func NewConfigMenu(config *io.Config) *list.Model {
 	return &cm
 }
 
-func menuHandler(m model, msg tea.Msg) (tea.Model, tea.Cmd) {
-	scr := m.Peek()
-	switch scr {
-	case MainMenu, LibraryMenu, ThumbMenu, ConfigMenu: // Menus without filtering
-		if k, ok := msg.(tea.KeyMsg); ok && (k.String() == "enter" || k.String() == " ") {
-			return enter[scr](m, msg)
-		} else if ok && k.String() == "esc" {
-			return esc[scr](m, msg)
-		}
-	case EditList, GenerateList, RemoveList: // Menus with filtering
-		if !m.gameList.SettingFilter() {
-			if k, ok := msg.(tea.KeyMsg); ok && (k.String() == "enter" || k.String() == " ") {
-				return enter[scr](m, msg)
-			} else if ok && k.String() == "esc" {
-				return esc[scr](m, msg)
-			}
-		}
-	}
-
-	// ok should be never false, but check just to make certain
-	if fn, ok := def[scr]; ok {
-		return fn(m, msg)
-	}
-
-	return m, nil
-}
-
-func generateGameList(l list.Model, entries []model2.Entry, title string, width, height int) list.Model {
+func generateGameList(l list.Model, entries []models.Entry, title string, width, height int) list.Model {
 	items := make([]list.Item, 0)
 	for _, e := range entries {
 		items = append(items, e)

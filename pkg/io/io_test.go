@@ -4,15 +4,14 @@ import (
 	"os"
 	"testing"
 
-	"github.com/g026r/pocket-library-editor/pkg/model"
-	"github.com/g026r/pocket-library-editor/pkg/util"
+	"github.com/g026r/pocket-library-editor/pkg/models"
 )
 
 func TestSaveInternal(t *testing.T) {
 	t.SkipNow()
 	t.Parallel()
 
-	e := []model.Entry{{System: util.PCE}, {System: util.GB}}
+	e := []models.Entry{{System: models.PCE}, {System: models.GB}}
 	if err := SaveInternal(nil, e); err != nil {
 
 	}
@@ -75,7 +74,7 @@ func TestLoadThumbs(t *testing.T) {
 			if !v.err {
 				if len(pt) != 1 {
 					t.Errorf("Expected 1 system entries; got %d", len(pt))
-				} else if tn, ok := pt[util.NGP]; !ok {
+				} else if tn, ok := pt[models.NGP]; !ok {
 					t.Errorf("Expected NGP entry to be present")
 				} else if len(tn.Images) != v.count {
 					t.Errorf("Expected %d images; got %d", v.count, len(tn.Images))

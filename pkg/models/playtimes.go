@@ -1,12 +1,10 @@
-package model
+package models
 
 import (
 	"encoding/binary"
 	"io"
 	"time"
 )
-
-const PlaytimeHeader uint32 = 0x01545050
 
 type PlayTime struct {
 	Added  uint32

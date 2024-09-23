@@ -11,7 +11,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/g026r/pocket-library-editor/pkg/model"
+	"github.com/g026r/pocket-library-editor/pkg/models"
 	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
@@ -29,16 +29,22 @@ const (
 	firstThumbsAddr  uint32 = 0x1000C
 )
 
-type jsonEntry struct {
-	util.System `json:"system"`
-	Name        string `json:"name"`
-	Crc32       string `json:"crc"`
-	Sig         string `json:"signature"`
-	Magic       string `json:"magic"` // TODO: Work out all possible mappings for this
+type Config struct {
+	RemoveImages    bool `json:"remove_images"`
+	AdvancedEditing bool `json:"advanced_editing"`
+	ShowAdd         bool `json:"show_add"`
 }
 
-func (j jsonEntry) Entry() model.Entry {
-	e := model.Entry{
+type jsonEntry struct {
+	models.System `json:"system"`
+	Name          string `json:"name"`
+	Crc32         string `json:"crc"`
+	Sig           string `json:"signature"`
+	Magic         string `json:"magic"` // TODO: Work out all possible mappings for this
+}
+
+func (j jsonEntry) Entry() models.Entry {
+	e := models.Entry{
 		Name:   j.Name,
 		System: j.System,
 	}
@@ -48,13 +54,7 @@ func (j jsonEntry) Entry() model.Entry {
 	return e
 }
 
-type Config struct {
-	RemoveImages    bool `json:"remove_images"`
-	AdvancedEditing bool `json:"advanced_editing"`
-	ShowAdd         bool `json:"show_add"`
-}
-
-func LoadEntries(root fs.FS) ([]model.Entry, error) {
+func LoadEntries(root fs.FS) ([]models.Entry, error) {
 	pg, err := fs.Sub(root, "System/Played Games")
 	if err != nil {
 		return nil, err
@@ -95,9 +95,9 @@ func LoadEntries(root fs.FS) ([]model.Entry, error) {
 	}
 
 	// Parse each of the library entries. The addresses are supposed to be sequential, but we're not going to trust that.
-	entries := make([]model.Entry, int(num))
+	entries := make([]models.Entry, int(num))
 	for i := range addresses {
-		e := model.Entry{}
+		e := models.Entry{}
 		if _, err := f.Seek(int64(addresses[i]), io.SeekStart); err != nil {
 			return nil, err
 		}
@@ -110,11 +110,11 @@ func LoadEntries(root fs.FS) ([]model.Entry, error) {
 	}
 
 	// Should already be sorted. But just in case.
-	slices.SortFunc(entries, model.EntrySort)
+	slices.SortFunc(entries, models.EntrySort)
 	return entries, nil
 }
 
-func LoadPlaytimes(root fs.FS) (map[uint32]model.PlayTime, error) {
+func LoadPlaytimes(root fs.FS) (map[uint32]models.PlayTime, error) {
 	pg, err := fs.Sub(root, "System/Played Games")
 	if err != nil {
 		return nil, err
@@ -139,10 +139,10 @@ func LoadPlaytimes(root fs.FS) (map[uint32]model.PlayTime, error) {
 		return nil, err
 	}
 
-	playtimes := make(map[uint32]model.PlayTime, num)
+	playtimes := make(map[uint32]models.PlayTime, num)
 	var sig uint32
 	for range num {
-		v := model.PlayTime{}
+		v := models.PlayTime{}
 
 		if err := binary.Read(f, binary.LittleEndian, &sig); err != nil {
 			return nil, err
@@ -156,14 +156,14 @@ func LoadPlaytimes(root fs.FS) (map[uint32]model.PlayTime, error) {
 	return playtimes, nil
 }
 
-func LoadThumbs(root fs.FS) (map[util.System]model.Thumbnails, error) {
+func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 	tb, err := fs.Sub(root, "System/Library/Images")
 	if err != nil {
 		return nil, err
 	}
 
-	thumbs := make(map[util.System]model.Thumbnails)
-	for _, k := range util.ValidThumbsFiles { // We're going to modify the values, so only range over the keys
+	thumbs := make(map[models.System]models.Thumbnails)
+	for _, k := range models.ValidThumbsFiles { // We're going to modify the values, so only range over the keys
 		f, err := ReadSeekerCloser(tb, fmt.Sprintf("%s_thumbs.bin", strings.ToLower(k.String())))
 		if os.IsNotExist(err) {
 			continue // It's possible for some systems to not have thumbnails yet. Just continue
@@ -196,7 +196,7 @@ func LoadThumbs(root fs.FS) (map[util.System]model.Thumbnails, error) {
 			address uint32
 		}
 		tuples := make([]tuple, num)
-		t := model.Thumbnails{Images: make([]model.Image, num)}
+		t := models.Thumbnails{Images: make([]models.Image, num)}
 		if num != 0 { // Only perform these steps if there are images
 			// Read all the image addresses
 			for i := range num {
@@ -261,13 +261,13 @@ func LoadConfig() (Config, error) {
 	return c, err
 }
 
-func LoadInternal() (map[util.System][]model.Entry, error) {
+func LoadInternal() (map[models.System][]models.Entry, error) {
 	dir, err := jsons.ReadDir("resources")
 	if err != nil {
 		return nil, err
 	}
 
-	library := make(map[util.System][]model.Entry)
+	library := make(map[models.System][]models.Entry)
 	for _, d := range dir {
 		f, err := jsons.ReadFile(fmt.Sprintf("resources/%s", d.Name()))
 		if err != nil {
@@ -277,25 +277,25 @@ func LoadInternal() (map[util.System][]model.Entry, error) {
 		if err := json.Unmarshal(f, &x); err != nil {
 			return nil, err
 		}
-		sys, err := util.Parse(strings.TrimSuffix(d.Name(), ".json"))
+		sys, err := models.Parse(strings.TrimSuffix(d.Name(), ".json"))
 		if err != nil {
 			return nil, err
 		}
 
 		// Oh, for a native map function
-		e := make([]model.Entry, len(x))
+		e := make([]models.Entry, len(x))
 		for i := range x {
 			e[i] = x[i].Entry()
 		}
 
-		slices.SortFunc(e, model.EntrySort)
+		slices.SortFunc(e, models.EntrySort)
 		library[sys] = e
 	}
 
 	return library, nil
 }
 
-func SaveLibrary(e []model.Entry, t map[uint32]model.PlayTime, tick chan any) error {
+func SaveLibrary(e []models.Entry, t map[uint32]models.PlayTime, tick chan any) error {
 	wd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -319,7 +319,7 @@ func SaveLibrary(e []model.Entry, t map[uint32]model.PlayTime, tick chan any) er
 	if err := binary.Write(l, binary.LittleEndian, uint32(len(e))); err != nil {
 		return err
 	}
-	if err := binary.Write(l, binary.LittleEndian, uint32(ListUnknown)); err != nil { // Not sure what this value signifies, but accidentally setting it to 1 caused the system to loop
+	if err := binary.Write(l, binary.LittleEndian, ListUnknown); err != nil { // Not sure what this value signifies, but accidentally setting it to 1 caused the system to loop
 		return err
 	}
 	if err := binary.Write(l, binary.LittleEndian, firstLibraryAddr); err != nil { // Don't know why the first entry address appears twice
@@ -335,7 +335,7 @@ func SaveLibrary(e []model.Entry, t map[uint32]model.PlayTime, tick chan any) er
 	}
 
 	// Build the address entries
-	slices.SortFunc(e, model.EntrySort)
+	slices.SortFunc(e, models.EntrySort)
 	addresses := make([]uint32, firstLibraryAddr/4-4)
 	addresses[0] = firstLibraryAddr
 	last := firstLibraryAddr
@@ -369,7 +369,7 @@ func SaveLibrary(e []model.Entry, t map[uint32]model.PlayTime, tick chan any) er
 	return nil
 }
 
-func SaveThumbs(t map[util.System]model.Thumbnails, tick chan any) error {
+func SaveThumbs(t map[models.System]models.Thumbnails, tick chan any) error {
 	wd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -394,7 +394,7 @@ func SaveThumbs(t map[util.System]model.Thumbnails, tick chan any) error {
 	return nil
 }
 
-func writeThumbsFile(t io.Writer, img []model.Image, tick chan any) error {
+func writeThumbsFile(t io.Writer, img []models.Image, tick chan any) error {
 	if err := binary.Write(t, binary.LittleEndian, ThumbnailHeader); err != nil {
 		return err
 	}
@@ -452,7 +452,7 @@ func SaveConfig(config Config) error {
 
 // SaveInternal saves one system's entries to a json file
 // If it finds that it has more than one system, it throws an error.
-func SaveInternal(i io.Writer, entries []model.Entry) error {
+func SaveInternal(i io.Writer, entries []models.Entry) error {
 	j := make([]jsonEntry, 0)
 	for i, e := range entries {
 		if i != 0 && entries[i].System != entries[i-1].System {

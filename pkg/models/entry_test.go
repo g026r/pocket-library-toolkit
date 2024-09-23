@@ -1,11 +1,9 @@
-package model
+package models
 
 import (
 	"bytes"
 	"slices"
 	"testing"
-
-	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
 // rawEntry is the binary representation of entry, as copied from a valid list.bin
@@ -16,7 +14,7 @@ var cleanEntry = []byte{0x1C, 0x00, 0x00, 0x07, 0x6D, 0x8D, 0xE0, 0xFD, 0x3E, 0x
 
 // entry is rawEntry in properly parsed format
 var entry = Entry{
-	System: util.PCE,
+	System: PCE,
 	Crc32:  0xfde08d6d,
 	Sig:    0x79cd1a3e,
 	Magic:  0x1b94,

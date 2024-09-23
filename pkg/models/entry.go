@@ -1,4 +1,4 @@
-package model
+package models
 
 import (
 	"cmp"
@@ -7,18 +7,14 @@ import (
 	"fmt"
 	"io"
 	"slices"
-
-	"github.com/g026r/pocket-library-editor/pkg/util"
 )
-
-const LibraryHeader uint32 = 0x01464154
 
 var EntrySort = func(a, b Entry) int {
 	return cmp.Compare(a.Name, b.Name)
 }
 
 type Entry struct {
-	util.System
+	System
 	Crc32 uint32
 	Sig   uint32
 	Magic uint32

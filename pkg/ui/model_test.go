@@ -1,96 +1,20 @@
 package ui
 
 import (
+	"slices"
 	"testing"
 
-	model2 "github.com/g026r/pocket-library-editor/pkg/model"
+	"github.com/g026r/pocket-library-editor/pkg/io"
+	"github.com/g026r/pocket-library-editor/pkg/models"
 )
 
-func TestStack_Peek(t *testing.T) {
-	t.Parallel()
-	stk := stack{}
-
-	// Confirm that an empty stack returns MainMenu
-	if stk.Peek() != MainMenu {
-		t.Errorf("Expected %v got %v", MainMenu, stk.Peek())
-	}
-
-	// Confirm that if we add this to the slice, it returns properly
-	stk.s = append(stk.s, ThumbMenu)
-	if stk.Peek() != ThumbMenu {
-		t.Errorf("Expected %v got %v", ThumbMenu, stk.Peek())
-	}
-	// Confirm that Peek() didn't Pop()
-	if len(stk.s) != 1 {
-		t.Errorf("Expected %d got %d", 1, len(stk.s))
-	}
-
-	// Confirm that Peek returns the most recent addition
-	stk.s = append(stk.s, FatalError)
-	if stk.Peek() != FatalError {
-		t.Errorf("Expected %d got %d", FatalError, stk.Peek())
-	}
-	if len(stk.s) != 2 {
-		t.Errorf("Expected %d got %d", 2, len(stk.s))
-	}
-
-}
-
-func TestStack_Pop(t *testing.T) {
-	t.Parallel()
-	sut := stack{}
-
-	// Confirm that an empty stack returns MainMenu
-	if sut.Pop() != MainMenu {
-		t.Errorf("Expected %d got %d", MainMenu, sut.Peek())
-	}
-
-	// Confirm that if we add this to the slice, it returns properly
-	sut.s = append(sut.s, ThumbMenu, Waiting)
-	if sut.Pop() != Waiting {
-		t.Errorf("Expected %d got %d", Waiting, sut.Peek())
-	}
-
-	// Confirm that Pop() didn't Peek()
-	if sut.Peek() != ThumbMenu {
-		t.Errorf("Expected %d got %d", ThumbMenu, sut.Peek())
-	}
-	if len(sut.s) != 1 {
-		t.Errorf("Expected %v got %v", []screen{}, sut.s)
-	}
-}
-
-func TestStack_Push(t *testing.T) {
-	t.Parallel()
-	sut := stack{}
-	if len(sut.s) != 0 {
-		t.Fatalf("stack not empty")
-	}
-	sut.Push(ConfigMenu)
-	if len(sut.s) != 1 {
-		t.Errorf("Expected %d got %d", 1, len(sut.s))
-	}
-	if sut.Peek() != ConfigMenu {
-		t.Errorf("Expected %d got %d", ConfigMenu, sut.Peek())
-	}
-
-	// Confirm that Push goes on the top of the stack
-	sut.Push(EditScreen)
-	if len(sut.s) != 2 {
-		t.Errorf("Expected %d got %d", 1, len(sut.s))
-	}
-	if sut.Peek() != EditScreen {
-		t.Errorf("Expected %d got %d", EditScreen, sut.Peek())
-	}
-}
-
-func TestApplication_fixPlayTimes(t *testing.T) {
+func TestModel_playfix(t *testing.T) {
 	t.Parallel()
 	var p float64
-	sut := model{
-		updates: make(chan model, 1),
+	sut := Model{
+		updates: make(chan Model, 1),
 		percent: &p,
-		PlayTimes: map[uint32]model2.PlayTime{
+		playTimes: map[uint32]models.PlayTime{
 			0x0: {Played: 0x0000ABCD}, 0x1: {Played: 0x0100ABCD}, 0x40: {Played: 0x0400ABCD}, 0xF: {Played: 0xFF00ABCD},
 		}}
 
@@ -102,9 +26,115 @@ func TestApplication_fixPlayTimes(t *testing.T) {
 	}
 
 	sut = <-sut.updates
-	for k, v := range sut.PlayTimes {
+	for k, v := range sut.playTimes {
 		if v.Played != 0x0000ABCD {
 			t.Errorf("0x%02x Expected 0x0000ABCD; got 0x%08x", k, v.Played)
 		}
+	}
+}
+
+func TestModel_prune(t *testing.T) {
+	t.Parallel()
+	var p float64
+	sut :=
+		Model{
+			updates: make(chan Model, 1),
+			entries: []models.Entry{{
+				System: models.GB,
+				Crc32:  0x12345678, // Present
+			}, {
+				System: models.GB,
+				Crc32:  0xAAAAAAAA, // Present
+			}, {
+				System: models.GBA,
+				Crc32:  0x66666666, // Present but different system
+			}, {
+				System: models.GB,
+				Crc32:  0xFEDCBA09, // Not present
+			}},
+			thumbnails: map[models.System]models.Thumbnails{
+				models.GB:  {Images: []models.Image{{Crc32: 0xAAAAAAAA}, {Crc32: 0x12345678}, {Crc32: 0x66666666}}},
+				models.GBA: {Images: []models.Image{{Crc32: 0x66666666}}},
+			},
+			percent: &p,
+		}
+
+	msg := sut.prune()
+	switch msg.(type) {
+	case updateMsg: // Don't need to do anything
+	default:
+		t.Errorf("Expected updateMsg got %v", msg)
+	}
+
+	sut = <-sut.updates
+
+	if gba := sut.thumbnails[models.GBA]; gba.Modified || len(gba.Images) != 1 {
+		t.Errorf("GBA thumbnails should not have been modified {Modified: %t, Images: %d}", gba.Modified, len(gba.Images))
+	}
+	gb := sut.thumbnails[models.GB]
+	if !gb.Modified {
+		t.Error("GB thumbnails should be modified")
+	}
+	if len(gb.Images) != 2 {
+		t.Errorf("Expected 2 images; found %d", len(gb.Images))
+	}
+	for _, x := range []uint32{0xFEDCBA09, 0x66666666} {
+		if slices.ContainsFunc(gb.Images, func(image models.Image) bool {
+			return image.Crc32 == x
+		}) {
+			t.Errorf("Image %08x should not be present", x)
+		}
+	}
+	for _, x := range []uint32{0x12345678, 0xAAAAAAAA} {
+		if !slices.ContainsFunc(gb.Images, func(image models.Image) bool {
+			return image.Crc32 == x
+		}) {
+			t.Errorf("Image %08x should be present", x)
+		}
+	}
+}
+
+func TestModel_configChange(t *testing.T) {
+	// Simple test to make certain that the correct values are being flipped
+	t.Parallel()
+	config := io.Config{}
+	sut := Model{Config: &config}
+
+	// test all false -> true
+	m, _ := sut.configChange(showAdd)
+	if !m.ShowAdd || m.AdvancedEditing || m.RemoveImages {
+		t.Errorf("Expected ShowAdd to be true: %v", *m.Config)
+	}
+	*m.Config = io.Config{}
+	m, _ = sut.configChange(rmThumbs)
+	if !m.RemoveImages || m.AdvancedEditing || m.ShowAdd {
+		t.Errorf("Expected RemoveImages to be true: %v", *m.Config)
+	}
+	*m.Config = io.Config{}
+	m, _ = sut.configChange(advEdit)
+	if !m.AdvancedEditing || m.ShowAdd || m.RemoveImages {
+		t.Errorf("Expected AdvancedEditing to be true: %v", *m.Config)
+	}
+
+	allTrue := io.Config{
+		RemoveImages:    true,
+		AdvancedEditing: true,
+		ShowAdd:         true,
+	}
+	// test true -> false
+	*sut.Config = allTrue
+	m, _ = sut.configChange(showAdd)
+	if m.ShowAdd || !m.AdvancedEditing || !m.RemoveImages {
+		t.Errorf("Expected ShowAdd to be false: %v", *m.Config)
+	}
+	*sut.Config = allTrue
+	m, _ = sut.configChange(rmThumbs)
+	if m.RemoveImages || !m.AdvancedEditing || !m.ShowAdd {
+		t.Errorf("Expected RemoveImages to be false: %v", *m.Config)
+	}
+	*sut.Config = allTrue
+	m, _ = sut.configChange(advEdit)
+	if m.AdvancedEditing || !m.RemoveImages || !m.ShowAdd {
+		t.Errorf("Expected AdvancedEditing to be false: %v", *m.Config)
 	}
 }

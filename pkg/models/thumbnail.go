@@ -1,4 +1,4 @@
-package model
+package models
 
 import (
 	"encoding/binary"
@@ -13,9 +13,7 @@ import (
 )
 
 const (
-	ThumbnailHeader uint32 = 0x41544602
-	UnknownWord     uint32 = 0x0000CE1C // No idea what this is for. But it appears necessary.
-	ImageHeader32   uint32 = 0x41504920 // The 32bit colour header. There's a 16bit one as well, but it's unused.
+	ImageHeader32 uint32 = 0x41504920 // The 32bit colour header. There's a 16bit one as well, but it's unused.
 
 	maxHeight int = 121
 	maxWidth  int = 109
@@ -30,7 +28,7 @@ type Image struct {
 	Image []byte
 }
 
-func GenerateThumbnail(dir fs.FS, sys util.System, crc32 uint32) (Image, error) {
+func GenerateThumbnail(dir fs.FS, sys System, crc32 uint32) (Image, error) {
 	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
 
 	f, err := dir.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", strings.ToLower(sys.String()), crc32))

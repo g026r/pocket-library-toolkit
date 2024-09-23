@@ -10,8 +10,7 @@ import (
 	"strings"
 
 	"github.com/g026r/pocket-library-editor/pkg/io"
-	"github.com/g026r/pocket-library-editor/pkg/model"
-	"github.com/g026r/pocket-library-editor/pkg/util"
+	"github.com/g026r/pocket-library-editor/pkg/models"
 )
 
 func main() {
@@ -33,7 +32,7 @@ func main() {
 	}
 
 	for _, e := range entries {
-		if !slices.ContainsFunc(internal[e.System], func(entry model.Entry) bool {
+		if !slices.ContainsFunc(internal[e.System], func(entry models.Entry) bool {
 			return entry.Crc32 == e.Crc32 && entry.Sig == e.Sig && entry.Magic == e.Magic
 		}) {
 			internal[e.System] = append(internal[e.System], e)
@@ -45,9 +44,9 @@ func main() {
 	}
 }
 
-func writeNewFiles(internal map[util.System][]model.Entry) error {
+func writeNewFiles(internal map[models.System][]models.Entry) error {
 	for k, v := range internal {
-		slices.SortFunc(v, func(a, b model.Entry) int {
+		slices.SortFunc(v, func(a, b models.Entry) int {
 			return cmp.Compare(a.Magic, b.Magic) // Sort now before we turn the magic number into a string
 		})
 
@@ -66,21 +65,18 @@ func writeNewFiles(internal map[util.System][]model.Entry) error {
 		if err != nil {
 			return err
 		}
+		defer m.Close() // defer exists for the early returns. We'll close it manually at the end of the loop as well.
 		for _, e := range v {
 			if _, err := m.WriteString(fmt.Sprintf("## %s\n\n", e.Name)); err != nil {
-				m.Close()
 				return err
 			}
 			if _, err := m.WriteString(fmt.Sprintf("- CRC32: `0x%08x`\n", e.Crc32)); err != nil {
-				_ = m.Close()
 				return err
 			}
 			if _, err := m.WriteString(fmt.Sprintf("- Signature: `0x%08x`\n", e.Sig)); err != nil {
-				_ = m.Close()
 				return err
 			}
 			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `0x%04x`\n\n", e.Magic)); err != nil {
-				m.Close()
 				return err
 			}
 		}

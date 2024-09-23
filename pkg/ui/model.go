@@ -17,8 +17,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/g026r/pocket-library-editor/pkg/io"
-	model2 "github.com/g026r/pocket-library-editor/pkg/model"
-	"github.com/g026r/pocket-library-editor/pkg/util"
+	"github.com/g026r/pocket-library-editor/pkg/models"
 )
 
 type errMsg struct {
@@ -30,51 +29,60 @@ type initDoneMsg struct{}
 
 type updateMsg struct{}
 
+// tickMsg is just a generic message fired by tickCmd
+// The time.Time could conceivably be used to make certain messages aren't processed out of order but isn't
 type tickMsg time.Time
 
-type model struct {
-	updates   chan model // updates is used for passing updates to the model rather than using pointers
-	RootDir   fs.FS
-	Entries   []model2.Entry
-	PlayTimes map[uint32]model2.PlayTime
-	Thumbs    map[util.System]model2.Thumbnails
-	*io.Config
-	Internal   map[util.System][]model2.Entry // Internal is a map of all known possible entries, grouped by system. For eventual use with add, maybe.
-	*stack                                    // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
-	spinner    spinner.Model                  // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
-	progress   *progress.Model                // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the model
-	percent    *float64                       // the percent of the progress bar
-	err        error                          // err is used to print out an error if the program has to exit early
-	wait       string                         // wait is the message to display while waiting
-	anyKey     bool                           // anyKey tells View whether we're waiting for a key input or not
-	page       int                            // page stores the page of game entries we are currently on
+// tickCmd is used by the progress bar. It fires 1/5 of a second after it's started, and it is necessary to call it
+// again if another tick is desired
+func tickCmd() tea.Cmd {
+	return tea.Tick(time.Second/5, func(t time.Time) tea.Msg {
+		return tickMsg(t)
+	})
+}
+
+type Model struct {
+	updates    chan Model // updates is used for passing updates to the Model rather than using pointers
+	rootDir    fs.FS
+	entries    []models.Entry
+	playTimes  map[uint32]models.PlayTime
+	thumbnails map[models.System]models.Thumbnails
+	internal   map[models.System][]models.Entry // internal is a map of all known possible entries, grouped by system. For eventual use with add & adv. editing, maybe.
+	*io.Config                                  // io.Config is a pointer as we need to be able to read this value in the configDelegate, which doesn't have access to Model
+	*stack                                      // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
+	spinner    spinner.Model                    // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
+	progress   *progress.Model                  // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the Model
+	percent    *float64                         // the percent of the progress bar
+	err        error                            // err is used to print out an error if the program has to exit early
+	wait       string                           // wait is the message to display while waiting
+	anyKey     bool                             // anyKey tells View whether we're waiting for a key input or not
 	mainMenu   *list.Model
-	subMenu    *list.Model
-	configMenu *list.Model
-	gameList   *list.Model
+	subMenu    *list.Model // subMenu covers the library & thumbnail options: menus where esc goes up a screen but filtering is disabled
+	configMenu *list.Model // configMenu is a special case as it needs a different delegate renderer from subMenu
+	gameList   *list.Model // gameList covers anything that lists all the games in the library
 }
 
 func NewModel() tea.Model {
-	prog := progress.New(progress.WithScaledGradient("#006699", "#00ccff"), progress.WithWidth(100))
+	prog := progress.New(progress.WithScaledGradient("#006699", "#00ccff"))
 	config := io.Config{}
-	return model{
-		updates:    make(chan model, 1),
+	return Model{
+		updates:    make(chan Model, 1),
 		stack:      &stack{[]screen{Initializing}},
 		spinner:    spinner.New(spinner.WithSpinner(spinner.MiniDot)),
 		progress:   &prog,
 		Config:     &config,
 		mainMenu:   NewMainMenu(),
-		subMenu:    NewSubMenu(),
 		configMenu: NewConfigMenu(&config),
-		gameList:   NewGameMenu(),
+		subMenu:    NewSubMenu(),  // subMenu needs to be set even without items to avoid a nil pointer with the initial WindowSizeMsg
+		gameList:   NewGameMenu(), // same for gameList
 	}
 }
 
-func (m model) Init() tea.Cmd {
+func (m Model) Init() tea.Cmd {
 	return tea.Batch(m.spinner.Tick, m.initSystem)
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	// Make sure these keys always quit
 	switch msg := msg.(type) {
 	case updateMsg:
@@ -132,80 +140,21 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	return menuHandler(m, msg)
+	return m.menuHandler(msg)
 }
 
-func processMenuItem(m model, key menuKey) (model, tea.Cmd) {
-	switch key {
-	case lib:
-		*m.subMenu = generateSubMenu(*m.subMenu, libraryOptions, "Main > Library", m.mainMenu.Width(), m.mainMenu.Height())
-		if !m.ShowAdd {
-			m.subMenu.SetItems(m.subMenu.Items()[1:])
-		}
-		m.Push(LibraryMenu)
-	case thumbs:
-		*m.subMenu = generateSubMenu(*m.subMenu, thumbOptions, "Main > Thumbnails", m.mainMenu.Width(), m.mainMenu.Height())
-		m.Push(ThumbMenu)
-	case config:
-		m.configMenu.ResetSelected()
-		m.Push(ConfigMenu)
-	case quit:
-		return m, tea.Quit
-	case save:
-		m.Push(Saving)
-		return m, tea.Batch(m.save, tickCmd())
-	case back:
-		m.Pop()
-	case add:
-		// TODO: Add menu?
-	case edit:
-		*m.gameList = generateGameList(*m.gameList, m.Entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
-		m.Push(EditList)
-	case rm:
-		*m.gameList = generateGameList(*m.gameList, m.Entries, "Main > Library > Remove Game", m.mainMenu.Width(), m.mainMenu.Height())
-		m.Push(RemoveList)
-	case fix:
-		m.Push(Waiting)
-		m.wait = "Fixing played times"
-		return m, tea.Batch(m.playfix, tickCmd())
-	case missing:
-		m.Push(Waiting)
-		m.wait = "Generating missing thumbnails for library"
-		return m, tea.Batch(m.genMissing, tickCmd())
-	case single:
-		*m.gameList = generateGameList(*m.gameList, m.Entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
-		m.Push(GenerateList)
-	case genlib:
-		m.Push(Waiting)
-		m.wait = "Regenerating all thumbnails for library"
-		return m, tea.Batch(m.regenLib, tickCmd())
-	case prune:
-		m.Push(Waiting)
-		m.wait = "Removing orphaned thumbs.bin entries"
-		return m, tea.Batch(m.prune, tickCmd())
-	case all:
-		m.Push(Waiting)
-		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
-		return m, tea.Batch(m.genFull, tickCmd())
-	case showAdd, advEdit, rmThumbs:
-		return configMenu(m, key)
-	}
-
-	return m, nil
-}
-
-func (m model) View() (s string) {
+func (m Model) View() (s string) {
 	switch m.Peek() {
 	case Initializing:
-		s = fmt.Sprintf(" %s Loading your library. Please wait.", m.spinner.View())
+		s = fmt.Sprintf("  %s Loading your Pocket library. Please wait.", m.spinner.View())
 		//s = m.menu.View()
 	case Waiting:
-		s = fmt.Sprintf("%s\n\n%s", m.wait, m.progress.ViewAs(*m.percent))
+		s = fmt.Sprintf("\n  %s\n\n  %s", m.wait, m.progress.ViewAs(*m.percent))
 		if m.anyKey {
-			s = fmt.Sprintf("%s\n\nPress any key to continue.", s)
+			s = fmt.Sprintf("%s\n\n  Press any key to continue.", s)
 		}
 	case Saving:
-		s = fmt.Sprintf("Saving your Pocket library\n\n%s", m.progress.ViewAs(*m.percent))
+		s = fmt.Sprintf("\n  Saving your Pocket library\n\n  %s", m.progress.ViewAs(*m.percent))
 	case FatalError:
 		s = fmt.Sprintf("FATAL ERROR: %v\n", m.err)
 	case MainMenu:
@@ -221,14 +170,14 @@ func (m model) View() (s string) {
 	case AddScreen:
 		fallthrough
 	default:
-		panic("Panic! At the switch statement")
+		panic("Panic! At the View() call")
 	}
 
 	return
 }
 
 // initSystem loads all our data from disk
-func (m model) initSystem() tea.Msg {
+func (m Model) initSystem() tea.Msg {
 	var d string
 	var err error
 
@@ -254,7 +203,7 @@ func (m model) initSystem() tea.Msg {
 	} else if !fi.IsDir() {
 		return errMsg{fmt.Errorf("%s is not a directory", d), true}
 	}
-	m.RootDir = os.DirFS(d)
+	m.rootDir = os.DirFS(d)
 
 	c, err := io.LoadConfig()
 	if err != nil {
@@ -262,34 +211,34 @@ func (m model) initSystem() tea.Msg {
 	}
 	*m.Config = c
 
-	e, err := io.LoadEntries(m.RootDir)
+	e, err := io.LoadEntries(m.rootDir)
 	if err != nil {
 		return errMsg{err, true}
 	}
-	m.Entries = e
+	m.entries = e
 
-	p, err := io.LoadPlaytimes(m.RootDir)
+	p, err := io.LoadPlaytimes(m.rootDir)
 	if err != nil {
 		return errMsg{err, true}
 	}
-	m.PlayTimes = p
+	m.playTimes = p
 
-	if len(m.Entries) != len(m.PlayTimes) {
-		return errMsg{fmt.Errorf("entry count mismatch between list.bin [%d] & playtimes.bin [%d]", len(m.Entries), len(m.PlayTimes)), true}
+	if len(m.entries) != len(m.playTimes) {
+		return errMsg{fmt.Errorf("entry count mismatch between list.bin [%d] & playtimes.bin [%d]", len(m.entries), len(m.playTimes)), true}
 	}
 
-	t, err := io.LoadThumbs(m.RootDir)
+	t, err := io.LoadThumbs(m.rootDir)
 	if err != nil {
 		return errMsg{err, true}
 	}
-	m.Thumbs = t
+	m.thumbnails = t
 
 	if m.ShowAdd { // Only need to load these if we're showing the add option
 		i, err := io.LoadInternal()
 		if err != nil {
 			return errMsg{err, true}
 		}
-		m.Internal = i
+		m.internal = i
 	}
 
 	per := 0.0
@@ -300,7 +249,7 @@ func (m model) initSystem() tea.Msg {
 }
 
 // save is the opposite of init: save our data to disk
-func (m model) save() tea.Msg {
+func (m Model) save() tea.Msg {
 	wd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -312,8 +261,8 @@ func (m model) save() tea.Msg {
 
 	ctr := 0.0
 	tick := make(chan any)
-	total := float64(len(m.Entries))
-	for _, v := range m.Thumbs {
+	total := float64(len(m.entries))
+	for _, v := range m.thumbnails {
 		if v.Modified {
 			total = total + float64(len(v.Images)) // Only increase the total if they've been modified since we don't write them out otherwise.
 		}
@@ -322,11 +271,11 @@ func (m model) save() tea.Msg {
 
 	go func() { // Run these in a goroutine to avoid having to pass around the pointer to the progress value as that would require knowing the total as well
 		defer close(tick)
-		if err := io.SaveLibrary(m.Entries, m.PlayTimes, tick); err != nil {
+		if err := io.SaveLibrary(m.entries, m.playTimes, tick); err != nil {
 			tick <- err
 			return
 		}
-		if err := io.SaveThumbs(m.Thumbs, tick); err != nil {
+		if err := io.SaveThumbs(m.thumbnails, tick); err != nil {
 			tick <- err
 			return
 		}
@@ -352,14 +301,14 @@ func (m model) save() tea.Msg {
 
 // playfix turns the most significant bit in the played time integer & sets them to 0.
 // This fixes a known bug in the library via the assumption that nobody has played 4660+ hours of something.
-func (m model) playfix() tea.Msg {
+func (m Model) playfix() tea.Msg {
 	ctr := 0.0
-	for k, v := range m.PlayTimes {
+	for k, v := range m.playTimes {
 		p := v.Played &^ 0xFF000000
 		v.Played = p
-		m.PlayTimes[k] = v
+		m.playTimes[k] = v
 		ctr++
-		*m.percent = ctr / float64(len(m.PlayTimes))
+		*m.percent = ctr / float64(len(m.playTimes))
 	}
 	*m.percent = 1.0
 	m.updates <- m
@@ -367,24 +316,24 @@ func (m model) playfix() tea.Msg {
 }
 
 // prune removes all thumbnail entries that don't have a corresponding entry in the library
-func (m model) prune() tea.Msg {
+func (m Model) prune() tea.Msg {
 	ctr := 0.0
 	total := 0.0
-	for _, v := range m.Thumbs {
+	for _, v := range m.thumbnails {
 		total = total + float64(len(v.Images))
 	}
 
-	for k, v := range m.Thumbs {
-		t := m.Thumbs[k]
-		t.Images = slices.DeleteFunc(v.Images, func(image model2.Image) bool {
-			return !slices.ContainsFunc(m.Entries, func(entry model2.Entry) bool {
+	for k, v := range m.thumbnails {
+		t := m.thumbnails[k]
+		t.Images = slices.DeleteFunc(v.Images, func(image models.Image) bool {
+			return !slices.ContainsFunc(m.entries, func(entry models.Entry) bool {
 				return entry.System.ThumbFile() == k && entry.Crc32 == image.Crc32
 			})
 		})
-		if len(t.Images) != len(m.Thumbs[k].Images) {
+		if len(t.Images) != len(m.thumbnails[k].Images) {
 			t.Modified = true
 		}
-		m.Thumbs[k] = t
+		m.thumbnails[k] = t
 		ctr++
 		*m.percent = ctr / total
 	}
@@ -395,11 +344,11 @@ func (m model) prune() tea.Msg {
 
 // genFull generates thumbnail images for all files in the Images/<system>/ directories. It can take a while.
 // TODO: Should some of this be moved into the io package? We'd lose the progress bar though
-func (m model) genFull() tea.Msg {
+func (m Model) genFull() tea.Msg {
 	ctr := 0.0
 	total := 0.0
-	for _, sys := range util.ValidThumbsFiles {
-		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.RootDir, strings.ToLower(sys.String())))
+	for _, sys := range models.ValidThumbsFiles {
+		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.rootDir, strings.ToLower(sys.String())))
 		if os.IsNotExist(err) {
 			// Directory doesn't exist. Just continue
 			continue
@@ -413,8 +362,8 @@ func (m model) genFull() tea.Msg {
 		}
 	}
 
-	for _, sys := range util.ValidThumbsFiles {
-		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.RootDir, strings.ToLower(sys.String())))
+	for _, sys := range models.ValidThumbsFiles {
+		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.rootDir, strings.ToLower(sys.String())))
 		if os.IsNotExist(err) {
 			// Directory doesn't exist. Just continue
 			continue
@@ -422,7 +371,7 @@ func (m model) genFull() tea.Msg {
 			return errMsg{err, true}
 		}
 
-		thumbs := model2.Thumbnails{Modified: true}
+		thumbs := models.Thumbnails{Modified: true}
 		for _, e := range de {
 			if e.IsDir() || len(e.Name()) != 12 || !strings.HasSuffix(e.Name(), ".bin") {
 				continue // Definitely not an image file. Continue.
@@ -435,7 +384,7 @@ func (m model) genFull() tea.Msg {
 				// Not a valid file name. Skip
 				continue
 			}
-			i, err := model2.GenerateThumbnail(m.RootDir, sys, binary.BigEndian.Uint32(b))
+			i, err := models.GenerateThumbnail(m.rootDir, sys, binary.BigEndian.Uint32(b))
 			if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
 				return errMsg{err, true}
 			}
@@ -443,7 +392,7 @@ func (m model) genFull() tea.Msg {
 			thumbs.Images = append(thumbs.Images, i)
 			*m.percent = ctr / total
 		}
-		m.Thumbs[sys] = thumbs
+		m.thumbnails[sys] = thumbs
 	}
 	*m.percent = 1.0
 	m.updates <- m
@@ -452,26 +401,26 @@ func (m model) genFull() tea.Msg {
 
 // genMissing generates thumbnails for only those games in the user's library that don't have entries.
 // genMissing and regenLib are the same except for the slices.ContainsFunc call. Can we do something about that?
-func (m model) genMissing() tea.Msg {
+func (m Model) genMissing() tea.Msg {
 	ctr := 0.0
-	for _, e := range m.Entries {
+	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
 
-		if !slices.ContainsFunc(m.Thumbs[sys].Images, func(image model2.Image) bool {
+		if !slices.ContainsFunc(m.thumbnails[sys].Images, func(image models.Image) bool {
 			return image.Crc32 == e.Crc32
 		}) {
-			img, err := model2.GenerateThumbnail(m.RootDir, sys, e.Crc32) // TODO: move this func elsewhere?
+			img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32) // TODO: move this func elsewhere?
 			if err != nil && !os.IsNotExist(err) {                        // We only care if it was something other than a not existing error
 				return errMsg{err, true}
 			} else {
-				i := m.Thumbs[sys]
+				i := m.thumbnails[sys]
 				i.Images = append(i.Images, img)
 				i.Modified = true
-				m.Thumbs[sys] = i
+				m.thumbnails[sys] = i
 			}
 		}
 		ctr++
-		*m.percent = ctr / float64(len(m.Entries))
+		*m.percent = ctr / float64(len(m.entries))
 	}
 	*m.percent = 1.0
 	m.updates <- m
@@ -479,22 +428,22 @@ func (m model) genMissing() tea.Msg {
 }
 
 // regenLib generates new thumbnails for all games in the user's library
-func (m model) regenLib() tea.Msg {
+func (m Model) regenLib() tea.Msg {
 	ctr := 0.0
-	for _, e := range m.Entries {
+	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
 
-		img, err := model2.GenerateThumbnail(m.RootDir, sys, e.Crc32) // TODO: move this func elsewhere?
+		img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32) // TODO: move this func elsewhere?
 		if err != nil && !os.IsNotExist(err) {                        // We only care if it was something other than a not existing error
 			return errMsg{err, true}
 		} else {
-			i := m.Thumbs[sys]
+			i := m.thumbnails[sys]
 			i.Images = append(i.Images, img)
 			i.Modified = true
-			m.Thumbs[sys] = i
+			m.thumbnails[sys] = i
 		}
 		ctr++
-		*m.percent = ctr / float64(len(m.Entries))
+		*m.percent = ctr / float64(len(m.entries))
 	}
 	*m.percent = 1.0
 	m.updates <- m
@@ -502,11 +451,11 @@ func (m model) regenLib() tea.Msg {
 }
 
 // genSingle generates a single thumbnail entry & then either updates or inserts it into the list of thumbnails
-func (m model) genSingle(e model2.Entry) tea.Cmd {
+func (m Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		*m.percent = 0.0
 		sys := e.System.ThumbFile()
-		img, err := model2.GenerateThumbnail(m.RootDir, sys, e.Crc32)
+		img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32)
 		*m.percent = .50        // These percentages are just made up.
 		if os.IsNotExist(err) { // Doesn't exist. That's fine.
 			*m.percent = 1.0
@@ -515,7 +464,7 @@ func (m model) genSingle(e model2.Entry) tea.Cmd {
 		} else if err != nil {
 			return errMsg{err, true}
 		}
-		t := m.Thumbs[sys]
+		t := m.thumbnails[sys]
 		for i, c := range t.Images {
 			if c.Crc32 == e.Crc32 {
 				t.Images[i] = img
@@ -528,7 +477,7 @@ func (m model) genSingle(e model2.Entry) tea.Cmd {
 			t.Modified = true
 		}
 
-		m.Thumbs[sys] = t
+		m.thumbnails[sys] = t
 
 		*m.percent = 1.0
 		m.updates <- m
@@ -537,8 +486,129 @@ func (m model) genSingle(e model2.Entry) tea.Cmd {
 	}
 }
 
+func (m Model) editScreenView() string {
+	s := ""
+	//e := m.entries[m.editList.Index()]
+
+	return s
+}
+
+// removeEntry removes an entry from the library. If RemoveImages is set to true, it also removes any thumbnails
+// associated with the system + CRC combination. idx is the element's index in the entries slice; this has to be used, rather
+// than CRC or sig, as it's possible with editting/adding to have duplicates.
+//
+// Unlike many of the other operations, this one should not be performed in a separate tea.Cmd, as we don't want to display
+// the list with the incorrect items.
+func (m Model) removeEntry(idx int) Model {
+	rm := m.entries[idx]
+	m.entries = slices.Delete(m.entries, idx, idx+1)
+
+	if !m.RemoveImages { // If they don't have this flagged, leave the thumbnails alone
+		return m
+	}
+
+	// Delete the thumbnail entry if it exists
+	sys := rm.System.ThumbFile()
+	t := m.thumbnails[sys]
+	for j, img := range t.Images {
+		if rm.Crc32 == img.Crc32 {
+			t.Images = slices.Delete(t.Images, j, j+1)
+			t.Modified = true
+		}
+	}
+	m.thumbnails[sys] = t
+
+	return m
+}
+
+func (m Model) menuHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
+	scr := m.Peek()
+	switch scr {
+	case MainMenu, LibraryMenu, ThumbMenu, ConfigMenu: // Menus without filtering
+		if k, ok := msg.(tea.KeyMsg); ok && (k.String() == "enter" || k.String() == " ") {
+			return enter[scr](m, msg)
+		} else if ok && k.String() == "esc" {
+			return esc[scr](m, msg)
+		}
+	case EditList, GenerateList, RemoveList: // Menus with filtering
+		if !m.gameList.SettingFilter() {
+			if k, ok := msg.(tea.KeyMsg); ok && (k.String() == "enter" || k.String() == " ") {
+				return enter[scr](m, msg)
+			} else if ok && k.String() == "esc" {
+				return esc[scr](m, msg)
+			}
+		}
+	}
+
+	// ok should be never false, but check just to make certain
+	if fn, ok := def[scr]; ok {
+		return fn(m, msg)
+	}
+
+	return m, nil
+}
+
+func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
+	switch key {
+	case lib:
+		*m.subMenu = generateSubMenu(*m.subMenu, libraryOptions, "Main > Library", m.mainMenu.Width(), m.mainMenu.Height())
+		if !m.ShowAdd {
+			m.subMenu.SetItems(m.subMenu.Items()[1:])
+		}
+		m.Push(LibraryMenu)
+	case thumbs:
+		*m.subMenu = generateSubMenu(*m.subMenu, thumbOptions, "Main > Thumbnails", m.mainMenu.Width(), m.mainMenu.Height())
+		m.Push(ThumbMenu)
+	case config:
+		m.configMenu.ResetSelected()
+		m.Push(ConfigMenu)
+	case quit:
+		return m, tea.Quit
+	case save:
+		m.Push(Saving)
+		return m, tea.Batch(m.save, tickCmd())
+	case back:
+		return pop(m, nil)
+	case add:
+		// TODO: Add menu?
+	case edit:
+		*m.gameList = generateGameList(*m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
+		m.Push(EditList)
+	case rm:
+		*m.gameList = generateGameList(*m.gameList, m.entries, "Main > Library > Remove Game", m.mainMenu.Width(), m.mainMenu.Height())
+		m.Push(RemoveList)
+	case fix:
+		m.Push(Waiting)
+		m.wait = "Fixing played times"
+		return m, tea.Batch(m.playfix, tickCmd())
+	case missing:
+		m.Push(Waiting)
+		m.wait = "Generating missing thumbnails for library"
+		return m, tea.Batch(m.genMissing, tickCmd())
+	case single:
+		*m.gameList = generateGameList(*m.gameList, m.entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
+		m.Push(GenerateList)
+	case genlib:
+		m.Push(Waiting)
+		m.wait = "Regenerating all thumbnails for library"
+		return m, tea.Batch(m.regenLib, tickCmd())
+	case prune:
+		m.Push(Waiting)
+		m.wait = "Removing orphaned thumbs.bin entries"
+		return m, tea.Batch(m.prune, tickCmd())
+	case all:
+		m.Push(Waiting)
+		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
+		return m, tea.Batch(m.genFull, tickCmd())
+	case showAdd, advEdit, rmThumbs:
+		return m.configChange(key)
+	}
+
+	return m, nil
+}
+
 // configMenu handles item selection on the settings menu
-func configMenu(m model, key menuKey) (model, tea.Cmd) {
+func (m Model) configChange(key menuKey) (Model, tea.Cmd) {
 	switch key {
 	case showAdd:
 		m.ShowAdd = !m.ShowAdd
@@ -549,87 +619,4 @@ func configMenu(m model, key menuKey) (model, tea.Cmd) {
 	}
 
 	return m, nil
-}
-
-func (m model) editScreenView() string {
-	s := ""
-	//e := m.Entries[m.editList.Index()]
-
-	return s
-}
-
-// removeEntry removes an entry from the library. if Config.RemoveImages is set to true, it also removes any thumbnails
-// associated with the system + CRC combination. idx is the element's index in the Entries slice; this has to be used, rather
-// than CRC or sig, as it's possible with editting/adding to have duplicates.
-//
-// Unlike many of the other operations, this one should not be performed in a separate tea.Cmd, as we don't want to display
-// the list with the incorrect items.
-func (m model) removeEntry(idx int) model {
-	rm := m.Entries[idx]
-	m.Entries = slices.Delete(m.Entries, idx, idx+1)
-
-	if !m.RemoveImages { // If they don't have this flagged, leave the thumbnails alone
-		return m
-	}
-
-	// Delete the thumbnail entry if it exists
-	sys := rm.System.ThumbFile()
-	t := m.Thumbs[sys]
-	for j, img := range t.Images {
-		if rm.Crc32 == img.Crc32 {
-			t.Images = slices.Delete(t.Images, j, j+1)
-			t.Modified = true
-		}
-	}
-	m.Thumbs[sys] = t
-
-	return m
-}
-
-// tickCmd is used by the progress bar. It fires 1/5 of a second after it's started, and is necessary to call again if
-// another tick is desired
-func tickCmd() tea.Cmd {
-	return tea.Tick(time.Second/5, func(t time.Time) tea.Msg {
-		return tickMsg(t)
-	})
-}
-
-// stack is a simple struct for keeping track of the screen we are currently on & the ones that came before it.
-// It's probably overkill. Could have just used a different constant for the edit game, remove game, & regen thumbnail screens.
-type stack struct {
-	s []screen
-}
-
-func (s *stack) Peek() screen {
-	if len(s.s) == 0 {
-		return MainMenu
-	}
-	return s.s[len(s.s)-1]
-}
-
-func (s *stack) Pop() screen {
-	if len(s.s) == 0 {
-		return MainMenu
-	}
-	rm := s.s[len(s.s)-1]
-	s.s = s.s[:len(s.s)-1]
-	return rm
-}
-
-func (s *stack) Push(v screen) {
-	s.s = append(s.s, v)
-}
-
-func (s *stack) Clear() {
-	s.s = make([]screen, 0)
-}
-
-// Parent returns the parent of the current screen without modifying the stack.
-// There are a few cases where we need to know what the previous screen was, without leaving the current screen.
-func (s *stack) Parent() screen {
-	if len(s.s) < 2 {
-		return MainMenu
-	}
-
-	return s.s[len(s.s)-2]
 }
