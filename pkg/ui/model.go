@@ -8,16 +8,19 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/progress"
 	"github.com/charmbracelet/bubbles/spinner"
+	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/g026r/pocket-library-editor/pkg/io"
 	"github.com/g026r/pocket-library-editor/pkg/models"
+	"github.com/g026r/pocket-library-editor/pkg/util"
 )
 
 type errMsg struct {
@@ -42,29 +45,32 @@ func tickCmd() tea.Cmd {
 }
 
 type Model struct {
-	updates    chan Model // updates is used for passing updates to the Model rather than using pointers
-	rootDir    fs.FS
-	entries    []models.Entry
-	playTimes  map[uint32]models.PlayTime
-	thumbnails map[models.System]models.Thumbnails
-	internal   map[models.System][]models.Entry // internal is a map of all known possible entries, grouped by system. For eventual use with add & adv. editing, maybe.
-	*io.Config                                  // io.Config is a pointer as we need to be able to read this value in the configDelegate, which doesn't have access to Model
-	*stack                                      // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
-	spinner    spinner.Model                    // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
-	progress   *progress.Model                  // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the Model
-	percent    *float64                         // the percent of the progress bar
-	err        error                            // err is used to print out an error if the program has to exit early
-	wait       string                           // wait is the message to display while waiting
-	anyKey     bool                             // anyKey tells View whether we're waiting for a key input or not
-	mainMenu   *list.Model
-	subMenu    *list.Model // subMenu covers the library & thumbnail options: menus where esc goes up a screen but filtering is disabled
-	configMenu *list.Model // configMenu is a special case as it needs a different delegate renderer from subMenu
-	gameList   *list.Model // gameList covers anything that lists all the games in the library
+	updates      chan Model // updates is used for passing updates to the Model rather than using pointers
+	rootDir      fs.FS
+	entries      []models.Entry
+	playTimes    map[uint32]models.PlayTime
+	thumbnails   map[models.System]models.Thumbnails
+	internal     map[models.System][]models.Entry // internal is a map of all known possible entries, grouped by system. For eventual use with add & adv. editing, maybe.
+	*io.Config                                    // io.Config is a pointer as we need to be able to read this value in the configDelegate, which doesn't have access to Model
+	*stack                                        // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
+	spinner      spinner.Model                    // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
+	progress     *progress.Model                  // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the Model
+	percent      *float64                         // the percent of the progress bar
+	err          error                            // err is used to print out an error if the program has to exit early
+	wait         string                           // wait is the message to display while waiting
+	anyKey       bool                             // anyKey tells View whether we're waiting for a key input or not
+	mainMenu     *list.Model
+	subMenu      *list.Model // subMenu covers the library & thumbnail options: menus where esc goes up a screen but filtering is disabled
+	configMenu   *list.Model // configMenu is a special case as it needs a different delegate renderer from subMenu
+	gameList     *list.Model // gameList covers anything that lists all the games in the library
+	gameInput    []textinput.Model
+	focusedInput int
 }
 
 func NewModel() tea.Model {
 	prog := progress.New(progress.WithScaledGradient("#006699", "#00ccff"))
 	config := io.Config{}
+
 	return Model{
 		updates:    make(chan Model, 1),
 		stack:      &stack{[]screen{Initializing}},
@@ -75,7 +81,69 @@ func NewModel() tea.Model {
 		configMenu: NewConfigMenu(&config),
 		subMenu:    NewSubMenu(),  // subMenu needs to be set even without items to avoid a nil pointer with the initial WindowSizeMsg
 		gameList:   NewGameMenu(), // same for gameList
+		gameInput:  NewTextInput(),
 	}
+}
+
+const (
+	name = iota
+	system
+	crc
+	sig
+	magic
+	added
+	play
+	submit
+	cancel
+)
+
+func NewTextInput() []textinput.Model {
+	inputs := make([]textinput.Model, play+1)
+
+	inputs[system] = textinput.New()
+	// TODO: Should we go with full suggestions instead?
+	inputs[system].SetSuggestions([]string{models.GB.String(), models.GBC.String(), models.GBA.String(), models.GG.String(), models.SMS.String(), models.NGP.String(), models.NGPC.String(), models.PCE.String(), models.Lynx.String()})
+	inputs[system].Prompt = "System: "
+	inputs[system].Placeholder = models.GB.String()
+	inputs[system].Validate = sysValidate
+	inputs[system].ShowSuggestions = true
+
+	inputs[name] = textinput.New()
+	inputs[name].Prompt = "Name: "
+	inputs[name].Validate = notBlank
+
+	inputs[crc] = textinput.New()
+	inputs[crc].Prompt = "CRC32: "
+	inputs[crc].Placeholder = "0x00000000"
+	inputs[crc].Validate = hexValidate
+
+	inputs[sig] = textinput.New()
+	inputs[sig].Prompt = "Signature: "
+	inputs[sig].Placeholder = "0x00000000"
+	inputs[sig].Validate = hexValidate
+
+	inputs[magic] = textinput.New()
+	inputs[magic].Prompt = "Magic Number: "
+	inputs[magic].Placeholder = "0x0000"
+	inputs[magic].Validate = hexValidate
+
+	inputs[added] = textinput.New()
+	inputs[added].Prompt = "Date Added: "
+	inputs[added].Placeholder = "2024-01-15 13:24" // Will be replaced eventually
+	inputs[added].Validate = dateValidate
+
+	inputs[play] = textinput.New()
+	inputs[play].Prompt = "Played: "
+	inputs[play].Placeholder = "0h 0m 0s"
+	inputs[play].Validate = playValidate
+
+	for i := range inputs {
+		inputs[i].PromptStyle = itemStyle
+		inputs[i].Cursor.Style = selectedItemStyle.PaddingLeft(0)
+		inputs[i].TextStyle = itemStyle.PaddingLeft(2)
+	}
+
+	return inputs
 }
 
 func (m Model) Init() tea.Cmd {
@@ -140,7 +208,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	return m.menuHandler(msg)
+	if s := m.Peek(); s == MainMenu || s == LibraryMenu || s == ThumbMenu || s == ConfigMenu ||
+		s == EditList || s == RemoveList || s == GenerateList {
+		return m.menuHandler(msg)
+	} else if s == AddScreen || s == EditScreen {
+		return m.inputHandler(msg)
+	}
+
+	return m, nil
 }
 
 func (m Model) View() (s string) {
@@ -166,9 +241,10 @@ func (m Model) View() (s string) {
 	case RemoveList, EditList, GenerateList:
 		s = m.gameList.View()
 	case EditScreen:
+		// TODO: Add a title to the edit & add screens
 		s = m.editScreenView()
 	case AddScreen:
-		fallthrough
+		s = m.addScreenView()
 	default:
 		panic("Panic! At the View() call")
 	}
@@ -487,8 +563,25 @@ func (m Model) genSingle(e models.Entry) tea.Cmd {
 }
 
 func (m Model) editScreenView() string {
-	s := ""
-	//e := m.entries[m.editList.Index()]
+	s := fmt.Sprintf("%s\n\n", m.gameInput[name].View())
+	if m.AdvancedEditing {
+		s = fmt.Sprintf("%s%s\n\n", s, m.gameInput[system].View())
+	}
+	s = fmt.Sprintf("%s%s\n\n", s, m.gameInput[crc].View())
+	if m.AdvancedEditing {
+		s = fmt.Sprintf("%s%s\n\n%s\n\n", s, m.gameInput[sig].View(), m.gameInput[magic].View())
+	}
+	s = fmt.Sprintf("%s%s\n\n%s\n\n", s, m.gameInput[added].View(), m.gameInput[play].View())
+
+	return s
+}
+
+func (m Model) addScreenView() string {
+	s := fmt.Sprintf("  %s\n\n", m.gameInput[name].View())
+	s = fmt.Sprintf("%s  %s\n\n", s, m.gameInput[system].View())
+	s = fmt.Sprintf("%s  %s\n\n", s, m.gameInput[crc].View())
+	s = fmt.Sprintf("%s  %s\n\n  %s\n\n", s, m.gameInput[sig].View(), m.gameInput[magic].View())
+	s = fmt.Sprintf("%s  %s\n\n  %s\n\n", s, m.gameInput[added].View(), m.gameInput[play].View())
 
 	return s
 }
@@ -548,6 +641,71 @@ func (m Model) menuHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
+func (m Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
+	if k, ok := msg.(tea.KeyMsg); ok {
+		switch k.String() {
+		case "tab", "down":
+			return m.shiftInput(1)
+		case "shift+tab", "up":
+			return m.shiftInput(-1)
+		case "enter":
+			switch m.focusedInput {
+			case submit:
+				// TODO: Handle submitting
+			case cancel:
+				m.Pop()
+			default:
+				return m.shiftInput(1)
+			}
+		case "esc":
+			m.Pop()
+		}
+	}
+
+	return m.updateInputs(msg)
+}
+
+func (m Model) shiftInput(i int) (tea.Model, tea.Cmd) {
+	// TODO: Blur buttons as necessary
+	m.gameInput[m.focusedInput].Blur()
+	m.gameInput[m.focusedInput].PromptStyle = itemStyle
+	m.focusedInput = m.focusedInput + i
+	if !m.AdvancedEditing && m.Peek() != AddScreen {
+		if i > 0 {
+			if m.focusedInput == system {
+				m.focusedInput = crc
+			} else if m.focusedInput == sig || m.focusedInput == magic {
+				m.focusedInput = added
+			}
+		} else if i < 0 {
+			if m.focusedInput == system {
+				m.focusedInput = name
+			} else if m.focusedInput == sig || m.focusedInput == magic {
+				m.focusedInput = crc
+			}
+		}
+	}
+	if m.focusedInput >= len(m.gameInput) {
+		m.focusedInput = len(m.gameInput) - 1
+	} else if m.focusedInput < 0 {
+		m.focusedInput = 0
+	}
+	m.gameInput[m.focusedInput].PromptStyle = selectedItemStyle.PaddingLeft(4)
+	return m, m.gameInput[m.focusedInput].Focus()
+}
+
+func (m Model) updateInputs(msg tea.Msg) (tea.Model, tea.Cmd) {
+	cmds := make([]tea.Cmd, len(m.gameInput))
+
+	// Only text inputs with Focus() set will respond, so it's safe to simply
+	// update all of them here without any further logic.
+	for i := range m.gameInput {
+		m.gameInput[i], cmds[i] = m.gameInput[i].Update(msg)
+	}
+
+	return m, tea.Batch(cmds...)
+}
+
 func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 	switch key {
 	case lib:
@@ -570,7 +728,17 @@ func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 	case back:
 		return pop(m, nil)
 	case add:
-		// TODO: Add menu?
+		m.focusedInput = 0
+		for i := range m.gameInput {
+			m.gameInput[i].SetValue("")
+			m.gameInput[i].Blur()
+			m.gameInput[i].PromptStyle = itemStyle
+		}
+		// TODO: Remove focus from buttons
+		m.gameInput[added].Placeholder = time.Now().Format("2006-01-02 15:04") // Reset the placeholder to whatever
+		m.gameInput[m.focusedInput].PromptStyle = selectedItemStyle.PaddingLeft(4)
+		m.Push(AddScreen)
+		return m, m.gameInput[m.focusedInput].Focus()
 	case edit:
 		*m.gameList = generateGameList(*m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(EditList)
@@ -619,4 +787,42 @@ func (m Model) configChange(key menuKey) (Model, tea.Cmd) {
 	}
 
 	return m, nil
+}
+
+func sysValidate(s string) error {
+	_, err := models.Parse(s)
+	return err
+}
+
+func notBlank(s string) error {
+	s = strings.TrimSpace(s)
+	if len(s) == 0 {
+		fmt.Errorf("Name cannot be blank")
+	}
+	return nil
+}
+
+func hexValidate(s string) error {
+	_, err := util.HexStringTransform(s)
+	return err
+}
+
+func dateValidate(s string) error {
+	// TODO: Make this more robust (e.g. 12 vs 24 hour, leading 0s, etc. Seconds?)
+	_, err := time.Parse("2006-01-02 15:04", s)
+	return err
+}
+
+func playValidate(s string) error {
+	// TODO: Should actually be in the form 00h 00m 00s
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		return err
+	}
+
+	if i < 0 {
+		return fmt.Errorf("Playtime cannot be a negative value")
+	}
+
+	return nil
 }

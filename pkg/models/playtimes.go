@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
 	"time"
 )
@@ -44,4 +45,12 @@ func (p PlayTime) WriteTo(w io.Writer) (int64, error) {
 	}
 
 	return 8, nil
+}
+
+func (p PlayTime) FormatPlayTime() string {
+	s := p.Played % 60
+	m := (p.Played % 3600) / 60
+	h := p.Played / 3600
+
+	return fmt.Sprintf("%dh %dm %ds", h, m, s)
 }

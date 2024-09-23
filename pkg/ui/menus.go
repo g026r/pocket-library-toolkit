@@ -5,6 +5,7 @@ import (
 	goio "io"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -86,14 +87,6 @@ var (
 		menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), showAdd},
 		menuItem{"Back", back}}
 
-	// pop is the ESC action for basically everything but main menu
-	// It removes the latest item from the stack, allowing the rendering to go up one level
-	pop = func(m Model, msg tea.Msg) (Model, tea.Cmd) {
-		m.Pop()
-		runtime.GC() // Not ideal. Probably also not necessary.
-		return m, nil
-	}
-
 	// esc consists of the items to be performed if esc is typed
 	esc = map[screen]func(m Model, msg tea.Msg) (Model, tea.Cmd){
 		MainMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
@@ -123,10 +116,39 @@ var (
 		},
 		EditList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			entry := m.gameList.SelectedItem().(models.Entry)
-			m.Push(EditScreen)
-			return m, func() tea.Msg { // TODO: Need to find a way to pass this back. Or can I just use the menu idx instead?
-				return entry
+			m.focusedInput = 0
+			m.gameInput[name].SetValue(entry.Name)
+			m.gameInput[name].SetCursor(len(entry.Name))
+			m.gameInput[system].SetValue(entry.System.String())
+			m.gameInput[system].SetCursor(len(entry.System.String()))
+			m.gameInput[crc].SetValue(fmt.Sprintf("0x%08x", entry.Crc32))
+			m.gameInput[crc].SetCursor(10)
+			m.gameInput[sig].SetValue(fmt.Sprintf("0x%08x", entry.Sig))
+			m.gameInput[sig].SetCursor(10)
+			m.gameInput[magic].SetValue(fmt.Sprintf("0x%04x", entry.Magic))
+			m.gameInput[magic].SetCursor(6)
+
+			if p, ok := m.playTimes[entry.Sig]; ok {
+				m.gameInput[added].SetValue(time.Unix(int64(p.Added), 0).Format("2006-01-02 15:04"))
+				m.gameInput[play].SetValue(p.FormatPlayTime())
+				m.gameInput[added].SetCursor(len(m.gameInput[added].Value()))
+				m.gameInput[play].SetCursor(len(m.gameInput[play].Value()))
+			} else {
+				m.gameInput[added].SetValue(time.Now().Format("2006-01-02 15:04"))
+				m.gameInput[play].SetValue("0h 0m 0s")
+				m.gameInput[added].SetCursor(len(m.gameInput[added].Value()))
+				m.gameInput[play].SetCursor(len(m.gameInput[play].Value()))
 			}
+
+			// TODO: Blur buttons
+			for i := range play {
+				m.gameInput[i].Blur()
+				m.gameInput[i].PromptStyle = itemStyle
+			}
+			m.gameInput[name].PromptStyle = selectedItemStyle.PaddingLeft(4)
+
+			m.Push(EditScreen)
+			return m, m.gameInput[name].Focus()
 		},
 		GenerateList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			entry := m.gameList.SelectedItem().(models.Entry)
@@ -184,6 +206,14 @@ var (
 		},
 	}
 )
+
+// pop is the ESC action for basically everything but main menu
+// It removes the latest item from the stack, allowing the rendering to go up one level
+func pop(m Model, msg tea.Msg) (Model, tea.Cmd) {
+	m.Pop()
+	runtime.GC() // Not ideal. Probably also not necessary.
+	return m, nil
+}
 
 // itemDelegate is the default rendered for menuItem instances that aren't io.Config values.
 // Though it can take anything that implements fmt.Stringer if need be.

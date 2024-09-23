@@ -50,3 +50,27 @@ func TestPlayTime_WriteTo(t *testing.T) {
 		}
 	})
 }
+
+func TestPlayTime_FormatPlayTime(t *testing.T) {
+	t.Parallel()
+
+	p := PlayTime{}
+	if s := p.FormatPlayTime(); s != "0h 0m 0s" {
+		t.Errorf("Expected '0h 0m 0s'; got '%s'", s)
+	}
+
+	p.Played = 55
+	if s := p.FormatPlayTime(); s != "0h 0m 55s" {
+		t.Errorf("Expected '0h 0m 55s'; got '%s'", s)
+	}
+
+	p.Played = 147
+	if s := p.FormatPlayTime(); s != "0h 2m 27s" {
+		t.Errorf("Expected '0h 2m 27s'; got '%s'", s)
+	}
+
+	p.Played = 11004
+	if s := p.FormatPlayTime(); s != "3h 3m 24s" {
+		t.Errorf("Expected '3h 3m 24s'; got '%s'", s)
+	}
+}
