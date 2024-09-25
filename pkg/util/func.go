@@ -12,9 +12,15 @@ var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
 
 // HexStringTransform takes a string, validates that it is a 32 bit hex string, and returns the uint32 representation of it
 // The input string may or may not be prefixed with `0x` and any leading or trailing spaces are removed.
+// If a blank string is passed, 0 is returned
 func HexStringTransform(s string) (uint32, error) {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return 0, nil
+	}
+
 	// take care of the many different ways a user might input this
-	s = strings.TrimPrefix(strings.ToLower(strings.TrimSpace(s)), "0x")
+	s = strings.TrimPrefix(strings.ToLower(s), "0x")
 	if s == "" {
 		return 0, fmt.Errorf("invalid string provided: %s", s)
 	}

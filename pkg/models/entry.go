@@ -7,10 +7,11 @@ import (
 	"fmt"
 	"io"
 	"slices"
+	"strings"
 )
 
 var EntrySort = func(a, b Entry) int {
-	return cmp.Compare(a.Name, b.Name)
+	return cmp.Compare(strings.ToLower(a.Name), strings.ToLower(b.Name))
 }
 
 type Entry struct {

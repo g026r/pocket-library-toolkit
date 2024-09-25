@@ -33,6 +33,7 @@ type Config struct {
 	RemoveImages    bool `json:"remove_images"`
 	AdvancedEditing bool `json:"advanced_editing"`
 	ShowAdd         bool `json:"show_add"`
+	GenerateNew     bool `json:"generate_new"`
 }
 
 type jsonEntry struct {
@@ -83,7 +84,7 @@ func LoadEntries(root fs.FS) ([]models.Entry, error) {
 		return nil, err
 	}
 
-	// TODO: This appears to be the first entry's value? But why?
+	// TODO: This appears to be the first entry's value? But why is it there twice?
 	if err = binary.Read(f, binary.LittleEndian, &unknown); err != nil {
 		return nil, err
 	}

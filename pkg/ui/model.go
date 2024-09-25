@@ -8,15 +8,14 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
-	"strconv"
 	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/progress"
 	"github.com/charmbracelet/bubbles/spinner"
-	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 
 	"github.com/g026r/pocket-library-editor/pkg/io"
 	"github.com/g026r/pocket-library-editor/pkg/models"
@@ -45,7 +44,7 @@ func tickCmd() tea.Cmd {
 }
 
 type Model struct {
-	updates      chan Model // updates is used for passing updates to the Model rather than using pointers
+	updates      chan Model // updates is used for passing updates to the Model rather than using pointers. Probably should look at pointers instead, just for memory reasons
 	rootDir      fs.FS
 	entries      []models.Entry
 	playTimes    map[uint32]models.PlayTime
@@ -60,15 +59,22 @@ type Model struct {
 	wait         string                           // wait is the message to display while waiting
 	anyKey       bool                             // anyKey tells View whether we're waiting for a key input or not
 	mainMenu     *list.Model
-	subMenu      *list.Model // subMenu covers the library & thumbnail options: menus where esc goes up a screen but filtering is disabled
-	configMenu   *list.Model // configMenu is a special case as it needs a different delegate renderer from subMenu
-	gameList     *list.Model // gameList covers anything that lists all the games in the library
-	gameInput    []textinput.Model
-	focusedInput int
+	subMenu      *list.Model       // subMenu covers the library & thumbnail options: menus where esc goes up a screen but filtering is disabled
+	configMenu   *list.Model       // configMenu is a special case as it needs a different delegate renderer from subMenu
+	gameList     *list.Model       // gameList covers anything that lists all the games in the library
+	gameInput    []FocusBlurViewer // "Widgets" on the edit & add screens
+	focusedInput int               // Which widget has focus on the edit/add screens
 }
 
 func NewModel() tea.Model {
-	prog := progress.New(progress.WithScaledGradient("#006699", "#00ccff"))
+	var opt progress.Option
+	if lipgloss.DefaultRenderer().HasDarkBackground() {
+		opt = progress.WithScaledGradient(blue.Light, blue.Dark)
+	} else {
+		opt = progress.WithScaledGradient(blue.Dark, blue.Light)
+	}
+	prog := progress.New(opt)
+
 	config := io.Config{}
 
 	return Model{
@@ -81,69 +87,8 @@ func NewModel() tea.Model {
 		configMenu: NewConfigMenu(&config),
 		subMenu:    NewSubMenu(),  // subMenu needs to be set even without items to avoid a nil pointer with the initial WindowSizeMsg
 		gameList:   NewGameMenu(), // same for gameList
-		gameInput:  NewTextInput(),
+		gameInput:  NewInputs(),
 	}
-}
-
-const (
-	name = iota
-	system
-	crc
-	sig
-	magic
-	added
-	play
-	submit
-	cancel
-)
-
-func NewTextInput() []textinput.Model {
-	inputs := make([]textinput.Model, play+1)
-
-	inputs[system] = textinput.New()
-	// TODO: Should we go with full suggestions instead?
-	inputs[system].SetSuggestions([]string{models.GB.String(), models.GBC.String(), models.GBA.String(), models.GG.String(), models.SMS.String(), models.NGP.String(), models.NGPC.String(), models.PCE.String(), models.Lynx.String()})
-	inputs[system].Prompt = "System: "
-	inputs[system].Placeholder = models.GB.String()
-	inputs[system].Validate = sysValidate
-	inputs[system].ShowSuggestions = true
-
-	inputs[name] = textinput.New()
-	inputs[name].Prompt = "Name: "
-	inputs[name].Validate = notBlank
-
-	inputs[crc] = textinput.New()
-	inputs[crc].Prompt = "CRC32: "
-	inputs[crc].Placeholder = "0x00000000"
-	inputs[crc].Validate = hexValidate
-
-	inputs[sig] = textinput.New()
-	inputs[sig].Prompt = "Signature: "
-	inputs[sig].Placeholder = "0x00000000"
-	inputs[sig].Validate = hexValidate
-
-	inputs[magic] = textinput.New()
-	inputs[magic].Prompt = "Magic Number: "
-	inputs[magic].Placeholder = "0x0000"
-	inputs[magic].Validate = hexValidate
-
-	inputs[added] = textinput.New()
-	inputs[added].Prompt = "Date Added: "
-	inputs[added].Placeholder = "2024-01-15 13:24" // Will be replaced eventually
-	inputs[added].Validate = dateValidate
-
-	inputs[play] = textinput.New()
-	inputs[play].Prompt = "Played: "
-	inputs[play].Placeholder = "0h 0m 0s"
-	inputs[play].Validate = playValidate
-
-	for i := range inputs {
-		inputs[i].PromptStyle = itemStyle
-		inputs[i].Cursor.Style = selectedItemStyle.PaddingLeft(0)
-		inputs[i].TextStyle = itemStyle.PaddingLeft(2)
-	}
-
-	return inputs
 }
 
 func (m Model) Init() tea.Cmd {
@@ -222,7 +167,6 @@ func (m Model) View() (s string) {
 	switch m.Peek() {
 	case Initializing:
 		s = fmt.Sprintf("  %s Loading your Pocket library. Please wait.", m.spinner.View())
-		//s = m.menu.View()
 	case Waiting:
 		s = fmt.Sprintf("\n  %s\n\n  %s", m.wait, m.progress.ViewAs(*m.percent))
 		if m.anyKey {
@@ -231,7 +175,7 @@ func (m Model) View() (s string) {
 	case Saving:
 		s = fmt.Sprintf("\n  Saving your Pocket library\n\n  %s", m.progress.ViewAs(*m.percent))
 	case FatalError:
-		s = fmt.Sprintf("FATAL ERROR: %v\n", m.err)
+		s = errorStyle.Render(fmt.Sprintf("FATAL ERROR: %v\n", m.err))
 	case MainMenu:
 		s = m.mainMenu.View()
 	case LibraryMenu, ThumbMenu:
@@ -241,10 +185,9 @@ func (m Model) View() (s string) {
 	case RemoveList, EditList, GenerateList:
 		s = m.gameList.View()
 	case EditScreen:
-		// TODO: Add a title to the edit & add screens
-		s = m.editScreenView()
+		s = m.inputView("Edit Game")
 	case AddScreen:
-		s = m.addScreenView()
+		s = m.inputView("Add Game")
 	default:
 		panic("Panic! At the View() call")
 	}
@@ -485,8 +428,8 @@ func (m Model) genMissing() tea.Msg {
 		if !slices.ContainsFunc(m.thumbnails[sys].Images, func(image models.Image) bool {
 			return image.Crc32 == e.Crc32
 		}) {
-			img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32) // TODO: move this func elsewhere?
-			if err != nil && !os.IsNotExist(err) {                        // We only care if it was something other than a not existing error
+			img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32)
+			if err != nil && !os.IsNotExist(err) { // We only care if it was something other than a not existing error
 				return errMsg{err, true}
 			} else {
 				i := m.thumbnails[sys]
@@ -509,8 +452,8 @@ func (m Model) regenLib() tea.Msg {
 	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
 
-		img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32) // TODO: move this func elsewhere?
-		if err != nil && !os.IsNotExist(err) {                        // We only care if it was something other than a not existing error
+		img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32)
+		if err != nil && !os.IsNotExist(err) { // We only care if it was something other than a not existing error
 			return errMsg{err, true}
 		} else {
 			i := m.thumbnails[sys]
@@ -562,27 +505,20 @@ func (m Model) genSingle(e models.Entry) tea.Cmd {
 	}
 }
 
-func (m Model) editScreenView() string {
-	s := fmt.Sprintf("%s\n\n", m.gameInput[name].View())
-	if m.AdvancedEditing {
-		s = fmt.Sprintf("%s%s\n\n", s, m.gameInput[system].View())
+func (m Model) inputView(title string) string {
+	s := fmt.Sprintf("  %s", titleStyle.MarginLeft(2).Render(fmt.Sprintf("Main > Library > %s", title)))
+	s = fmt.Sprintf("%s\n\n%s\n%s\n", s, m.gameInput[name].View(), errorStyle.Render(m.gameInput[name].error()))
+	if m.AdvancedEditing || m.Peek() == AddScreen {
+		s = fmt.Sprintf("%s%s\n%s\n", s, m.gameInput[system].View(), errorStyle.Render(m.gameInput[system].error()))
 	}
-	s = fmt.Sprintf("%s%s\n\n", s, m.gameInput[crc].View())
-	if m.AdvancedEditing {
-		s = fmt.Sprintf("%s%s\n\n%s\n\n", s, m.gameInput[sig].View(), m.gameInput[magic].View())
+	s = fmt.Sprintf("%s%s\n%s\n", s, m.gameInput[crc].View(), errorStyle.Render(m.gameInput[crc].error()))
+	if m.AdvancedEditing || m.Peek() == AddScreen {
+		s = fmt.Sprintf("%s%s\n%s\n", s, m.gameInput[sig].View(), errorStyle.Render(m.gameInput[sig].error()))
+		s = fmt.Sprintf("%s%s\n%s\n", s, m.gameInput[magic].View(), errorStyle.Render(m.gameInput[magic].error()))
 	}
-	s = fmt.Sprintf("%s%s\n\n%s\n\n", s, m.gameInput[added].View(), m.gameInput[play].View())
-
-	return s
-}
-
-func (m Model) addScreenView() string {
-	s := fmt.Sprintf("  %s\n\n", m.gameInput[name].View())
-	s = fmt.Sprintf("%s  %s\n\n", s, m.gameInput[system].View())
-	s = fmt.Sprintf("%s  %s\n\n", s, m.gameInput[crc].View())
-	s = fmt.Sprintf("%s  %s\n\n  %s\n\n", s, m.gameInput[sig].View(), m.gameInput[magic].View())
-	s = fmt.Sprintf("%s  %s\n\n  %s\n\n", s, m.gameInput[added].View(), m.gameInput[play].View())
-
+	s = fmt.Sprintf("%s%s\n%s\n", s, m.gameInput[added].View(), errorStyle.Render(m.gameInput[added].error()))
+	s = fmt.Sprintf("%s%s\n%s\n", s, m.gameInput[play].View(), errorStyle.Render(m.gameInput[play].error()))
+	s = fmt.Sprintf("%s%s%s", s, m.gameInput[submit].View(), m.gameInput[cancel].View())
 	return s
 }
 
@@ -651,7 +587,7 @@ func (m Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			switch m.focusedInput {
 			case submit:
-				// TODO: Handle submitting
+				return m.saveEntry()
 			case cancel:
 				m.Pop()
 			default:
@@ -666,9 +602,8 @@ func (m Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) shiftInput(i int) (tea.Model, tea.Cmd) {
-	// TODO: Blur buttons as necessary
 	m.gameInput[m.focusedInput].Blur()
-	m.gameInput[m.focusedInput].PromptStyle = itemStyle
+	m.gameInput[m.focusedInput].Style(itemStyle)
 	m.focusedInput = m.focusedInput + i
 	if !m.AdvancedEditing && m.Peek() != AddScreen {
 		if i > 0 {
@@ -690,7 +625,12 @@ func (m Model) shiftInput(i int) (tea.Model, tea.Cmd) {
 	} else if m.focusedInput < 0 {
 		m.focusedInput = 0
 	}
-	m.gameInput[m.focusedInput].PromptStyle = selectedItemStyle.PaddingLeft(4)
+	m.gameInput[m.focusedInput].Style(focusedStyle)
+
+	if t, ok := m.gameInput[m.focusedInput].(*Input); ok {
+		t.SetCursor(len(t.Value()))
+	}
+
 	return m, m.gameInput[m.focusedInput].Focus()
 }
 
@@ -699,11 +639,89 @@ func (m Model) updateInputs(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	// Only text inputs with Focus() set will respond, so it's safe to simply
 	// update all of them here without any further logic.
-	for i := range m.gameInput {
-		m.gameInput[i], cmds[i] = m.gameInput[i].Update(msg)
+	for i := range len(m.gameInput) {
+		u, c := m.gameInput[i].Update(msg)
+		m.gameInput[i] = u
+		cmds[i] = c
 	}
 
 	return m, tea.Batch(cmds...)
+}
+
+func (m Model) saveEntry() (tea.Model, tea.Cmd) {
+	foundError := false
+	for i := range play + 1 { // Check all the ones that are inputs.
+		if t, ok := m.gameInput[i].(*Input); ok {
+			var err error
+			if err = t.Validate(t.Value()); err == nil {
+				continue
+			}
+			// Only set the cursor back to the first error found
+			if !foundError {
+				m.gameInput[i].Style(focusedStyle)
+				m.gameInput[i].Focus()
+				m.gameInput[m.focusedInput].Blur()
+				m.gameInput[m.focusedInput].Style(itemStyle)
+				m.focusedInput = i
+				t.SetCursor(len(t.Value()))
+				foundError = true
+			}
+			// But set all the error statuses
+			t.Err = err
+		}
+	}
+	if foundError {
+		return m, nil
+	}
+
+	e := models.Entry{}
+	if m.Peek() == EditScreen {
+		e = m.gameList.SelectedItem().(models.Entry)
+	}
+	e.Name = m.gameInput[name].Value()
+	sys := strings.TrimSpace(m.gameInput[system].Value())
+	if sys == "" {
+		sys = models.GB.String()
+	}
+	e.System, _ = models.Parse(sys)
+	e.Crc32, _ = util.HexStringTransform(m.gameInput[crc].Value())
+	e.Sig, _ = util.HexStringTransform(m.gameInput[sig].Value())
+	e.Magic, _ = util.HexStringTransform(m.gameInput[magic].Value())
+
+	p := models.PlayTime{}
+	if stored, ok := m.playTimes[e.Sig]; ok {
+		p = stored
+	}
+	t, _ := parseDate(m.gameInput[added].Value())
+	p.Added = uint32(t.Unix())
+	p.Played = parsePlayTime(m.gameInput[play].Value())
+
+	m.playTimes[e.Sig] = p
+
+	if m.Peek() == EditScreen {
+		m.entries[m.gameList.Index()] = e
+	} else {
+		m.entries = append(m.entries, e)
+	}
+
+	slices.SortFunc(m.entries, models.EntrySort)
+	if m.Peek() == EditScreen {
+		*m.gameList = generateGameList(*m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
+	}
+
+	m.Pop()
+	if m.GenerateNew {
+		// TODO: Can I figure out a way to clean up any orphaned ones as well?
+		m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", e.Name, e.System)
+		m.Push(Waiting)
+		return m, tea.Batch(m.genSingle(e), tickCmd())
+	} else {
+		m.updates <- m // Need to trigger the update if the thumbnail generation isn't going to
+	}
+
+	return m, func() tea.Msg {
+		return updateMsg{}
+	}
 }
 
 func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
@@ -729,14 +747,16 @@ func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 		return pop(m, nil)
 	case add:
 		m.focusedInput = 0
-		for i := range m.gameInput {
-			m.gameInput[i].SetValue("")
-			m.gameInput[i].Blur()
-			m.gameInput[i].PromptStyle = itemStyle
+		for i := range len(m.gameInput) {
+			m.gameInput[i].Style(itemStyle)
+			m.gameInput[i].Reset()
+			//m.validationErrors[i] = ""
 		}
-		// TODO: Remove focus from buttons
-		m.gameInput[added].Placeholder = time.Now().Format("2006-01-02 15:04") // Reset the placeholder to whatever
-		m.gameInput[m.focusedInput].PromptStyle = selectedItemStyle.PaddingLeft(4)
+		m.gameInput[submit].Blur()
+		m.gameInput[cancel].Blur()
+
+		m.gameInput[added].(*Input).Placeholder = time.Now().Format("2006-01-02 15:04") // Reset the placeholder to whatever
+		m.gameInput[m.focusedInput].Style(focusedStyle)
 		m.Push(AddScreen)
 		return m, m.gameInput[m.focusedInput].Focus()
 	case edit:
@@ -768,7 +788,7 @@ func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 		m.Push(Waiting)
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
-	case showAdd, advEdit, rmThumbs:
+	case showAdd, advEdit, rmThumbs, genNew:
 		return m.configChange(key)
 	}
 
@@ -784,45 +804,9 @@ func (m Model) configChange(key menuKey) (Model, tea.Cmd) {
 		m.RemoveImages = !m.RemoveImages
 	case advEdit:
 		m.AdvancedEditing = !m.AdvancedEditing
+	case genNew:
+		m.GenerateNew = !m.GenerateNew
 	}
 
 	return m, nil
-}
-
-func sysValidate(s string) error {
-	_, err := models.Parse(s)
-	return err
-}
-
-func notBlank(s string) error {
-	s = strings.TrimSpace(s)
-	if len(s) == 0 {
-		fmt.Errorf("Name cannot be blank")
-	}
-	return nil
-}
-
-func hexValidate(s string) error {
-	_, err := util.HexStringTransform(s)
-	return err
-}
-
-func dateValidate(s string) error {
-	// TODO: Make this more robust (e.g. 12 vs 24 hour, leading 0s, etc. Seconds?)
-	_, err := time.Parse("2006-01-02 15:04", s)
-	return err
-}
-
-func playValidate(s string) error {
-	// TODO: Should actually be in the form 00h 00m 00s
-	i, err := strconv.Atoi(s)
-	if err != nil {
-		return err
-	}
-
-	if i < 0 {
-		return fmt.Errorf("Playtime cannot be a negative value")
-	}
-
-	return nil
 }

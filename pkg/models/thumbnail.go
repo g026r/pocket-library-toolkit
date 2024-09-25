@@ -28,6 +28,7 @@ type Image struct {
 	Image []byte
 }
 
+// TODO: move this func elsewhere? I don't like that it's the only spot using util.ErrUnrecognizedFormat outside of io
 func GenerateThumbnail(dir fs.FS, sys System, crc32 uint32) (Image, error) {
 	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
 

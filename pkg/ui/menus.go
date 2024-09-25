@@ -15,37 +15,38 @@ import (
 	"github.com/g026r/pocket-library-editor/pkg/models"
 )
 
-type menuKey string
+type menuKey int
 
 const (
-	lib      menuKey = "lib"
-	thumbs   menuKey = "thumbs"
-	config   menuKey = "config"
-	save     menuKey = "save"
-	quit     menuKey = "quit"
-	add      menuKey = "add"
-	edit     menuKey = "edit"
-	rm       menuKey = "rm"
-	fix      menuKey = "fix"
-	back     menuKey = "back"
-	missing  menuKey = "missing"
-	single   menuKey = "single"
-	genlib   menuKey = "genlib"
-	all      menuKey = "all"
-	prune    menuKey = "prune"
-	showAdd  menuKey = "showAdd"
-	advEdit  menuKey = "advEdit"
-	rmThumbs menuKey = "rmThumbs"
+	lib menuKey = iota
+	thumbs
+	config
+	save
+	quit
+	add
+	edit
+	rm
+	fix
+	back
+	missing
+	single
+	genlib
+	all
+	prune
+	showAdd
+	advEdit
+	rmThumbs
+	genNew
 )
 
 var (
-	titleStyle        = lipgloss.NewStyle().MarginLeft(2).PaddingLeft(2).PaddingRight(2).Background(lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"}).Foreground(lipgloss.AdaptiveColor{Light: "#aaaaaa", Dark: "#111111"})
+	titleStyle        = lipgloss.NewStyle().MarginLeft(2).PaddingLeft(2).PaddingRight(2).Background(blue).Foreground(lipgloss.AdaptiveColor{Light: "#aaaaaa", Dark: "#111111"})
 	itemStyle         = lipgloss.NewStyle().PaddingLeft(4)
-	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"})
+	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(blue)
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
 	italic            = lipgloss.NewStyle().Italic(true)
-	darkGray          = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "#ababab", Dark: "#545454"})
+	blue              = lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"}
 )
 
 type menuItem struct {
@@ -83,6 +84,7 @@ var (
 		menuItem{"Back", back}}
 	configOptions = []list.Item{
 		menuItem{"Remove thumbnail when removing game", rmThumbs},
+		menuItem{"Generate new thumbnail when editing game", genNew},
 		menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), advEdit},
 		menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), showAdd},
 		menuItem{"Back", back}}
@@ -117,35 +119,36 @@ var (
 		EditList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
 			entry := m.gameList.SelectedItem().(models.Entry)
 			m.focusedInput = 0
-			m.gameInput[name].SetValue(entry.Name)
-			m.gameInput[name].SetCursor(len(entry.Name))
-			m.gameInput[system].SetValue(entry.System.String())
-			m.gameInput[system].SetCursor(len(entry.System.String()))
-			m.gameInput[crc].SetValue(fmt.Sprintf("0x%08x", entry.Crc32))
-			m.gameInput[crc].SetCursor(10)
-			m.gameInput[sig].SetValue(fmt.Sprintf("0x%08x", entry.Sig))
-			m.gameInput[sig].SetCursor(10)
-			m.gameInput[magic].SetValue(fmt.Sprintf("0x%04x", entry.Magic))
-			m.gameInput[magic].SetCursor(6)
+			m.gameInput[name].(*Input).SetValue(entry.Name)
+			m.gameInput[name].(*Input).SetCursor(len(entry.Name))
+			m.gameInput[system].(*Input).SetValue(entry.System.String())
+			m.gameInput[system].(*Input).SetCursor(len(entry.System.String()))
+			m.gameInput[crc].(*Input).SetValue(fmt.Sprintf("0x%08x", entry.Crc32))
+			m.gameInput[crc].(*Input).SetCursor(10)
+			m.gameInput[sig].(*Input).SetValue(fmt.Sprintf("0x%08x", entry.Sig))
+			m.gameInput[sig].(*Input).SetCursor(10)
+			m.gameInput[magic].(*Input).SetValue(fmt.Sprintf("0x%04x", entry.Magic))
+			m.gameInput[magic].(*Input).SetCursor(6)
 
 			if p, ok := m.playTimes[entry.Sig]; ok {
-				m.gameInput[added].SetValue(time.Unix(int64(p.Added), 0).Format("2006-01-02 15:04"))
-				m.gameInput[play].SetValue(p.FormatPlayTime())
-				m.gameInput[added].SetCursor(len(m.gameInput[added].Value()))
-				m.gameInput[play].SetCursor(len(m.gameInput[play].Value()))
+				m.gameInput[added].(*Input).SetValue(time.Unix(int64(p.Added), 0).Format("2006-01-02 15:04:05"))
+				m.gameInput[play].(*Input).SetValue(p.FormatPlayTime())
+				m.gameInput[added].(*Input).SetCursor(16)
+				m.gameInput[play].(*Input).SetCursor(len(m.gameInput[play].(*Input).Value()))
 			} else {
-				m.gameInput[added].SetValue(time.Now().Format("2006-01-02 15:04"))
-				m.gameInput[play].SetValue("0h 0m 0s")
-				m.gameInput[added].SetCursor(len(m.gameInput[added].Value()))
-				m.gameInput[play].SetCursor(len(m.gameInput[play].Value()))
+				m.gameInput[added].(*Input).SetValue(time.Now().Format("2006-01-02 15:04"))
+				m.gameInput[play].(*Input).SetValue("0h 0m 0s")
+				m.gameInput[added].(*Input).SetCursor(16)
+				m.gameInput[play].(*Input).SetCursor(8)
 			}
 
-			// TODO: Blur buttons
-			for i := range play {
+			for i := range m.gameInput {
+				m.gameInput[i].Style(itemStyle)
 				m.gameInput[i].Blur()
-				m.gameInput[i].PromptStyle = itemStyle
 			}
-			m.gameInput[name].PromptStyle = selectedItemStyle.PaddingLeft(4)
+
+			// Name is always the first value selected
+			m.gameInput[name].Style(selectedItemStyle.PaddingLeft(4))
 
 			m.Push(EditScreen)
 			return m, m.gameInput[name].Focus()
@@ -209,7 +212,7 @@ var (
 
 // pop is the ESC action for basically everything but main menu
 // It removes the latest item from the stack, allowing the rendering to go up one level
-func pop(m Model, msg tea.Msg) (Model, tea.Cmd) {
+func pop(m Model, _ tea.Msg) (Model, tea.Cmd) {
 	m.Pop()
 	runtime.GC() // Not ideal. Probably also not necessary.
 	return m, nil
@@ -291,8 +294,10 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 			b = d.ShowAdd
 		case rmThumbs:
 			b = d.RemoveImages
+		case genNew:
+			b = d.GenerateNew
 		default:
-			// Don't know what this is. Return
+			// If we don't know what this value is, return
 			return
 		}
 

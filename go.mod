@@ -1,14 +1,12 @@
 module github.com/g026r/pocket-library-editor
 
-go 1.22
+go 1.23.1
 
 require (
-	github.com/buger/goterm v1.0.4
 	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/bubbletea v1.1.1
 	github.com/charmbracelet/lipgloss v0.13.0
 	github.com/disintegration/imaging v1.6.3-0.20201218193011-d40f48ce0f09
-	github.com/nexidian/gocliselect v1.0.0
 )
 
 require (
@@ -25,7 +23,6 @@ require (
 	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
-	github.com/pkg/term v1.1.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/sahilm/fuzzy v0.1.1 // indirect
 	golang.org/x/image v0.20.0 // indirect
