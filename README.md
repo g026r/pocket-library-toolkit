@@ -1,4 +1,4 @@
-# pocket-library-editor
+# pocket-library-toolkit
 
 A rough-and-ready way to edit your Pocket's library.
 
