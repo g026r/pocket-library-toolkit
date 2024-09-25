@@ -320,7 +320,7 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 
 func NewMainMenu() *list.Model {
 	mm := list.New(mainMenuOptions, itemDelegate{}, 0, 5)
-	mm.Title = "Welcome to the unofficial Analogue Pocket library editor"
+	mm.Title = "Welcome to the unofficial Analogue Pocket library toolkit"
 	mm.SetShowStatusBar(false)
 	mm.Styles.Title = titleStyle
 	mm.Styles.HelpStyle = helpStyle
