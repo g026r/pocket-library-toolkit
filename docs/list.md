@@ -8,7 +8,8 @@
 
 32 bits (Little Endian) integer
 
-Must match the count found in [playtimes.bin](./playtimes.md) or odd things happen.
+Must match the count found in [playtimes.bin](./playtimes.md) or odd things happen. If the value of this word is more
+than 3000 (`0x00000BB8`) then the Pocket will display an empty library.
 
 ## Unknown (4 bytes)
 
@@ -21,21 +22,21 @@ I've been unable to determine what this does but setting it to `0x00000001` by m
 32 bits (Little Endian)
 
 The purpose of this entry is unknown to me. On my system, this value always contains the same value as the subsequent 4
-bytes, meaning it duplicates the address of the first library entry.
+bytes. This means it duplicates the address of the first library entry.
 
 // TODO: Set this to something else. See what happens.
 
-## Entry Byte Addresses (16 kiB)
+## Entry Addresses (16 kiB)
 
 4096 * 32 bits (Little Endian)
 
-No matter how many entries you have (// TODO: Confirm this with just 1 entry), this section will be 16kiB in length —
+No matter how many entries you have, this section will be 16kiB in length —
 from byte 0x10 to byte 0x400F (inclusive). Unused entries are normally represented as 0s but any data can be present
 here as entries beyond the number specified in bytes 0x4-0x7 will be ignored.
 
 Each entry consists of a single 32bit Little Endian entry representing the byte position in the file where the library
 entry resides. As the Pocket simply displays these sequentially they should be sorted in alphabetical order by the
-game's title // TODO: Verify this, but they must match the same ordering as [playtimes.bin](./playtimes.md).
+game's title.
 
 As the library entry addresses appears to be a fixed size, it is likely that the first entry will always be `0x0004010`.
 
@@ -107,7 +108,7 @@ Big Endian zero-terminated string.
 
 ### Padding (0-7 bytes)
 
-Each library entry must align with a word boundary. If the size of the game's name plus zero-terminator in bits is not 
+Each library entry must align with a word boundary. If the size of the game's name plus zero-terminator in bits is not
 evenly divisible by 32, then up to 7 bytes of padding are added. These can be any data as the system ignores it.
 
-// TODO: Does the final entry also need this padding? 
+// TODO: Does the final entry also need this padding?

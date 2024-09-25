@@ -254,7 +254,7 @@ func LoadConfig() (Config, error) {
 	}
 	dir = filepath.Dir(dir)
 
-	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-editor.json", dir))
+	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-toolkit.json", dir))
 	if os.IsNotExist(err) {
 		return c, nil // Doesn't exist. Use defaults
 	} else if err != nil {
@@ -450,7 +450,7 @@ func SaveConfig(config Config) error {
 		return err
 	}
 
-	return os.WriteFile(fmt.Sprintf("%s/pocket-editor.json", dir), b, 0644)
+	return os.WriteFile(fmt.Sprintf("%s/pocket-toolkit.json", dir), b, 0644)
 }
 
 // SaveInternal saves one system's entries to a json file

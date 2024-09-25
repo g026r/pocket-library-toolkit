@@ -27,4 +27,7 @@ go.work.sum
 /vendor/
 /.idea/
 /library-editor/
-/pocket-editor.json
+/pocket-toolkit.json
+*.tar
+*.zip
+*.gz
