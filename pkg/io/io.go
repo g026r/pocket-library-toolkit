@@ -12,8 +12,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/g026r/pocket-library-editor/pkg/models"
-	"github.com/g026r/pocket-library-editor/pkg/util"
+	"github.com/g026r/pocket-toolkit/pkg/models"
+	"github.com/g026r/pocket-toolkit/pkg/util"
 )
 
 //go:embed resources/*.json
@@ -303,13 +303,13 @@ func SaveLibrary(e []models.Entry, t map[uint32]models.PlayTime, tick chan any) 
 	if err != nil {
 		return err
 	}
-	l, err := os.Create(fmt.Sprintf("%s/library-editor/list.bin", wd))
+	l, err := os.Create(fmt.Sprintf("%s/pocket-toolkit/list.bin", wd))
 	if err != nil {
 		return err
 	}
 	defer l.Close()
 
-	p, err := os.Create(fmt.Sprintf("%s/library-editor/playtimes.bin", wd))
+	p, err := os.Create(fmt.Sprintf("%s/pocket-toolkit/playtimes.bin", wd))
 	if err != nil {
 		return err
 	}
@@ -383,7 +383,7 @@ func SaveThumbs(t map[models.System]models.Thumbnails, tick chan any) error {
 			continue // Not changed. For speed reasons, don't save.
 		}
 
-		f, err := os.Create(fmt.Sprintf("%s/library-editor/%s_thumbs.bin", wd, strings.ToLower(sys.String())))
+		f, err := os.Create(fmt.Sprintf("%s/pocket-toolkit/%s_thumbs.bin", wd, strings.ToLower(sys.String())))
 		if err != nil {
 			return err
 		}
