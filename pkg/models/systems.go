@@ -61,6 +61,10 @@ func (s System) ThumbFile() System {
 	}
 }
 
+func (s System) PlayOffset() uint32 {
+	return uint32(s) * 0x04000000
+}
+
 func Parse(s string) (System, error) {
 	switch strings.ToUpper(s) {
 	case "GB":

@@ -455,6 +455,7 @@ func SaveConfig(config Config) error {
 
 // SaveInternal saves one system's entries to a json file
 // If it finds that it has more than one system, it throws an error.
+// Used in magic.go to generate the files nicely.
 func SaveInternal(i io.Writer, entries []models.Entry) error {
 	j := make([]jsonEntry, 0)
 	for i, e := range entries {

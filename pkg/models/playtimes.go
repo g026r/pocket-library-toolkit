@@ -48,9 +48,21 @@ func (p PlayTime) WriteTo(w io.Writer) (int64, error) {
 }
 
 func (p PlayTime) FormatPlayTime() string {
-	s := p.Played % 60
-	m := (p.Played % 3600) / 60
-	h := p.Played / 3600
+	working := p.Played - p.SystemOffset()
+	s := working % 60
+	m := (working % 3600) / 60
+	h := working / 3600
 
 	return fmt.Sprintf("%dh %dm %ds", h, m, s)
+}
+
+// SystemOffset calclulates the offset necessary for the played time given the game's system
+// The playtimes file uses the highest byte to signify the system type for some reason, allowing for values of 0-3 for
+// each system
+func (p *PlayTime) SystemOffset() uint32 {
+	offset := uint32(0x04000000)
+	for offset < p.Played && offset < 0x24000000 {
+		offset = offset + 0x04000000
+	}
+	return offset - 0x04000000
 }

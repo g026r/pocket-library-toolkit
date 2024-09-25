@@ -17,6 +17,10 @@ var playtime = PlayTime{
 	Played: 0x08012624,
 }
 
+func TestPlayTime_SystemOffset(t *testing.T) {
+	t.Parallel()
+}
+
 func TestPlayTime_WriteTo(t *testing.T) {
 	t.Parallel()
 

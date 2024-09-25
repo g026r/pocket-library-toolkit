@@ -44,7 +44,6 @@ func tickCmd() tea.Cmd {
 }
 
 type Model struct {
-	updates      chan Model // updates is used for passing updates to the Model rather than using pointers. Probably should look at pointers instead, just for memory reasons
 	rootDir      fs.FS
 	entries      []models.Entry
 	playTimes    map[uint32]models.PlayTime
@@ -77,8 +76,7 @@ func NewModel() tea.Model {
 
 	config := io.Config{}
 
-	return Model{
-		updates:    make(chan Model, 1),
+	return &Model{
 		stack:      &stack{[]screen{Initializing}},
 		spinner:    spinner.New(spinner.WithSpinner(spinner.MiniDot)),
 		progress:   &prog,
@@ -91,24 +89,22 @@ func NewModel() tea.Model {
 	}
 }
 
-func (m Model) Init() tea.Cmd {
+func (m *Model) Init() tea.Cmd {
 	return tea.Batch(m.spinner.Tick, m.initSystem)
 }
 
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	// Make sure these keys always quit
 	switch msg := msg.(type) {
 	case updateMsg:
-		m = <-m.updates
 		if m.Peek() == Waiting {
 			m.anyKey = true
 		}
 	case tea.KeyMsg:
 		if m.anyKey {
 			m.anyKey = false
-			m.Pop()
 			*m.percent = 0.0
-			return m, nil
+			return pop(m, msg)
 		}
 		if msg.String() == "ctrl+c" {
 			return m, tea.Quit
@@ -141,7 +137,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.gameList.SetWidth(msg.Width)
 		return m, nil
 	case initDoneMsg:
-		m = <-m.updates // Replace the ui we have with the new, initialized one. Fine in this case as we return m further down the method.
 		m.Clear()
 		m.Push(MainMenu) // Finished initializing. Replace the stack with a new one containing only the main menu
 		return m, tea.ClearScreen
@@ -163,7 +158,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m Model) View() (s string) {
+func (m *Model) View() (s string) {
 	switch m.Peek() {
 	case Initializing:
 		s = fmt.Sprintf("  %s Loading your Pocket library. Please wait.", m.spinner.View())
@@ -196,7 +191,7 @@ func (m Model) View() (s string) {
 }
 
 // initSystem loads all our data from disk
-func (m Model) initSystem() tea.Msg {
+func (m *Model) initSystem() tea.Msg {
 	var d string
 	var err error
 
@@ -263,12 +258,11 @@ func (m Model) initSystem() tea.Msg {
 	per := 0.0
 	m.percent = &per // Setting this value both prevents nil pointer dereferences & is used as the signal to stop the spinner
 
-	m.updates <- m
 	return initDoneMsg{}
 }
 
 // save is the opposite of init: save our data to disk
-func (m Model) save() tea.Msg {
+func (m *Model) save() tea.Msg {
 	wd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -320,22 +314,24 @@ func (m Model) save() tea.Msg {
 
 // playfix turns the most significant bit in the played time integer & sets them to 0.
 // This fixes a known bug in the library via the assumption that nobody has played 4660+ hours of something.
-func (m Model) playfix() tea.Msg {
+// We need to add the weird system offset/multiplier to it, however.
+func (m *Model) playfix() tea.Msg {
 	ctr := 0.0
 	for k, v := range m.playTimes {
-		p := v.Played &^ 0xFF000000
+		fmt.Println("Loop ", k)
+		p := (v.Played &^ 0xFF000000) + v.SystemOffset()
 		v.Played = p
 		m.playTimes[k] = v
 		ctr++
 		*m.percent = ctr / float64(len(m.playTimes))
 	}
 	*m.percent = 1.0
-	m.updates <- m
+	fmt.Println("Yep. Done this.")
 	return updateMsg{}
 }
 
 // prune removes all thumbnail entries that don't have a corresponding entry in the library
-func (m Model) prune() tea.Msg {
+func (m *Model) prune() tea.Msg {
 	ctr := 0.0
 	total := 0.0
 	for _, v := range m.thumbnails {
@@ -357,13 +353,12 @@ func (m Model) prune() tea.Msg {
 		*m.percent = ctr / total
 	}
 	*m.percent = 1.0
-	m.updates <- m
 	return updateMsg{}
 }
 
 // genFull generates thumbnail images for all files in the Images/<system>/ directories. It can take a while.
 // TODO: Should some of this be moved into the io package? We'd lose the progress bar though
-func (m Model) genFull() tea.Msg {
+func (m *Model) genFull() tea.Msg {
 	ctr := 0.0
 	total := 0.0
 	for _, sys := range models.ValidThumbsFiles {
@@ -414,13 +409,12 @@ func (m Model) genFull() tea.Msg {
 		m.thumbnails[sys] = thumbs
 	}
 	*m.percent = 1.0
-	m.updates <- m
 	return updateMsg{}
 }
 
 // genMissing generates thumbnails for only those games in the user's library that don't have entries.
 // genMissing and regenLib are the same except for the slices.ContainsFunc call. Can we do something about that?
-func (m Model) genMissing() tea.Msg {
+func (m *Model) genMissing() tea.Msg {
 	ctr := 0.0
 	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
@@ -442,12 +436,11 @@ func (m Model) genMissing() tea.Msg {
 		*m.percent = ctr / float64(len(m.entries))
 	}
 	*m.percent = 1.0
-	m.updates <- m
 	return updateMsg{}
 }
 
 // regenLib generates new thumbnails for all games in the user's library
-func (m Model) regenLib() tea.Msg {
+func (m *Model) regenLib() tea.Msg {
 	ctr := 0.0
 	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
@@ -465,12 +458,11 @@ func (m Model) regenLib() tea.Msg {
 		*m.percent = ctr / float64(len(m.entries))
 	}
 	*m.percent = 1.0
-	m.updates <- m
 	return updateMsg{}
 }
 
 // genSingle generates a single thumbnail entry & then either updates or inserts it into the list of thumbnails
-func (m Model) genSingle(e models.Entry) tea.Cmd {
+func (m *Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		*m.percent = 0.0
 		sys := e.System.ThumbFile()
@@ -478,7 +470,6 @@ func (m Model) genSingle(e models.Entry) tea.Cmd {
 		*m.percent = .50        // These percentages are just made up.
 		if os.IsNotExist(err) { // Doesn't exist. That's fine.
 			*m.percent = 1.0
-			m.updates <- m
 			return updateMsg{}
 		} else if err != nil {
 			return errMsg{err, true}
@@ -499,13 +490,12 @@ func (m Model) genSingle(e models.Entry) tea.Cmd {
 		m.thumbnails[sys] = t
 
 		*m.percent = 1.0
-		m.updates <- m
 
 		return updateMsg{}
 	}
 }
 
-func (m Model) inputView(title string) string {
+func (m *Model) inputView(title string) string {
 	s := fmt.Sprintf("  %s", titleStyle.MarginLeft(2).Render(fmt.Sprintf("Main > Library > %s", title)))
 	s = fmt.Sprintf("%s\n\n%s\n%s\n", s, m.gameInput[name].View(), errorStyle.Render(m.gameInput[name].error()))
 	if m.AdvancedEditing || m.Peek() == AddScreen {
@@ -528,7 +518,7 @@ func (m Model) inputView(title string) string {
 //
 // Unlike many of the other operations, this one should not be performed in a separate tea.Cmd, as we don't want to display
 // the list with the incorrect items.
-func (m Model) removeEntry(idx int) Model {
+func (m *Model) removeEntry(idx int) *Model {
 	rm := m.entries[idx]
 	m.entries = slices.Delete(m.entries, idx, idx+1)
 
@@ -550,7 +540,7 @@ func (m Model) removeEntry(idx int) Model {
 	return m
 }
 
-func (m Model) menuHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) menuHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 	scr := m.Peek()
 	switch scr {
 	case MainMenu, LibraryMenu, ThumbMenu, ConfigMenu: // Menus without filtering
@@ -577,7 +567,7 @@ func (m Model) menuHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if k, ok := msg.(tea.KeyMsg); ok {
 		switch k.String() {
 		case "tab", "down":
@@ -589,19 +579,19 @@ func (m Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case submit:
 				return m.saveEntry()
 			case cancel:
-				m.Pop()
+				return pop(m, msg)
 			default:
 				return m.shiftInput(1)
 			}
 		case "esc":
-			m.Pop()
+			return pop(m, msg)
 		}
 	}
 
 	return m.updateInputs(msg)
 }
 
-func (m Model) shiftInput(i int) (tea.Model, tea.Cmd) {
+func (m *Model) shiftInput(i int) (tea.Model, tea.Cmd) {
 	m.gameInput[m.focusedInput].Blur()
 	m.gameInput[m.focusedInput].Style(itemStyle)
 	m.focusedInput = m.focusedInput + i
@@ -634,7 +624,7 @@ func (m Model) shiftInput(i int) (tea.Model, tea.Cmd) {
 	return m, m.gameInput[m.focusedInput].Focus()
 }
 
-func (m Model) updateInputs(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) updateInputs(msg tea.Msg) (tea.Model, tea.Cmd) {
 	cmds := make([]tea.Cmd, len(m.gameInput))
 
 	// Only text inputs with Focus() set will respond, so it's safe to simply
@@ -648,7 +638,7 @@ func (m Model) updateInputs(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
-func (m Model) saveEntry() (tea.Model, tea.Cmd) {
+func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	foundError := false
 	for i := range play + 1 { // Check all the ones that are inputs.
 		if t, ok := m.gameInput[i].(*Input); ok {
@@ -694,7 +684,7 @@ func (m Model) saveEntry() (tea.Model, tea.Cmd) {
 	}
 	t, _ := parseDate(m.gameInput[added].Value())
 	p.Added = uint32(t.Unix())
-	p.Played = parsePlayTime(m.gameInput[play].Value())
+	p.Played = parsePlayTime(m.gameInput[play].Value()) + e.System.PlayOffset()
 
 	m.playTimes[e.Sig] = p
 
@@ -709,14 +699,13 @@ func (m Model) saveEntry() (tea.Model, tea.Cmd) {
 		*m.gameList = generateGameList(*m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
 	}
 
-	m.Pop()
+	m.Pop() // TODO: Find a way to do this with a Cmd?
 	if m.GenerateNew {
 		// TODO: Can I figure out a way to clean up any orphaned ones as well?
 		m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", e.Name, e.System)
 		m.Push(Waiting)
+		*m.percent = 0.0
 		return m, tea.Batch(m.genSingle(e), tickCmd())
-	} else {
-		m.updates <- m // Need to trigger the update if the thumbnail generation isn't going to
 	}
 
 	return m, func() tea.Msg {
@@ -724,7 +713,7 @@ func (m Model) saveEntry() (tea.Model, tea.Cmd) {
 	}
 }
 
-func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
+func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	switch key {
 	case lib:
 		*m.subMenu = generateSubMenu(*m.subMenu, libraryOptions, "Main > Library", m.mainMenu.Width(), m.mainMenu.Height())
@@ -742,6 +731,7 @@ func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 		return m, tea.Quit
 	case save:
 		m.Push(Saving)
+		*m.percent = 0.0
 		return m, tea.Batch(m.save, tickCmd())
 	case back:
 		return pop(m, nil)
@@ -768,9 +758,11 @@ func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 	case fix:
 		m.Push(Waiting)
 		m.wait = "Fixing played times"
+		*m.percent = 0.0
 		return m, tea.Batch(m.playfix, tickCmd())
 	case missing:
 		m.Push(Waiting)
+		*m.percent = 0.0
 		m.wait = "Generating missing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
 	case single:
@@ -778,14 +770,17 @@ func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 		m.Push(GenerateList)
 	case genlib:
 		m.Push(Waiting)
+		*m.percent = 0.0
 		m.wait = "Regenerating all thumbnails for library"
 		return m, tea.Batch(m.regenLib, tickCmd())
 	case prune:
 		m.Push(Waiting)
+		*m.percent = 0.0
 		m.wait = "Removing orphaned thumbs.bin entries"
 		return m, tea.Batch(m.prune, tickCmd())
 	case all:
 		m.Push(Waiting)
+		*m.percent = 0.0
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
 	case showAdd, advEdit, rmThumbs, genNew:
@@ -796,7 +791,7 @@ func (m Model) processMenuItem(key menuKey) (Model, tea.Cmd) {
 }
 
 // configMenu handles item selection on the settings menu
-func (m Model) configChange(key menuKey) (Model, tea.Cmd) {
+func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 	switch key {
 	case showAdd:
 		m.ShowAdd = !m.ShowAdd
