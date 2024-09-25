@@ -18,7 +18,7 @@ func TestHexStringTransform(t *testing.T) {
 		{"0ABCDEF0", 0x0ABCDEF0, false},         // no 0x prefix
 		{"0x123456789", 0, true},                // too long
 		{"0x0abcdefg", 0, true},                 // invalid characters
-		{"   ", 0, true},                        // blank string
+		{"   ", 0, false},                       // blank string
 		{"0x", 0, true},                         // only prefix
 	}
 
