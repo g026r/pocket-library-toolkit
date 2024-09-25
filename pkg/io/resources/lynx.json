@@ -1,0 +1,37 @@
+[
+  {
+    "system": 8,
+    "name": "Chip's Challenge",
+    "crc": "0xf45f784a",
+    "signature": "0x7876e6ec",
+    "magic": "0x1d34"
+  },
+  {
+    "system": 8,
+    "name": "Crystal Mines II",
+    "crc": "0x0535e6c9",
+    "signature": "0xd9b3509c",
+    "magic": "0x1d36"
+  },
+  {
+    "system": 8,
+    "name": "Dracula the Undead",
+    "crc": "0x0f4b4071",
+    "signature": "0x27d7ef77",
+    "magic": "0x1d3c"
+  },
+  {
+    "system": 8,
+    "name": "Gates of Zendocon",
+    "crc": "0xd852dba7",
+    "signature": "0x36a5818e",
+    "magic": "0x1d42"
+  },
+  {
+    "system": 8,
+    "name": "S.T.U.N. Runner",
+    "crc": "0x4b3bf84f",
+    "signature": "0xef95c9bc",
+    "magic": "0x1d66"
+  }
+]

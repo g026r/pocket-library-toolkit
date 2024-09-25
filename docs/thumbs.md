@@ -48,8 +48,6 @@ The location in the file where the thumbnail entry for this game begins. The fir
 New thumbnails are simply appended to the end of the file & their location then recorded in the entry mappings. Removing
 a game from the library via the Pocket's UI does not remove its image from the thumbnails.
 
-// TODO What happens if there's garbage after the image ends?
-
 See Analogue's [developer docs](https://www.analogue.co/developer/docs/library#image-format) for details on their image
 format, which this duplicates.
 

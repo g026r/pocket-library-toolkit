@@ -2,108 +2,108 @@
 
 ## Castle of Illusion Starring Mickey Mouse
 
-- CRC32: `0x59840FD6`
-- Signature: `0x7C3D8290`
+- CRC32: `0x59840fd6`
+- Signature: `0x7c3d8290`
 - Magic Number: `0x1782`
 
 ## Columns
 
-- CRC32: `0x83FA26D9`
-- Signature: `0xB5EEC6CF`
+- CRC32: `0x83fa26d9`
+- Signature: `0xb5eec6cf`
 - Magic Number: `0x1793`
 
 ## Deep Duck Trouble Starring Donald Duck
 
-- CRC32: `0x5A136D7E`
-- Signature: `0xD8A8EED6`
-- Magic Number: `0x179B`
+- CRC32: `0x5a136d7e`
+- Signature: `0xd8a8eed6`
+- Magic Number: `0x179b`
 
 ## Fantasy Zone
 
-- CRC32: `0xD69097E8`
-- Signature: `0xB9ADF48A`
-- Magic Number: `0x17C4`
+- CRC32: `0xd69097e8`
+- Signature: `0xb9adf48a`
+- Magic Number: `0x17c4`
 
 ## GG Aleste
 
-- CRC32: `0x1B80A75B`
-- Signature: `0x3B553337`
-- Magic Number: `0x17DB`
+- CRC32: `0x1b80a75b`
+- Signature: `0x3b553337`
+- Magic Number: `0x17db`
 
 ## Power Strike II
 
-- CRC32: `0x09DE1528`
-- Signature: `0x03DF1FF9`
-- Magic Number: `0x17DC`
+- CRC32: `0x09de1528`
+- Signature: `0x03df1ff9`
+- Magic Number: `0x17dc`
 
 ## Gunstar Heroes
 
-- CRC32: `0xC3C52767`
-- Signature: `0xE2B366BB`
-- Magic Number: `0x17EC`
+- CRC32: `0xc3c52767`
+- Signature: `0xe2b366bb`
+- Magic Number: `0x17ec`
 
 ## In the Wake of Vampire
 
-- CRC32: `0xDAB0F265`
-- Signature: `0x41117E28`
-- Magic Number: `0x17F8`
+- CRC32: `0xdab0f265`
+- Signature: `0x41117e28`
+- Magic Number: `0x17f8`
 
 ## Kinetic Connection
 
-- CRC32: `0x4AF7F2AA`
-- Signature: `0x9BB34518`
+- CRC32: `0x4af7f2aa`
+- Signature: `0x9bb34518`
 - Magic Number: `0x1817`
 
 ## Land of Illusion Starring Mickey Mouse
 
-- CRC32: `0x52DBF3E1`
-- Signature: `0xD646307E`
-- Magic Number: `0x181D`
+- CRC32: `0x52dbf3e1`
+- Signature: `0xd646307e`
+- Magic Number: `0x181d`
 
 ## Lemmings
 
-- CRC32: `0x0FDE7BAA`
-- Signature: `0x1B39218D`
+- CRC32: `0x0fde7baa`
+- Signature: `0x1b39218d`
 - Magic Number: `0x1820`
 
 ## The Lion King
 
-- CRC32: `0x0CD9C20B`
-- Signature: `0x9062B5EC`
+- CRC32: `0x0cd9c20b`
+- Signature: `0x9062b5ec`
 - Magic Number: `0x1821`
 
 ## Sonic Chaos
 
-- CRC32: `0x663F2ABB`
-- Signature: `0x066E484D`
-- Magic Number: `0x18BE`
+- CRC32: `0x663f2abb`
+- Signature: `0x066e484d`
+- Magic Number: `0x18be`
 
 ## Sonic the Hedgehog
 
-- CRC32: `0x3E31CB8C`
-- Signature: `0xB512D08F`
-- Magic Number: `0x18C5`
+- CRC32: `0x3e31cb8c`
+- Signature: `0xb512d08f`
+- Magic Number: `0x18c5`
 
 ## Sonic the Hedgehog 2
 
-- CRC32: `0x95A18EC7`
-- Signature: `0x269AFD59`
-- Magic Number: `0x18C6`
+- CRC32: `0x95a18ec7`
+- Signature: `0x269afd59`
+- Magic Number: `0x18c6`
 
 ## Tails Adventures
 
-- CRC32: `0x5BB6E5D6`
-- Signature: `0x8E602224`
-- Magic Number: `0x18E7`
+- CRC32: `0x5bb6e5d6`
+- Signature: `0x8e602224`
+- Magic Number: `0x18e7`
 
 ## Wonder Boy: The Dragon's Trap
 
-- CRC32: `0xA74C97A7`
-- Signature: `0x07FCC33B`
-- Magic Number: `0x190B`
+- CRC32: `0xa74c97a7`
+- Signature: `0x07fcc33b`
+- Magic Number: `0x190b`
 
 ## Wonder Boy
 
-- CRC32: `0x9977FCB3`
-- Signature: `0x9FA70149`
-- Magic Number: `0x190D`
+- CRC32: `0x9977fcb3`
+- Signature: `0x9fa70149`
+- Magic Number: `0x190d`

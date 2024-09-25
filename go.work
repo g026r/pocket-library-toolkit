@@ -1,6 +1,0 @@
-go 1.23.1
-
-use (
-	.
-	./gocliselect // Local copy of github.com/nexidian/gocliselect with a few modifications (Ctrl-C hard quits, left & right keys for multi-page menus)
-)

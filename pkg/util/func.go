@@ -5,8 +5,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"io"
-	"io/fs"
 	"strings"
 )
 
@@ -14,9 +12,15 @@ var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
 
 // HexStringTransform takes a string, validates that it is a 32 bit hex string, and returns the uint32 representation of it
 // The input string may or may not be prefixed with `0x` and any leading or trailing spaces are removed.
+// If a blank string is passed, 0 is returned
 func HexStringTransform(s string) (uint32, error) {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return 0, nil
+	}
+
 	// take care of the many different ways a user might input this
-	s = strings.TrimPrefix(strings.ToLower(strings.TrimSpace(s)), "0x")
+	s = strings.TrimPrefix(strings.ToLower(s), "0x")
 	if s == "" {
 		return 0, fmt.Errorf("invalid string provided: %s", s)
 	}
@@ -34,24 +38,4 @@ func HexStringTransform(s string) (uint32, error) {
 	}
 
 	return binary.BigEndian.Uint32(h), nil
-}
-
-func ReadSeeker(fs fs.FS, filename string) (io.ReadSeekCloser, error) {
-	fileSys, err := fs.Open(filename)
-	if err != nil {
-		return nil, err
-	}
-
-	fi, err := fileSys.Stat()
-	if err != nil {
-		return nil, err
-	} else if fi.IsDir() {
-		return nil, fmt.Errorf("file is a directory: %s", fi.Name())
-	}
-
-	if rs, ok := fileSys.(io.ReadSeekCloser); !ok { // fs.FS is such a half-assed interface
-		return nil, fmt.Errorf("cannot cast to io.ReadSeeker: %T", fileSys)
-	} else {
-		return rs, nil
-	}
 }

@@ -76,11 +76,11 @@ All known collisions occur within unlicensed cartridges.
 All known collisions occur within unlicensed cartridges.
 
 * `0xe22df58d`:
-    * Action Replay GBX  `[0x5ad72359]` // TODO check which of these is the first
+    * Action Replay GBX  `[0x5ad72359]`
     * Action Replay GBX _(alternate ROM 1)_  `[0x45bb6f4e]`
     * Action Replay GBX _(alternate ROM 2)_  `[0x18ce5322]`
 * `0xdbebd573`:
-    * GameShark GBA  `[0xd71dbca6]` // TODO check which of these is the first
+    * GameShark GBA  `[0xd71dbca6]`
     * GameShark GBA _(alternate ROM)_  `[0x9ad94c62]`
 
 ### Game Gear

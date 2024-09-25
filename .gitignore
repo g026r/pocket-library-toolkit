@@ -22,3 +22,8 @@
 /pocket-library-editor.iml
 /vendor/
 /.idea/
+/library-editor/
+/pocket-toolkit.json
+*.tar
+*.zip
+*.gz
