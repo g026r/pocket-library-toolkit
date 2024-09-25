@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/g026r/pocket-library-editor/pkg/models"
+	"github.com/g026r/pocket-toolkit/pkg/models"
 )
 
 func TestSaveInternal(t *testing.T) {

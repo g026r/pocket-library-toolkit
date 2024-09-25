@@ -17,9 +17,9 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/g026r/pocket-library-editor/pkg/io"
-	"github.com/g026r/pocket-library-editor/pkg/models"
-	"github.com/g026r/pocket-library-editor/pkg/util"
+	"github.com/g026r/pocket-toolkit/pkg/io"
+	"github.com/g026r/pocket-toolkit/pkg/models"
+	"github.com/g026r/pocket-toolkit/pkg/util"
 )
 
 type errMsg struct {
@@ -273,7 +273,7 @@ func (m Model) save() tea.Msg {
 	if err != nil {
 		return err
 	}
-	err = os.Mkdir(fmt.Sprintf("%s/library-editor", wd), os.ModePerm)
+	err = os.Mkdir(fmt.Sprintf("%s/pocket-toolkit", wd), os.ModePerm)
 	if err != nil && !os.IsExist(err) {
 		return errMsg{err, true}
 	}

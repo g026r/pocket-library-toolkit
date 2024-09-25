@@ -1,4 +1,4 @@
-module github.com/g026r/pocket-library-editor
+module github.com/g026r/pocket-toolkit
 
 go 1.23.1
 

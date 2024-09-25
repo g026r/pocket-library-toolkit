@@ -9,7 +9,7 @@ import (
 
 	"github.com/disintegration/imaging"
 
-	"github.com/g026r/pocket-library-editor/pkg/util"
+	"github.com/g026r/pocket-toolkit/pkg/util"
 )
 
 const (
