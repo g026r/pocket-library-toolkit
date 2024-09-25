@@ -85,8 +85,8 @@ var (
 	configOptions = []list.Item{
 		menuItem{"Remove thumbnail when removing game", rmThumbs},
 		menuItem{"Generate new thumbnail when editing game", genNew},
-		menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), advEdit},
-		menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), showAdd},
+		//menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), advEdit},
+		//menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), showAdd},
 		menuItem{"Back", back}}
 
 	// esc consists of the items to be performed if esc is typed

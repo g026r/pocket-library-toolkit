@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/fs"
 	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 
@@ -239,18 +240,19 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 }
 
 func LoadConfig() (Config, error) {
-	c := Config{
+	c := Config{ // Sensible defaults
 		RemoveImages:    true,
 		AdvancedEditing: false,
 		ShowAdd:         false,
+		GenerateNew:     true,
 	}
-	// FIXME: Use the program's dir rather than the cwd
-	dir, err := os.Getwd()
-	//dir, err := os.Executable()
-	//if err != nil {
-	//	return c, err
-	//}
-	//dir = filepath.Dir(dir)
+	//// FIXME: Use the program's dir rather than the cwd
+	//dir, err := os.Getwd()
+	dir, err := os.Executable()
+	if err != nil {
+		return c, err
+	}
+	dir = filepath.Dir(dir)
 
 	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-editor.json", dir))
 	if os.IsNotExist(err) {
@@ -437,13 +439,13 @@ func SaveConfig(config Config) error {
 	if err != nil {
 		return err
 	}
-	// FIXME: Use the program's dir rather than the cwd
-	dir, err := os.Getwd()
-	//dir, err := os.Executable()
-	//if err != nil {
-	//	return c, err
-	//}
-	//dir = filepath.Dir(dir)
+	//// FIXME: Use the program's dir rather than the cwd
+	//dir, err := os.Getwd()
+	dir, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	dir = filepath.Dir(dir)
 	if err != nil {
 		return err
 	}
