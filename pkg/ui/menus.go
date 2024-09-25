@@ -159,7 +159,7 @@ var (
 		GenerateList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			entry := m.gameList.SelectedItem().(models.Entry)
 			m.Push(Waiting)
-			*m.percent = 0.0
+			m.percent = 0.0
 			m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", entry.Name, entry.System)
 			return m, tea.Batch(m.genSingle(entry), tickCmd())
 		},
@@ -180,37 +180,37 @@ var (
 	def = map[screen]func(m *Model, msg tea.Msg) (*Model, tea.Cmd){
 		MainMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.mainMenu, cmd = m.mainMenu.Update(msg)
+			m.mainMenu, cmd = m.mainMenu.Update(msg)
 			return m, cmd
 		},
 		LibraryMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.subMenu, cmd = m.subMenu.Update(msg)
+			m.subMenu, cmd = m.subMenu.Update(msg)
 			return m, cmd
 		},
 		ThumbMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.subMenu, cmd = m.subMenu.Update(msg)
+			m.subMenu, cmd = m.subMenu.Update(msg)
 			return m, cmd
 		},
 		ConfigMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.configMenu, cmd = m.configMenu.Update(msg)
+			m.configMenu, cmd = m.configMenu.Update(msg)
 			return m, cmd
 		},
 		EditList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.gameList, cmd = m.gameList.Update(msg)
+			m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
 		GenerateList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.gameList, cmd = m.gameList.Update(msg)
+			m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
 		RemoveList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.gameList, cmd = m.gameList.Update(msg)
+			m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
 	}

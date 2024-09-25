@@ -206,6 +206,8 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 				if err := binary.Read(f, binary.LittleEndian, &tu.crc32); err != nil {
 					return nil, err
 				}
+				t.Images[i].Crc32 = tuples[i].crc32
+
 				if err := binary.Read(f, binary.LittleEndian, &tu.address); err != nil {
 					return nil, err
 				}
