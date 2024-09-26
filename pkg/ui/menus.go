@@ -39,6 +39,7 @@ const (
 	advEdit
 	rmThumbs
 	genNew
+	overwrite
 )
 
 var (
@@ -90,6 +91,7 @@ var (
 		menuItem{"Generate new thumbnail when editing game", genNew},
 		//menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), advEdit},
 		//menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), showAdd},
+		menuItem{"Overwrite original files on save' " + italic.Render("(Experimental)"), overwrite},
 		menuItem{"Back", back}}
 
 	// esc consists of the items to be performed if esc is typed

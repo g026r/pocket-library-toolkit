@@ -35,6 +35,7 @@ type Config struct {
 	AdvancedEditing bool `json:"advanced_editing"`
 	ShowAdd         bool `json:"show_add"`
 	GenerateNew     bool `json:"generate_new"`
+	Overwrite       bool `json:"overwrite"`
 }
 
 type jsonEntry struct {
@@ -42,7 +43,7 @@ type jsonEntry struct {
 	Name          string `json:"name"`
 	Crc32         string `json:"crc"`
 	Sig           string `json:"signature"`
-	Magic         string `json:"magic"` // TODO: Work out all possible mappings for this
+	Magic         string `json:"magic"` // TODO: Work out all possible mappings for this?
 }
 
 func (j jsonEntry) Entry() models.Entry {

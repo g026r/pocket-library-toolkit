@@ -280,13 +280,22 @@ func (m *Model) initSystem() tea.Msg {
 
 // save is the opposite of init: save our data to disk
 func (m *Model) save() tea.Msg {
-	wd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	err = os.Mkdir(fmt.Sprintf("%s/pocket-toolkit", wd), os.ModePerm)
-	if err != nil && !os.IsExist(err) {
-		return errMsg{err, true}
+	// TODO: Overwrite in place
+	// TODO: If so, create a backup of the files first
+	var dir string
+	if m.Overwrite {
+		// TODO: Make backups
+	} else {
+		wd, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		dir = fmt.Sprintf("%s/pocket-toolkit", wd)
+		// Need to mkdir if we're overwriting
+		err = os.Mkdir(dir, os.ModePerm)
+		if err != nil && !os.IsExist(err) {
+			return errMsg{err, true}
+		}
 	}
 
 	ctr := 0.0
@@ -809,7 +818,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		m.percent = 0.0
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
-	case showAdd, advEdit, rmThumbs, genNew:
+	case showAdd, advEdit, rmThumbs, genNew, overwrite:
 		return m.configChange(key)
 	}
 
@@ -827,6 +836,8 @@ func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 		m.AdvancedEditing = !m.AdvancedEditing
 	case genNew:
 		m.GenerateNew = !m.GenerateNew
+	case overwrite:
+		m.Overwrite = !m.Overwrite
 	}
 
 	return m, nil
