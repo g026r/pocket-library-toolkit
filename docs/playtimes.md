@@ -39,8 +39,12 @@ This value may represent a future time without issue.
 32 bits (Little Endian)
 
 Playtime in seconds. Despite being 32 bits unsigned, the maximum value storable for a game is `0x03FFFFFF`. This is due
-to the first byte being both part of the time & an indicator of the entry's system. To determine the actual playtime,
-subtract the following from the total based on the system the entry corresponds to:
+to the first byte being both part of the time & an indicator of the entry's system. My assumption would be that this is
+to allow for the possibility of two games on different systems having a signature collision. But since the only place
+where this cross-system collision currently occurs involves Game Gear & Sega Master System, it's likely mostly
+theoretical.
+
+To determine the actual playtime, subtract the following from the total based on the system the entry corresponds to:
 
 * GB: `0x00000000`
 * GBC: `0x04000000`
@@ -52,6 +56,6 @@ subtract the following from the total based on the system the entry corresponds 
 * PCE: `0x1C000000`
 * Lynx: `0x20000000`
 
-Setting this initial byte to a value beyond the appropriate system boundary (e.g. setting the first byte on a game 
-marked as GB in list.bin to `04` or above) will cause the Pocket to briefly freeze when accessing the library entry, 
+Setting this initial byte to a value beyond the appropriate system boundary (e.g. setting the first byte on a game
+marked as GB in list.bin to `04` or above) will cause the Pocket to briefly freeze when accessing the library entry,
 after which it will delete it from the library.
