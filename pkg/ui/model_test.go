@@ -13,7 +13,7 @@ func TestModel_playfix(t *testing.T) {
 	var p float64
 	sut := Model{
 		//updates: make(chan Model, 1),
-		percent: &p,
+		percent: p,
 		playTimes: map[uint32]models.PlayTime{
 			0x0: {Played: 0x0000ABCD}, 0x1: {Played: 0x0100ABCD}, 0x04: {Played: 0x0400ABCD}, 0xFF: {Played: 0xFF00ABCD},
 		}}
@@ -27,7 +27,7 @@ func TestModel_playfix(t *testing.T) {
 
 	//sut = <-sut.updates
 	for k, v := range sut.playTimes {
-		if v.Played != 0x0000ABCD+v.SystemOffset() {
+		if v.Played != 0x0000ABCD { //+v.SystemOffset() {
 			t.Errorf("0x%02x Expected 0x0000ABCD; got 0x%08x", k, v.Played)
 		}
 	}
@@ -56,7 +56,7 @@ func TestModel_prune(t *testing.T) {
 				models.GB:  {Images: []models.Image{{Crc32: 0xAAAAAAAA}, {Crc32: 0x12345678}, {Crc32: 0x66666666}}},
 				models.GBA: {Images: []models.Image{{Crc32: 0x66666666}}},
 			},
-			percent: &p,
+			percent: p,
 		}
 
 	msg := sut.prune()

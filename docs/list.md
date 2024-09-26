@@ -86,6 +86,9 @@ CRC32 of the cartridge's ROM file. This is used in conjunction with the system b
 Unlike the signature, the Pocket never calculates this independently. Rather, it uses the signature to look up the
 precalculated CRC32 in an internal database.
 
+For most games, these are the same as the values in the [no-intro datomatic.](https://datomatic.no-intro.org/index.php).
+But for Lynx games the CRCs match those of headered .lnx ROM files.
+
 ### Cartridge Signature (4 bytes)
 
 32 bits (Little Endian)
@@ -95,16 +98,28 @@ Sufficient for most games but, for games where the header is not located at the 
 have multiple carts that collide. See [this file](./collisions.md) for all the signature collisions that I've been
 able to determine at this time.
 
+NB: the "first 512 bytes of the ROM" that Pocket reads for TurboGrafx-16 & Lynx games is not the same as the first 512
+bytes that you might get from .pce & unheadered .lyx files. It seems likely the Pocket is adding something, possibly via
+the adapter, but I've been unable to determine what.
+
 ### Unknown (4 bytes)
 
 Most likely 32 bits (Little Endian), might be 16 bits plus another 16 bits of padding.
 
-I've been unable to determine what this word is for. Changing its value didn't stop the library from loading or change
-any of the information displayed. Might have something to do with the order items are added to the library?
+I've been unable to determine what this word is used for. Changing its value didn't stop the library from loading or
+a game entry change any of the information displayed.
+
+It appeaars to be a simple sequential mapping of games to an integer, mostly but not entirely alphabetically in system
+order, but not entirely.
+
+e.g. Power Strike II on the Game Gear comes immediately after GG Aleste, likely as its Japanese name is "GG Aleste II."
+e.g. The earliest Game Boy game I've been able to spot is Super R.C. Pro-Am, which is `0x00000013`
 
 ### Cartridge Name (variable)
 
 Big Endian zero-terminated string.
+
+// TODO: Unknown whether this can be a blank string.
 
 ### Padding (0-7 bytes)
 

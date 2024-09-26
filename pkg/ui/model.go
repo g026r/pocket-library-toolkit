@@ -316,15 +316,12 @@ func (m *Model) save() tea.Msg {
 func (m *Model) playfix() tea.Msg {
 	ctr := 0.0
 	for k, v := range m.playTimes {
-		fmt.Println("Loop ", k)
-		p := (v.Played &^ 0xFF000000) + v.SystemOffset()
-		v.Played = p
+		v.Played = v.Played &^ 0xFF000000
 		m.playTimes[k] = v
 		ctr++
 		m.percent = ctr / float64(len(m.playTimes))
 	}
 	m.percent = 1.0
-	fmt.Println("Yep. Done this.")
 	return updateMsg{}
 }
 
@@ -682,7 +679,8 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	}
 	t, _ := parseDate(m.gameInput[added].Value())
 	p.Added = uint32(t.Unix())
-	p.Played = parsePlayTime(m.gameInput[play].Value()) + e.System.PlayOffset()
+	p.Played = parsePlayTime(m.gameInput[play].Value())
+	p.System = e.System
 
 	m.playTimes[e.Sig] = p
 

@@ -61,10 +61,6 @@ func (s System) ThumbFile() System {
 	}
 }
 
-func (s System) PlayOffset() uint32 {
-	return uint32(s) * 0x04000000
-}
-
 func Parse(s string) (System, error) {
 	switch strings.ToUpper(s) {
 	case "GB":
@@ -88,4 +84,20 @@ func Parse(s string) (System, error) {
 	default:
 		return math.MaxUint16, fmt.Errorf("unknown system: %s", s)
 	}
+}
+
+func (s System) PlayOffset() uint32 {
+	return uint32(s) * 0x04000000
+}
+
+func FromPlayedTime(p uint32) System {
+	for i := range Lynx {
+		// If the next value up is smaller than what we're dividing by, we've found our system
+		// Need to do i+1 instead of i to avoid a divide by 0 issue
+		if p/((uint32(i)+1)*0x04000000) == 0 {
+			return i
+		}
+	}
+
+	return Lynx
 }

@@ -134,7 +134,7 @@ var (
 			m.gameInput[magic].(*Input).SetCursor(6)
 
 			if p, ok := m.playTimes[entry.Sig]; ok {
-				m.gameInput[added].(*Input).SetValue(time.Unix(int64(p.Added), 0).Format("2006-01-02 15:04:05"))
+				m.gameInput[added].(*Input).SetValue(time.Unix(int64(p.Added), 0).UTC().Format("2006-01-02 15:04:05"))
 				m.gameInput[play].(*Input).SetValue(p.FormatPlayTime())
 				m.gameInput[added].(*Input).SetCursor(16)
 				m.gameInput[play].(*Input).SetCursor(len(m.gameInput[play].(*Input).Value()))

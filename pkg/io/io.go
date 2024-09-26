@@ -365,7 +365,8 @@ func SaveLibrary(e []models.Entry, t map[uint32]models.PlayTime, tick chan any) 
 		if err := binary.Write(p, binary.LittleEndian, entry.Sig); err != nil {
 			return err
 		}
-		if _, err := t[entry.Sig].WriteTo(p); err != nil {
+		pt := t[entry.Sig]
+		if _, err := pt.WriteTo(p); err != nil {
 			return err
 		}
 		if tick != nil {

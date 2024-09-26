@@ -34,12 +34,24 @@ problem. Timezones aren't taken into account, so when modifying this manually th
 
 This value may represent a future time without issue.
 
-### Played Time (4 bytes)
+### Played Time + System (4 bytes)
 
 32 bits (Little Endian)
 
-Playtime in seconds. I think it's a simple 32 bit unsigned integer, but I've had a few odd entries. (e.g. `0x08000033`
-showing up as "0m" but `0x08000018` showing up as "37282h 42m".)
+Playtime in seconds. Despite being 32 bits unsigned, the maximum value storable for a game is `0x03FFFFFF`. This is due
+to the first byte being both part of the time & an indicator of the entry's system. To determine the actual playtime,
+subtract the following from the total based on the system the entry corresponds to:
 
-For this tool it's just being set to `0x00000000` when manually creating a new entry if a playtime doesn't already exist
-for the signature.
+* GB: `0x00000000`
+* GBC: `0x04000000`
+* GBA: `0x08000000`
+* GG: `0x0c000000`
+* SMS: `0x10000000`
+* NGP: `0x14000000`
+* NGPC: `0x18000000`
+* PCE: `0x1C000000`
+* Lynx: `0x20000000`
+
+Setting this initial byte to a value beyond the appropriate system boundary (e.g. setting the first byte on a game 
+marked as GB in list.bin to `04` or above) will cause the Pocket to briefly freeze when accessing the library entry, 
+after which it will delete it from the library.
