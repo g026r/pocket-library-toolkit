@@ -79,6 +79,15 @@ func TestLoadThumbs(t *testing.T) {
 				} else if len(tn.Images) != v.count {
 					t.Errorf("Expected %d images; got %d", v.count, len(tn.Images))
 				}
+
+				for _, img := range pt[models.NGP].Images {
+					if img.Crc32 == 0 {
+						t.Errorf("Expected CRC32 value to be present")
+					}
+					if len(img.Image) == 0 {
+						t.Errorf("Expected image to be greater than 0 bytes")
+					}
+				}
 			}
 		})
 	}

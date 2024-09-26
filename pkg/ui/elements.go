@@ -33,9 +33,10 @@ var (
 	focusedStyle = selectedItemStyle.PaddingLeft(4)
 	errorStyle   = lipgloss.NewStyle().Foreground(red).PaddingLeft(6)
 
-	playRegex = regexp.MustCompile(`^((?P<hours>\d+)[hH])? *((?P<minutes>\d+)[mM])? *((?P<seconds>\d+)[sS])?$`)
+	playRegex = regexp.MustCompile(`^((?P<hours>\d+)[hH])?((?P<minutes>\d+)[mM])?((?P<seconds>\d+)[sS])?$`)
 )
 
+// FocusBlurViewer really exists so that Button & textinput.Model instances can be mostly treated the same
 type FocusBlurViewer interface {
 	Reset()
 	Focus() tea.Cmd
@@ -47,6 +48,7 @@ type FocusBlurViewer interface {
 	Value() string
 }
 
+// Input is a simple wrapper for textinput.Model to deal with the way it defined Update
 type Input struct {
 	textinput.Model
 }
@@ -69,10 +71,9 @@ func (i *Input) Style(style lipgloss.Style) {
 }
 
 type Button struct {
-	focused    bool
 	style      lipgloss.Style
 	Label      string
-	focusStyle lipgloss.Style
+	focusStyle lipgloss.Style // TODO Can't recall if I actually use these. Double check
 	blurStyle  lipgloss.Style
 }
 
@@ -86,12 +87,10 @@ func (b *Button) Reset() {
 
 func (b *Button) Blur() {
 	b.style = b.blurStyle
-	b.focused = false
 }
 
 func (b *Button) Focus() tea.Cmd {
 	b.style = b.focusStyle
-	b.focused = true
 	return nil
 }
 
@@ -180,13 +179,11 @@ func NewInputs() []FocusBlurViewer {
 	inputs[play] = &p
 
 	inputs[submit] = &Button{
-		focused:    false,
 		Label:      "Submit",
 		focusStyle: focusedStyle,
 		blurStyle:  itemStyle,
 	}
 	inputs[cancel] = &Button{
-		focused:    false,
 		Label:      "Cancel",
 		focusStyle: focusedStyle,
 		blurStyle:  itemStyle,
@@ -234,6 +231,7 @@ func dateValidate(s string) error {
 	return nil
 }
 
+// parseDate does no validation as it assumes that dateValidate has already been run on the value
 func parseDate(s string) (time.Time, error) {
 	s = strings.TrimSpace(s)
 	if s == "" {
@@ -255,8 +253,9 @@ func parseDate(s string) (time.Time, error) {
 	return time.Time{}, fmt.Errorf("could not parse string: %s", s)
 }
 
+// parsePlayTime does no validation as it assumes that playValidate has already been run on the value
 func parsePlayTime(s string) uint32 {
-	s = strings.TrimSpace(s)
+	s = strings.ReplaceAll(s, " ", "") // Remove all spaces, since we're allowing 0h0m0s, 0 h 0m 0s, 0h 0m 0s, etc
 	if s == "" {
 		return 0
 	}
@@ -288,7 +287,7 @@ func parsePlayTime(s string) uint32 {
 }
 
 func playValidate(s string) error {
-	s = strings.TrimSpace(s)
+	s = strings.ReplaceAll(s, " ", "")
 	if s == "" { // If it's blank, we go with all 0s
 		return nil
 	}

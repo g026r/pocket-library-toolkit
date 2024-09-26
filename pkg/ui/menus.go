@@ -90,8 +90,8 @@ var (
 		menuItem{"Back", back}}
 
 	// esc consists of the items to be performed if esc is typed
-	esc = map[screen]func(m Model, msg tea.Msg) (Model, tea.Cmd){
-		MainMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+	esc = map[screen]func(m *Model, msg tea.Msg) (*Model, tea.Cmd){
+		MainMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			return m, nil // No op
 		},
 		LibraryMenu:  pop,
@@ -103,20 +103,23 @@ var (
 	}
 
 	// enter consists of the actions to be performed when an item is selected
-	enter = map[screen]func(m Model, msg tea.Msg) (Model, tea.Cmd){
-		MainMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+	enter = map[screen]func(m *Model, msg tea.Msg) (*Model, tea.Cmd){
+		MainMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			return m.processMenuItem(m.mainMenu.SelectedItem().(menuItem).key)
 		},
-		LibraryMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		LibraryMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			return m.processMenuItem(m.subMenu.SelectedItem().(menuItem).key)
 		},
-		ThumbMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		ThumbMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			return m.processMenuItem(m.subMenu.SelectedItem().(menuItem).key)
 		},
-		ConfigMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		ConfigMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			return m.processMenuItem(m.configMenu.SelectedItem().(menuItem).key)
 		},
-		EditList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		EditList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
+			if len(m.gameList.Items()) == 0 {
+				return m, nil
+			}
 			entry := m.gameList.SelectedItem().(models.Entry)
 			m.focusedInput = 0
 			m.gameInput[name].(*Input).SetValue(entry.Name)
@@ -131,7 +134,7 @@ var (
 			m.gameInput[magic].(*Input).SetCursor(6)
 
 			if p, ok := m.playTimes[entry.Sig]; ok {
-				m.gameInput[added].(*Input).SetValue(time.Unix(int64(p.Added), 0).Format("2006-01-02 15:04:05"))
+				m.gameInput[added].(*Input).SetValue(time.Unix(int64(p.Added), 0).UTC().Format("2006-01-02 15:04:05"))
 				m.gameInput[play].(*Input).SetValue(p.FormatPlayTime())
 				m.gameInput[added].(*Input).SetCursor(16)
 				m.gameInput[play].(*Input).SetCursor(len(m.gameInput[play].(*Input).Value()))
@@ -153,17 +156,20 @@ var (
 			m.Push(EditScreen)
 			return m, m.gameInput[name].Focus()
 		},
-		GenerateList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		GenerateList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			entry := m.gameList.SelectedItem().(models.Entry)
 			m.Push(Waiting)
+			m.percent = 0.0
 			m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", entry.Name, entry.System)
 			return m, tea.Batch(m.genSingle(entry), tickCmd())
 		},
-		RemoveList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		RemoveList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
+			if len(m.gameList.Items()) == 0 {
+				return m, nil
+			}
 			idx := m.gameList.Index()
 			m = m.removeEntry(idx)
 			m.gameList.RemoveItem(idx)
-			m.updates <- m
 			return m, func() tea.Msg {
 				return updateMsg{}
 			}
@@ -171,40 +177,40 @@ var (
 	}
 
 	// def consists of the default actions when nothing else is to be done
-	def = map[screen]func(m Model, msg tea.Msg) (Model, tea.Cmd){
-		MainMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+	def = map[screen]func(m *Model, msg tea.Msg) (*Model, tea.Cmd){
+		MainMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.mainMenu, cmd = m.mainMenu.Update(msg)
+			m.mainMenu, cmd = m.mainMenu.Update(msg)
 			return m, cmd
 		},
-		LibraryMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		LibraryMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.subMenu, cmd = m.subMenu.Update(msg)
+			m.subMenu, cmd = m.subMenu.Update(msg)
 			return m, cmd
 		},
-		ThumbMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		ThumbMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.subMenu, cmd = m.subMenu.Update(msg)
+			m.subMenu, cmd = m.subMenu.Update(msg)
 			return m, cmd
 		},
-		ConfigMenu: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		ConfigMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.configMenu, cmd = m.configMenu.Update(msg)
+			m.configMenu, cmd = m.configMenu.Update(msg)
 			return m, cmd
 		},
-		EditList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		EditList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.gameList, cmd = m.gameList.Update(msg)
+			m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
-		GenerateList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		GenerateList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.gameList, cmd = m.gameList.Update(msg)
+			m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
-		RemoveList: func(m Model, msg tea.Msg) (Model, tea.Cmd) {
+		RemoveList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
-			*m.gameList, cmd = m.gameList.Update(msg)
+			m.gameList, cmd = m.gameList.Update(msg)
 			return m, cmd
 		},
 	}
@@ -212,7 +218,7 @@ var (
 
 // pop is the ESC action for basically everything but main menu
 // It removes the latest item from the stack, allowing the rendering to go up one level
-func pop(m Model, _ tea.Msg) (Model, tea.Cmd) {
+func pop(m *Model, _ tea.Msg) (*Model, tea.Cmd) {
 	m.Pop()
 	runtime.GC() // Not ideal. Probably also not necessary.
 	return m, nil

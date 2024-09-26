@@ -66,3 +66,15 @@ func TestParse(t *testing.T) {
 		})
 	}
 }
+
+func TestFromPlayedTime(t *testing.T) {
+	for i := range Lynx + 1 {
+		base := uint32(i) * 0x04000000
+		for j := uint32(0); j < 4; j++ {
+			added := 0x01000001 * j
+			if sys := FromPlayedTime(base + added); sys != i {
+				t.Errorf("Excpected %s; got %s", i, sys)
+			}
+		}
+	}
+}

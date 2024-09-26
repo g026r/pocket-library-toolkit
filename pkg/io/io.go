@@ -217,11 +217,15 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 			}
 			// Read each of the individual image entries.
 			for i := range tuples {
+				t.Images[i].Crc32 = tuples[i].crc32
 				if i+1 < len(tuples) {
 					t.Images[i].Image = make([]byte, tuples[i+1].address-tuples[i].address)
 				} else {
 					// This does present the problem that a file with the wrong number of entries in the count will wind up with one really weird
-					// entry. But not sure that can really be helped, since there isn't a terminator or image size field for the entries
+					// entry. But not sure that can really be helped, since there isn't a terminator or file size field for the entries
+					// TODO: Use height * width to determine how much of the image to read?
+					//  Each pixel = 4 bytes, so height * width * 4 + header size should do it.
+					//   But that will require us to read the first bit & parse it
 					end, _ := f.Seek(0, io.SeekEnd) // since a fs.File doesn't have a Size() func, we have to do it this way.
 					t.Images[i].Image = make([]byte, end-int64(tuples[i].address))
 					_, _ = f.Seek(int64(tuples[i].address), io.SeekStart)
@@ -361,7 +365,8 @@ func SaveLibrary(e []models.Entry, t map[uint32]models.PlayTime, tick chan any) 
 		if err := binary.Write(p, binary.LittleEndian, entry.Sig); err != nil {
 			return err
 		}
-		if _, err := t[entry.Sig].WriteTo(p); err != nil {
+		pt := t[entry.Sig]
+		if _, err := pt.WriteTo(p); err != nil {
 			return err
 		}
 		if tick != nil {
@@ -455,6 +460,7 @@ func SaveConfig(config Config) error {
 
 // SaveInternal saves one system's entries to a json file
 // If it finds that it has more than one system, it throws an error.
+// Used in magic.go to generate the files nicely.
 func SaveInternal(i io.Writer, entries []models.Entry) error {
 	j := make([]jsonEntry, 0)
 	for i, e := range entries {
