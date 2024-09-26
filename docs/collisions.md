@@ -298,6 +298,17 @@ collisions, amounting to 15.7% of the system's library.
     * Zillion _(Europe, Brazil) (Rev 2)_ `[0x7ba54510]`
     * Zillion _(USA, Europe) (Rev 1)_ `[0x5718762c]`
 
+#### Sega Master System Special Case
+
+There is one Sega Master System game that shares a cartridge signature with a Gear Game game:
+
+* `0x2fc3f107`:
+    * Spider-Man - Return of the Sinister Six _(USA, Europe)_ (Game Gear) `0xbc240779`
+    * Spider-Man - Return of the Sinister Six _(Europe, Brazil)_ (Master System) `0xebe45388`
+
+It is possible that it may incorrectly detect the Master System game as the Game Gear cartridge, but more investigation
+would be necessary to give a conclusive answer.
+
 ### Neo Geo Pocket / Neo Geo Pocket Color
 
 No known collisions.
