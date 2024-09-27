@@ -7,6 +7,14 @@ A rough-and-ready way to edit your Pocket's library.
 This product is provided as-is. While the chance that it breaks your Pocket is extremely low, it is very much
 experimental software that is doing something Analogue was not expecting users to do. Use at your own risk.
 
+## How to Install
+
+Download the appropriate version for your operating system from [the latest release](https://github.com/g026r/pocket-library-toolkit/releases/latest) & extract the archive. I recommend placing it in the root of your Pocket's SD card.
+
+Run the application & select the actions you desire. A basic [user guide](docs/userguide.md) is available.
+
+Once complete, and then copy the files the tool generates over to the correct locations under your SD card's System directory _**making backups of any originals before replacing them**_.
+
 ## But Why?
 
 Because I can get remarkably anal about these things.
