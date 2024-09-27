@@ -104,7 +104,7 @@ In addition, this action saves the current user config to pocket-toolkit.json, l
 
 ### The Game List
 
-![regen1.png](..%2F..%2F..%2FDownloads%2Fregen1.png)
+![list.png](images%2Flist.png)
 
 Used by the edit, remove, and regenerate thumbnail options. Up & down navigate the list, while left & right switch pages.
 
