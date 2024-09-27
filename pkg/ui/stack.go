@@ -16,6 +16,7 @@ const (
 	Waiting
 	Initializing
 	FatalError
+	AboutScreen
 )
 
 // stack is a simple struct for keeping track of the screen we are currently on & the ones that came before it.

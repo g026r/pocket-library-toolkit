@@ -28,3 +28,4 @@
 *.zip
 *.gz
 /build.sh
+/pkg/ui/version.txt

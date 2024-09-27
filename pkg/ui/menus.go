@@ -4,6 +4,7 @@ import (
 	"fmt"
 	goio "io"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 
@@ -21,6 +22,7 @@ const (
 	lib menuKey = iota
 	thumbs
 	config
+	about
 	save
 	quit
 	add
@@ -67,6 +69,7 @@ var (
 		menuItem{"Library", lib},
 		menuItem{"Thumbnails", thumbs},
 		menuItem{"Settings", config},
+		menuItem{"About", about},
 		menuItem{"Save & Quit", save},
 		menuItem{"Quit", quit}}
 	libraryOptions = []list.Item{
@@ -179,24 +182,16 @@ var (
 	// def consists of the default actions when nothing else is to be done
 	def = map[screen]func(m *Model, msg tea.Msg) (*Model, tea.Cmd){
 		MainMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
-			var cmd tea.Cmd
-			m.mainMenu, cmd = m.mainMenu.Update(msg)
-			return m, cmd
+			return defaultAction(MainMenu, &m.mainMenu, m, msg)
 		},
 		LibraryMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
-			var cmd tea.Cmd
-			m.subMenu, cmd = m.subMenu.Update(msg)
-			return m, cmd
+			return defaultAction(LibraryMenu, &m.subMenu, m, msg)
 		},
 		ThumbMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
-			var cmd tea.Cmd
-			m.subMenu, cmd = m.subMenu.Update(msg)
-			return m, cmd
+			return defaultAction(ThumbMenu, &m.subMenu, m, msg)
 		},
 		ConfigMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
-			var cmd tea.Cmd
-			m.configMenu, cmd = m.configMenu.Update(msg)
-			return m, cmd
+			return defaultAction(ConfigMenu, &m.configMenu, m, msg)
 		},
 		EditList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			var cmd tea.Cmd
@@ -215,6 +210,20 @@ var (
 		},
 	}
 )
+
+// defaulAction is a default action for sub menus allowing numeric navigation.
+// It's not easily doable for game list menus as there may be too many items to handle key-presses without storing the previous press & waiting to process it.
+func defaultAction(scr screen, menu *list.Model, m *Model, msg tea.Msg) (*Model, tea.Cmd) {
+	if k, ok := msg.(tea.KeyMsg); ok {
+		if i, err := strconv.Atoi(k.String()); err == nil && i >= 1 && i <= len(menu.Items()) {
+			menu.Select(i - 1)
+			return enter[scr](m, msg)
+		}
+	}
+	var cmd tea.Cmd
+	*menu, cmd = menu.Update(msg)
+	return m, cmd
+}
 
 // pop is the ESC action for basically everything but main menu
 // It removes the latest item from the stack, allowing the rendering to go up one level
