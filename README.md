@@ -14,9 +14,13 @@ Because I can get remarkably anal about these things.
 First off: 95% of Pocket users won't need or even want this.
 
 This software is for the users who are annoyed that their library shows `Famicom Mini 01 - Super Mario Bros.` but also
-`Famicom Mini 22: Nazo no Murasame Jou`, that it's `The Lion King` but `NewZealand Story, The`. It's for those users who
-have one of the small number of carts that the Pocket misidentifies & who'd rather it appeared in their library under
-the correct name.
+`Famicom Mini 22: Nazo no Murasame Jou`, that it's `The Lion King` but `NewZealand Story, The`.
+
+It's for those users who have one of the small number of carts that the Pocket misidentifies & who'd rather it appeared
+in their library under the correct name.
+
+It's for the users who suddenly have a game claiming they've played more than 3,000 hours & who want to fix it without
+manually editing the binary file themselves.
 
 ## Limitations
 
