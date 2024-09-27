@@ -1,3 +1,2 @@
-- Better error handling?
-- check a cart signature for Atari & PCE and see if I can generate it to check for conflicts. (Find unheadered ROMs?)
+- Better error handling? (Add a status bar to screens displaying last error?)
 - Is magic number really needed?
