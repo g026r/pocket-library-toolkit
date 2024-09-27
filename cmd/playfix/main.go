@@ -45,7 +45,7 @@ func main() {
 	// Write entries in the same order as list.bin
 	for _, e := range entries {
 		tmp := p[e.Sig]
-		tmp.Played = tmp.Played &^ 0xFF000000
+		tmp.Played = tmp.Played &^ 0xFF000000 // Fix the time. System prefix will get written by WriteTo
 		if err := binary.Write(out, binary.LittleEndian, e.Sig); err != nil {
 			log.Fatal(err)
 		}
