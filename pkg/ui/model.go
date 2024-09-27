@@ -588,6 +588,14 @@ func (m *Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m.shiftInput(1)
 		case "shift+tab", "up":
 			return m.shiftInput(-1)
+		case "left":
+			if m.focusedInput == cancel {
+				return m.shiftInput(-1)
+			}
+		case "right":
+			if m.focusedInput == submit {
+				return m.shiftInput(1)
+			}
 		case "enter":
 			switch m.focusedInput {
 			case submit:
@@ -653,7 +661,7 @@ func (m *Model) updateInputs(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
-	foundError := false
+	foundError := -1
 	for i := range play + 1 { // Check all the ones that are inputs.
 		if t, ok := m.gameInput[i].(*Input); ok {
 			var err error
@@ -661,21 +669,20 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 				continue
 			}
 			// Only set the cursor back to the first error found
-			if !foundError {
+			if foundError == -1 {
 				m.gameInput[i].Style(focusedStyle)
-				m.gameInput[i].Focus()
 				m.gameInput[m.focusedInput].Blur()
 				m.gameInput[m.focusedInput].Style(itemStyle)
 				m.focusedInput = i
 				t.SetCursor(len(t.Value()))
-				foundError = true
+				foundError = i
 			}
 			// But set all the error statuses
 			t.Err = err
 		}
 	}
-	if foundError {
-		return m, nil
+	if foundError != -1 {
+		return m, m.gameInput[foundError].Focus()
 	}
 
 	e := models.Entry{}
