@@ -131,14 +131,14 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, cmd
 	case tea.WindowSizeMsg:
 		m.progress.Width = msg.Width - 8
-		m.mainMenu.SetHeight(msg.Height)
-		m.mainMenu.SetWidth(msg.Width)
-		m.subMenu.SetHeight(msg.Height)
-		m.subMenu.SetWidth(msg.Width)
-		m.configMenu.SetHeight(msg.Height)
-		m.configMenu.SetWidth(msg.Width)
-		m.gameList.SetHeight(msg.Height)
-		m.gameList.SetWidth(msg.Width)
+		m.mainMenu.SetHeight(msg.Height - 1)
+		m.mainMenu.SetWidth(msg.Width - 1)
+		m.subMenu.SetHeight(msg.Height - 1)
+		m.subMenu.SetWidth(msg.Width - 1)
+		m.configMenu.SetHeight(msg.Height - 1)
+		m.configMenu.SetWidth(msg.Width - 1)
+		m.gameList.SetHeight(msg.Height - 1)
+		m.gameList.SetWidth(msg.Width - 1)
 		return m, nil
 	case initDoneMsg:
 		m.initialized = true
@@ -281,7 +281,8 @@ func (m *Model) initSystem() tea.Msg {
 // save is the opposite of init: save our data to disk
 func (m *Model) save() tea.Msg {
 	// TODO: Overwrite in place
-	// TODO: If so, create a backup of the files first
+	// TODO: If so, create a backup of the files first?
+	// TODO: Or temp files? (Temp files. Definitely temp files.)
 	var dir string
 	if m.Overwrite {
 		// TODO: Make backups
@@ -484,7 +485,7 @@ func (m *Model) regenLib() tea.Msg {
 	return updateMsg{}
 }
 
-// genSingle generates a single thumbnail entry & then either updates or inserts it into the list of thumbnails
+// genSingle generates a tmSingle thumbnail entry & then either updates or inserts it into the list of thumbnails
 func (m *Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		m.percent = 0.0
@@ -770,7 +771,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		return m, tea.Batch(m.save, tickCmd())
 	case back:
 		return pop(m, nil)
-	case add:
+	case libAdd:
 		m.focusedInput = 0
 		for i := range len(m.gameInput) {
 			m.gameInput[i].Style(itemStyle)
@@ -784,41 +785,41 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		m.gameInput[m.focusedInput].Style(focusedStyle)
 		m.Push(AddScreen)
 		return m, m.gameInput[m.focusedInput].Focus()
-	case edit:
+	case libEdit:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(EditList)
-	case rm:
+	case libRm:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Remove Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(RemoveList)
-	case fix:
+	case libFix:
 		m.Push(Waiting)
 		m.wait = "Fixing played times"
 		m.percent = 0.0
 		return m, tea.Batch(m.playfix, tickCmd())
-	case missing:
+	case tmMissing:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating missing thumbnails for library"
+		m.wait = "Generating tmMissing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
-	case single:
+	case tmSingle:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(GenerateList)
-	case genlib:
+	case tmGenlib:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Regenerating all thumbnails for library"
+		m.wait = "Regenerating tmAll thumbnails for library"
 		return m, tea.Batch(m.regenLib, tickCmd())
-	case prune:
+	case tmPrune:
 		m.Push(Waiting)
 		m.percent = 0.0
 		m.wait = "Removing orphaned thumbs.bin entries"
 		return m, tea.Batch(m.prune, tickCmd())
-	case all:
+	case tmAll:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
+		m.wait = "Generating thumbnails for tmAll games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
-	case showAdd, advEdit, rmThumbs, genNew, overwrite:
+	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgOverwrite, cfgUnmodified:
 		return m.configChange(key)
 	}
 
@@ -828,16 +829,18 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 // configMenu handles item selection on the settings menu
 func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 	switch key {
-	case showAdd:
+	case cfgShowAdd:
 		m.ShowAdd = !m.ShowAdd
-	case rmThumbs:
+	case cfgRmThumbs:
 		m.RemoveImages = !m.RemoveImages
-	case advEdit:
+	case cfgAdvEdit:
 		m.AdvancedEditing = !m.AdvancedEditing
-	case genNew:
+	case cfgGenNew:
 		m.GenerateNew = !m.GenerateNew
-	case overwrite:
+	case cfgOverwrite:
 		m.Overwrite = !m.Overwrite
+	case cfgUnmodified:
+		m.SaveUnmodified = !m.SaveUnmodified
 	}
 
 	return m, nil

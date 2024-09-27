@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+
 	if _, err := tea.NewProgram(model2.NewModel(), tea.WithAltScreen()).Run(); err != nil {
 		log.Fatal(err)
 	}

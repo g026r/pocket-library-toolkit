@@ -25,21 +25,22 @@ const (
 	about
 	save
 	quit
-	add
-	edit
-	rm
-	fix
+	libAdd
+	libEdit
+	libRm
+	libFix
 	back
-	missing
-	single
-	genlib
-	all
-	prune
-	showAdd
-	advEdit
-	rmThumbs
-	genNew
-	overwrite
+	tmMissing
+	tmSingle
+	tmGenlib
+	tmAll
+	tmPrune
+	cfgShowAdd
+	cfgAdvEdit
+	cfgRmThumbs
+	cfgGenNew
+	cfgUnmodified
+	cfgOverwrite
 )
 
 var (
@@ -74,24 +75,25 @@ var (
 		menuItem{"Save & Quit", save},
 		menuItem{"Quit", quit}}
 	libraryOptions = []list.Item{
-		menuItem{"Add entry", add},
-		menuItem{"Edit entry", edit},
-		menuItem{"Remove entry", rm},
-		menuItem{"Fix played times", fix},
+		menuItem{"Add entry", libAdd},
+		menuItem{"Edit entry", libEdit},
+		menuItem{"Remove entry", libRm},
+		menuItem{"Fix played times", libFix},
 		menuItem{"Back", back}}
 	thumbOptions = []list.Item{
-		menuItem{"Generate missing thumbnails", missing},
-		menuItem{"Regenerate single game", single},
-		menuItem{"Regenerate full library", genlib},
-		menuItem{"Prune orphaned thumbnails", prune},
-		menuItem{"Generate complete system thumbnails", all},
+		menuItem{"Generate tmMissing thumbnails", tmMissing},
+		menuItem{"Regenerate tmSingle game", tmSingle},
+		menuItem{"Regenerate full library", tmGenlib},
+		menuItem{"Prune orphaned thumbnails", tmPrune},
+		menuItem{"Generate complete system thumbnails", tmAll},
 		menuItem{"Back", back}}
 	configOptions = []list.Item{
-		menuItem{"Remove thumbnail when removing game", rmThumbs},
-		menuItem{"Generate new thumbnail when editing game", genNew},
-		//menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), advEdit},
-		//menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), showAdd},
-		menuItem{"Overwrite original files on save' " + italic.Render("(Experimental)"), overwrite},
+		menuItem{"Remove thumbnail when removing game", cfgRmThumbs},
+		menuItem{"Generate new thumbnail when editing game", cfgGenNew},
+		//menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), cfgAdvEdit},
+		//menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), cfgShowAdd},
+		menuItem{"Always save _thumbs.bin files, even if unmodified", cfgUnmodified},
+		menuItem{"Overwrite original files on save' " + italic.Render("(Experimental)"), cfgOverwrite},
 		menuItem{"Back", back}}
 
 	// esc consists of the items to be performed if esc is typed
@@ -213,7 +215,7 @@ var (
 	}
 )
 
-// defaulAction is a default action for sub menus allowing numeric navigation.
+// defaultAction is a default action for sub menus allowing numeric navigation.
 // It's not easily doable for game list menus as there may be too many items to handle key-presses without storing the previous press & waiting to process it.
 func defaultAction(scr screen, menu *list.Model, m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 	if k, ok := msg.(tea.KeyMsg); ok {
@@ -305,13 +307,13 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 		str = fmt.Sprintf("%d. [%%s] %s", index+1, i)
 		var b bool
 		switch i.key {
-		case advEdit:
+		case cfgAdvEdit:
 			b = d.AdvancedEditing
-		case showAdd:
+		case cfgShowAdd:
 			b = d.ShowAdd
-		case rmThumbs:
+		case cfgRmThumbs:
 			b = d.RemoveImages
-		case genNew:
+		case cfgGenNew:
 			b = d.GenerateNew
 		default:
 			// If we don't know what this value is, return

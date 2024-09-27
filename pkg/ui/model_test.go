@@ -101,17 +101,17 @@ func TestModel_configChange(t *testing.T) {
 	sut := Model{Config: &config}
 
 	// test all false -> true
-	m, _ := sut.configChange(showAdd)
+	m, _ := sut.configChange(cfgShowAdd)
 	if !m.ShowAdd || m.AdvancedEditing || m.RemoveImages {
 		t.Errorf("Expected ShowAdd to be true: %v", *m.Config)
 	}
 	*m.Config = io.Config{}
-	m, _ = sut.configChange(rmThumbs)
+	m, _ = sut.configChange(cfgRmThumbs)
 	if !m.RemoveImages || m.AdvancedEditing || m.ShowAdd {
 		t.Errorf("Expected RemoveImages to be true: %v", *m.Config)
 	}
 	*m.Config = io.Config{}
-	m, _ = sut.configChange(advEdit)
+	m, _ = sut.configChange(cfgAdvEdit)
 	if !m.AdvancedEditing || m.ShowAdd || m.RemoveImages {
 		t.Errorf("Expected AdvancedEditing to be true: %v", *m.Config)
 	}
@@ -123,17 +123,17 @@ func TestModel_configChange(t *testing.T) {
 	}
 	// test true -> false
 	*sut.Config = allTrue
-	m, _ = sut.configChange(showAdd)
+	m, _ = sut.configChange(cfgShowAdd)
 	if m.ShowAdd || !m.AdvancedEditing || !m.RemoveImages {
 		t.Errorf("Expected ShowAdd to be false: %v", *m.Config)
 	}
 	*sut.Config = allTrue
-	m, _ = sut.configChange(rmThumbs)
+	m, _ = sut.configChange(cfgRmThumbs)
 	if m.RemoveImages || !m.AdvancedEditing || !m.ShowAdd {
 		t.Errorf("Expected RemoveImages to be false: %v", *m.Config)
 	}
 	*sut.Config = allTrue
-	m, _ = sut.configChange(advEdit)
+	m, _ = sut.configChange(cfgAdvEdit)
 	if m.AdvancedEditing || !m.RemoveImages || !m.ShowAdd {
 		t.Errorf("Expected AdvancedEditing to be false: %v", *m.Config)
 	}

@@ -35,6 +35,7 @@ type Config struct {
 	AdvancedEditing bool `json:"advanced_editing"`
 	ShowAdd         bool `json:"show_add"`
 	GenerateNew     bool `json:"generate_new"`
+	SaveUnmodified  bool `json:"save_unmodified"`
 	Overwrite       bool `json:"overwrite"`
 }
 
@@ -250,6 +251,8 @@ func LoadConfig() (Config, error) {
 		AdvancedEditing: false,
 		ShowAdd:         false,
 		GenerateNew:     true,
+		SaveUnmodified:  false,
+		Overwrite:       false,
 	}
 	//// FIXME: Use the program's dir rather than the cwd
 	//dir, err := os.Getwd()
