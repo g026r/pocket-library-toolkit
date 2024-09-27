@@ -106,14 +106,14 @@ the adapter, but I've been unable to determine what.
 
 Most likely 32 bits (Little Endian), might be 16 bits plus another 16 bits of padding.
 
-I've been unable to determine what this word is used for. Changing its value didn't stop the library from loading or
-a game entry change any of the information displayed.
+I've been unable to determine what this word is used for. Changing its value didn't stop the library from loading
+a game entry or change any of the information displayed.
 
-It appeaars to be a simple sequential mapping of games to an integer, mostly but not entirely alphabetically in system
+It appeaars to be a simple sequential mapping of games to an integer, mostly arranged alphabetically in system
 order, but not entirely.
 
 e.g. Power Strike II on the Game Gear comes immediately after GG Aleste, likely as its Japanese name is "GG Aleste II."
-e.g. The earliest Game Boy game I've been able to spot is Super R.C. Pro-Am, which is `0x00000013`
+e.g. The lowest Game Boy game in the sequence that I have a value for is Super R.C. Pro-Am, which is `0x00000013` & has a lower value than many games beginning with 'A'.
 
 ### Cartridge Name (variable)
 
