@@ -1,6 +1,7 @@
 package ui
 
 import (
+	_ "embed"
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
@@ -21,6 +22,9 @@ import (
 	"github.com/g026r/pocket-toolkit/pkg/models"
 	"github.com/g026r/pocket-toolkit/pkg/util"
 )
+
+//go:embed version.txt
+var version string
 
 type errMsg struct {
 	err   error
@@ -78,7 +82,7 @@ func NewModel() tea.Model {
 
 	return &Model{
 		stack:      stack{[]screen{Initializing}},
-		spinner:    spinner.New(spinner.WithSpinner(spinner.MiniDot)),
+		spinner:    spinner.New(spinner.WithSpinner(spinner.MiniDot), spinner.WithStyle(itemStyle.Foreground(blue))),
 		progress:   progress.New(opt),
 		Config:     &config,
 		mainMenu:   *NewMainMenu(),
@@ -101,13 +105,13 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.anyKey = true
 		}
 	case tea.KeyMsg:
+		if msg.String() == "ctrl+c" {
+			return m, tea.Quit
+		}
 		if m.anyKey {
 			m.anyKey = false
 			m.percent = 0.0
 			return pop(m, msg)
-		}
-		if msg.String() == "ctrl+c" {
-			return m, tea.Quit
 		}
 	case spinner.TickMsg:
 		if m.initialized {
@@ -162,12 +166,9 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m *Model) View() (s string) {
 	switch m.Peek() {
 	case Initializing:
-		s = fmt.Sprintf("  %s Loading your Pocket library. Please wait.", m.spinner.View())
+		s = fmt.Sprintf("%s %s", m.spinner.View(), "Loading your Pocket library. Please wait.")
 	case Waiting:
-		s = fmt.Sprintf("\n  %s\n\n  %s", m.wait, m.progress.ViewAs(m.percent))
-		if m.anyKey {
-			s = fmt.Sprintf("%s\n\n  Press any key to continue.", s)
-		}
+		s = fmt.Sprintf("\n%s\n\n%s", itemStyle.Render(m.wait), itemStyle.Render(m.progress.ViewAs(m.percent)))
 	case Saving:
 		s = fmt.Sprintf("\n  Saving your Pocket library\n\n  %s", m.progress.ViewAs(m.percent))
 	case FatalError:
@@ -181,14 +182,32 @@ func (m *Model) View() (s string) {
 	case RemoveList, EditList, GenerateList:
 		s = m.gameList.View()
 	case EditScreen:
-		s = m.inputView("Edit Game")
+		s = m.inputView(fmt.Sprintf("Edit Game > %s", m.gameList.SelectedItem().(models.Entry).Name))
 	case AddScreen:
 		s = m.inputView("Add Game")
+	case AboutScreen:
+		s = aboutView()
 	default:
 		panic("Panic! At the View() call")
 	}
 
+	if m.anyKey {
+		s = fmt.Sprintf("%s\n\n%s", s, itemStyle.Render("Press any key to continue."))
+	}
+
 	return
+}
+
+func aboutView() string {
+	s := fmt.Sprintf("  %s", titleStyle.Render("Unofficial Analogue Pocket library toolkit"))
+
+	v := strings.Split(version, ",")
+	s = fmt.Sprintf("%s\n\n%s", s, itemStyle.Render("Version:", v[0]))
+	s = fmt.Sprintf("%s\n%s", s, itemStyle.Render("Built:", v[1]))
+	s = fmt.Sprintf("%s\n\n%s", s, itemStyle.Render("Bug reports, feature requests, & new versions:"))
+	s = fmt.Sprintf("%s\n%s", s, selectedItemStyle.PaddingLeft(6).Render("https://github.com/g026r/pocket-library-toolkit"))
+
+	return s
 }
 
 // initSystem loads all our data from disk
@@ -491,7 +510,7 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 }
 
 func (m *Model) inputView(title string) string {
-	s := fmt.Sprintf("  %s", titleStyle.MarginLeft(2).Render(fmt.Sprintf("Main > Library > %s", title)))
+	s := fmt.Sprintf("  %s", titleStyle.Render(fmt.Sprintf("Main > Library > %s", title)))
 	s = fmt.Sprintf("%s\n\n%s\n%s\n", s, m.gameInput[name].View(), errorStyle.Render(m.gameInput[name].error()))
 	if m.AdvancedEditing || m.Peek() == AddScreen {
 		s = fmt.Sprintf("%s%s\n%s\n", s, m.gameInput[system].View(), errorStyle.Render(m.gameInput[system].error()))
@@ -723,6 +742,10 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case config:
 		m.configMenu.ResetSelected()
 		m.Push(ConfigMenu)
+	case about:
+		m.Push(AboutScreen)
+		m.anyKey = true
+		// TODO: Add a basic about screen
 	case quit:
 		return m, tea.Quit
 	case save:
