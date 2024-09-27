@@ -211,8 +211,8 @@ var (
 	}
 )
 
-// default action is a default action for sub menus allowing numeric navigation.
-// It's not doable for game list menus as there may be too many items to handle key-presses easily
+// defaulAction is a default action for sub menus allowing numeric navigation.
+// It's not easily doable for game list menus as there may be too many items to handle key-presses without storing the previous press & waiting to process it.
 func defaultAction(scr screen, menu *list.Model, m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 	if k, ok := msg.(tea.KeyMsg); ok {
 		if i, err := strconv.Atoi(k.String()); err == nil && i >= 1 && i <= len(menu.Items()) {
