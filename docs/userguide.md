@@ -95,7 +95,7 @@ Displays settings currently in use by the system. Ones marked with an `X` are ac
    thumbs.bin files if it detects that the thumbnails have been modified during this session. If this setting is turned
    on it will save new copies of the files regardless of changes. Leaving this off will improve save performance for
    large libraries.
-3. **Back**: return to the [main menu](#main-menu)
+4. **Back**: return to the [main menu](#main-menu)
 
 ### Save & Quit
 
