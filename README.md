@@ -9,11 +9,14 @@ experimental software that is doing something Analogue was not expecting users t
 
 ## How to Install
 
-Download the appropriate version for your operating system from [the latest release](https://github.com/g026r/pocket-library-toolkit/releases/latest) & extract the archive. I recommend placing it in the root of your Pocket's SD card.
+Download the appropriate version for your operating system
+from [the latest release](https://github.com/g026r/pocket-library-toolkit/releases/latest) & extract the archive. I
+recommend placing it in the root of your Pocket's SD card.
 
 Run the application & select the actions you desire. A basic [user guide](docs/userguide.md) is available.
 
-Once complete, and then copy the files the tool generates over to the correct locations under your SD card's System directory _**making backups of any originals before replacing them**_.
+Once complete, then copy the files the tool generates over to the correct locations under your SD card's System
+directory _**making backups of any originals before replacing them**_.
 
 ## But Why?
 
@@ -21,8 +24,8 @@ Because I can get remarkably anal about these things.
 
 First off: 95% of Pocket users won't need or even want this.
 
-This software is for the users who are annoyed that their library shows `Famicom Mini 01 - Super Mario Bros.` but also
-`Famicom Mini 22: Nazo no Murasame Jou`, that it's `The Lion King` but `NewZealand Story, The`.
+This software is for the users who are annoyed that their library shows _Famicom Mini 01 - Super Mario Bros._ but also
+_Famicom Mini 22: Nazo no Murasame Jou_, that it's _The Lion King_ but _NewZealand Story, The_.
 
 It's for those users who have one of the small number of carts that the Pocket misidentifies & who'd rather it appeared
 in their library under the correct name.
@@ -33,7 +36,7 @@ manually editing the binary file themselves.
 ## Limitations
 
 The library info screen for a given cart is stored in the Pocket's internal memory. Even if your library
-now shows "Sagaia" instead of "Mani 4 in 1 - Taito", clicking into it or loading the cart will still show you the
+now shows "_Sagaia_" instead of "_Mani 4 in 1 - Taito_", clicking into it or loading the cart will still show you the
 original info.
 
 Additionally, if you have two different entries with the same cart signature, it's likely that only the playtime for the

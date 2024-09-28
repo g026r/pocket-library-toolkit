@@ -6,8 +6,8 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io/fs"
+	"log"
 	"os"
-	"path/filepath"
 	"slices"
 	"strings"
 	"time"
@@ -131,14 +131,14 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, cmd
 	case tea.WindowSizeMsg:
 		m.progress.Width = msg.Width - 8
-		m.mainMenu.SetHeight(msg.Height)
-		m.mainMenu.SetWidth(msg.Width)
-		m.subMenu.SetHeight(msg.Height)
-		m.subMenu.SetWidth(msg.Width)
-		m.configMenu.SetHeight(msg.Height)
-		m.configMenu.SetWidth(msg.Width)
-		m.gameList.SetHeight(msg.Height)
-		m.gameList.SetWidth(msg.Width)
+		m.mainMenu.SetHeight(msg.Height - 1)
+		m.mainMenu.SetWidth(msg.Width - 1)
+		m.subMenu.SetHeight(msg.Height - 1)
+		m.subMenu.SetWidth(msg.Width - 1)
+		m.configMenu.SetHeight(msg.Height - 1)
+		m.configMenu.SetWidth(msg.Width - 1)
+		m.gameList.SetHeight(msg.Height - 1)
+		m.gameList.SetWidth(msg.Width - 1)
 		return m, nil
 	case initDoneMsg:
 		m.initialized = true
@@ -212,30 +212,9 @@ func aboutView() string {
 
 // initSystem loads all our data from disk
 func (m *Model) initSystem() tea.Msg {
-	var d string
-	var err error
-
-	switch len(os.Args) {
-	case 1:
-		if d, err = os.Executable(); err != nil {
-			return errMsg{err, true}
-		}
-		d = filepath.Dir(d)
-	case 2:
-		d = os.Args[1]
-	default:
-	}
-
-	d, err = filepath.Abs(d)
+	d, err := util.GetRoot()
 	if err != nil {
 		return errMsg{err, true}
-	}
-
-	fi, err := os.Stat(d)
-	if err != nil {
-		return errMsg{err, true}
-	} else if !fi.IsDir() {
-		return errMsg{fmt.Errorf("%s is not a directory", d), true}
 	}
 	m.rootDir = os.DirFS(d)
 
@@ -280,14 +259,83 @@ func (m *Model) initSystem() tea.Msg {
 
 // save is the opposite of init: save our data to disk
 func (m *Model) save() tea.Msg {
-	wd, err := os.Getwd()
+	success := false
+	tmpList, err := os.CreateTemp("", "list.bin_*")
 	if err != nil {
-		return err
-	}
-	err = os.Mkdir(fmt.Sprintf("%s/pocket-toolkit", wd), os.ModePerm)
-	if err != nil && !os.IsExist(err) {
 		return errMsg{err, true}
 	}
+	tmpPlaytimes, err := os.CreateTemp("", "playtimes.bin_*")
+	if err != nil {
+		return errMsg{err, true}
+	}
+	tmpThumbs := make(map[models.System]*os.File)
+	for k, v := range m.thumbnails {
+		if v.Modified || m.SaveUnmodified {
+			tmpThumbs[k], err = os.CreateTemp("", fmt.Sprintf("%s_thumbs.bin_*", strings.ToLower(k.String())))
+			if err != nil {
+				return errMsg{err, true}
+			}
+		}
+	}
+	defer func() {
+		// An absolute mess of a function that:
+		// 1. Closes all the file handles
+		// 2. Creates the output directories if we're not overwriting
+		// 3. Moves the temporary files over to the correct spot if successful, or
+		// 4. Deletes them if we weren't
+		// TODO: Clean this up to make it all more manageable
+
+		// Clean everything up
+		_ = tmpList.Close()
+		_ = tmpPlaytimes.Close()
+		for _, v := range tmpThumbs {
+			_ = v.Close()
+		}
+		if success {
+			var root string
+			var err error
+			if m.Overwrite {
+				root, err = util.GetRoot()
+				if err != nil {
+					log.Fatal(errorStyle.Render(err.Error()))
+				}
+			} else {
+				// If we're not overwriting in place, get the working dir & create all our directories if they don't exist
+				wd, err := os.Getwd()
+				if err != nil {
+					log.Fatal(errorStyle.Render(err.Error()))
+				}
+				root = fmt.Sprintf("%s/pocket-toolkit", wd)
+				_ = os.Mkdir(root, os.ModePerm)
+				_ = os.Mkdir(fmt.Sprintf("%s/System", root), os.ModePerm)
+				if len(tmpThumbs) > 0 {
+					_ = os.Mkdir(fmt.Sprintf("%s/System/Library", root), os.ModePerm)
+					_ = os.Mkdir(fmt.Sprintf("%s/System/Library/Images", root), os.ModePerm)
+				}
+				if err := os.Mkdir(fmt.Sprintf("%s/System/Played Games", root), os.ModePerm); err != nil && !os.IsExist(err) {
+					log.Fatal(errorStyle.Render(err.Error())) // Only going to check this final one for errors on the basis of "if it failed, the others did as well"
+				}
+			}
+			if err := os.Rename(tmpList.Name(), fmt.Sprintf("%s/System/Played Games/list.bin", root)); err != nil {
+				log.Fatal(errorStyle.Render(err.Error()))
+			}
+			if err := os.Rename(tmpPlaytimes.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root)); err != nil {
+				log.Fatal(errorStyle.Render(err.Error()))
+			}
+			for k, v := range tmpThumbs {
+				if err := os.Rename(v.Name(), fmt.Sprintf("%s/System/Library/Images/%s_thumbs.bin", root, strings.ToLower(k.String()))); err != nil {
+					log.Fatal(errorStyle.Render(err.Error()))
+				}
+			}
+		} else {
+			// Remove all the files as we weren't successful
+			_ = os.Remove(tmpList.Name())
+			_ = os.Remove(tmpPlaytimes.Name())
+			for _, v := range tmpThumbs {
+				_ = os.Remove(v.Name())
+			}
+		}
+	}()
 
 	ctr := 0.0
 	tick := make(chan any)
@@ -301,13 +349,15 @@ func (m *Model) save() tea.Msg {
 
 	go func() { // Run these in a goroutine to avoid having to pass around the pointer to the progress value as that would require knowing the total as well
 		defer close(tick)
-		if err := io.SaveLibrary(m.entries, m.playTimes, tick); err != nil {
+		if err := io.SaveLibrary(tmpList, m.entries, tmpPlaytimes, m.playTimes, tick); err != nil {
 			tick <- err
 			return
 		}
-		if err := io.SaveThumbs(m.thumbnails, tick); err != nil {
-			tick <- err
-			return
+		for k, v := range tmpThumbs {
+			if err := io.SaveThumbsFile(v, m.thumbnails[k].Images, tick); err != nil {
+				tick <- err
+				return
+			}
 		}
 		if err := io.SaveConfig(*m.Config); err != nil {
 			tick <- err
@@ -326,6 +376,7 @@ func (m *Model) save() tea.Msg {
 		}
 	}
 
+	success = true
 	return tea.QuitMsg{}
 }
 
@@ -475,7 +526,7 @@ func (m *Model) regenLib() tea.Msg {
 	return updateMsg{}
 }
 
-// genSingle generates a single thumbnail entry & then either updates or inserts it into the list of thumbnails
+// genSingle generates a tmSingle thumbnail entry & then either updates or inserts it into the list of thumbnails
 func (m *Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		m.percent = 0.0
@@ -752,7 +803,6 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case about:
 		m.Push(AboutScreen)
 		m.anyKey = true
-		// TODO: Add a basic about screen
 	case quit:
 		return m, tea.Quit
 	case save:
@@ -761,7 +811,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		return m, tea.Batch(m.save, tickCmd())
 	case back:
 		return pop(m, nil)
-	case add:
+	case libAdd:
 		m.focusedInput = 0
 		for i := range len(m.gameInput) {
 			m.gameInput[i].Style(itemStyle)
@@ -775,41 +825,41 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		m.gameInput[m.focusedInput].Style(focusedStyle)
 		m.Push(AddScreen)
 		return m, m.gameInput[m.focusedInput].Focus()
-	case edit:
+	case libEdit:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(EditList)
-	case rm:
+	case libRm:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Remove Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(RemoveList)
-	case fix:
+	case libFix:
 		m.Push(Waiting)
 		m.wait = "Fixing played times"
 		m.percent = 0.0
 		return m, tea.Batch(m.playfix, tickCmd())
-	case missing:
+	case tmMissing:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating missing thumbnails for library"
+		m.wait = "Generating tmMissing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
-	case single:
+	case tmSingle:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(GenerateList)
-	case genlib:
+	case tmGenlib:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Regenerating all thumbnails for library"
+		m.wait = "Regenerating tmAll thumbnails for library"
 		return m, tea.Batch(m.regenLib, tickCmd())
-	case prune:
+	case tmPrune:
 		m.Push(Waiting)
 		m.percent = 0.0
 		m.wait = "Removing orphaned thumbs.bin entries"
 		return m, tea.Batch(m.prune, tickCmd())
-	case all:
+	case tmAll:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
+		m.wait = "Generating thumbnails for tmAll games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
-	case showAdd, advEdit, rmThumbs, genNew:
+	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgOverwrite, cfgUnmodified:
 		return m.configChange(key)
 	}
 
@@ -819,14 +869,18 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 // configMenu handles item selection on the settings menu
 func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 	switch key {
-	case showAdd:
+	case cfgShowAdd:
 		m.ShowAdd = !m.ShowAdd
-	case rmThumbs:
+	case cfgRmThumbs:
 		m.RemoveImages = !m.RemoveImages
-	case advEdit:
+	case cfgAdvEdit:
 		m.AdvancedEditing = !m.AdvancedEditing
-	case genNew:
+	case cfgGenNew:
 		m.GenerateNew = !m.GenerateNew
+	case cfgOverwrite:
+		m.Overwrite = !m.Overwrite
+	case cfgUnmodified:
+		m.SaveUnmodified = !m.SaveUnmodified
 	}
 
 	return m, nil
