@@ -6,8 +6,8 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io/fs"
+	"log"
 	"os"
-	"path/filepath"
 	"slices"
 	"strings"
 	"time"
@@ -212,30 +212,9 @@ func aboutView() string {
 
 // initSystem loads all our data from disk
 func (m *Model) initSystem() tea.Msg {
-	var d string
-	var err error
-
-	switch len(os.Args) {
-	case 1:
-		if d, err = os.Executable(); err != nil {
-			return errMsg{err, true}
-		}
-		d = filepath.Dir(d)
-	case 2:
-		d = os.Args[1]
-	default:
-	}
-
-	d, err = filepath.Abs(d)
+	d, err := util.GetRoot()
 	if err != nil {
 		return errMsg{err, true}
-	}
-
-	fi, err := os.Stat(d)
-	if err != nil {
-		return errMsg{err, true}
-	} else if !fi.IsDir() {
-		return errMsg{fmt.Errorf("%s is not a directory", d), true}
 	}
 	m.rootDir = os.DirFS(d)
 
@@ -280,24 +259,83 @@ func (m *Model) initSystem() tea.Msg {
 
 // save is the opposite of init: save our data to disk
 func (m *Model) save() tea.Msg {
-	// TODO: Overwrite in place
-	// TODO: If so, create a backup of the files first?
-	// TODO: Or temp files? (Temp files. Definitely temp files.)
-	var dir string
-	if m.Overwrite {
-		// TODO: Make backups
-	} else {
-		wd, err := os.Getwd()
-		if err != nil {
-			return err
-		}
-		dir = fmt.Sprintf("%s/pocket-toolkit", wd)
-		// Need to mkdir if we're overwriting
-		err = os.Mkdir(dir, os.ModePerm)
-		if err != nil && !os.IsExist(err) {
-			return errMsg{err, true}
+	success := false
+	tmpList, err := os.CreateTemp("", "list.bin_*")
+	if err != nil {
+		return errMsg{err, true}
+	}
+	tmpPlaytimes, err := os.CreateTemp("", "playtimes.bin_*")
+	if err != nil {
+		return errMsg{err, true}
+	}
+	tmpThumbs := make(map[models.System]*os.File)
+	for k, v := range m.thumbnails {
+		if v.Modified || m.SaveUnmodified {
+			tmpThumbs[k], err = os.CreateTemp("", fmt.Sprintf("%s_thumbs.bin_*", strings.ToLower(k.String())))
+			if err != nil {
+				return errMsg{err, true}
+			}
 		}
 	}
+	defer func() {
+		// An absolute mess of a function that:
+		// 1. Closes all the file handles
+		// 2. Creates the output directories if we're not overwriting
+		// 3. Moves the temporary files over to the correct spot if successful, or
+		// 4. Deletes them if we weren't
+		// TODO: Clean this up to make it all more manageable
+
+		// Clean everything up
+		_ = tmpList.Close()
+		_ = tmpPlaytimes.Close()
+		for _, v := range tmpThumbs {
+			_ = v.Close()
+		}
+		if success {
+			var root string
+			var err error
+			if m.Overwrite {
+				root, err = util.GetRoot()
+				if err != nil {
+					log.Fatal(errorStyle.Render(err.Error()))
+				}
+			} else {
+				// If we're not overwriting in place, get the working dir & create all our directories if they don't exist
+				wd, err := os.Getwd()
+				if err != nil {
+					log.Fatal(errorStyle.Render(err.Error()))
+				}
+				root = fmt.Sprintf("%s/pocket-toolkit", wd)
+				_ = os.Mkdir(root, os.ModePerm)
+				_ = os.Mkdir(fmt.Sprintf("%s/System", root), os.ModePerm)
+				if len(tmpThumbs) > 0 {
+					_ = os.Mkdir(fmt.Sprintf("%s/System/Library", root), os.ModePerm)
+					_ = os.Mkdir(fmt.Sprintf("%s/System/Library/Images", root), os.ModePerm)
+				}
+				if err := os.Mkdir(fmt.Sprintf("%s/System/Played Games", root), os.ModePerm); err != nil && !os.IsExist(err) {
+					log.Fatal(errorStyle.Render(err.Error())) // Only going to check this final one for errors on the basis of "if it failed, the others did as well"
+				}
+			}
+			if err := os.Rename(tmpList.Name(), fmt.Sprintf("%s/System/Played Games/list.bin", root)); err != nil {
+				log.Fatal(errorStyle.Render(err.Error()))
+			}
+			if err := os.Rename(tmpPlaytimes.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root)); err != nil {
+				log.Fatal(errorStyle.Render(err.Error()))
+			}
+			for k, v := range tmpThumbs {
+				if err := os.Rename(v.Name(), fmt.Sprintf("%s/System/Library/Images/%s_thumbs.bin", root, strings.ToLower(k.String()))); err != nil {
+					log.Fatal(errorStyle.Render(err.Error()))
+				}
+			}
+		} else {
+			// Remove all the files as we weren't successful
+			_ = os.Remove(tmpList.Name())
+			_ = os.Remove(tmpPlaytimes.Name())
+			for _, v := range tmpThumbs {
+				_ = os.Remove(v.Name())
+			}
+		}
+	}()
 
 	ctr := 0.0
 	tick := make(chan any)
@@ -311,13 +349,15 @@ func (m *Model) save() tea.Msg {
 
 	go func() { // Run these in a goroutine to avoid having to pass around the pointer to the progress value as that would require knowing the total as well
 		defer close(tick)
-		if err := io.SaveLibrary(m.entries, m.playTimes, tick); err != nil {
+		if err := io.SaveLibrary(tmpList, m.entries, tmpPlaytimes, m.playTimes, tick); err != nil {
 			tick <- err
 			return
 		}
-		if err := io.SaveThumbs(m.thumbnails, tick); err != nil {
-			tick <- err
-			return
+		for k, v := range tmpThumbs {
+			if err := io.SaveThumbsFile(v, m.thumbnails[k].Images, tick); err != nil {
+				tick <- err
+				return
+			}
 		}
 		if err := io.SaveConfig(*m.Config); err != nil {
 			tick <- err
@@ -336,6 +376,7 @@ func (m *Model) save() tea.Msg {
 		}
 	}
 
+	success = true
 	return tea.QuitMsg{}
 }
 
@@ -762,7 +803,6 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case about:
 		m.Push(AboutScreen)
 		m.anyKey = true
-		// TODO: Add a basic about screen
 	case quit:
 		return m, tea.Quit
 	case save:

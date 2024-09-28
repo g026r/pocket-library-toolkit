@@ -254,7 +254,8 @@ func LoadConfig() (Config, error) {
 		SaveUnmodified:  false,
 		Overwrite:       false,
 	}
-	//// FIXME: Use the program's dir rather than the cwd
+	// FIXME: When compiling, use the program's dir rather than the cwd
+	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
 	//dir, err := os.Getwd()
 	dir, err := os.Executable()
 	if err != nil {
@@ -306,23 +307,7 @@ func LoadInternal() (map[models.System][]models.Entry, error) {
 	return library, nil
 }
 
-func SaveLibrary(e []models.Entry, t map[uint32]models.PlayTime, tick chan any) error {
-	wd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	l, err := os.Create(fmt.Sprintf("%s/pocket-toolkit/list.bin", wd))
-	if err != nil {
-		return err
-	}
-	defer l.Close()
-
-	p, err := os.Create(fmt.Sprintf("%s/pocket-toolkit/playtimes.bin", wd))
-	if err != nil {
-		return err
-	}
-	defer p.Close()
-
+func SaveLibrary(l io.Writer, e []models.Entry, p io.Writer, t map[uint32]models.PlayTime, tick chan any) error {
 	// Prep list.bin
 	if err := binary.Write(l, binary.BigEndian, ListHeader); err != nil {
 		return err
@@ -381,32 +366,7 @@ func SaveLibrary(e []models.Entry, t map[uint32]models.PlayTime, tick chan any) 
 	return nil
 }
 
-func SaveThumbs(t map[models.System]models.Thumbnails, tick chan any) error {
-	wd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-
-	for sys, thumbs := range t {
-		if !thumbs.Modified {
-			continue // Not changed. For speed reasons, don't save.
-		}
-
-		f, err := os.Create(fmt.Sprintf("%s/pocket-toolkit/%s_thumbs.bin", wd, strings.ToLower(sys.String())))
-		if err != nil {
-			return err
-		}
-
-		err = writeThumbsFile(f, thumbs.Images, tick)
-		_ = f.Close() // Close explicitly rather than defer as defer in a loop is not best practice
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func writeThumbsFile(t io.Writer, img []models.Image, tick chan any) error {
+func SaveThumbsFile(t io.Writer, img []models.Image, tick chan any) error {
 	if err := binary.Write(t, binary.LittleEndian, ThumbnailHeader); err != nil {
 		return err
 	}
@@ -448,8 +408,9 @@ func SaveConfig(config Config) error {
 	if err != nil {
 		return err
 	}
-	//// FIXME: Use the program's dir rather than the cwd
-	//dir, err := os.Getwd()
+	// FIXME: When compiling, use the program's dir rather than the cwd
+	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
+	// dir, err := os.Getwd()
 	dir, err := os.Executable()
 	if err != nil {
 		return err

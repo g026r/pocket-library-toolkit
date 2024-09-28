@@ -5,6 +5,8 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -38,4 +40,36 @@ func HexStringTransform(s string) (uint32, error) {
 	}
 
 	return binary.BigEndian.Uint32(h), nil
+}
+
+// GetRoot finds the path to the Pocket root dir.
+// If an argument was passed, it uses that.
+// If an argument wasn't passed, it uses the current directory.
+func GetRoot() (string, error) {
+	var d string
+	var err error
+	switch len(os.Args) {
+	case 1:
+		if d, err = os.Executable(); err != nil {
+			return "", err
+		}
+		d = filepath.Dir(d)
+	case 2:
+		d = os.Args[1]
+	default:
+	}
+
+	d, err = filepath.Abs(d)
+	if err != nil {
+		return "", err
+	}
+
+	fi, err := os.Stat(d)
+	if err != nil {
+		return "", err
+	} else if !fi.IsDir() {
+		return "", fmt.Errorf("%s is not a directory", d)
+	}
+
+	return d, nil
 }

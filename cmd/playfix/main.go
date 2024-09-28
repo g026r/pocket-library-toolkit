@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/binary"
+	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/g026r/pocket-toolkit/pkg/io"
 )
@@ -11,11 +13,17 @@ import (
 // Simple application to fix played times & nothing else.
 
 func main() {
-	entries, err := io.LoadEntries(os.DirFS("./"))
+	ex, err := os.Executable()
 	if err != nil {
 		log.Fatal(err)
 	}
-	p, err := io.LoadPlaytimes(os.DirFS("./"))
+	root := filepath.Dir(ex)
+
+	entries, err := io.LoadEntries(os.DirFS(root))
+	if err != nil {
+		log.Fatal(err)
+	}
+	p, err := io.LoadPlaytimes(os.DirFS(root))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,7 +36,7 @@ func main() {
 	defer func() {
 		_ = out.Close()
 		if complete { // Overwrite the original with the temp file if successful; delete it if not.
-			err = os.Rename(out.Name(), "System/Played Games/playtimes.bin")
+			err = os.Rename(out.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root))
 		} else {
 			err = os.Remove(out.Name())
 		}

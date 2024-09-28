@@ -90,10 +90,10 @@ var (
 	configOptions = []list.Item{
 		menuItem{"Remove thumbnail when removing game", cfgRmThumbs},
 		menuItem{"Generate new thumbnail when editing game", cfgGenNew},
+		menuItem{"Overwrite original files on save", cfgOverwrite},
+		menuItem{"Always save _thumbs.bin files, even if unmodified", cfgUnmodified},
 		//menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), cfgAdvEdit},
 		//menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), cfgShowAdd},
-		menuItem{"Always save _thumbs.bin files, even if unmodified", cfgUnmodified},
-		menuItem{"Overwrite original files on save' " + italic.Render("(Experimental)"), cfgOverwrite},
 		menuItem{"Back", back}}
 
 	// esc consists of the items to be performed if esc is typed
@@ -307,14 +307,18 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 		str = fmt.Sprintf("%d. [%%s] %s", index+1, i)
 		var b bool
 		switch i.key {
-		case cfgAdvEdit:
-			b = d.AdvancedEditing
-		case cfgShowAdd:
-			b = d.ShowAdd
 		case cfgRmThumbs:
 			b = d.RemoveImages
 		case cfgGenNew:
 			b = d.GenerateNew
+		case cfgUnmodified:
+			b = d.SaveUnmodified
+		case cfgOverwrite:
+			b = d.Overwrite
+		case cfgAdvEdit:
+			b = d.AdvancedEditing
+		case cfgShowAdd:
+			b = d.ShowAdd
 		default:
 			// If we don't know what this value is, return
 			return
