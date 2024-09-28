@@ -424,6 +424,7 @@ func (m *Model) prune() tea.Msg {
 		m.thumbnails[k] = t
 		ctr++
 		m.percent = ctr / total
+		m.dedupe(k)
 	}
 	m.percent = 1.0
 	return updateMsg{}
@@ -530,6 +531,10 @@ func (m *Model) regenLib() tea.Msg {
 		ctr++
 		m.percent = ctr / float64(len(m.entries))
 	}
+
+	for _, sys := range models.ValidThumbsFiles {
+		m.dedupe(sys)
+	}
 	m.percent = 1.0
 	return updateMsg{}
 }
@@ -566,6 +571,27 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 
 		return updateMsg{}
 	}
+}
+
+// dedupe iterates through the thumbnails for a given System & removes any duplicates it finds,
+// keeping only the first image in the list.
+// It's not run on save, as the images can get quite large. Instead, it's only run after prune and regenLib are called.
+func (m *Model) dedupe(sys models.System) {
+	found := map[uint32]bool{}
+	remove := []int{}
+	thumbs := m.thumbnails[sys]
+	for i := range thumbs.Images {
+		img := thumbs.Images[i]
+		if _, ok := found[img.Crc32]; ok {
+			remove = append(remove, i)
+		}
+		found[img.Crc32] = true
+	}
+	for i := len(remove) - 1; i >= 0; i-- { // Go backwards through the list, removing duplicates
+		thumbs.Images = slices.Delete(thumbs.Images, i, i+1)
+		thumbs.Modified = true
+	}
+	m.thumbnails[sys] = thumbs
 }
 
 func (m *Model) inputView(title string) string {
@@ -852,7 +878,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case tmMissing:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating Missing thumbnails for library"
+		m.wait = "Generating missing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
 	case tmSingle:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
@@ -860,7 +886,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case tmGenlib:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Regenerating All thumbnails for library"
+		m.wait = "Regenerating all thumbnails for library"
 		return m, tea.Batch(m.regenLib, tickCmd())
 	case tmPrune:
 		m.Push(Waiting)
@@ -870,7 +896,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case tmAll:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating thumbnails for All games in the Images folder. This may take a while."
+		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
 	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgOverwrite, cfgUnmodified:
 		return m.configChange(key)

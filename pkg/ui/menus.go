@@ -80,8 +80,8 @@ var (
 		menuItem{"Fix played times", libFix},
 		menuItem{"Back", back}}
 	thumbOptions = []list.Item{
-		menuItem{"Generate Missing thumbnails", tmMissing},
-		menuItem{"Regenerate Single game", tmSingle},
+		menuItem{"Generate missing thumbnails", tmMissing},
+		menuItem{"Regenerate single game", tmSingle},
 		menuItem{"Regenerate full library", tmGenlib},
 		menuItem{"Prune orphaned thumbnails", tmPrune},
 		menuItem{"Generate complete system thumbnails", tmAll},
