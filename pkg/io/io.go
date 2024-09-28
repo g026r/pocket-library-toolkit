@@ -410,15 +410,12 @@ func SaveConfig(config Config) error {
 	}
 	// FIXME: When compiling, use the program's dir rather than the cwd
 	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
-	// dir, err := os.Getwd()
+	//dir, err := os.Getwd()
 	dir, err := os.Executable()
 	if err != nil {
 		return err
 	}
 	dir = filepath.Dir(dir)
-	if err != nil {
-		return err
-	}
 
 	return os.WriteFile(fmt.Sprintf("%s/pocket-toolkit.json", dir), b, 0644)
 }
