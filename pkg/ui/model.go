@@ -339,13 +339,17 @@ func (m *Model) save() tea.Msg {
 
 	ctr := 0.0
 	tick := make(chan any)
+	defer close(tick)
 	total := float64(len(m.entries))
 	for _, v := range m.thumbnails {
 		if v.Modified {
 			total = total + float64(len(v.Images)) // Only increase the total if they've been modified since we don't write them out otherwise.
 		}
 	}
-	total = total + 1 // Add 1 for the config
+	// Add some extra to account for copying the files.
+	// This means the bar will never reach 100% since the tick channel is closed by then
+	// but better to pause for an extended period at 95% than at 100%
+	total = total + total/.95
 
 	go func() { // Run these in a goroutine to avoid having to pass around the pointer to the progress value as that would require knowing the total as well
 		defer close(tick)
