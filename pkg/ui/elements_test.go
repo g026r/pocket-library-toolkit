@@ -174,6 +174,7 @@ func Test_PlayValidate(t *testing.T) {
 	}
 }
 
+// FIXME: Add tests
 func Test_DateValidate(t *testing.T) {
 
 }

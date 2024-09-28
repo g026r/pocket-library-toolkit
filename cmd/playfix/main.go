@@ -10,8 +10,7 @@ import (
 	"github.com/g026r/pocket-toolkit/pkg/io"
 )
 
-// Simple application to fix played times & nothing else.
-
+// main provides a simple application to fix played times & nothing else.
 func main() {
 	ex, err := os.Executable()
 	if err != nil {
@@ -53,7 +52,7 @@ func main() {
 	// Write entries in the same order as list.bin
 	for _, e := range entries {
 		tmp := p[e.Sig]
-		tmp.Played = tmp.Played &^ 0xFF000000 // Fix the time. System prefix will get written by WriteTo
+		tmp.Played = tmp.Played &^ 0xFF000000 // Fix the time. System prefix will get handled by WriteTo
 		if err := binary.Write(out, binary.LittleEndian, e.Sig); err != nil {
 			log.Fatal(err)
 		}
