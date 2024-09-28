@@ -252,7 +252,7 @@ func LoadConfig() (Config, error) {
 		ShowAdd:         false,
 		GenerateNew:     true,
 		SaveUnmodified:  false,
-		Overwrite:       false,
+		Overwrite:       true,
 	}
 	// FIXME: When compiling, use the program's dir rather than the cwd
 	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call

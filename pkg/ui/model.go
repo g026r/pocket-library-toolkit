@@ -236,8 +236,13 @@ func (m *Model) initSystem() tea.Msg {
 	}
 	m.playTimes = p
 
-	if len(m.entries) != len(m.playTimes) {
+	if len(m.entries) < len(m.playTimes) { // We can have more entries than play times, but not the other way around.
 		return errMsg{fmt.Errorf("entry count mismatch between list.bin [%d] & playtimes.bin [%d]", len(m.entries), len(m.playTimes)), true}
+	}
+	for _, e := range m.entries { // Check to make certain that every entry has a play time entry
+		if _, ok := m.playTimes[e.Sig]; !ok { // entry without a play time
+			return errMsg{fmt.Errorf("entry mismatch between list.bin & playtimes.bin"), true}
+		}
 	}
 
 	t, err := io.LoadThumbs(m.rootDir)
@@ -259,19 +264,42 @@ func (m *Model) initSystem() tea.Msg {
 
 // save is the opposite of init: save our data to disk
 func (m *Model) save() tea.Msg {
+	var root string
+	var err error
+	if m.Overwrite {
+		root, err = util.GetRoot()
+		if err != nil {
+			return errMsg{err, true}
+		}
+	} else {
+		// If we're not overwriting in place, get the working dir & create all our directories if they don't exist
+		wd, err := os.Getwd()
+		if err != nil {
+			return errMsg{err, true}
+		}
+		root = fmt.Sprintf("%s/pocket-toolkit", wd)
+		_ = os.Mkdir(root, os.ModePerm)
+		_ = os.Mkdir(fmt.Sprintf("%s/System", root), os.ModePerm)
+		_ = os.Mkdir(fmt.Sprintf("%s/System/Library", root), os.ModePerm)
+		_ = os.Mkdir(fmt.Sprintf("%s/System/Library/Images", root), os.ModePerm)
+		if err := os.Mkdir(fmt.Sprintf("%s/System/Played Games", root), os.ModePerm); err != nil && !os.IsExist(err) {
+			return errMsg{err, true} // Only going to check this final one for errors on the basis of "if it failed, the others did as well"
+		}
+	}
+
 	success := false
-	tmpList, err := os.CreateTemp("", "list.bin_*")
+	tmpList, err := os.CreateTemp(root, "list.bin_*")
 	if err != nil {
 		return errMsg{err, true}
 	}
-	tmpPlaytimes, err := os.CreateTemp("", "playtimes.bin_*")
+	tmpPlaytimes, err := os.CreateTemp(root, "playtimes.bin_*")
 	if err != nil {
 		return errMsg{err, true}
 	}
 	tmpThumbs := make(map[models.System]*os.File)
 	for k, v := range m.thumbnails {
 		if v.Modified || m.SaveUnmodified {
-			tmpThumbs[k], err = os.CreateTemp("", fmt.Sprintf("%s_thumbs.bin_*", strings.ToLower(k.String())))
+			tmpThumbs[k], err = os.CreateTemp(root, fmt.Sprintf("%s_thumbs.bin_*", strings.ToLower(k.String())))
 			if err != nil {
 				return errMsg{err, true}
 			}
@@ -292,30 +320,6 @@ func (m *Model) save() tea.Msg {
 			_ = v.Close()
 		}
 		if success {
-			var root string
-			var err error
-			if m.Overwrite {
-				root, err = util.GetRoot()
-				if err != nil {
-					log.Fatal(errorStyle.Render(err.Error()))
-				}
-			} else {
-				// If we're not overwriting in place, get the working dir & create all our directories if they don't exist
-				wd, err := os.Getwd()
-				if err != nil {
-					log.Fatal(errorStyle.Render(err.Error()))
-				}
-				root = fmt.Sprintf("%s/pocket-toolkit", wd)
-				_ = os.Mkdir(root, os.ModePerm)
-				_ = os.Mkdir(fmt.Sprintf("%s/System", root), os.ModePerm)
-				if len(tmpThumbs) > 0 {
-					_ = os.Mkdir(fmt.Sprintf("%s/System/Library", root), os.ModePerm)
-					_ = os.Mkdir(fmt.Sprintf("%s/System/Library/Images", root), os.ModePerm)
-				}
-				if err := os.Mkdir(fmt.Sprintf("%s/System/Played Games", root), os.ModePerm); err != nil && !os.IsExist(err) {
-					log.Fatal(errorStyle.Render(err.Error())) // Only going to check this final one for errors on the basis of "if it failed, the others did as well"
-				}
-			}
 			if err := os.Rename(tmpList.Name(), fmt.Sprintf("%s/System/Played Games/list.bin", root)); err != nil {
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
@@ -339,7 +343,6 @@ func (m *Model) save() tea.Msg {
 
 	ctr := 0.0
 	tick := make(chan any)
-	defer close(tick)
 	total := float64(len(m.entries))
 	for _, v := range m.thumbnails {
 		if v.Modified {
@@ -530,7 +533,7 @@ func (m *Model) regenLib() tea.Msg {
 	return updateMsg{}
 }
 
-// genSingle generates a tmSingle thumbnail entry & then either updates or inserts it into the list of thumbnails
+// genSingle generates a Single thumbnail entry & then either updates or inserts it into the list of thumbnails
 func (m *Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		m.percent = 0.0
@@ -754,16 +757,14 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	e.Sig, _ = util.HexStringTransform(m.gameInput[sig].Value())
 	e.Magic, _ = util.HexStringTransform(m.gameInput[magic].Value())
 
-	p := models.PlayTime{}
-	if stored, ok := m.playTimes[e.Sig]; ok {
-		p = stored
+	// We only want to edit the played time *if* we're editing or we're adding & a played time doesn't yet exist
+	if p, ok := m.playTimes[e.Sig]; !ok || m.Peek() == EditScreen {
+		t, _ := parseDate(m.gameInput[added].Value())
+		p.Added = uint32(t.Unix())
+		p.Played = parsePlayTime(m.gameInput[play].Value())
+		p.System = e.System
+		m.playTimes[e.Sig] = p
 	}
-	t, _ := parseDate(m.gameInput[added].Value())
-	p.Added = uint32(t.Unix())
-	p.Played = parsePlayTime(m.gameInput[play].Value())
-	p.System = e.System
-
-	m.playTimes[e.Sig] = p
 
 	if m.Peek() == EditScreen {
 		m.entries[m.gameList.Index()] = e
@@ -843,7 +844,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case tmMissing:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating tmMissing thumbnails for library"
+		m.wait = "Generating Missing thumbnails for library"
 		return m, tea.Batch(m.genMissing, tickCmd())
 	case tmSingle:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
@@ -851,7 +852,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case tmGenlib:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Regenerating tmAll thumbnails for library"
+		m.wait = "Regenerating All thumbnails for library"
 		return m, tea.Batch(m.regenLib, tickCmd())
 	case tmPrune:
 		m.Push(Waiting)
@@ -861,7 +862,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 	case tmAll:
 		m.Push(Waiting)
 		m.percent = 0.0
-		m.wait = "Generating thumbnails for tmAll games in the Images folder. This may take a while."
+		m.wait = "Generating thumbnails for All games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
 	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgOverwrite, cfgUnmodified:
 		return m.configChange(key)
