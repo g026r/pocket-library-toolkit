@@ -10,6 +10,7 @@ present in the System subdirectory & load them into memory.
 
 General keys:
 
+* Navigate with arrows
 * Select: `enter` or `space`
 * Go back a screen: `esc`
 * Force-quit without saving: `ctrl+C`
@@ -37,13 +38,10 @@ The library menu displays actions related to the game entries in the library.
 The following options are available:
 
 1. [**Edit entry**](): displays [a list](#the-game-list) of all the games in the user library. Selecting the entry will
-   displau the
-   details of it for editing.
+   display the details of it for editing.
 2. **Remove entry**: displays [a list](#the-game-list) of all the games in your library. Enter or space on an entry will
-   remove it
-   from
-   the library. If [_"remove thumbnail when removing game"_](#settings-menu) is set, then the corresponding image will
-   be removed from _thumbs.bin at the same time.
+   remove it from the library. If [_"remove thumbnail when removing game"_](#settings-menu) is set, then the
+   corresponding image will be removed from _thumbs.bin at the same time.
 3. **Fix played times**: attempts a simple adjustment of the times for every game in the library. This involves removing
    approximately 4660 hours from any game whose played time is greater than 4660 hours & addresses an occasional bug
    where game times are displayed inaccurately.
@@ -91,7 +89,7 @@ Displays settings currently in use by the system. Ones marked with an `X` are ac
    removing a game. If this value is not set, the thumbnails for any removed games will remain in the thumbnail caches.
 2. **Generate new thumbnail when editing game**: if set, editing a game will automatically generate a new thumbnail,
    overwriting any existing thumbnails. This is mostly useful for if you change the game's [CRC32 value.](#crc32)
-3. **Always save _thumbs.bin files, even if unmodifier**: by default, the application only saves new copies of the _
+3. **Always save _thumbs.bin files, even if unmodified**: by default, the application only saves new copies of the _
    thumbs.bin files if it detects that the thumbnails have been modified during this session. If this setting is turned
    on it will save new copies of the files regardless of changes. Leaving this off will improve save performance for
    large libraries.
@@ -129,7 +127,7 @@ Game name that will be displayed in the library. Cannot be blank.
 
 #### CRC32
 
-A hexadecimal 32 bit integer. This value is used to determine which thumbnail to display in the library & corresponds to
+A hexadecimal 32-bit integer. This value is used to determine which thumbnail to display in the library & corresponds to
 the CRC32 of the game ROM. If blank, `0x00000000` will be used.
 
 #### Date Added
