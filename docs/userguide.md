@@ -10,13 +10,14 @@ present in the System subdirectory & load them into memory.
 
 General keys:
 
+* Navigate with arrows
 * Select: `enter` or `space`
 * Go back a screen: `esc`
 * Force-quit without saving: `ctrl+C`
 
 ### Main Menu
 
-![main.png](images%2Fmain.png)
+![main.png](images/main.png)
 
 Use up & down arrows to navigate and enter or space to select.
 
@@ -31,19 +32,16 @@ From this menu, the following options are available:
 
 ### Library Menu
 
-![library.png](images%2Flibrary.png)
+![library.png](images/library.png)
 
 The library menu displays actions related to the game entries in the library.
 The following options are available:
 
 1. [**Edit entry**](): displays [a list](#the-game-list) of all the games in the user library. Selecting the entry will
-   displau the
-   details of it for editing.
+   display the details of it for editing.
 2. **Remove entry**: displays [a list](#the-game-list) of all the games in your library. Enter or space on an entry will
-   remove it
-   from
-   the library. If [_"remove thumbnail when removing game"_](#settings-menu) is set, then the corresponding image will
-   be removed from _thumbs.bin at the same time.
+   remove it from the library. If [_"remove thumbnail when removing game"_](#settings-menu) is set, then the
+   corresponding image will be removed from _thumbs.bin at the same time.
 3. **Fix played times**: attempts a simple adjustment of the times for every game in the library. This involves removing
    approximately 4660 hours from any game whose played time is greater than 4660 hours & addresses an occasional bug
    where game times are displayed inaccurately.
@@ -51,7 +49,7 @@ The following options are available:
 
 ### Thumbnails Menu
 
-![thumbs.png](images%2Fthumbs.png)
+![thumbs.png](images/thumbs.png)
 
 The thumbnails menu displays actions related to the thumbnails displayed when browsing the library in "Image" or "Grid"
 mode. It does not affect images displayed on the game info screen.
@@ -83,7 +81,7 @@ The following options are available:
 
 ### Settings Menu
 
-![config.png](images%2Fconfig.png)
+![config.png](images/config.png)
 
 Displays settings currently in use by the system. Ones marked with an `X` are active.
 
@@ -91,7 +89,11 @@ Displays settings currently in use by the system. Ones marked with an `X` are ac
    removing a game. If this value is not set, the thumbnails for any removed games will remain in the thumbnail caches.
 2. **Generate new thumbnail when editing game**: if set, editing a game will automatically generate a new thumbnail,
    overwriting any existing thumbnails. This is mostly useful for if you change the game's [CRC32 value.](#crc32)
-3. **Back**: return to the [main menu](#main-menu)
+3. **Always save _thumbs.bin files, even if unmodified**: by default, the application only saves new copies of the _
+   thumbs.bin files if it detects that the thumbnails have been modified during this session. If this setting is turned
+   on it will save new copies of the files regardless of changes. Leaving this off will improve save performance for
+   large libraries.
+4. **Back**: return to the [main menu](#main-menu)
 
 ### Save & Quit
 
@@ -104,9 +106,10 @@ In addition, this action saves the current user config to pocket-toolkit.json, l
 
 ### The Game List
 
-![list.png](images%2Flist.png)
+![list.png](images/list.png)
 
-Used by the edit, remove, and regenerate thumbnail options. Up & down navigate the list, while left & right switch pages.
+Used by the edit, remove, and regenerate thumbnail options. Up & down navigate the list, while left & right switch
+pages.
 
 Enter or space selects an entry and a filter is available by typing `/`.
 
@@ -114,7 +117,7 @@ To exit the list & return to previous menu, press `esc`
 
 ### Editing an Entry
 
-![edit.png](images%2Fedit.png)
+![edit.png](images/edit.png)
 
 Up & down or shift+tab & tab navigate.
 
@@ -124,7 +127,7 @@ Game name that will be displayed in the library. Cannot be blank.
 
 #### CRC32
 
-A hexadecimal 32 bit integer. This value is used to determine which thumbnail to display in the library & corresponds to
+A hexadecimal 32-bit integer. This value is used to determine which thumbnail to display in the library & corresponds to
 the CRC32 of the game ROM. If blank, `0x00000000` will be used.
 
 #### Date Added
