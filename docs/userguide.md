@@ -91,6 +91,10 @@ Displays settings currently in use by the system. Ones marked with an `X` are ac
    removing a game. If this value is not set, the thumbnails for any removed games will remain in the thumbnail caches.
 2. **Generate new thumbnail when editing game**: if set, editing a game will automatically generate a new thumbnail,
    overwriting any existing thumbnails. This is mostly useful for if you change the game's [CRC32 value.](#crc32)
+3. **Always save _thumbs.bin files, even if unmodifier**: by default, the application only saves new copies of the _
+   thumbs.bin files if it detects that the thumbnails have been modified during this session. If this setting is turned
+   on it will save new copies of the files regardless of changes. Leaving this off will improve save performance for
+   large libraries.
 3. **Back**: return to the [main menu](#main-menu)
 
 ### Save & Quit
@@ -106,7 +110,8 @@ In addition, this action saves the current user config to pocket-toolkit.json, l
 
 ![list.png](images%2Flist.png)
 
-Used by the edit, remove, and regenerate thumbnail options. Up & down navigate the list, while left & right switch pages.
+Used by the edit, remove, and regenerate thumbnail options. Up & down navigate the list, while left & right switch
+pages.
 
 Enter or space selects an entry and a filter is available by typing `/`.
 
