@@ -1,6 +1,7 @@
 package io
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -37,7 +38,7 @@ func TestReadEntries(t *testing.T) {
 	for k, v := range cases {
 		t.Run(k, func(t *testing.T) {
 			t.Parallel()
-			pt, err := LoadEntries(os.DirFS(k))
+			pt, err := LoadEntries(os.DirFS(fmt.Sprintf("../../%s", k)))
 			if (err != nil) != v.err {
 				t.Error(err)
 			} else if len(pt) != v.count {
@@ -67,7 +68,7 @@ func TestLoadThumbs(t *testing.T) {
 	for k, v := range cases {
 		t.Run(k, func(t *testing.T) {
 			t.Parallel()
-			pt, err := LoadThumbs(os.DirFS(k))
+			pt, err := LoadThumbs(os.DirFS(fmt.Sprintf("../../%s", k)))
 			if (err != nil) != v.err {
 				t.Error(err)
 			}
@@ -113,7 +114,7 @@ func TestLoadPlaytimes(t *testing.T) {
 	for k, v := range cases {
 		t.Run(k, func(t *testing.T) {
 			t.Parallel()
-			pt, err := LoadPlaytimes(os.DirFS(k))
+			pt, err := LoadPlaytimes(os.DirFS(fmt.Sprintf("../../%s", k)))
 			if (err != nil) != v.err {
 				t.Error(err)
 			} else if len(pt) != v.count {
