@@ -8,6 +8,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"runtime"
 	"slices"
 	"strings"
 	"time"
@@ -625,7 +626,7 @@ func (m *Model) menuHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if !m.gameList.SettingFilter() {
 			if k, ok := msg.(tea.KeyMsg); ok && (k.String() == "enter" || k.String() == " ") {
 				return enter[scr](m, msg)
-			} else if ok && k.String() == "esc" {
+			} else if ok && k.String() == "esc" && !m.gameList.IsFiltered() { // Only exit if we're not filtering. Otherwise let the default actions reset the filter
 				return esc[scr](m, msg)
 			}
 		}
@@ -662,6 +663,13 @@ func (m *Model) inputHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return pop(m, msg)
 			default:
 				return m.shiftInput(1)
+			}
+		case " ": // Space only submits on the buttons
+			switch m.focusedInput {
+			case submit:
+				return m.saveEntry()
+			case cancel:
+				return pop(m, msg)
 			}
 		case "esc":
 			return pop(m, msg)
@@ -888,5 +896,13 @@ func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 		m.SaveUnmodified = !m.SaveUnmodified
 	}
 
+	return m, nil
+}
+
+// pop is the ESC action for basically everything but main menu
+// It removes the latest item from the stack, allowing the rendering to go up one level, and runs a GC just because.
+func pop(m *Model, _ tea.Msg) (*Model, tea.Cmd) {
+	m.Pop()
+	runtime.GC() // Not ideal. Probably also not necessary.
 	return m, nil
 }

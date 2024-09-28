@@ -3,7 +3,6 @@ package ui
 import (
 	"fmt"
 	goio "io"
-	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -229,14 +228,6 @@ func defaultAction(scr screen, menu *list.Model, m *Model, msg tea.Msg) (*Model,
 	return m, cmd
 }
 
-// pop is the ESC action for basically everything but main menu
-// It removes the latest item from the stack, allowing the rendering to go up one level
-func pop(m *Model, _ tea.Msg) (*Model, tea.Cmd) {
-	m.Pop()
-	runtime.GC() // Not ideal. Probably also not necessary.
-	return m, nil
-}
-
 // itemDelegate is the default rendered for menuItem instances that aren't io.Config values.
 // Though it can take anything that implements fmt.Stringer if need be.
 type itemDelegate struct{}
@@ -259,7 +250,7 @@ func (d itemDelegate) Render(w goio.Writer, m list.Model, index int, listItem li
 		}
 	}
 
-	fmt.Fprint(w, fn(str))
+	_, _ = fmt.Fprint(w, fn(str))
 }
 
 // entryDelegate is the default renderer for models.Entry instances
@@ -283,7 +274,7 @@ func (d entryDelegate) Render(w goio.Writer, m list.Model, index int, listItem l
 		}
 	}
 
-	fmt.Fprint(w, fn(str))
+	_, _ = fmt.Fprint(w, fn(str))
 }
 
 // configDelegate is the default renderer for menuItem instances that represent io.Config values.
@@ -338,7 +329,7 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 		}
 	}
 
-	fmt.Fprint(w, fn(str))
+	_, _ = fmt.Fprint(w, fn(str))
 }
 
 func NewMainMenu() *list.Model {
@@ -354,6 +345,8 @@ func NewMainMenu() *list.Model {
 	return &mm
 }
 
+// NewSubMenu exists to set the default values that we will use for all actual sub menus.
+// It's empty to start with as we'll be modifying it as necessary depending on the actions the user has taken
 func NewSubMenu() *list.Model {
 	sm := list.New([]list.Item{}, itemDelegate{}, 0, 0) // Empty to start with
 	sm.Title = ""                                       // Blank to start with
@@ -368,6 +361,9 @@ func NewSubMenu() *list.Model {
 	return &sm
 }
 
+// NewGameMenu exists to set the default values that we will use for all actual game menus.
+// It's empty to start with as we'll be modifying it as necessary depending on the actions the user has taken
+// It differs from NewSubMenu in that it uses the entryDelegate & has filtering enabled.
 func NewGameMenu() *list.Model {
 	gm := list.New([]list.Item{}, entryDelegate{}, 0, 0) // Empty to start with
 	gm.Title = ""                                        // Blank to start with
@@ -398,6 +394,7 @@ func NewConfigMenu(config *io.Config) *list.Model {
 }
 
 func generateGameList(l list.Model, entries []models.Entry, title string, width, height int) list.Model {
+	// TODO: Could I save memory if I modified this in place? (And is it worth it?)
 	items := make([]list.Item, 0)
 	for _, e := range entries {
 		items = append(items, e)
