@@ -16,7 +16,7 @@ General keys:
 
 ### Main Menu
 
-![main.png](images%2Fmain.png)
+![main.png](images/main.png)
 
 Use up & down arrows to navigate and enter or space to select.
 
@@ -31,7 +31,7 @@ From this menu, the following options are available:
 
 ### Library Menu
 
-![library.png](images%2Flibrary.png)
+![library.png](images/library.png)
 
 The library menu displays actions related to the game entries in the library.
 The following options are available:
@@ -51,7 +51,7 @@ The following options are available:
 
 ### Thumbnails Menu
 
-![thumbs.png](images%2Fthumbs.png)
+![thumbs.png](images/thumbs.png)
 
 The thumbnails menu displays actions related to the thumbnails displayed when browsing the library in "Image" or "Grid"
 mode. It does not affect images displayed on the game info screen.
@@ -83,7 +83,7 @@ The following options are available:
 
 ### Settings Menu
 
-![config.png](images%2Fconfig.png)
+![config.png](images/config.png)
 
 Displays settings currently in use by the system. Ones marked with an `X` are active.
 
@@ -108,7 +108,7 @@ In addition, this action saves the current user config to pocket-toolkit.json, l
 
 ### The Game List
 
-![list.png](images%2Flist.png)
+![list.png](images/list.png)
 
 Used by the edit, remove, and regenerate thumbnail options. Up & down navigate the list, while left & right switch
 pages.
@@ -119,7 +119,7 @@ To exit the list & return to previous menu, press `esc`
 
 ### Editing an Entry
 
-![edit.png](images%2Fedit.png)
+![edit.png](images/edit.png)
 
 Up & down or shift+tab & tab navigate.
 
