@@ -29,7 +29,7 @@ func main() {
 	}
 
 	complete := false
-	out, err := os.CreateTemp("", "playtimes_*.bin")
+	out, err := os.CreateTemp(root, "playtimes_*.bin")
 	if err != nil {
 		log.Fatal(err)
 	}

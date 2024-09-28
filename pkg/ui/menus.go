@@ -81,8 +81,8 @@ var (
 		menuItem{"Fix played times", libFix},
 		menuItem{"Back", back}}
 	thumbOptions = []list.Item{
-		menuItem{"Generate tmMissing thumbnails", tmMissing},
-		menuItem{"Regenerate tmSingle game", tmSingle},
+		menuItem{"Generate Missing thumbnails", tmMissing},
+		menuItem{"Regenerate Single game", tmSingle},
 		menuItem{"Regenerate full library", tmGenlib},
 		menuItem{"Prune orphaned thumbnails", tmPrune},
 		menuItem{"Generate complete system thumbnails", tmAll},
@@ -90,7 +90,7 @@ var (
 	configOptions = []list.Item{
 		menuItem{"Remove thumbnail when removing game", cfgRmThumbs},
 		menuItem{"Generate new thumbnail when editing game", cfgGenNew},
-		menuItem{"Overwrite original files on save", cfgOverwrite},
+		//menuItem{"Overwrite original files on save", cfgOverwrite},
 		menuItem{"Always save _thumbs.bin files, even if unmodified", cfgUnmodified},
 		//menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), cfgAdvEdit},
 		//menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), cfgShowAdd},
