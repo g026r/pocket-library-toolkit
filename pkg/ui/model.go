@@ -269,13 +269,13 @@ func (m *Model) save() tea.Msg {
 	if m.Overwrite {
 		root, err = util.GetRoot()
 		if err != nil {
-			log.Fatal(errorStyle.Render(err.Error()))
+			return errMsg{err, true}
 		}
 	} else {
 		// If we're not overwriting in place, get the working dir & create all our directories if they don't exist
 		wd, err := os.Getwd()
 		if err != nil {
-			log.Fatal(errorStyle.Render(err.Error()))
+			return errMsg{err, true}
 		}
 		root = fmt.Sprintf("%s/pocket-toolkit", wd)
 		_ = os.Mkdir(root, os.ModePerm)
@@ -283,7 +283,7 @@ func (m *Model) save() tea.Msg {
 		_ = os.Mkdir(fmt.Sprintf("%s/System/Library", root), os.ModePerm)
 		_ = os.Mkdir(fmt.Sprintf("%s/System/Library/Images", root), os.ModePerm)
 		if err := os.Mkdir(fmt.Sprintf("%s/System/Played Games", root), os.ModePerm); err != nil && !os.IsExist(err) {
-			log.Fatal(errorStyle.Render(err.Error())) // Only going to check this final one for errors on the basis of "if it failed, the others did as well"
+			return errMsg{err, true} // Only going to check this final one for errors on the basis of "if it failed, the others did as well"
 		}
 	}
 
