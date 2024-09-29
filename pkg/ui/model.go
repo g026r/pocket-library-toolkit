@@ -252,13 +252,12 @@ func (m *Model) initSystem() tea.Msg {
 	}
 	m.thumbnails = t
 
-	if m.ShowAdd { // Only need to load these if we're showing the add option
-		i, err := io.LoadInternal()
-		if err != nil {
-			return errMsg{err, true}
-		}
-		m.internal = i
-	}
+	// TODO: Uncomment when we're closer to having a complete dataset & can use this with the add functionality
+	//	i, err := io.LoadInternal()
+	//	if err != nil {
+	//		return errMsg{err, true}
+	//	}
+	//	m.internal = i
 
 	return initDoneMsg{}
 }

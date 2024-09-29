@@ -60,7 +60,7 @@ func TestGenerateThumbnail(t *testing.T) {
 
 	t.Run("valid", func(t *testing.T) {
 		t.Parallel()
-		f, err := os.Open("../../testdata/valid/thumbnail_output.bin")
+		f, err := os.Open("../../testdata/thumbnail_output.bin")
 		if err != nil {
 			t.Fatal(err)
 		}
