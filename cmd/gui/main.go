@@ -5,11 +5,11 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	model2 "github.com/g026r/pocket-toolkit/pkg/ui"
+	"github.com/g026r/pocket-toolkit/pkg/ui"
 )
 
 func main() {
-	if _, err := tea.NewProgram(model2.NewModel(), tea.WithAltScreen()).Run(); err != nil {
+	if _, err := tea.NewProgram(ui.NewModel(), tea.WithAltScreen()).Run(); err != nil {
 		log.Fatal(err)
 	}
 }
