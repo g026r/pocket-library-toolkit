@@ -174,7 +174,65 @@ func Test_PlayValidate(t *testing.T) {
 	}
 }
 
-// FIXME: Add tests
 func Test_DateValidate(t *testing.T) {
+	t.Parallel()
 
+	dates := []string{"2023-04-02", "2023/04/02"}
+	times := []string{"2:34:05", "2:34", "2:34:05PM", "2:34PM", "2:34 PM", "2:34:05 PM", "02:34:05", "02:34:05", "14:34:05", "14:34"}
+
+	// All the possible date/time combinations I permit
+	for _, d := range dates {
+		for _, h := range times {
+			if err := dateValidate(strings.Join([]string{d, h}, " ")); err != nil {
+				t.Errorf("Expected nil but got %v", err)
+			}
+		}
+	}
+
+	if err := dateValidate(""); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
+	if err := dateValidate(strings.Join([]string{" ", dates[0], times[0], " "}, " ")); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
+	if err := dateValidate(dates[0]); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+	if err := dateValidate(times[0]); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+	if err := dateValidate(dates[0] + times[0]); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+}
+
+func Test_parsePlayTimes(t *testing.T) {
+	t.Parallel()
+
+	if p := parsePlayTime("123"); p != 123 {
+		t.Errorf("Expected %d; got %d", 123, p)
+	}
+	if p := parsePlayTime("123s"); p != 123 {
+		t.Errorf("Expected %d; got %d", 123, p)
+	}
+	if p := parsePlayTime("2m 3s"); p != 123 {
+		t.Errorf("Expected %d; got %d", 123, p)
+	}
+	if p := parsePlayTime("7h 40m 15s"); p != 27615 {
+		t.Errorf("Expected %d; got %d", 27615, p)
+	}
+}
+
+func Test_notBlank(t *testing.T) {
+	t.Parallel()
+
+	if err := notBlank(""); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+	if err := notBlank("  "); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+	if err := notBlank(" . "); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
 }
