@@ -854,10 +854,13 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		for i := range len(m.gameInput) {
 			m.gameInput[i].Style(itemStyle)
 			m.gameInput[i].Reset()
-			//m.validationErrors[i] = ""
+			m.gameInput[i].Blur()
+			if i != submit && i != cancel {
+				// Weirdly Reset() doesn't reset the value of Err
+				// Set it directly rather than using SetValue to reset it as "" is a validation error for name
+				m.gameInput[i].(*Input).Err = nil
+			}
 		}
-		m.gameInput[submit].Blur()
-		m.gameInput[cancel].Blur()
 
 		m.gameInput[added].(*Input).Placeholder = time.Now().Format("2006-01-02 15:04") // Reset the placeholder to whatever
 		m.gameInput[m.focusedInput].Style(focusedStyle)
