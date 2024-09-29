@@ -50,6 +50,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 			return cmp.Compare(a.Magic, b.Magic) // Sort now before we turn the magic number into a string
 		})
 
+		// Create the json files
 		d, err := os.Getwd()
 		if err != nil {
 			return err
@@ -61,6 +62,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 		}
 		_ = j.Close()
 
+		// Create the .md files
 		m, err := os.Create(fmt.Sprintf("%s/%s.md", d, strings.ToLower(k.String())))
 		if err != nil {
 			return err

@@ -107,33 +107,3 @@ func TestExtractName(t *testing.T) {
 		}
 	})
 }
-
-//func TestReadEntries(t *testing.T) {
-//	t.Parallel()
-//	cases := map[string]struct {
-//		count int
-//		err   bool
-//	}{
-//		"testdata/count_mismatch": {
-//			count: 4,
-//		},
-//		"testdata/invalid_header": {
-//			err: true,
-//		},
-//		"testdata/valid": {
-//			count: 229,
-//		},
-//	}
-//
-//	for k, v := range cases {
-//		t.Run(k, func(t *testing.T) {
-//			t.Parallel()
-//			pt, err := ReadEntries(os.DirFS(k))
-//			if (err != nil) != v.err {
-//				t.Error(err)
-//			} else if len(pt) != v.count {
-//				t.Errorf("Expected %d entries; got %d", v.count, len(pt))
-//			}
-//		})
-//	}
-//}

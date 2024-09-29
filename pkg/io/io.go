@@ -16,7 +16,7 @@ import (
 	"github.com/g026r/pocket-toolkit/pkg/util"
 )
 
-//go:embed resources/*.json
+// TODO: Uncomment this once I have a more complete dataset //go:embed resources/*.json
 var jsons embed.FS
 
 const (
@@ -392,6 +392,7 @@ func SaveThumbsFile(t io.Writer, img []models.Image, tick chan any) error {
 	}
 	// write out the images
 	for _, j := range img {
+		// models.Image doesn't have a WriteTo as it's just stored in memory exactly how it was read.
 		if _, err := t.Write(j.Image); err != nil {
 			return err
 		}
