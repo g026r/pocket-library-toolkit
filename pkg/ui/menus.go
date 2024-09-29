@@ -129,29 +129,23 @@ var (
 			entry := m.gameList.SelectedItem().(models.Entry)
 			m.focusedInput = 0
 			m.gameInput[name].(*Input).SetValue(entry.Name)
-			m.gameInput[name].(*Input).SetCursor(len(entry.Name))
 			m.gameInput[system].(*Input).SetValue(entry.System.String())
-			m.gameInput[system].(*Input).SetCursor(len(entry.System.String()))
 			m.gameInput[crc].(*Input).SetValue(fmt.Sprintf("0x%08x", entry.Crc32))
-			m.gameInput[crc].(*Input).SetCursor(10)
 			m.gameInput[sig].(*Input).SetValue(fmt.Sprintf("0x%08x", entry.Sig))
-			m.gameInput[sig].(*Input).SetCursor(10)
 			m.gameInput[magic].(*Input).SetValue(fmt.Sprintf("0x%04x", entry.Magic))
-			m.gameInput[magic].(*Input).SetCursor(6)
-
 			if p, ok := m.playTimes[entry.Sig]; ok {
 				m.gameInput[added].(*Input).SetValue(time.Unix(int64(p.Added), 0).UTC().Format("2006-01-02 15:04:05"))
 				m.gameInput[play].(*Input).SetValue(p.FormatPlayTime())
-				m.gameInput[added].(*Input).SetCursor(16)
-				m.gameInput[play].(*Input).SetCursor(len(m.gameInput[play].(*Input).Value()))
 			} else {
 				m.gameInput[added].(*Input).SetValue(time.Now().Format("2006-01-02 15:04"))
 				m.gameInput[play].(*Input).SetValue("0h 0m 0s")
-				m.gameInput[added].(*Input).SetCursor(16)
-				m.gameInput[play].(*Input).SetCursor(8)
 			}
 
 			for i := range m.gameInput {
+				if i != cancel && i != submit {
+					// Don't need to reset Err here like we do with the add screen as SetValue triggers ValidateFunc
+					m.gameInput[i].(*Input).CursorEnd()
+				}
 				m.gameInput[i].Style(itemStyle)
 				m.gameInput[i].Blur()
 			}
