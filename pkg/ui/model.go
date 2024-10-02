@@ -471,7 +471,7 @@ func (m *Model) genFull() tea.Msg {
 				// Not a valid file name. Skip
 				continue
 			}
-			i, err := models.GenerateThumbnail(m.rootDir, sys, binary.BigEndian.Uint32(b))
+			i, err := io.GenerateThumbnail(m.rootDir, sys, binary.BigEndian.Uint32(b))
 			if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
 				return errMsg{err, true}
 			}
@@ -495,7 +495,7 @@ func (m *Model) genMissing() tea.Msg {
 		if !slices.ContainsFunc(m.thumbnails[sys].Images, func(image models.Image) bool {
 			return image.Crc32 == e.Crc32
 		}) {
-			img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32)
+			img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32)
 			if err != nil && !os.IsNotExist(err) { // We only care if it was something other than a not existing error
 				return errMsg{err, true}
 			} else {
@@ -518,7 +518,7 @@ func (m *Model) regenLib() tea.Msg {
 	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
 
-		img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32)
+		img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32)
 		if err != nil && !os.IsNotExist(err) { // We only care if it was something other than a not existing error
 			return errMsg{err, true}
 		} else {
@@ -543,7 +543,7 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		m.percent = 0.0
 		sys := e.System.ThumbFile()
-		img, err := models.GenerateThumbnail(m.rootDir, sys, e.Crc32)
+		img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32)
 		m.percent = .50         // These percentages are just made up.
 		if os.IsNotExist(err) { // Doesn't exist. That's fine.
 			m.percent = 1.0

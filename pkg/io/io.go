@@ -4,13 +4,17 @@ import (
 	"embed"
 	"encoding/binary"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"image"
 	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
+
+	"github.com/disintegration/imaging"
 
 	"github.com/g026r/pocket-toolkit/pkg/models"
 	"github.com/g026r/pocket-toolkit/pkg/util"
@@ -25,10 +29,14 @@ const (
 	PlaytimesHeader  uint32 = 0x01545050
 	ThumbnailHeader  uint32 = 0x41544602
 	ThumbnailUnknown uint32 = 0x0000CE1C
+	ImageHeader32    uint32 = 0x41504920 // The 32bit colour header.
+	ImageHeader16    uint32 = 0x41504910 // The 16bit colour header. Not currently used.
 
 	firstLibraryAddr uint32 = 0x4010
 	firstThumbsAddr  uint32 = 0x1000C
 )
+
+var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
 
 type Config struct {
 	RemoveImages    bool `json:"remove_images"`
@@ -36,7 +44,7 @@ type Config struct {
 	ShowAdd         bool `json:"show_add"`
 	GenerateNew     bool `json:"generate_new"`
 	SaveUnmodified  bool `json:"save_unmodified"`
-	Overwrite       bool `json:"overwrite"`
+	Overwrite       bool // `json:"overwrite"`
 }
 
 type jsonEntry struct {
@@ -75,7 +83,7 @@ func LoadEntries(root fs.FS) ([]models.Entry, error) {
 		return nil, err
 	}
 	if header != ListHeader { // Missing the magic number = not a Pocket library file
-		return nil, fmt.Errorf("list.bin: %w", util.ErrUnrecognizedFileFormat)
+		return nil, fmt.Errorf("list.bin: %w", ErrUnrecognizedFileFormat)
 	}
 
 	if err = binary.Read(f, binary.LittleEndian, &num); err != nil {
@@ -135,7 +143,7 @@ func LoadPlaytimes(root fs.FS) (map[uint32]models.PlayTime, error) {
 		return nil, err
 	}
 	if header != PlaytimesHeader {
-		return nil, fmt.Errorf("playtimes.bin: %w", util.ErrUnrecognizedFileFormat)
+		return nil, fmt.Errorf("playtimes.bin: %w", ErrUnrecognizedFileFormat)
 	}
 
 	var num uint32
@@ -181,13 +189,13 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 			return nil, err
 		}
 		if header != ThumbnailHeader {
-			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), util.ErrUnrecognizedFileFormat)
+			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), ErrUnrecognizedFileFormat)
 		}
 		if err := binary.Read(f, binary.LittleEndian, &header); err != nil {
 			return nil, err
 		}
 		if header != ThumbnailUnknown {
-			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), util.ErrUnrecognizedFileFormat)
+			return nil, fmt.Errorf("%s_thumbs.bin: %w", strings.ToLower(k.String()), ErrUnrecognizedFileFormat)
 		}
 
 		var num uint32
@@ -245,6 +253,78 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 	return thumbs, nil
 }
 
+func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32) (models.Image, error) {
+	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
+
+	f, err := dir.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", strings.ToLower(sys.String()), crc32))
+	if err != nil {
+		return models.Image{}, err
+	}
+	defer f.Close()
+
+	var header uint32
+	var height, width uint16
+	if err := binary.Read(f, binary.LittleEndian, &header); err != nil {
+		return models.Image{}, err
+	}
+	if header != ImageHeader32 {
+		return models.Image{}, fmt.Errorf("%08x.bin: %w", crc32, ErrUnrecognizedFileFormat)
+	}
+
+	if err := binary.Read(f, binary.LittleEndian, &height); err != nil {
+		return models.Image{}, err
+	}
+	if err := binary.Read(f, binary.LittleEndian, &width); err != nil {
+		return models.Image{}, err
+	}
+
+	img := image.NewNRGBA(image.Rectangle{
+		Min: image.Point{},
+		Max: image.Point{X: int(width), Y: int(height)},
+	})
+	bgra := make([]byte, 4)
+	for i := 0; i < len(img.Pix); i = i + 4 {
+		// BGRA order
+		if n, err := f.Read(bgra); err != nil || n != 4 {
+			return models.Image{}, fmt.Errorf("read error (%d): %w", n, err)
+		}
+		// Pix holds the image's pixels, in R, G, B, A order and big-endian format.
+		img.Pix[i] = bgra[2]   // r
+		img.Pix[i+1] = bgra[1] // g
+		img.Pix[i+2] = bgra[0] // b
+		img.Pix[i+3] = bgra[3] // a
+	}
+
+	// If the image is too square, we need to resize to the longest of the new dimensions
+	// Otherwise, resize the shorter side to the new max dimensions
+	newWidth, newHeight := util.DetermineResizing(img)
+	img = imaging.Resize(img, newWidth, newHeight, imaging.Lanczos)
+	img = imaging.CropCenter(img, util.MaxWidth, util.MaxHeight)
+
+	pkt := make([]byte, 0)
+	pkt, err = binary.Append(pkt, binary.LittleEndian, ImageHeader32)
+	if err != nil {
+		return models.Image{}, err
+	}
+	pkt, err = binary.Append(pkt, binary.LittleEndian, uint16(img.Rect.Max.Y))
+	if err != nil {
+		return models.Image{}, err
+	}
+	pkt, err = binary.Append(pkt, binary.LittleEndian, uint16(img.Rect.Max.X))
+	if err != nil {
+		return models.Image{}, err
+	}
+	// Turn it back into BGRA order
+	for i := 0; i < len(img.Pix); i = i + 4 {
+		pkt = append(pkt, img.Pix[i+2], img.Pix[i+1], img.Pix[i], img.Pix[i+3])
+	}
+
+	return models.Image{
+		Crc32: crc32,
+		Image: pkt,
+	}, nil
+}
+
 func LoadConfig() (Config, error) {
 	c := Config{ // Sensible defaults
 		RemoveImages:    true,
@@ -256,7 +336,7 @@ func LoadConfig() (Config, error) {
 	}
 	// FIXME: When compiling, use the program's dir rather than the cwd
 	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
-	//dir, err := os.Getwd()
+	// dir, err := os.Getwd()
 	dir, err := os.Executable()
 	if err != nil {
 		return c, err
@@ -411,7 +491,7 @@ func SaveConfig(config Config) error {
 	}
 	// FIXME: When compiling, use the program's dir rather than the cwd
 	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
-	//dir, err := os.Getwd()
+	// dir, err := os.Getwd()
 	dir, err := os.Executable()
 	if err != nil {
 		return err

@@ -3,14 +3,17 @@ package util
 import (
 	"encoding/binary"
 	"encoding/hex"
-	"errors"
 	"fmt"
+	"image"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
+const (
+	MaxHeight int = 121
+	MaxWidth  int = 109
+)
 
 // HexStringTransform takes a string, validates that it is a 32 bit hex string, and returns the uint32 representation of it
 // The input string may or may not be prefixed with `0x` and any leading or trailing spaces are removed.
@@ -72,4 +75,11 @@ func GetRoot() (string, error) {
 	}
 
 	return d, nil
+}
+
+func DetermineResizing(i *image.NRGBA) (int, int) {
+	if float32(i.Rect.Max.X)/float32(i.Rect.Max.Y) < float32(MaxWidth)/float32(MaxHeight) {
+		return MaxWidth, 0
+	}
+	return 0, MaxHeight
 }
