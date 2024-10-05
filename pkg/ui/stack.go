@@ -20,7 +20,7 @@ const (
 )
 
 // stack is a simple struct for keeping track of the screen we are currently on & the ones that came before it.
-// It's probably overkill. Could have just used a different constant for the edit game, remove game, & regen thumbnail screens.
+// It's probably overkill as we could have just used different enum values for some of the screens
 type stack struct {
 	s []screen
 }
@@ -47,4 +47,12 @@ func (s *stack) Push(v screen) {
 
 func (s *stack) Clear() {
 	s.s = make([]screen, 0)
+}
+
+// Replace the top element in the stack with v, returning the element replaced
+// Equivalent to calling Pop and then Push(v)
+func (s *stack) Replace(v screen) screen {
+	scr := s.Pop()
+	s.Push(v)
+	return scr
 }
