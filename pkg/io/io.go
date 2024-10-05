@@ -44,8 +44,29 @@ type Config struct {
 	ShowAdd         bool `json:"show_add"`
 	GenerateNew     bool `json:"generate_new"`
 	SaveUnmodified  bool `json:"save_unmodified"`
-	Overwrite       bool `json:"overwrite"`
 	Backup          bool `json:"backup"`
+}
+
+func (c Config) SaveConfig() error {
+	b, err := json.Marshal(c)
+	if err != nil {
+		return err
+	}
+	dir, err := os.Executable()
+	if err != nil {
+		return err
+	}
+
+	dir, f := filepath.Split(dir)
+	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
+	if f == "main" || f == "___main" {
+		dir, err = os.Getwd()
+		if err != nil {
+			return err
+		}
+	}
+
+	return os.WriteFile(fmt.Sprintf("%s/pocket-toolkit.json", dir), b, 0644)
 }
 
 type jsonEntry struct {
@@ -333,17 +354,21 @@ func LoadConfig() (Config, error) {
 		ShowAdd:         false,
 		GenerateNew:     true,
 		SaveUnmodified:  false,
-		Overwrite:       true,
 		Backup:          true,
 	}
-	// FIXME: When compiling, use the program's dir rather than the cwd
-	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
-	// dir, err := os.Getwd()
 	dir, err := os.Executable()
 	if err != nil {
 		return c, err
 	}
-	dir = filepath.Dir(dir)
+
+	dir, f := filepath.Split(dir)
+	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
+	if f == "main" || f == "___main" {
+		dir, err = os.Getwd()
+		if err != nil {
+			return c, err
+		}
+	}
 
 	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-toolkit.json", dir))
 	if errors.Is(err, fs.ErrNotExist) {
@@ -484,23 +509,6 @@ func SaveThumbsFile(t io.Writer, img []models.Image, tick chan any) error {
 	}
 
 	return nil
-}
-
-func SaveConfig(config Config) error {
-	b, err := json.Marshal(config)
-	if err != nil {
-		return err
-	}
-	// FIXME: When compiling, use the program's dir rather than the cwd
-	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
-	// dir, err := os.Getwd()
-	dir, err := os.Executable()
-	if err != nil {
-		return err
-	}
-	dir = filepath.Dir(dir)
-
-	return os.WriteFile(fmt.Sprintf("%s/pocket-toolkit.json", dir), b, 0644)
 }
 
 // SaveInternal saves one system's entries to a json file

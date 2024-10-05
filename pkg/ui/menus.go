@@ -32,7 +32,7 @@ const (
 	back
 	tmMissing
 	tmSingle
-	tmGenlib
+	tmGenLib
 	tmAll
 	tmPrune
 	cfgShowAdd
@@ -40,7 +40,6 @@ const (
 	cfgRmThumbs
 	cfgGenNew
 	cfgUnmodified
-	cfgOverwrite
 	cfgBackup
 )
 
@@ -87,15 +86,14 @@ var (
 	thumbOptions = []list.Item{
 		menuItem{"Generate missing thumbnails", tmMissing},
 		menuItem{"Regenerate single game", tmSingle},
-		menuItem{"Regenerate full library", tmGenlib},
+		menuItem{"Regenerate full library", tmGenLib},
 		menuItem{"Prune orphaned thumbnails", tmPrune},
 		menuItem{"Generate complete system thumbnails", tmAll},
 		menuItem{"Back", back}}
 	configOptions = []list.Item{
 		menuItem{"Remove thumbnail when removing game", cfgRmThumbs},
 		menuItem{"Generate new thumbnail when editing game", cfgGenNew},
-		// menuItem{"Overwrite original files on save", cfgOverwrite},
-		menuItem{"Backup files before overwriting", cfgBackup},
+		menuItem{"Backup previous files before saving", cfgBackup},
 		menuItem{"Always save _thumbs.bin files, even if unmodified", cfgUnmodified},
 		// menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), cfgAdvEdit},
 		// menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), cfgShowAdd},
@@ -106,9 +104,14 @@ var (
 		MainMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			return m, nil // No op
 		},
+		ConfigMenu: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
+			if err := m.SaveConfig(); err != nil {
+				return m, func() tea.Msg { return errMsg{err, true} }
+			}
+			return pop(m, msg)
+		},
 		LibraryMenu:  pop,
 		ThumbMenu:    pop,
-		ConfigMenu:   pop,
 		EditList:     pop,
 		GenerateList: pop,
 		RemoveList:   pop,
@@ -176,9 +179,7 @@ var (
 			idx := m.gameList.Index()
 			m = m.removeEntry(idx)
 			m.gameList.RemoveItem(idx)
-			return m, func() tea.Msg {
-				return updateMsg{}
-			}
+			return m, nil
 		},
 	}
 
@@ -309,8 +310,6 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 			b = d.GenerateNew
 		case cfgUnmodified:
 			b = d.SaveUnmodified
-		case cfgOverwrite:
-			b = d.Overwrite
 		case cfgAdvEdit:
 			b = d.AdvancedEditing
 		case cfgShowAdd:

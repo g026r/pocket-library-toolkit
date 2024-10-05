@@ -295,13 +295,13 @@ func playValidate(s string) error {
 	// We're going to allow just undifferentiated int values as seconds, because why not
 	// But it still has to be 0 or greater
 	if i, err := strconv.Atoi(s); err == nil && i < 0 {
-		return fmt.Errorf("Playtime cannot be a negative value")
+		return fmt.Errorf("Play time cannot be a negative value")
 	} else if err == nil {
 		return nil
 	}
 
 	if !playRegex.MatchString(s) {
-		return fmt.Errorf("Playtime should be in the form: 0h 0m 0s")
+		return fmt.Errorf("Play time should be in the form: 0h 0m 0s")
 	}
 
 	return nil
