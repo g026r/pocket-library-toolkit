@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"encoding/binary"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io/fs"
 	"log"
@@ -32,8 +33,12 @@ type errMsg struct {
 	fatal bool
 }
 
+// initDoneMsg signals the initial loading is done.
+// it's used to stop the spinner, clear the screen, etc
 type initDoneMsg struct{}
 
+// updateMsg tells the program that an update requiring a progress bar is complete
+// it's used to trigger the "press any key" text
 type updateMsg struct{}
 
 // tickMsg is just a generic message fired by tickCmd
@@ -282,7 +287,7 @@ func (m *Model) save() tea.Msg {
 		_ = os.Mkdir(fmt.Sprintf("%s/System", root), os.ModePerm)
 		_ = os.Mkdir(fmt.Sprintf("%s/System/Library", root), os.ModePerm)
 		_ = os.Mkdir(fmt.Sprintf("%s/System/Library/Images", root), os.ModePerm)
-		if err := os.Mkdir(fmt.Sprintf("%s/System/Played Games", root), os.ModePerm); err != nil && !os.IsExist(err) {
+		if err := os.Mkdir(fmt.Sprintf("%s/System/Played Games", root), os.ModePerm); err != nil && !errors.Is(err, fs.ErrExist) {
 			return errMsg{err, true} // Only going to check this final one for errors on the basis of "if it failed, the others did as well"
 		}
 	}
@@ -320,16 +325,26 @@ func (m *Model) save() tea.Msg {
 			_ = v.Close()
 		}
 		if success {
-			if err := os.Rename(tmpList.Name(), fmt.Sprintf("%s/System/Played Games/list.bin", root)); err != nil {
+			t := time.Now().Format("20060102_150405")
+			if err := m.backupAndRename(root, "/System/Played Games/list.bin", tmpList, t); err != nil {
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
-			if err := os.Rename(tmpPlaytimes.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root)); err != nil {
+			if err := m.backupAndRename(root, "/System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
+			// if err := os.Rename(tmpList.Name(), fmt.Sprintf("%s/System/Played Games/list.bin", root)); err != nil {
+			// 	log.Fatal(errorStyle.Render(err.Error()))
+			// }
+			// if err := os.Rename(tmpPlaytimes.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root)); err != nil {
+			// 	log.Fatal(errorStyle.Render(err.Error()))
+			// }
 			for k, v := range tmpThumbs {
-				if err := os.Rename(v.Name(), fmt.Sprintf("%s/System/Library/Images/%s_thumbs.bin", root, strings.ToLower(k.String()))); err != nil {
+				if err := m.backupAndRename(root, fmt.Sprintf("/System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
 					log.Fatal(errorStyle.Render(err.Error()))
 				}
+				// if err := os.Rename(v.Name(), fmt.Sprintf("%s/System/Library/Images/%s_thumbs.bin", root, strings.ToLower(k.String()))); err != nil {
+				// 	log.Fatal(errorStyle.Render(err.Error()))
+				// }
 			}
 		} else {
 			// Remove all the files as we weren't successful
@@ -436,7 +451,7 @@ func (m *Model) genFull() tea.Msg {
 	total := 0.0
 	for _, sys := range models.ValidThumbsFiles {
 		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.rootDir, strings.ToLower(sys.String())))
-		if os.IsNotExist(err) {
+		if errors.Is(err, fs.ErrNotExist) {
 			// Directory doesn't exist. Just continue
 			continue
 		} else if err != nil {
@@ -451,7 +466,7 @@ func (m *Model) genFull() tea.Msg {
 
 	for _, sys := range models.ValidThumbsFiles {
 		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.rootDir, strings.ToLower(sys.String())))
-		if os.IsNotExist(err) {
+		if errors.Is(err, fs.ErrNotExist) {
 			// Directory doesn't exist. Just continue
 			continue
 		} else if err != nil {
@@ -496,7 +511,7 @@ func (m *Model) genMissing() tea.Msg {
 			return image.Crc32 == e.Crc32
 		}) {
 			img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32)
-			if err != nil && !os.IsNotExist(err) { // We only care if it was something other than a not existing error
+			if err != nil && !errors.Is(err, fs.ErrNotExist) { // We only care if it was something other than a not existing error
 				return errMsg{err, true}
 			} else {
 				i := m.thumbnails[sys]
@@ -519,7 +534,7 @@ func (m *Model) regenLib() tea.Msg {
 		sys := e.System.ThumbFile()
 
 		img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32)
-		if err != nil && !os.IsNotExist(err) { // We only care if it was something other than a not existing error
+		if err != nil && !errors.Is(err, fs.ErrNotExist) { // We only care if it was something other than a not existing error
 			return errMsg{err, true}
 		} else {
 			i := m.thumbnails[sys]
@@ -544,8 +559,8 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 		m.percent = 0.0
 		sys := e.System.ThumbFile()
 		img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32)
-		m.percent = .50         // These percentages are just made up.
-		if os.IsNotExist(err) { // Doesn't exist. That's fine.
+		m.percent = .50                     // These percentages are just made up.
+		if errors.Is(err, fs.ErrNotExist) { // Doesn't exist. That's fine.
 			m.percent = 1.0
 			return updateMsg{}
 		} else if err != nil {
@@ -651,7 +666,7 @@ func (m *Model) menuHandler(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if !m.gameList.SettingFilter() {
 			if k, ok := msg.(tea.KeyMsg); ok && (k.String() == "enter" || k.String() == " ") {
 				return enter[scr](m, msg)
-			} else if ok && k.String() == "esc" && !m.gameList.IsFiltered() { // Only exit if we're not filtering. Otherwise let the default actions reset the filter
+			} else if ok && k.String() == "esc" && !m.gameList.IsFiltered() { // Only exit if we're not filtering. Otherwise, let the default actions reset the filter
 				return esc[scr](m, msg)
 			}
 		}
@@ -810,18 +825,15 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
 	}
 
-	m.Pop() // TODO: Find a way to do this with a Cmd?
 	if m.GenerateNew {
 		// TODO: Can I figure out a way to clean up any orphaned ones as well?
 		m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", e.Name, e.System)
-		m.Push(Waiting)
+		m.Replace(Waiting)
 		m.percent = 0.0
 		return m, tea.Batch(m.genSingle(e), tickCmd())
 	}
 
-	return m, func() tea.Msg {
-		return updateMsg{}
-	}
+	return pop(m, nil)
 }
 
 func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
@@ -900,7 +912,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		m.percent = 0.0
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		return m, tea.Batch(m.genFull, tickCmd())
-	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgOverwrite, cfgUnmodified:
+	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgOverwrite, cfgUnmodified, cfgBackup:
 		return m.configChange(key)
 	}
 
@@ -922,13 +934,26 @@ func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 		m.Overwrite = !m.Overwrite
 	case cfgUnmodified:
 		m.SaveUnmodified = !m.SaveUnmodified
+	case cfgBackup:
+		m.Backup = !m.Backup
 	}
 
 	return m, nil
 }
 
+func (m *Model) backupAndRename(root string, path string, tempFile *os.File, time string) error {
+	file := fmt.Sprintf("%s%s", root, path)
+	if m.Backup {
+		if err := os.Rename(file, fmt.Sprintf("%s_%s.bak", strings.TrimSuffix(file, ".bin"), time)); err != nil && !errors.Is(err, fs.ErrNotExist) {
+			return err
+		}
+	}
+	return os.Rename(tempFile.Name(), file)
+}
+
 // pop is the ESC action for basically everything but main menu
 // It removes the latest item from the stack, allowing the rendering to go up one level, and runs a GC just because.
+// It's doable largely because we never have a submenu on top of another submenu
 func pop(m *Model, _ tea.Msg) (*Model, tea.Cmd) {
 	m.Pop()
 	runtime.GC() // Not ideal. Probably also not necessary.

@@ -15,6 +15,7 @@ import (
 	"github.com/g026r/pocket-toolkit/pkg/models"
 )
 
+// menuKey consists of all the possible menu actions
 type menuKey int
 
 const (
@@ -40,6 +41,7 @@ const (
 	cfgGenNew
 	cfgUnmodified
 	cfgOverwrite
+	cfgBackup
 )
 
 var (
@@ -52,6 +54,9 @@ var (
 	blue              = lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"}
 )
 
+// menuItem is used for each menu that isn't a game list
+// text represents the text to display
+// key is the result that should be checked to determine the item selected
 type menuItem struct {
 	text string
 	key  menuKey
@@ -89,10 +94,11 @@ var (
 	configOptions = []list.Item{
 		menuItem{"Remove thumbnail when removing game", cfgRmThumbs},
 		menuItem{"Generate new thumbnail when editing game", cfgGenNew},
-		//menuItem{"Overwrite original files on save", cfgOverwrite},
+		// menuItem{"Overwrite original files on save", cfgOverwrite},
+		menuItem{"Backup files before overwriting", cfgBackup},
 		menuItem{"Always save _thumbs.bin files, even if unmodified", cfgUnmodified},
-		//menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), cfgAdvEdit},
-		//menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), cfgShowAdd},
+		// menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), cfgAdvEdit},
+		// menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), cfgShowAdd},
 		menuItem{"Back", back}}
 
 	// esc consists of the items to be performed if esc is typed
@@ -226,8 +232,10 @@ func defaultAction(scr screen, menu *list.Model, m *Model, msg tea.Msg) (*Model,
 // Though it can take anything that implements fmt.Stringer if need be.
 type itemDelegate struct{}
 
-func (d itemDelegate) Height() int                             { return 1 }
-func (d itemDelegate) Spacing() int                            { return 0 }
+func (d itemDelegate) Height() int  { return 1 }
+func (d itemDelegate) Spacing() int { return 0 }
+
+// We're not using Update to process key presses as we need to update the Model in some cases & we don't have access to it.
 func (d itemDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd { return nil }
 func (d itemDelegate) Render(w goio.Writer, m list.Model, index int, listItem list.Item) {
 	i, ok := listItem.(fmt.Stringer)
@@ -276,8 +284,11 @@ type configDelegate struct {
 	*io.Config
 }
 
-func (d configDelegate) Height() int                             { return 1 }
-func (d configDelegate) Spacing() int                            { return 0 }
+func (d configDelegate) Height() int  { return 1 }
+func (d configDelegate) Spacing() int { return 0 }
+
+// While we could conceivably use Update for the config menu, as we have a pointer to the object being updated, we're not
+// just to keep the menu processing code all in one spot
 func (d configDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd { return nil }
 func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem list.Item) {
 	i, ok := listItem.(menuItem)
@@ -304,6 +315,8 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 			b = d.AdvancedEditing
 		case cfgShowAdd:
 			b = d.ShowAdd
+		case cfgBackup:
+			b = d.Backup
 		default:
 			// If we don't know what this value is, return
 			return

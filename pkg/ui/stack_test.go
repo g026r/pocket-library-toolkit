@@ -37,14 +37,14 @@ func TestStack_Pop(t *testing.T) {
 	sut := stack{}
 
 	// Confirm that an empty stack returns MainMenu
-	if sut.Pop() != MainMenu {
-		t.Errorf("Expected %d got %d", MainMenu, sut.Peek())
+	if s := sut.Pop(); s != MainMenu {
+		t.Errorf("Expected %d got %d", MainMenu, s)
 	}
 
 	// Confirm that if we add this to the slice, it returns properly
-	sut.s = append(sut.s, ThumbMenu, Waiting)
-	if sut.Pop() != Waiting {
-		t.Errorf("Expected %d got %d", Waiting, sut.Peek())
+	sut.s = []screen{ThumbMenu, Waiting}
+	if s := sut.Pop(); s != Waiting {
+		t.Errorf("Expected %d got %d", Waiting, s)
 	}
 
 	// Confirm that Pop() didn't Peek()
@@ -100,5 +100,32 @@ func TestStack_Clear(t *testing.T) {
 		if len(sut.s) != 0 {
 			t.Errorf("stack not empty: %v", sut.s)
 		}
+	}
+}
+
+func TestStack_Replace(t *testing.T) {
+	t.Parallel()
+	sut := stack{}
+
+	// Confirm that an empty stack returns MainMenu
+	if s := sut.Replace(ConfigMenu); s != MainMenu {
+		t.Errorf("Expected %d got %d", MainMenu, s)
+	}
+	if sut.Peek() != ConfigMenu {
+		t.Errorf("Expected %d got %d", ConfigMenu, sut.Peek())
+	}
+
+	// Confirm that if we add this to the slice, it returns properly
+	sut.s = []screen{ThumbMenu, Waiting}
+	if s := sut.Replace(ConfigMenu); s != Waiting {
+		t.Errorf("Expected %d got %d", Waiting, s)
+	}
+
+	// Confirm that Remove() didn't merely Peek() or Pop()
+	if sut.Peek() != ConfigMenu {
+		t.Errorf("Expected %d got %d", ConfigMenu, sut.Peek())
+	}
+	if len(sut.s) != 2 {
+		t.Errorf("Expected %v got %v", []screen{}, sut.s)
 	}
 }

@@ -44,7 +44,8 @@ type Config struct {
 	ShowAdd         bool `json:"show_add"`
 	GenerateNew     bool `json:"generate_new"`
 	SaveUnmodified  bool `json:"save_unmodified"`
-	Overwrite       bool // `json:"overwrite"`
+	Overwrite       bool `json:"overwrite"`
+	Backup          bool `json:"backup"`
 }
 
 type jsonEntry struct {
@@ -177,7 +178,7 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 	thumbs := make(map[models.System]models.Thumbnails)
 	for _, k := range models.ValidThumbsFiles { // We're going to modify the values, so only range over the keys
 		f, err := ReadSeekerCloser(tb, fmt.Sprintf("%s_thumbs.bin", strings.ToLower(k.String())))
-		if os.IsNotExist(err) {
+		if errors.Is(err, fs.ErrNotExist) {
 			continue // It's possible for some systems to not have thumbnails yet. Just continue
 		} else if err != nil {
 			return nil, err
@@ -333,6 +334,7 @@ func LoadConfig() (Config, error) {
 		GenerateNew:     true,
 		SaveUnmodified:  false,
 		Overwrite:       true,
+		Backup:          true,
 	}
 	// FIXME: When compiling, use the program's dir rather than the cwd
 	// FIXME: When testing, use the cwd & remember to comment out the filepath.Dir call
@@ -344,7 +346,7 @@ func LoadConfig() (Config, error) {
 	dir = filepath.Dir(dir)
 
 	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-toolkit.json", dir))
-	if os.IsNotExist(err) {
+	if errors.Is(err, fs.ErrNotExist) {
 		return c, nil // Doesn't exist. Use defaults
 	} else if err != nil {
 		return c, err
