@@ -783,14 +783,34 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	}
 
 	if m.Peek() == EditScreen {
-		m.entries[m.gameList.Index()] = e
+		if m.gameList.IsFiltered() {
+			// Need to do this as Index() returns position based on the filtered list of items, despite what the godoc says
+			// See: https://github.com/charmbracelet/bubbles/issues/550
+			selected := m.gameList.SelectedItem().(models.Entry)
+			for i := range m.entries {
+				if models.EntrySort(m.entries[i], selected) == 0 {
+					m.entries[i] = e
+					break
+				}
+			}
+		} else {
+			// Don't use SetItem on gameList as we're going to resort the items
+			// So we'll have to reset the value of Items anyway
+			m.entries[m.gameList.Index()] = e
+		}
 	} else {
 		m.entries = append(m.entries, e)
 	}
 
 	slices.SortFunc(m.entries, models.EntrySort)
+	var cmd tea.Cmd
 	if m.Peek() == EditScreen {
-		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Edit Game", m.mainMenu.Width(), m.mainMenu.Height())
+		// Only reset the items rather than the whole list so we can keep our position in the list + the active filter
+		tmp := make([]list.Item, len(m.entries))
+		for i := range m.entries {
+			tmp[i] = m.entries[i]
+		}
+		cmd = m.gameList.SetItems(tmp) // TODO: This is really kind of ugly. Can we make it neater?
 	}
 
 	if m.GenerateNew {
@@ -798,10 +818,11 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 		m.percent = 0.0
 		m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", e.Name, e.System)
 		m.Replace(Waiting)
-		return m, tea.Batch(m.genSingle(e), tickCmd())
+		return m, tea.Sequence(cmd, tea.Batch(m.genSingle(e), tickCmd())) // Probably doesn't need to be done in sequence tbh
 	}
 
-	return pop(m, nil)
+	m, c := pop(m, nil) // c is always nil here, but capture it just in case I ever change that
+	return m, tea.Sequence(cmd, c)
 }
 
 func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
