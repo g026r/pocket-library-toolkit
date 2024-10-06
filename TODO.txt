@@ -1,2 +1,4 @@
 - Better error handling? (Add a status bar to screens displaying last error?)
-- Is magic number really needed?
+- Is the entry magic number really needed?
+- Would `WriteAt` be useful? Probably not.
+- Something wrong with filters? They're removing entries on me.

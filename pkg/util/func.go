@@ -77,8 +77,8 @@ func GetRoot() (string, error) {
 	return d, nil
 }
 
-func DetermineResizing(i *image.NRGBA) (int, int) {
-	if float32(i.Rect.Max.X)/float32(i.Rect.Max.Y) < float32(MaxWidth)/float32(MaxHeight) {
+func DetermineResizing(i image.Image) (int, int) {
+	if float32(i.Bounds().Dx())/float32(i.Bounds().Dy()) < float32(MaxWidth)/float32(MaxHeight) {
 		return MaxWidth, 0
 	}
 	return 0, MaxHeight

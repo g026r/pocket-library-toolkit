@@ -450,7 +450,9 @@ func (m *Model) genFull() tea.Msg {
 				continue
 			}
 			i, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, binary.BigEndian.Uint32(b))
-			if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
+			if errors.Is(err, io.ErrSixteenBitImage) {
+				continue // Can't handle 16-bit images at the moment due to a lack of documentation & examples
+			} else if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
 				return errMsg{err, true}
 			}
 
@@ -474,7 +476,9 @@ func (m *Model) genMissing() tea.Msg {
 			return image.Crc32 == e.Crc32
 		}) {
 			img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
-			if err != nil && !errors.Is(err, fs.ErrNotExist) { // We only care if it was something other than a not existing error
+			if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
+				continue
+			} else if err != nil { // We only care if it was something other than a not existing error
 				return errMsg{err, true}
 			} else {
 				i := m.thumbnails[sys]
@@ -497,7 +501,9 @@ func (m *Model) regenLib() tea.Msg {
 		sys := e.System.ThumbFile()
 
 		img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
-		if err != nil && !errors.Is(err, fs.ErrNotExist) { // We only care if it was something other than a not existing error
+		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
+			continue
+		} else if err != nil { // We only care if it was something other than a not existing error
 			return errMsg{err, true}
 		} else {
 			i := m.thumbnails[sys]
@@ -522,8 +528,8 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 		m.percent = 0.0
 		sys := e.System.ThumbFile()
 		img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
-		m.percent = .50                     // These percentages are just made up.
-		if errors.Is(err, fs.ErrNotExist) { // Doesn't exist. That's fine.
+		m.percent = .50                                                              // These percentages are just made up.
+		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) { // Doesn't exist. That's fine.
 			m.percent = 1.0
 			return updateMsg{}
 		} else if err != nil {
