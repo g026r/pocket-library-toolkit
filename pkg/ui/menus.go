@@ -167,9 +167,9 @@ var (
 		},
 		GenerateList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
 			entry := m.gameList.SelectedItem().(models.Entry)
-			m.Push(Waiting)
 			m.percent = 0.0
 			m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", entry.Name, entry.System)
+			m.Push(Waiting)
 			return m, tea.Batch(m.genSingle(entry), tickCmd())
 		},
 		RemoveList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {

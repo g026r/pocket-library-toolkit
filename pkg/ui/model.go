@@ -407,10 +407,11 @@ func (m *Model) prune() tea.Msg {
 }
 
 // genFull generates thumbnail images for all files in the Images/<system>/ directories. It can take a while.
-// TODO: Should some of this be moved into the io package? We'd lose the progress bar though
+// TODO: Should some of this be moved into the io package? We'd lose the progress bar though. Though could maybe use a channel to pass messages
 func (m *Model) genFull() tea.Msg {
 	ctr := 0.0
 	total := 0.0
+	// Calculate what our total percentage is so we can show the progress bar
 	for _, sys := range models.ValidThumbsFiles {
 		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.rootDir, strings.ToLower(sys.String())))
 		if errors.Is(err, fs.ErrNotExist) {
@@ -449,7 +450,9 @@ func (m *Model) genFull() tea.Msg {
 				continue
 			}
 			i, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, binary.BigEndian.Uint32(b))
-			if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
+			if errors.Is(err, io.ErrSixteenBitImage) {
+				continue // Can't handle 16-bit images at the moment due to a lack of documentation & examples
+			} else if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
 				return errMsg{err, true}
 			}
 
@@ -473,7 +476,9 @@ func (m *Model) genMissing() tea.Msg {
 			return image.Crc32 == e.Crc32
 		}) {
 			img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
-			if err != nil && !errors.Is(err, fs.ErrNotExist) { // We only care if it was something other than a not existing error
+			if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
+				continue
+			} else if err != nil { // We only care if it was something other than a not existing error
 				return errMsg{err, true}
 			} else {
 				i := m.thumbnails[sys]
@@ -496,7 +501,9 @@ func (m *Model) regenLib() tea.Msg {
 		sys := e.System.ThumbFile()
 
 		img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
-		if err != nil && !errors.Is(err, fs.ErrNotExist) { // We only care if it was something other than a not existing error
+		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
+			continue
+		} else if err != nil { // We only care if it was something other than a not existing error
 			return errMsg{err, true}
 		} else {
 			i := m.thumbnails[sys]
@@ -521,8 +528,8 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 		m.percent = 0.0
 		sys := e.System.ThumbFile()
 		img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
-		m.percent = .50                     // These percentages are just made up.
-		if errors.Is(err, fs.ErrNotExist) { // Doesn't exist. That's fine.
+		m.percent = .50                                                              // These percentages are just made up.
+		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) { // Doesn't exist. That's fine.
 			m.percent = 1.0
 			return updateMsg{}
 		} else if err != nil {
@@ -787,10 +794,10 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	}
 
 	if m.GenerateNew {
-		// TODO: Can I figure out a way to clean up any orphaned ones as well?
+		// TODO: Figure out a way to clean up any orphaned ones as well
+		m.percent = 0.0
 		m.wait = fmt.Sprintf("Generating thumbnail for %s (%s)", e.Name, e.System)
 		m.Replace(Waiting)
-		m.percent = 0.0
 		return m, tea.Batch(m.genSingle(e), tickCmd())
 	}
 
@@ -851,32 +858,32 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Remove Game", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(RemoveList)
 	case libFix:
-		m.Push(Waiting)
-		m.wait = "Fixing played times"
 		m.percent = 0.0
+		m.wait = "Fixing played times"
+		m.Push(Waiting)
 		return m, tea.Batch(m.playfix, tickCmd())
 	case tmMissing:
-		m.Push(Waiting)
 		m.percent = 0.0
 		m.wait = "Generating missing thumbnails for library"
+		m.Push(Waiting)
 		return m, tea.Batch(m.genMissing, tickCmd())
 	case tmSingle:
 		m.gameList = generateGameList(m.gameList, m.entries, "Main > Library > Generate Thumbnail", m.mainMenu.Width(), m.mainMenu.Height())
 		m.Push(GenerateList)
 	case tmGenLib:
-		m.Push(Waiting)
 		m.percent = 0.0
 		m.wait = "Regenerating all thumbnails for library"
+		m.Push(Waiting)
 		return m, tea.Batch(m.regenLib, tickCmd())
 	case tmPrune:
-		m.Push(Waiting)
 		m.percent = 0.0
 		m.wait = "Removing orphaned thumbs.bin entries"
+		m.Push(Waiting)
 		return m, tea.Batch(m.prune, tickCmd())
 	case tmAll:
-		m.Push(Waiting)
 		m.percent = 0.0
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
+		m.Push(Waiting)
 		return m, tea.Batch(m.genFull, tickCmd())
 	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgUnmodified, cfgBackup:
 		return m.configChange(key)

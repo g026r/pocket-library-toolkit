@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	"image/color"
 	"io"
 	"io/fs"
 	"os"
@@ -29,7 +30,7 @@ const (
 	PlaytimesHeader  uint32 = 0x01545050
 	ThumbnailHeader  uint32 = 0x41544602
 	ThumbnailUnknown uint32 = 0x0000CE1C
-	ImageHeader32    uint32 = 0x41504920 // The 32bit colour header.
+	ImageHeader32    uint32 = 0x41504920 // The 32bit colour header. (Actually 24bit + 8 bit Alpha)
 	ImageHeader16    uint32 = 0x41504910 // The 16bit colour header. Not currently used.
 
 	firstLibraryAddr uint32 = 0x4010
@@ -37,6 +38,7 @@ const (
 )
 
 var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
+var ErrSixteenBitImage = errors.New("16-bit image files unsupported")
 
 type Config struct {
 	RemoveImages    bool `json:"remove_images"`
@@ -112,12 +114,13 @@ func LoadEntries(root fs.FS) ([]models.Entry, error) {
 		return nil, err
 	}
 
-	// TODO: I don't know what this word represents. It's equivalent to 0x00000010 on mine.
+	// I don't know what this word represents. It's equivalent to 0x00000010 on mine & things fail if the value changes.
+	// Maybe Duo related? Keep an eye on this in future firmware releases, at least.
 	if err = binary.Read(f, binary.LittleEndian, &unknown); err != nil {
 		return nil, err
 	}
 
-	// TODO: This appears to be the first entry's value? But why is it there twice?
+	// This appears to be the first entry's file address? But why is it there twice?
 	if err = binary.Read(f, binary.LittleEndian, &unknown); err != nil {
 		return nil, err
 	}
@@ -244,27 +247,35 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 				tuples[i] = tu
 			}
 
-			if _, err := f.Seek(int64(tuples[0].address), io.SeekStart); err != nil {
-				return nil, err
-			}
 			// Read each of the individual image entries.
 			for i := range tuples {
 				t.Images[i].Crc32 = tuples[i].crc32
-				if i+1 < len(tuples) {
-					t.Images[i].Image = make([]byte, tuples[i+1].address-tuples[i].address)
-				} else {
-					// This does present the problem that a file with the wrong number of entries in the count will wind up with one really weird
-					// entry. But not sure that can really be helped, since there isn't a terminator or file size field for the entries
-					// TODO: Use height * width to determine how much of the image to read?
-					//  Each pixel = 4 bytes, so height * width * 4 + header size should do it.
-					//   But that will require us to read the first bit & parse it
-					end, _ := f.Seek(0, io.SeekEnd) // since a fs.File doesn't have a Size() func, we have to do it this way.
-					t.Images[i].Image = make([]byte, end-int64(tuples[i].address))
-					_, _ = f.Seek(int64(tuples[i].address), io.SeekStart)
+
+				// Seek to the address. After the first image this *should* be where we are already. But just to be safe.
+				if _, err := f.Seek(int64(tuples[i].address), io.SeekStart); err != nil {
+					return nil, fmt.Errorf("seek error: %w", err)
 				}
-				if _, err := f.Read(t.Images[i].Image); err != nil {
+				buf := make([]byte, 8)
+				if _, err := f.Read(buf); err != nil { // Read both the header & dimensions at once.
 					return nil, fmt.Errorf("read error: %w", err)
 				}
+
+				//  Calculate the size of the image in bytes: byte-depth * height * width
+				var size int
+				dim1 := int(binary.LittleEndian.Uint16(buf[4:6]))
+				dim2 := int(binary.LittleEndian.Uint16(buf[6:]))
+				if binary.LittleEndian.Uint32(buf[:4]) == ImageHeader32 {
+					size = 4 * dim1 * dim2
+				} else {
+					size = 2 * dim1 * dim2 // We can't handle 16-bit original images when generating thumbs. But if you somehow already have a 16-bit thumbnail, sure.
+				}
+				//  3. Read that many bytes
+				img := make([]byte, size)
+				if _, err := f.Read(img); err != nil {
+					return nil, fmt.Errorf("read error: %w", err)
+				}
+				//  4. Concat the two slices together
+				t.Images[i].Image = slices.Concat(buf, img)
 			}
 		}
 		thumbs[k] = t
@@ -289,6 +300,10 @@ func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32) (models.Image
 	if err := binary.Read(f, binary.LittleEndian, &header); err != nil {
 		return models.Image{}, err
 	}
+	if header == ImageHeader16 {
+		// No docs on 16-bit images available. Haven't been able to work out the byte order, so not going to process.
+		return models.Image{}, ErrSixteenBitImage
+	}
 	if header != ImageHeader32 {
 		return models.Image{}, fmt.Errorf("%08x.bin: %w", crc32, ErrUnrecognizedFileFormat)
 	}
@@ -305,16 +320,14 @@ func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32) (models.Image
 		Max: image.Point{X: int(width), Y: int(height)},
 	})
 	bgra := make([]byte, 4)
-	for i := 0; i < len(img.Pix); i = i + 4 {
-		// BGRA order
-		if n, err := f.Read(bgra); err != nil || n != 4 {
-			return models.Image{}, fmt.Errorf("read error (%d): %w", n, err)
+	// It's stored in sequential rows, so Y on the outer loop & X on the inner
+	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
+		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
+			if _, err := f.Read(bgra); err != nil {
+				return models.Image{}, fmt.Errorf("read error: %w", err)
+			}
+			img.SetNRGBA(x, y, color.NRGBA{B: bgra[0], G: bgra[1], R: bgra[2], A: bgra[3]})
 		}
-		// Pix holds the image's pixels, in R, G, B, A order and big-endian format.
-		img.Pix[i] = bgra[2]   // r
-		img.Pix[i+1] = bgra[1] // g
-		img.Pix[i+2] = bgra[0] // b
-		img.Pix[i+3] = bgra[3] // a
 	}
 
 	// If the image is too square, we need to resize to the longest of the new dimensions
@@ -324,21 +337,26 @@ func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32) (models.Image
 	img = imaging.CropCenter(img, util.MaxWidth, util.MaxHeight)
 
 	pkt := make([]byte, 0)
-	pkt, err = binary.Append(pkt, binary.LittleEndian, ImageHeader32)
+	pkt, err = binary.Append(pkt, binary.LittleEndian, header)
 	if err != nil {
 		return models.Image{}, err
 	}
-	pkt, err = binary.Append(pkt, binary.LittleEndian, uint16(img.Rect.Max.Y))
+	pkt, err = binary.Append(pkt, binary.LittleEndian, uint16(img.Bounds().Dy()))
 	if err != nil {
 		return models.Image{}, err
 	}
-	pkt, err = binary.Append(pkt, binary.LittleEndian, uint16(img.Rect.Max.X))
+	pkt, err = binary.Append(pkt, binary.LittleEndian, uint16(img.Bounds().Dx()))
 	if err != nil {
 		return models.Image{}, err
 	}
-	// Turn it back into BGRA order
-	for i := 0; i < len(img.Pix); i = i + 4 {
-		pkt = append(pkt, img.Pix[i+2], img.Pix[i+1], img.Pix[i], img.Pix[i+3])
+
+	// Turn it back into BGRA order. Don't do .RGBA() as that's alpha-pre-multiplied
+	// It's stored in sequential rows, so outer loop is Y & inner is X
+	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
+		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
+			c := img.NRGBAAt(x, y)
+			pkt = append(pkt, c.B, c.G, c.R, c.A)
+		}
 	}
 
 	return models.Image{
