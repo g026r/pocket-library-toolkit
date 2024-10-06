@@ -3,6 +3,7 @@ package ui
 import (
 	"fmt"
 	goio "io"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -176,9 +177,25 @@ var (
 			if len(m.gameList.Items()) == 0 {
 				return m, nil
 			}
-			idx := m.gameList.Index()
-			m = m.removeEntry(idx)
-			m.gameList.RemoveItem(idx)
+			if m.gameList.IsFiltered() {
+				// Need to do this as Index() returns position based on the filtered list of items, despite what the godoc says
+				// See: https://github.com/charmbracelet/bubbles/issues/550
+				selected := m.gameList.SelectedItem().(models.Entry)
+				for i := range m.entries {
+					if models.EntrySort(m.entries[i], selected) == 0 {
+						m = m.removeEntry(i)
+						// list.Model.RemoveItem is badly broken & can result in misleading behaviour. Do not use it.
+						// See: https://github.com/charmbracelet/bubbles/issues/632
+						// m.gameList.RemoveItem(m.gameList.Index())
+						cmd := m.gameList.SetItems(slices.Delete(m.gameList.Items(), i, i+1))
+						return m, cmd
+					}
+				}
+			} else {
+				m = m.removeEntry(m.gameList.Index())
+				m.gameList.RemoveItem(m.gameList.Index())
+			}
+
 			return m, nil
 		},
 	}

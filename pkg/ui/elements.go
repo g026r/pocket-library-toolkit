@@ -119,11 +119,11 @@ func NewInputs() []FocusBlurViewer {
 
 	sys := Input{textinput.New()}
 	// TODO: Should we go with full suggestions instead? These aren't really visible most of the time. But full suggestions makes parsing more difficult
-	sys.SetSuggestions([]string{models.GB.String(), models.GBC.String(), models.GBA.String(), models.GG.String(), models.SMS.String(), models.NGP.String(), models.NGPC.String(), models.PCE.String(), models.Lynx.String()})
+	// sys.SetSuggestions([]string{models.GB.String(), models.GBC.String(), models.GBA.String(), models.GG.String(), models.SMS.String(), models.NGP.String(), models.NGPC.String(), models.PCE.String(), models.Lynx.String()})
+	// sys.ShowSuggestions = true
 	sys.Prompt = "System: "
 	sys.Placeholder = models.GB.String()
 	sys.Validate = sysValidate
-	sys.ShowSuggestions = true
 	sys.PromptStyle = itemStyle
 	sys.Cursor.Style = selectedItemStyle.PaddingLeft(0)
 	sys.TextStyle = itemStyle.PaddingLeft(2)
