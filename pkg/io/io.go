@@ -112,12 +112,13 @@ func LoadEntries(root fs.FS) ([]models.Entry, error) {
 		return nil, err
 	}
 
-	// TODO: I don't know what this word represents. It's equivalent to 0x00000010 on mine.
+	// I don't know what this word represents. It's equivalent to 0x00000010 on mine & things fail if the value changes.
+	// Maybe Duo related? Keep an eye on this in future firmware releases, at least.
 	if err = binary.Read(f, binary.LittleEndian, &unknown); err != nil {
 		return nil, err
 	}
 
-	// TODO: This appears to be the first entry's value? But why is it there twice?
+	// This appears to be the first entry's file address? But why is it there twice?
 	if err = binary.Read(f, binary.LittleEndian, &unknown); err != nil {
 		return nil, err
 	}
@@ -256,8 +257,8 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 					// This does present the problem that a file with the wrong number of entries in the count will wind up with one really weird
 					// entry. But not sure that can really be helped, since there isn't a terminator or file size field for the entries
 					// TODO: Use height * width to determine how much of the image to read?
-					//  Each pixel = 4 bytes, so height * width * 4 + header size should do it.
-					//   But that will require us to read the first bit & parse it
+					//  Each pixel = 4 bytes for 32bit images, so height * width * 4 + header size should do it.
+					//   But that will require us to read the first two words & parse them to get 16 vs 32 & the dimensions
 					end, _ := f.Seek(0, io.SeekEnd) // since a fs.File doesn't have a Size() func, we have to do it this way.
 					t.Images[i].Image = make([]byte, end-int64(tuples[i].address))
 					_, _ = f.Seek(int64(tuples[i].address), io.SeekStart)

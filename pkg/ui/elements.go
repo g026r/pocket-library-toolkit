@@ -41,6 +41,7 @@ type FocusBlurViewer interface {
 	Reset()
 	Focus() tea.Cmd
 	Blur()
+	Focused() bool
 	View() string
 	error() string
 	Style(style lipgloss.Style)
@@ -71,10 +72,9 @@ func (i *Input) Style(style lipgloss.Style) {
 }
 
 type Button struct {
-	style      lipgloss.Style
-	Label      string
-	focusStyle lipgloss.Style // TODO Can't recall if I actually use these. Double check
-	blurStyle  lipgloss.Style
+	style   lipgloss.Style
+	Label   string
+	focused bool
 }
 
 func (b *Button) Style(style lipgloss.Style) {
@@ -86,12 +86,16 @@ func (b *Button) Reset() {
 }
 
 func (b *Button) Blur() {
-	b.style = b.blurStyle
+	b.focused = false
 }
 
 func (b *Button) Focus() tea.Cmd {
-	b.style = b.focusStyle
+	b.focused = true
 	return nil
+}
+
+func (b *Button) Focused() bool {
+	return b.focused
 }
 
 func (b *Button) View() string {
@@ -179,14 +183,12 @@ func NewInputs() []FocusBlurViewer {
 	inputs[play] = &p
 
 	inputs[submit] = &Button{
-		Label:      "Submit",
-		focusStyle: focusedStyle,
-		blurStyle:  itemStyle,
+		Label: "Submit",
+		style: itemStyle,
 	}
 	inputs[cancel] = &Button{
-		Label:      "Cancel",
-		focusStyle: focusedStyle,
-		blurStyle:  itemStyle,
+		Label: "Cancel",
+		style: itemStyle,
 	}
 
 	return inputs
