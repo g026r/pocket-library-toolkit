@@ -29,3 +29,5 @@
 *.gz
 /build.sh
 /pkg/ui/version.txt
+/playtime-fix
+/pltoolkit

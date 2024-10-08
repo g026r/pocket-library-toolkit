@@ -197,6 +197,13 @@
   },
   {
     "system": 2,
+    "name": "Final Fantasy VI Advance",
+    "crc": "0xd708f5ab",
+    "signature": "0xeef5fab6",
+    "magic": "0x0f81"
+  },
+  {
+    "system": 2,
     "name": "Golden Sun",
     "crc": "0xe1fb68e8",
     "signature": "0xdabdf0da",
