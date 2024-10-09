@@ -430,7 +430,7 @@ func generateSubMenu(l list.Model, items []list.Item, title string, width, heigh
 	l.Title = title
 	l.ResetSelected()
 	l.ResetFilter()
-	l.SetItems(items)
+	_ = l.SetItems(items) // Don't care that it potentially returns a FilterMatchMsg command as we're resetting everything.
 	// Need to reset height & width or else it doesn't display right the first time since the number of items in the list
 	// has changed from the initial WindowSizeMsg that's fired on startup
 	// It's overkill after it's displayed once, but an issue until then.
