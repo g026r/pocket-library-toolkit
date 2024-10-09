@@ -1,3 +1,5 @@
 - Better error handling? (Add a status bar to screens displaying last error?)
 - Is the entry magic number really needed?
 - Would `WriteAt` be useful? Probably not.
+- What value does it save to the .sta file after it's been edited?
+    - Doesn't seem to affect the association, so I assume it's using cart signature for that.
