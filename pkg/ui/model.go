@@ -146,6 +146,11 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.gameList.SetHeight(msg.Height - 1)
 		m.gameList.SetWidth(msg.Width - 1)
 		return m, nil
+	case list.FilterMatchesMsg:
+		// Only m.gameList has filtering enabled, so don't need to check the current screen else here
+		listModel, cmd := m.gameList.Update(msg)
+		m.gameList = listModel
+		return m, cmd
 	case initDoneMsg:
 		m.initialized = true
 		m.Clear()
@@ -805,12 +810,15 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	slices.SortFunc(m.entries, models.EntrySort)
 	var cmd tea.Cmd
 	if m.Peek() == EditScreen {
-		// Only reset the items rather than the whole list so we can keep our position in the list + the active filter
+		// Only reset the items rather than the whole list so that we can keep our position in the list + the active filter
 		tmp := make([]list.Item, len(m.entries))
 		for i := range m.entries {
 			tmp[i] = m.entries[i]
 		}
 		cmd = m.gameList.SetItems(tmp) // TODO: This is really kind of ugly. Can we make it neater?
+		// if m.gameList.FilterState() != list.Unfiltered && len(m.gameList.VisibleItems()) == 0 {
+		// 	m.gameList.ResetFilter()
+		// }
 	}
 
 	if m.GenerateNew {

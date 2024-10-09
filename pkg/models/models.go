@@ -12,7 +12,10 @@ import (
 )
 
 var EntrySort = func(a, b Entry) int {
-	return cmp.Compare(strings.ToLower(a.Name), strings.ToLower(b.Name))
+	if val := cmp.Compare(strings.ToLower(a.Name), strings.ToLower(b.Name)); val != 0 {
+		return val
+	}
+	return cmp.Compare(a.Magic, b.Magic)
 }
 
 type Thumbnails struct {
