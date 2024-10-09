@@ -147,7 +147,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.gameList.SetWidth(msg.Width - 1)
 		return m, nil
 	case list.FilterMatchesMsg:
-		// Only m.gameList has filtering enabled, so don't need to check the current screen else here
+		// Only m.gameList has filtering enabled, so don't need to check the current screen
 		listModel, cmd := m.gameList.Update(msg)
 		m.gameList = listModel
 		return m, cmd
