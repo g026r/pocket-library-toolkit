@@ -1,8 +1,8 @@
 # Pocket Cartridge Signatures
 
-Looking for the Pocket's cartridge signature or CRC32 hash for a given cartridge?
+Looking for the Pocket's cartridge signature, CRC32 hash, or magic number for a given cartridge?
 
-The following pages list them all, except for PC Engine & Atari Lynx, where I've been unable to duplicate them.
+The following pages list the ones I have been able to discover.
 
 * [Game Boy](./gb.md)
 * [Game Boy Color](./gbc.md)

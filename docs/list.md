@@ -102,9 +102,9 @@ NB: the "first 512 bytes of the ROM" that Pocket reads for TurboGrafx-16 & Lynx 
 bytes that you might get from .pce & unheadered .lyx files. It seems likely the Pocket is adding something, possibly via
 the adapter, but I've been unable to determine what.
 
-### Unknown (4 bytes)
+### Magic Number (4 bytes)
 
-Most likely 32 bits (Little Endian), might be 16 bits plus another 16 bits of padding.
+32 bits (Little Endian), Though could also be 16 bits plus another 16 bits of padding.
 
 I've been unable to determine what this word is used for. Changing its value didn't stop the library from loading
 a game entry or change any of the information displayed.

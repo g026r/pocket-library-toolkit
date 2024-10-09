@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "system": 4,
+    "name": "Turma da Monica em O Resgate",
+    "crc": "0x22cca9bb",
+    "signature": "0x81c8bc58",
+    "magic": "0x1b04"
+  }
+]

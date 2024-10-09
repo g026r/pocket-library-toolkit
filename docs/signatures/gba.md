@@ -166,6 +166,12 @@
 - Signature: `0xb179be43`
 - Magic Number: `0x0f7e`
 
+## Final Fantasy VI Advance
+
+- CRC32: `0xd708f5ab`
+- Signature: `0xeef5fab6`
+- Magic Number: `0x0f81`
+
 ## Golden Sun
 
 - CRC32: `0xe1fb68e8`
