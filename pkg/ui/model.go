@@ -810,7 +810,7 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	slices.SortFunc(m.entries, models.EntrySort)
 	var cmd tea.Cmd
 	if m.Peek() == EditScreen {
-		// Only reset the items rather than the whole list so that we can keep our position in the list + the active filter
+		// Only reset the items rather than re-initialize the whole list so that we can keep our position in the list + the active filter
 		tmp := make([]list.Item, len(m.entries))
 		for i := range m.entries {
 			tmp[i] = m.entries[i]
