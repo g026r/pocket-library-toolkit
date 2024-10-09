@@ -816,9 +816,6 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 			tmp[i] = m.entries[i]
 		}
 		cmd = m.gameList.SetItems(tmp) // TODO: This is really kind of ugly. Can we make it neater?
-		// if m.gameList.FilterState() != list.Unfiltered && len(m.gameList.VisibleItems()) == 0 {
-		// 	m.gameList.ResetFilter()
-		// }
 	}
 
 	if m.GenerateNew {
