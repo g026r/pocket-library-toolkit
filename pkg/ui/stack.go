@@ -17,6 +17,7 @@ const (
 	Initializing
 	FatalError
 	AboutScreen
+	PlaytimePrompt
 )
 
 // stack is a simple struct for keeping track of the screen we are currently on & the ones that came before it.
