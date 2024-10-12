@@ -47,6 +47,7 @@ type Config struct {
 	GenerateNew     bool `json:"generate_new"`
 	SaveUnmodified  bool `json:"save_unmodified"`
 	Backup          bool `json:"backup"`
+	CheckPlaytimes  bool `json:"check_playtimes"`
 }
 
 func (c Config) SaveConfig() error {
@@ -373,6 +374,7 @@ func LoadConfig() (Config, error) {
 		GenerateNew:     true,
 		SaveUnmodified:  false,
 		Backup:          true,
+		CheckPlaytimes:  true,
 	}
 	dir, err := os.Executable()
 	if err != nil {

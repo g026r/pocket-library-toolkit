@@ -42,11 +42,13 @@ const (
 	cfgGenNew
 	cfgUnmodified
 	cfgBackup
+	cfgPlaytimeCheck
 )
 
 var (
 	titleStyle        = lipgloss.NewStyle().MarginLeft(2).PaddingLeft(2).PaddingRight(2).Background(blue).Foreground(lipgloss.AdaptiveColor{Light: "#aaaaaa", Dark: "#111111"})
 	itemStyle         = lipgloss.NewStyle().PaddingLeft(4)
+	subduedStyle      = itemStyle.Foreground(lipgloss.AdaptiveColor{Light: "#9B9B9B", Dark: "#5C5C5C"})
 	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(blue)
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
@@ -92,6 +94,7 @@ var (
 		menuItem{"Generate complete system thumbnails", tmAll},
 		menuItem{"Back", back}}
 	configOptions = []list.Item{
+		menuItem{"Check played times on startup", cfgPlaytimeCheck},
 		menuItem{"Remove thumbnail when removing game", cfgRmThumbs},
 		menuItem{"Generate new thumbnail when editing game", cfgGenNew},
 		menuItem{"Backup previous files before saving", cfgBackup},
@@ -333,6 +336,8 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 			b = d.ShowAdd
 		case cfgBackup:
 			b = d.Backup
+		case cfgPlaytimeCheck:
+			b = d.CheckPlaytimes
 		default:
 			// If we don't know what this value is, return
 			return

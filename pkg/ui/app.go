@@ -34,10 +34,12 @@ type errMsg struct {
 }
 
 // TODO: Do I really need initDoneMsg & updateMsg?
-// TODO: Could what they do be done in their functions instead since there's no data passed in them?
+// TODO: Could what they're used to trigger be done in their functions instead?
 // initDoneMsg signals the initial loading is done.
 // it's used to stop the spinner, clear the screen, etc
-type initDoneMsg struct{}
+type initDoneMsg struct {
+	badPlaytimes bool
+}
 
 // updateMsg tells the program that an update requiring a progress bar is complete
 // it's used to trigger the "press any key" text
@@ -119,6 +121,16 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.percent = 0.0
 			return pop(m, msg)
 		}
+		if m.Peek() == PlaytimePrompt {
+			if strings.ToLower(msg.String()) == "y" {
+				var cmd, cmd2 tea.Cmd
+				m, cmd = pop(m, msg) // Need to pop first to get the prompt screen out of there
+				m, cmd2 = m.processMenuItem(libFix)
+				return m, tea.Batch(cmd, cmd2)
+			} else if strings.ToLower(msg.String()) == "n" || msg.String() == " " || msg.String() == "enter" {
+				return pop(m, msg)
+			}
+		}
 	case spinner.TickMsg:
 		if m.initialized {
 			break // initialized gets set as the last step of initialization. If it's true, we can stop the spinner.
@@ -154,7 +166,11 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case initDoneMsg:
 		m.initialized = true
 		m.Clear()
-		m.Push(MainMenu) // Finished initializing. Replace the stack with a new one containing only the main menu
+		if msg.badPlaytimes {
+			m.Push(PlaytimePrompt)
+		} else {
+			m.Push(MainMenu) // Finished initializing. Replace the stack with a new one containing only the main menu
+		}
 		return m, tea.ClearScreen
 	case errMsg:
 		m.err = msg.err
@@ -198,6 +214,8 @@ func (m *Model) View() (s string) {
 		s = m.inputView("Add Game")
 	case AboutScreen:
 		s = aboutView()
+	case PlaytimePrompt:
+		s = playTimePrompt()
 	default:
 		panic("Panic! At the View() call")
 	}
@@ -207,6 +225,15 @@ func (m *Model) View() (s string) {
 	}
 
 	return
+}
+
+func playTimePrompt() string {
+	s := fmt.Sprintf("  %s", titleStyle.Render("Unofficial Analogue Pocket library toolkit"))
+
+	s = fmt.Sprintf("%s\n\n%s", s, itemStyle.Render("Potentially invalid played times (> 4096 hours) detected. Do you wish to adjust them (y/N)?"))
+	s = fmt.Sprintf("%s\n\n%s", s, subduedStyle.Render("You can disable this automated check in the settings."))
+
+	return s
 }
 
 func aboutView() string {
@@ -270,7 +297,15 @@ func (m *Model) initSystem() tea.Msg {
 	//	}
 	//	m.internal = i
 
-	return initDoneMsg{}
+	if m.CheckPlaytimes {
+		for _, p := range m.playTimes {
+			if p.Played >= 0x01000000 {
+				return initDoneMsg{true}
+			}
+		}
+	}
+
+	return initDoneMsg{false}
 }
 
 // save is the opposite of init: save our data to disk
@@ -911,7 +946,7 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		m.Push(Waiting)
 		return m, tea.Batch(m.genFull, tickCmd())
-	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgUnmodified, cfgBackup:
+	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgUnmodified, cfgBackup, cfgPlaytimeCheck:
 		return m.configChange(key)
 	}
 
@@ -933,6 +968,8 @@ func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 		m.SaveUnmodified = !m.SaveUnmodified
 	case cfgBackup:
 		m.Backup = !m.Backup
+	case cfgPlaytimeCheck:
+		m.CheckPlaytimes = !m.CheckPlaytimes
 	}
 
 	return m, nil
