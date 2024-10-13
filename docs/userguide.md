@@ -15,6 +15,25 @@ General keys:
 * Go back a screen: `esc`
 * Force-quit without saving: `ctrl+C`
 
+### Troubleshooting
+
+Though the chances this application wrecks your library are low, it is doing something Analogue did not intend for users
+to do & as such is provided with no warranties.
+
+Though the application creates backups of any files it modifies by default, it is still recommended that you create a
+manual backup of the files in your `System/Played Games` and `System/Library/Images` directories before using.
+
+#### Problems with Your Pocket After Using
+
+If problems occur, first power down your Pocket. Then replace any modified files on the SD card (list.bin,
+playtimes.bin, *_thumbs.bin) with the last known good backups.
+
+If you no longer have backups, the only solution is to delete the files & start with a fresh library.
+
+#### Problems with the Application
+
+Please consider [opening an issue.](https://github.com/g026r/pocket-library-toolkit/issues)
+
 ### Main Menu
 
 ![main.png](images/main.png)
