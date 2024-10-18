@@ -1,9 +1,23 @@
 [
   {
     "system": 4,
+    "name": "Double Dragon",
+    "crc": "0xf4f848c2",
+    "signature": "0xfa3b0e9b",
+    "magic": "0x19a7"
+  },
+  {
+    "system": 4,
     "name": "Turma da Monica em O Resgate",
     "crc": "0x22cca9bb",
     "signature": "0x81c8bc58",
     "magic": "0x1b04"
+  },
+  {
+    "system": 4,
+    "name": "Zillion",
+    "crc": "0x7ba54510",
+    "signature": "0xa7e33a29",
+    "magic": "0x1b29"
   }
 ]
