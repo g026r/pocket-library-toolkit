@@ -188,6 +188,11 @@ func LoadPlaytimes(root fs.FS) (map[uint32]models.PlayTime, error) {
 		if _, err := v.ReadFrom(f); err != nil {
 			return nil, err
 		}
+		if p, ok := playtimes[sig]; ok && (p.Played > v.Played || p.Added < v.Added) {
+			// If you have duplicate playtimes, a side effect of adding a game with the same signature, keep the older or more played
+			// TODO: Can we find a way to allow duplicate signatures?
+			continue
+		}
 		playtimes[sig] = v
 	}
 
