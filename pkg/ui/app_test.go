@@ -27,7 +27,6 @@ func TestModel_playfix(t *testing.T) {
 		t.Errorf("Expected updateMsg got %v", msg)
 	}
 
-	// sut = <-sut.updates
 	for _, v := range sut.entries {
 		if v.Times.Played != 0x0000ABCD { // +v.SystemOffset() {
 			t.Errorf("0x%02x Expected 0x0000ABCD; got 0x%08x", v.Times.Sig, v.Times.Played)
@@ -67,8 +66,6 @@ func TestModel_prune(t *testing.T) {
 	default:
 		t.Errorf("Expected updateMsg got %v", msg)
 	}
-
-	// sut = <-sut.updates
 
 	if gba := sut.thumbnails[models.GBA]; gba.Modified || len(gba.Images) != 1 {
 		t.Errorf("GBA thumbnails should not have been modified {Modified: %t, Images: %d}", gba.Modified, len(gba.Images))
