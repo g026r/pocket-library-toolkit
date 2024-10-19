@@ -42,6 +42,7 @@ type Entry struct {
 	Sig   uint32
 	Magic uint32
 	Name  string
+	Times PlayTime
 }
 
 func (e Entry) FilterValue() string {
@@ -156,21 +157,27 @@ func extractName(src []byte) (string, error) {
 type PlayTime struct {
 	Added  uint32
 	Played uint32
+	// A bit redundant, as the entry this is associated with also stores the signature & system. But having these as
+	// part of it reduces the number of things we need to pass to methods
+	Sig uint32
 	System
 }
 
 func (p *PlayTime) ReadFrom(r io.Reader) (int64, error) {
 	var played uint32
-	if err := binary.Read(r, binary.LittleEndian, &p.Added); err != nil {
+	if err := binary.Read(r, binary.LittleEndian, &p.Sig); err != nil {
 		return 0, err
 	}
-	if err := binary.Read(r, binary.LittleEndian, &played); err != nil {
+	if err := binary.Read(r, binary.LittleEndian, &p.Added); err != nil {
 		return 4, err
+	}
+	if err := binary.Read(r, binary.LittleEndian, &played); err != nil {
+		return 8, err
 	}
 	p.System = FromPlayedTime(played)
 	p.Played = played - p.PlayOffset()
 
-	return 8, nil
+	return 12, nil
 }
 
 func (p *PlayTime) WriteTo(w io.Writer) (int64, error) {
@@ -185,14 +192,17 @@ func (p *PlayTime) WriteTo(w io.Writer) (int64, error) {
 		added = uint32(time.Now().Add(time.Second * time.Duration(offset)).Unix())
 	}
 
-	if err := binary.Write(w, binary.LittleEndian, added); err != nil {
+	if err := binary.Write(w, binary.LittleEndian, p.Sig); err != nil {
 		return 0, err
 	}
-	if err := binary.Write(w, binary.LittleEndian, played+p.PlayOffset()); err != nil {
+	if err := binary.Write(w, binary.LittleEndian, added); err != nil {
 		return 4, err
 	}
+	if err := binary.Write(w, binary.LittleEndian, played+p.PlayOffset()); err != nil {
+		return 8, err
+	}
 
-	return 8, nil
+	return 12, nil
 }
 
 func (p *PlayTime) FormatPlayTime() string {

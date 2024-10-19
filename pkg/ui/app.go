@@ -60,7 +60,6 @@ func tickCmd() tea.Cmd {
 type Model struct {
 	rootDir      string
 	entries      []models.Entry
-	playTimes    map[uint32]models.PlayTime
 	thumbnails   map[models.System]models.Thumbnails
 	internal     map[models.System][]models.Entry // internal is a map of all known possible entries, grouped by system. For eventual use with add & adv. editing, maybe.
 	*io.Config                                    // io.Config is a pointer as we need to be able to read this value in the configDelegate, which doesn't have access to Model
@@ -273,15 +272,16 @@ func (m *Model) initSystem() tea.Msg {
 	if err != nil {
 		return errMsg{err, true}
 	}
-	m.playTimes = p
 
-	if len(m.entries) < len(m.playTimes) { // We can have more entries than play times, but not the other way around.
-		return errMsg{fmt.Errorf("entry count mismatch between list.bin [%d] & playtimes.bin [%d]", len(m.entries), len(m.playTimes)), true}
+	if len(m.entries) < len(p) { // We can have more entries than play times, but not the other way around.
+		return errMsg{fmt.Errorf("entry count mismatch between list.bin [%d] & playtimes.bin [%d]", len(m.entries), len(p)), true}
 	}
-	for _, e := range m.entries { // Check to make certain that every entry has a play time entry
-		if _, ok := m.playTimes[e.Sig]; !ok { // entry without a play time
+	for i := range p {
+		if p[i].Sig != m.entries[i].Sig || p[i].System != m.entries[i].System {
+			// Confirm that the entries & play times lists are in the same order
 			return errMsg{fmt.Errorf("entry mismatch between list.bin & playtimes.bin"), true}
 		}
+		m.entries[i].Times = p[i]
 	}
 
 	t, err := io.LoadThumbs(rootFs)
@@ -298,8 +298,8 @@ func (m *Model) initSystem() tea.Msg {
 	//	m.internal = i
 
 	if m.CheckPlaytimes {
-		for _, p := range m.playTimes {
-			if p.Played >= 0x01000000 {
+		for _, p := range m.entries {
+			if p.Times.Played >= 0x01000000 {
 				return initDoneMsg{true}
 			}
 		}
@@ -378,7 +378,7 @@ func (m *Model) save() tea.Msg {
 
 	go func() { // Run these in a goroutine to avoid having to pass around the pointer to the progress value as that would require knowing the total as well
 		defer close(tick)
-		if err := io.SaveLibrary(tmpList, m.entries, tmpPlaytimes, m.playTimes, tick); err != nil {
+		if err := io.SaveLibrary(tmpList, tmpPlaytimes, m.entries, tick); err != nil {
 			tick <- err
 			return
 		}
@@ -409,11 +409,10 @@ func (m *Model) save() tea.Msg {
 // This fixes a known bug in the library via the assumption that nobody has played 4660+ hours of something.
 func (m *Model) playfix() tea.Msg {
 	ctr := 0.0
-	for k, v := range m.playTimes {
-		v.Played = v.Played &^ 0xFF000000
-		m.playTimes[k] = v
+	for i := range m.entries {
+		m.entries[i].Times.Played = m.entries[i].Times.Played &^ 0xFF000000
 		ctr++
-		m.percent = ctr / float64(len(m.playTimes))
+		m.percent = ctr / float64(len(m.entries))
 	}
 	m.percent = 1.0
 	return updateMsg{}
@@ -813,14 +812,11 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	e.Sig, _ = util.HexStringTransform(m.gameInput[sig].Value())
 	e.Magic, _ = util.HexStringTransform(m.gameInput[magic].Value())
 
-	// We only want to edit the played time *if* we're editing or we're adding & a played time doesn't yet exist
-	if p, ok := m.playTimes[e.Sig]; !ok || m.Peek() == EditScreen {
-		t, _ := parseDate(m.gameInput[added].Value())
-		p.Added = uint32(t.Unix())
-		p.Played = parsePlayTime(m.gameInput[play].Value())
-		p.System = e.System
-		m.playTimes[e.Sig] = p
-	}
+	t, _ := parseDate(m.gameInput[added].Value())
+	e.Times.Added = uint32(t.Unix())
+	e.Times.Played = parsePlayTime(m.gameInput[play].Value())
+	e.Times.System = e.System
+	e.Times.Sig = e.Sig
 
 	if m.Peek() == EditScreen {
 		if m.gameList.IsFiltered() {

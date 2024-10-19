@@ -75,7 +75,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 			if _, err := m.WriteString(fmt.Sprintf("- CRC32: `0x%08x`\n", e.Crc32)); err != nil {
 				return err
 			}
-			if _, err := m.WriteString(fmt.Sprintf("- Signature: `0x%08x`\n", e.Sig)); err != nil {
+			if _, err := m.WriteString(fmt.Sprintf("- Sig: `0x%08x`\n", e.Sig)); err != nil {
 				return err
 			}
 			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `0x%04x`\n\n", e.Magic)); err != nil {
