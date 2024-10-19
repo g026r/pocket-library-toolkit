@@ -146,13 +146,8 @@ var (
 			m.gameInput[crc].(*Input).SetValue(fmt.Sprintf("0x%08x", entry.Crc32))
 			m.gameInput[sig].(*Input).SetValue(fmt.Sprintf("0x%08x", entry.Sig))
 			m.gameInput[magic].(*Input).SetValue(fmt.Sprintf("0x%04x", entry.Magic))
-			// if p, ok := m.playTimes[entry.Sig]; ok {
 			m.gameInput[added].(*Input).SetValue(time.Unix(int64(entry.Times.Added), 0).UTC().Format("2006-01-02 15:04:05"))
 			m.gameInput[play].(*Input).SetValue(entry.Times.FormatPlayTime())
-			// } else {
-			// 	m.gameInput[added].(*Input).SetValue(time.Now().Format("2006-01-02 15:04"))
-			// 	m.gameInput[play].(*Input).SetValue("0h 0m 0s")
-			// }
 
 			for i := range m.gameInput {
 				if i != cancel && i != submit {

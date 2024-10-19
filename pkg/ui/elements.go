@@ -147,7 +147,7 @@ func NewInputs() []FocusBlurViewer {
 	inputs[crc] = &c
 
 	s := Input{textinput.New()}
-	s.Prompt = "Sig: "
+	s.Prompt = "Signature: "
 	s.Placeholder = "0x00000000"
 	s.Validate = hexValidate
 	s.PromptStyle = itemStyle
@@ -174,7 +174,7 @@ func NewInputs() []FocusBlurViewer {
 	inputs[added] = &a
 
 	p := Input{textinput.New()}
-	p.Prompt = "Times: "
+	p.Prompt = "Played: "
 	p.Placeholder = "0h 0m 0s"
 	p.Validate = playValidate
 	p.PromptStyle = itemStyle

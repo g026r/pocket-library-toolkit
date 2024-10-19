@@ -39,7 +39,6 @@ func TestModel_prune(t *testing.T) {
 	var p float64
 	sut :=
 		Model{
-			// updates: make(chan Model, 1),
 			entries: []models.Entry{{
 				System: models.GB,
 				Crc32:  0x12345678, // Present
