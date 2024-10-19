@@ -9,14 +9,16 @@ import (
 )
 
 func TestModel_playfix(t *testing.T) {
-	//t.Parallel()
+	t.Parallel()
 	var p float64
 	sut := Model{
-		//updates: make(chan Model, 1),
 		percent: p,
-		playTimes: map[uint32]models.PlayTime{
-			0x0: {Played: 0x0000ABCD}, 0x1: {Played: 0x0100ABCD}, 0x04: {Played: 0x0400ABCD}, 0xFF: {Played: 0xFF00ABCD},
-		}}
+		entries: []models.Entry{
+			{Times: models.PlayTime{Played: 0x0000ABCD}},
+			{Times: models.PlayTime{Played: 0x0100ABCD}},
+			{Times: models.PlayTime{Played: 0x0400ABCD}},
+			{Times: models.PlayTime{Played: 0xFF00ABCD}}},
+	}
 
 	msg := sut.playfix()
 	switch msg.(type) {
@@ -25,10 +27,9 @@ func TestModel_playfix(t *testing.T) {
 		t.Errorf("Expected updateMsg got %v", msg)
 	}
 
-	//sut = <-sut.updates
-	for k, v := range sut.playTimes {
-		if v.Played != 0x0000ABCD { //+v.SystemOffset() {
-			t.Errorf("0x%02x Expected 0x0000ABCD; got 0x%08x", k, v.Played)
+	for _, v := range sut.entries {
+		if v.Times.Played != 0x0000ABCD { // +v.SystemOffset() {
+			t.Errorf("0x%02x Expected 0x0000ABCD; got 0x%08x", v.Times.Sig, v.Times.Played)
 		}
 	}
 }
@@ -38,7 +39,6 @@ func TestModel_prune(t *testing.T) {
 	var p float64
 	sut :=
 		Model{
-			//updates: make(chan Model, 1),
 			entries: []models.Entry{{
 				System: models.GB,
 				Crc32:  0x12345678, // Present
@@ -65,8 +65,6 @@ func TestModel_prune(t *testing.T) {
 	default:
 		t.Errorf("Expected updateMsg got %v", msg)
 	}
-
-	//sut = <-sut.updates
 
 	if gba := sut.thumbnails[models.GBA]; gba.Modified || len(gba.Images) != 1 {
 		t.Errorf("GBA thumbnails should not have been modified {Modified: %t, Images: %d}", gba.Modified, len(gba.Images))

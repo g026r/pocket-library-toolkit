@@ -146,7 +146,7 @@ func TestLoadEntries(t *testing.T) {
 		t.Parallel()
 		e, err := LoadEntries(os.DirFS("../../testdata/valid/"))
 		if err != nil {
-			t.Errorf("Expected nil got %v", err)
+			t.Fatalf("Expected nil got %v", err)
 		}
 		if len(e) != 230 {
 			t.Errorf("Expected 299 entries; got %d", len(e))
@@ -252,6 +252,11 @@ func TestSaveLibrary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	for i := range e {
+		e[i].Times = p[i]
+	}
+
 	cmpPlay, err := dir.Open("System/Played Games/playtimes.bin")
 	if err != nil {
 		t.Fatal(err)
@@ -274,7 +279,7 @@ func TestSaveLibrary(t *testing.T) {
 
 	list := &bytes.Buffer{}
 	play := &bytes.Buffer{}
-	err = SaveLibrary(list, e, play, p, tick)
+	err = SaveLibrary(list, play, e, tick)
 	if err != nil {
 		t.Errorf("Expected nil but got %v", err)
 	}

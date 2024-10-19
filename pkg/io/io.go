@@ -152,7 +152,7 @@ func LoadEntries(root fs.FS) ([]models.Entry, error) {
 	return entries, nil
 }
 
-func LoadPlaytimes(root fs.FS) (map[uint32]models.PlayTime, error) {
+func LoadPlaytimes(root fs.FS) ([]models.PlayTime, error) {
 	pg, err := fs.Sub(root, "System/Played Games")
 	if err != nil {
 		return nil, err
@@ -177,23 +177,14 @@ func LoadPlaytimes(root fs.FS) (map[uint32]models.PlayTime, error) {
 		return nil, err
 	}
 
-	playtimes := make(map[uint32]models.PlayTime, num)
-	var sig uint32
-	for range num {
+	playtimes := make([]models.PlayTime, num)
+	for i := range num {
 		v := models.PlayTime{}
 
-		if err := binary.Read(f, binary.LittleEndian, &sig); err != nil {
-			return nil, err
-		}
 		if _, err := v.ReadFrom(f); err != nil {
 			return nil, err
 		}
-		if p, ok := playtimes[sig]; ok && (p.Played > v.Played || p.Added < v.Added) {
-			// If you have duplicate playtimes, a side effect of adding a game with the same signature, keep the older or more played
-			// TODO: Can we find a way to allow duplicate signatures?
-			continue
-		}
-		playtimes[sig] = v
+		playtimes[i] = v
 	}
 
 	return playtimes, nil
@@ -439,7 +430,7 @@ func LoadInternal() (map[models.System][]models.Entry, error) {
 	return library, nil
 }
 
-func SaveLibrary(l io.Writer, e []models.Entry, p io.Writer, t map[uint32]models.PlayTime, tick chan any) error {
+func SaveLibrary(l io.Writer, p io.Writer, e []models.Entry, tick chan any) error {
 	// Prep list.bin
 	if err := binary.Write(l, binary.BigEndian, ListHeader); err != nil {
 		return err
@@ -483,11 +474,7 @@ func SaveLibrary(l io.Writer, e []models.Entry, p io.Writer, t map[uint32]models
 
 		// list.bin & playtimes.bin must be recorded in the same order.
 		// So write the playtimes.bin info now as well.
-		if err := binary.Write(p, binary.LittleEndian, entry.Sig); err != nil {
-			return err
-		}
-		pt := t[entry.Sig]
-		if _, err := pt.WriteTo(p); err != nil {
+		if _, err := entry.Times.WriteTo(p); err != nil {
 			return err
 		}
 		if tick != nil {

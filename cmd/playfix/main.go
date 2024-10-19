@@ -18,10 +18,6 @@ func main() {
 	}
 	root := filepath.Dir(ex)
 
-	entries, err := io.LoadEntries(os.DirFS(root))
-	if err != nil {
-		log.Fatal(err)
-	}
 	p, err := io.LoadPlaytimes(os.DirFS(root))
 	if err != nil {
 		log.Fatal(err)
@@ -45,17 +41,13 @@ func main() {
 	if err := binary.Write(out, binary.BigEndian, io.PlaytimesHeader); err != nil {
 		log.Fatal(err)
 	}
-	if err := binary.Write(out, binary.LittleEndian, uint32(len(entries))); err != nil {
+	if err := binary.Write(out, binary.LittleEndian, uint32(len(p))); err != nil {
 		log.Fatal(err)
 	}
 
 	// Write entries in the same order as list.bin
-	for _, e := range entries {
-		tmp := p[e.Sig]
+	for _, tmp := range p {
 		tmp.Played = tmp.Played &^ 0xFF000000 // Fix the time. System prefix will get handled by WriteTo
-		if err := binary.Write(out, binary.LittleEndian, e.Sig); err != nil {
-			log.Fatal(err)
-		}
 		if _, err := tmp.WriteTo(out); err != nil {
 			log.Fatal(err)
 		}
