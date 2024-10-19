@@ -161,10 +161,11 @@ func TestPlayTime_WriteTo(t *testing.T) {
 	t.Run("values unset", func(t *testing.T) {
 		t.Parallel()
 		w := &bytes.Buffer{}
-		if _, err := (&PlayTime{System: NGPC, Sig: 0x00000000}).WriteTo(w); err != nil {
+		if _, err := (&PlayTime{System: NGPC, Sig: 0x12345678}).WriteTo(w); err != nil {
 			t.Fatalf("%v", err)
 		}
 		b := w.Bytes()
+		sig := binary.LittleEndian.Uint32(b[:4])
 		added := binary.LittleEndian.Uint32(b[4:8])
 		play := binary.LittleEndian.Uint32(b[8:])
 		_, offset := time.Now().Zone()
@@ -174,6 +175,9 @@ func TestPlayTime_WriteTo(t *testing.T) {
 		}
 		if play != 0x18000000 {
 			t.Errorf("Expected %08x; got %08x", 0x18000000, play)
+		}
+		if sig != 0x12345678 {
+			t.Errorf("Expected %08x; got %08x", 0x12345678, sig)
 		}
 	})
 }
