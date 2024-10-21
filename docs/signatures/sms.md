@@ -1,5 +1,11 @@
 # Sega Master System CRC32s, cartridge signatures, and magic numbers
 
+## Choplifter
+
+- CRC32: `0x4a21c15f`
+- Signature: `0xa42d8baf`
+- Magic Number: `0x198c`
+
 ## Double Dragon
 
 - CRC32: `0xf4f848c2`

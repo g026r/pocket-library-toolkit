@@ -1,6 +1,13 @@
 [
   {
     "system": 4,
+    "name": "Choplifter",
+    "crc": "0x4a21c15f",
+    "signature": "0xa42d8baf",
+    "magic": "0x198c"
+  },
+  {
+    "system": 4,
     "name": "Double Dragon",
     "crc": "0xf4f848c2",
     "signature": "0xfa3b0e9b",

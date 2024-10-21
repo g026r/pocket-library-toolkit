@@ -57,11 +57,11 @@ var (
 )
 
 // menuItem is used for each menu that isn't a game list
-// text represents the text to display
-// key is the result that should be checked to determine the item selected
 type menuItem struct {
+	// text represents the text to display
 	text string
-	key  menuKey
+	// key is the unique value used to determine the item selected
+	key menuKey
 }
 
 func (m menuItem) FilterValue() string {
@@ -251,8 +251,10 @@ type itemDelegate struct{}
 func (d itemDelegate) Height() int  { return 1 }
 func (d itemDelegate) Spacing() int { return 0 }
 
-// We're not using Update to process key presses as we need to update the Model in some cases & we don't have access to it.
-func (d itemDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd { return nil }
+func (d itemDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd {
+	// We're not using Update to process key presses as we need to update the Model in some cases & we don't have access to it.
+	return nil
+}
 func (d itemDelegate) Render(w goio.Writer, m list.Model, index int, listItem list.Item) {
 	i, ok := listItem.(fmt.Stringer)
 	if !ok {
@@ -303,9 +305,11 @@ type configDelegate struct {
 func (d configDelegate) Height() int  { return 1 }
 func (d configDelegate) Spacing() int { return 0 }
 
-// While we could conceivably use Update for the config menu, as we have a pointer to the object being updated, we're not
-// just to keep the menu processing code all in one spot
-func (d configDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd { return nil }
+func (d configDelegate) Update(_ tea.Msg, _ *list.Model) tea.Cmd {
+	// While we could conceivably use Update for the config menu, as we have a pointer to the object being updated, we're not
+	// going to sole to keep the menu processing code all in one spot
+	return nil
+}
 func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem list.Item) {
 	i, ok := listItem.(menuItem)
 	if !ok {
