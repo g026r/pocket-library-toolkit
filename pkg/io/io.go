@@ -21,7 +21,7 @@ import (
 	"github.com/g026r/pocket-toolkit/pkg/util"
 )
 
-// TODO: Uncomment this once I have a more complete dataset //go:embed resources/*.json
+//go:embed resources/*.json
 var jsons embed.FS
 
 const (

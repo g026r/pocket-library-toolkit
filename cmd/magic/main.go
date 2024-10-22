@@ -52,10 +52,15 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 
 		// Create the json files
 		d, err := os.Getwd()
+		md := fmt.Sprintf("%s/docs/signatures", d)
+		jsons := fmt.Sprintf("%s/pkg/io/resources", d)
 		if err != nil {
 			return err
 		}
-		j, err := os.Create(fmt.Sprintf("%s/%s.json", d, strings.ToLower(k.String())))
+		j, err := os.Create(fmt.Sprintf("%s/%s.json", jsons, strings.ToLower(k.String())))
+		if err != nil {
+			return err
+		}
 		if err := io.SaveInternal(j, v); err != nil {
 			_ = j.Close()
 			return err
@@ -63,7 +68,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 		_ = j.Close()
 
 		// Create the .md files
-		m, err := os.Create(fmt.Sprintf("%s/%s.md", d, strings.ToLower(k.String())))
+		m, err := os.Create(fmt.Sprintf("%s/%s.md", md, strings.ToLower(k.String())))
 		if err != nil {
 			return err
 		}

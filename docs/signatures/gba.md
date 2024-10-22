@@ -1,3 +1,5 @@
+# Game Boy Advance CRC32s, cartridge signatures, and magic numbers
+
 ## Advance Wars
 
 - CRC32: `0x26fd0fc9`
