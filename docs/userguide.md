@@ -104,11 +104,15 @@ The following options are available:
 
 Displays settings currently in use by the system. Ones marked with an `X` are active.
 
-1. **Remove thumbnail when removing game**: similar to running "prune orphaned thumbnails" immediately after
+1. **Check played times on startup**: when starting up, checks to ensure that no played game times are over 4096 hours.
+   If any are discovered, it asks the user if they want to fix the times.
+2. **Remove thumbnail when removing game**: similar to running "prune orphaned thumbnails" immediately after
    removing a game. If this value is not set, the thumbnails for any removed games will remain in the thumbnail caches.
 2. **Generate new thumbnail when editing game**: if set, editing a game will automatically generate a new thumbnail,
    overwriting any existing thumbnails. This is mostly useful for if you change the game's [CRC32 value.](#crc32)
-3. **Always save _thumbs.bin files, even if unmodified**: by default, the application only saves new copies of the _
+3. **Backup previous files before saving**: if set, creates backups of any files when creating new ones. These files
+   will be in the same location as the originals & named `<filename>_<date>_<time>.bak`.
+4. **Always save _thumbs.bin files, even if unmodified**: by default, the application only saves new copies of the _
    thumbs.bin files if it detects that the thumbnails have been modified during this session. If this setting is turned
    on it will save new copies of the files regardless of changes. Leaving this off will improve save performance for
    large libraries.
