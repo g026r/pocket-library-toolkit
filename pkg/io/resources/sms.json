@@ -15,6 +15,13 @@
   },
   {
     "system": 4,
+    "name": "Sonic the Hedgehog",
+    "crc": "0xb519e833",
+    "signature": "0xf150f769",
+    "magic": "0x1ab9"
+  },
+  {
+    "system": 4,
     "name": "Turma da Monica em O Resgate",
     "crc": "0x22cca9bb",
     "signature": "0x81c8bc58",
