@@ -6,3 +6,5 @@
   * [list.md](./list.md): the main library info file
   * [playtimes.md](./playtimes.md): containing dates added & time played
   * [thumbs.md](./thumbs.md): because the library images aren't stored in the same place as the game info images
+
+You can also view the list of cartridge signatures I've been able to collect [here](./signatures)
