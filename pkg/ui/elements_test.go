@@ -137,11 +137,18 @@ func Test_PlayValidate(t *testing.T) {
 	if err := playValidate("123"); err != nil {
 		t.Errorf("Expected nil but got %v", err)
 	}
+	if err := playValidate("1,230"); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
 
 	if err := playValidate("0h 0m 0s"); err != nil {
 		t.Errorf("Expected nil but got %v", err)
 	}
 	if err := playValidate("0h0m0s"); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
+
+	if err := playValidate("1,000h0m0s"); err != nil {
 		t.Errorf("Expected nil but got %v", err)
 	}
 
@@ -166,6 +173,10 @@ func Test_PlayValidate(t *testing.T) {
 	}
 
 	if err := playValidate("-1"); err == nil {
+		t.Error("Expected err but got nil")
+	}
+
+	if err := playValidate(fmt.Sprintf("%d", MAX_PLAYTIME+1)); err == nil {
 		t.Error("Expected err but got nil")
 	}
 
@@ -212,6 +223,9 @@ func Test_parsePlayTimes(t *testing.T) {
 	if p := parsePlayTime("123"); p != 123 {
 		t.Errorf("Expected %d; got %d", 123, p)
 	}
+	if p := parsePlayTime("1,230"); p != 1230 {
+		t.Errorf("Expected %d; got %d", 1230, p)
+	}
 	if p := parsePlayTime("123s"); p != 123 {
 		t.Errorf("Expected %d; got %d", 123, p)
 	}
@@ -220,6 +234,12 @@ func Test_parsePlayTimes(t *testing.T) {
 	}
 	if p := parsePlayTime("7h 40m 15s"); p != 27615 {
 		t.Errorf("Expected %d; got %d", 27615, p)
+	}
+	if p := parsePlayTime("7h 40m 1,500s"); p != 29100 {
+		t.Errorf("Expected %d; got %d", 29100, p)
+	}
+	if p := parsePlayTime("7d 40m 1,500s"); p != 0 { // Invalid value returns 0
+		t.Errorf("Expected %d; got %d", 0, p)
 	}
 }
 

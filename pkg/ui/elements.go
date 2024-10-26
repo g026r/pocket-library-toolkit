@@ -26,6 +26,8 @@ const (
 	play
 	submit
 	cancel
+
+	MAX_PLAYTIME = 0x03FFFFFF
 )
 
 var (
@@ -257,7 +259,7 @@ func parseDate(s string) (time.Time, error) {
 
 // parsePlayTime does no validation as it assumes that playValidate has already been run on the value
 func parsePlayTime(s string) uint32 {
-	s = strings.ReplaceAll(s, " ", "") // Remove all spaces, since we're allowing 0h0m0s, 0 h 0m 0s, 0h 0m 0s, etc
+	s = strings.ReplaceAll(strings.ReplaceAll(s, " ", ""), ",", "") // Remove all spaces, since we're allowing 0h0m0s, 0 h 0m 0s, 0h 0m 0s, etc
 	if s == "" {
 		return 0
 	}
@@ -289,7 +291,7 @@ func parsePlayTime(s string) uint32 {
 }
 
 func playValidate(s string) error {
-	s = strings.ReplaceAll(s, " ", "")
+	s = strings.ReplaceAll(strings.ReplaceAll(s, " ", ""), ",", "")
 	if s == "" { // If it's blank, we go with all 0s
 		return nil
 	}
@@ -298,12 +300,14 @@ func playValidate(s string) error {
 	// But it still has to be 0 or greater
 	if i, err := strconv.Atoi(s); err == nil && i < 0 {
 		return fmt.Errorf("Play time cannot be a negative value")
-	} else if err == nil {
-		return nil
+	} else if err != nil {
+		if !playRegex.MatchString(s) {
+			return fmt.Errorf("Play time should be in the form: 0h 0m 0s")
+		}
 	}
 
-	if !playRegex.MatchString(s) {
-		return fmt.Errorf("Play time should be in the form: 0h 0m 0s")
+	if parsePlayTime(s) > MAX_PLAYTIME {
+		return fmt.Errorf("Play time cannot be more than %d seconds total (%dh %dm %ds)", MAX_PLAYTIME, 18641, 21, 3)
 	}
 
 	return nil
