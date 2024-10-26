@@ -18,6 +18,12 @@
 - Signature: `0xf150f769`
 - Magic Number: `0x1ab9`
 
+## Sonic the Hedgehog 2
+
+- CRC32: `0x5b3b922c`
+- Signature: `0xf6a1d62e`
+- Magic Number: `0x1abb`
+
 ## Turma da Monica em O Resgate
 
 - CRC32: `0x22cca9bb`
