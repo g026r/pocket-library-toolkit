@@ -6,6 +6,12 @@
 - Signature: `0x74e36925`
 - Magic Number: `0x1b40`
 
+## Faselei! (Europe)
+
+- CRC32: `0xe705e30e`
+- Signature: `0xc23983a1`
+- Magic Number: `0x1b42`
+
 ## Metal Slug: 1st Mission
 
 - CRC32: `0x4ff91807`
