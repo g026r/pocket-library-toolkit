@@ -8,6 +8,13 @@
   },
   {
     "system": 6,
+    "name": "Faselei!",
+    "crc": "0xe705e30e",
+    "signature": "0xc23983a1",
+    "magic": "0x1b42"
+  },
+  {
+    "system": 6,
     "name": "Metal Slug: 1st Mission",
     "crc": "0x4ff91807",
     "signature": "0x1725730d",
