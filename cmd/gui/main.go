@@ -5,7 +5,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/g026r/pocket-toolkit/pkg/ui"
+	"github.com/g026r/pocket-library-toolkit/pkg/ui"
 )
 
 func main() {
