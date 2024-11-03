@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/g026r/pocket-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/io"
 )
 
 // main provides a simple application to fix played times & nothing else.
