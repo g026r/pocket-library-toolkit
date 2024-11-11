@@ -351,6 +351,13 @@
   },
   {
     "system": 0,
+    "name": "Kaeru no Tame ni Kane wa Naru",
+    "crc": "0xc18cd57a",
+    "signature": "0x344575bf",
+    "magic": "0x038d"
+  },
+  {
+    "system": 0,
     "name": "Kirby no Pinball",
     "crc": "0x8b44fb7d",
     "signature": "0xb64c97f0",
