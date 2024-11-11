@@ -300,6 +300,12 @@
 - Signature: `0xa3eaa843`
 - Magic Number: `0x036b`
 
+## Kaeru no Tame ni Kane wa Naru
+
+- CRC32: `0xc18cd57a`
+- Signature: `0x344575bf`
+- Magic Number: `0x038d`
+
 ## Kirby no Pinball
 
 - CRC32: `0x8b44fb7d`
