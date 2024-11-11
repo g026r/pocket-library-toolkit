@@ -17,8 +17,8 @@ import (
 
 	"github.com/disintegration/imaging"
 
-	"github.com/g026r/pocket-toolkit/pkg/models"
-	"github.com/g026r/pocket-toolkit/pkg/util"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/util"
 )
 
 //go:embed resources/*.json

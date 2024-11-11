@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/g026r/pocket-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
 )
 
 func Test_SysValidate(t *testing.T) {

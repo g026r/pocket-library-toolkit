@@ -20,9 +20,9 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/g026r/pocket-toolkit/pkg/io"
-	"github.com/g026r/pocket-toolkit/pkg/models"
-	"github.com/g026r/pocket-toolkit/pkg/util"
+	"github.com/g026r/pocket-library-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/util"
 )
 
 //go:embed version.txt

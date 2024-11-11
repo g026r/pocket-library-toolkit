@@ -4,8 +4,8 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/g026r/pocket-toolkit/pkg/io"
-	"github.com/g026r/pocket-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
 )
 
 func TestModel_playfix(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/g026r/pocket-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/io"
 )
 
 func Test_GenerateGameList(t *testing.T) {
