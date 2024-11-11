@@ -147,8 +147,7 @@ func LoadEntries(root fs.FS) ([]models.Entry, error) {
 		}
 	}
 
-	// Should already be sorted. But just in case.
-	slices.SortFunc(entries, models.EntrySort)
+	// Don't sort just yet as we need to associate these with the playtimes.bin entries. So just return as is.
 	return entries, nil
 }
 

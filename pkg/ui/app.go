@@ -284,6 +284,9 @@ func (m *Model) initSystem() tea.Msg {
 		m.entries[i].Times = p[i]
 	}
 
+	// Now that list.bin & playtimes.bin have been synced, we can sort them.
+	slices.SortFunc(m.entries, models.EntrySort)
+
 	t, err := io.LoadThumbs(rootFs)
 	if err != nil {
 		return errMsg{err, true}

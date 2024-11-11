@@ -15,16 +15,16 @@ var EntrySort = func(a, b Entry) int {
 	if val := cmp.Compare(strings.ToLower(a.Name), strings.ToLower(b.Name)); val != 0 {
 		return val
 	}
-	if val := cmp.Compare(a.Crc32, b.Crc32); val != 0 {
+	if val := cmp.Compare(a.System, b.System); val != 0 {
 		return val
 	}
 	if val := cmp.Compare(a.Sig, b.Sig); val != 0 {
 		return val
 	}
-	if val := cmp.Compare(a.Magic, b.Magic); val != 0 {
+	if val := cmp.Compare(a.Crc32, b.Crc32); val != 0 {
 		return val
 	}
-	return cmp.Compare(a.System, b.System) // Technically system & magic number should be tied together. But you never know.
+	return cmp.Compare(a.Magic, b.Magic) // Technically system & magic number should be tied together. But you never know.
 }
 
 type Thumbnails struct {
