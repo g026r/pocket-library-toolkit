@@ -5,4 +5,3 @@
 - CRC32: `0x4b1eed05`
 - Signature: `0x8644f66f`
 - Magic Number: `0x1b30`
-
