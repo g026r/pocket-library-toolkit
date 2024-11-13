@@ -9,9 +9,23 @@
   {
     "system": 6,
     "name": "Faselei!",
+    "crc": "0x8f585838",
+    "signature": "0x01df72bb",
+    "magic": "0x1b41"
+  },
+  {
+    "system": 6,
+    "name": "Faselei!",
     "crc": "0xe705e30e",
     "signature": "0xc23983a1",
     "magic": "0x1b42"
+  },
+  {
+    "system": 6,
+    "name": "King of Fighters R-2: Pocket Fighting Series",
+    "crc": "0x47e490a2",
+    "signature": "0x3c5f1121",
+    "magic": "0x1b47"
   },
   {
     "system": 6,
@@ -40,6 +54,27 @@
     "crc": "0x67e6dc56",
     "signature": "0x925c9d1d",
     "magic": "0x1b6a"
+  },
+  {
+    "system": 6,
+    "name": "Puzzle Bobble Mini (v1.10)",
+    "crc": "0xe69eae3e",
+    "signature": "0x8bd49222",
+    "magic": "0x1b71"
+  },
+  {
+    "system": 6,
+    "name": "SNK vs. Capcom: Card Fighters' Clash: Capcom Version",
+    "crc": "0x80ce137b",
+    "signature": "0x5cab59c1",
+    "magic": "0x1b7d"
+  },
+  {
+    "system": 6,
+    "name": "SNK vs. Capcom: Card Fighters' Clash: SNK Version",
+    "crc": "0x94b63a97",
+    "signature": "0xb68083ab",
+    "magic": "0x1b7e"
   },
   {
     "system": 6,

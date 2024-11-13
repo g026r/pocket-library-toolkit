@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "system": 5,
+    "name": "Pocket Tennis - Pocket Sports Series",
+    "crc": "0x4b1eed05",
+    "signature": "0x8644f66f",
+    "magic": "0x1b30"
+  }
+]

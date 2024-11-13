@@ -1,6 +1,13 @@
 [
   {
     "system": 0,
+    "name": "Super Mario Land 2: 6 Golden Coins",
+    "crc": "0x635a9112",
+    "signature": "0x3738e6f5",
+    "magic": "0x0010"
+  },
+  {
+    "system": 0,
     "name": "Super R.C. Pro-Am",
     "crc": "0x7960f33f",
     "signature": "0x4c453436",
@@ -71,10 +78,52 @@
   },
   {
     "system": 0,
+    "name": "Bart Simpson's Escape from Camp Deadly",
+    "crc": "0x5546a382",
+    "signature": "0x73e96f62",
+    "magic": "0x0088"
+  },
+  {
+    "system": 0,
     "name": "Batman: Return of the Joker",
     "crc": "0x5124bbec",
     "signature": "0x49841f02",
     "magic": "0x008a"
+  },
+  {
+    "system": 0,
+    "name": "Battletoads",
+    "crc": "0xb0c3361b",
+    "signature": "0xc78367f8",
+    "magic": "0x0091"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong",
+    "crc": "0xedab3378",
+    "signature": "0xac0d7c12",
+    "magic": "0x00df"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong Land",
+    "crc": "0x49dc0d37",
+    "signature": "0x732d15ca",
+    "magic": "0x00e0"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong Land 2",
+    "crc": "0x2827e5d4",
+    "signature": "0xbfcc1d70",
+    "magic": "0x00e1"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong Land III",
+    "crc": "0xb40c159c",
+    "signature": "0x28724549",
+    "magic": "0x00e3"
   },
   {
     "system": 0,
@@ -120,6 +169,13 @@
   },
   {
     "system": 0,
+    "name": "Game Boy Camera",
+    "crc": "0x4640909f",
+    "signature": "0xc54ac95a",
+    "magic": "0x010e"
+  },
+  {
+    "system": 0,
     "name": "Gargoyle's Quest",
     "crc": "0x0030e61f",
     "signature": "0xb5f8cf1d",
@@ -159,6 +215,13 @@
     "crc": "0x40f25740",
     "signature": "0x36f4016f",
     "magic": "0x0151"
+  },
+  {
+    "system": 0,
+    "name": "Kirby's Dream Land 2",
+    "crc": "0x8dc07c35",
+    "signature": "0x37477393",
+    "magic": "0x0152"
   },
   {
     "system": 0,
@@ -243,6 +306,13 @@
     "crc": "0x5a1a20f3",
     "signature": "0xe2eb4e33",
     "magic": "0x025b"
+  },
+  {
+    "system": 0,
+    "name": "Cave Noire",
+    "crc": "0x44256a2f",
+    "signature": "0x7f633f5f",
+    "magic": "0x026a"
   },
   {
     "system": 0,

@@ -1,5 +1,11 @@
 # Game Boy CRC32s, cartridge signatures, and magic numbers
 
+## Super Mario Land 2: 6 Golden Coins
+
+- CRC32: `0x635a9112`
+- Signature: `0x3738e6f5`
+- Magic Number: `0x0010`
+
 ## Super R.C. Pro-Am
 
 - CRC32: `0x7960f33f`
@@ -60,11 +66,47 @@
 - Signature: `0x83127d5d`
 - Magic Number: `0x0086`
 
+## Bart Simpson's Escape from Camp Deadly
+
+- CRC32: `0x5546a382`
+- Signature: `0x73e96f62`
+- Magic Number: `0x0088`
+
 ## Batman: Return of the Joker
 
 - CRC32: `0x5124bbec`
 - Signature: `0x49841f02`
 - Magic Number: `0x008a`
+
+## Battletoads
+
+- CRC32: `0xb0c3361b`
+- Signature: `0xc78367f8`
+- Magic Number: `0x0091`
+
+## Donkey Kong
+
+- CRC32: `0xedab3378`
+- Signature: `0xac0d7c12`
+- Magic Number: `0x00df`
+
+## Donkey Kong Land
+
+- CRC32: `0x49dc0d37`
+- Signature: `0x732d15ca`
+- Magic Number: `0x00e0`
+
+## Donkey Kong Land 2
+
+- CRC32: `0x2827e5d4`
+- Signature: `0xbfcc1d70`
+- Magic Number: `0x00e1`
+
+## Donkey Kong Land III
+
+- CRC32: `0xb40c159c`
+- Signature: `0x28724549`
+- Magic Number: `0x00e3`
 
 ## DuckTales
 
@@ -102,6 +144,12 @@
 - Signature: `0xb41976ae`
 - Magic Number: `0x0101`
 
+## Game Boy Camera
+
+- CRC32: `0x4640909f`
+- Signature: `0xc54ac95a`
+- Magic Number: `0x010e`
+
 ## Gargoyle's Quest
 
 - CRC32: `0x0030e61f`
@@ -137,6 +185,12 @@
 - CRC32: `0x40f25740`
 - Signature: `0x36f4016f`
 - Magic Number: `0x0151`
+
+## Kirby's Dream Land 2
+
+- CRC32: `0x8dc07c35`
+- Signature: `0x37477393`
+- Magic Number: `0x0152`
 
 ## The Legend of Zelda: Link's Awakening
 
@@ -209,6 +263,12 @@
 - CRC32: `0x5a1a20f3`
 - Signature: `0xe2eb4e33`
 - Magic Number: `0x025b`
+
+## Cave Noire
+
+- CRC32: `0x44256a2f`
+- Signature: `0x7f633f5f`
+- Magic Number: `0x026a`
 
 ## Contra
 
@@ -473,3 +533,4 @@
 - CRC32: `0x75e1d268`
 - Signature: `0x86575c60`
 - Magic Number: `0x0618`
+
