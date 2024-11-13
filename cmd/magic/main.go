@@ -73,8 +73,11 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 			return err
 		}
 		defer m.Close() // defer exists for the early returns. We'll close it manually at the end of the loop as well.
+		if _, err := m.WriteString(fmt.Sprintf("# %s CRC32s, cartridge signatures, and magic numbers\n", k.FullString())); err != nil {
+			return err
+		}
 		for _, e := range v {
-			if _, err := m.WriteString(fmt.Sprintf("## %s\n\n", e.Name)); err != nil {
+			if _, err := m.WriteString(fmt.Sprintf("\n## %s\n\n", e.Name)); err != nil {
 				return err
 			}
 			if _, err := m.WriteString(fmt.Sprintf("- CRC32: `0x%08x`\n", e.Crc32)); err != nil {
@@ -83,7 +86,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 			if _, err := m.WriteString(fmt.Sprintf("- Signature: `0x%08x`\n", e.Sig)); err != nil {
 				return err
 			}
-			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `0x%04x`\n\n", e.Magic)); err != nil {
+			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `0x%04x`\n", e.Magic)); err != nil {
 				return err
 			}
 		}
