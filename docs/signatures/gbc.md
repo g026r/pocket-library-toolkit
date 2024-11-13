@@ -36,6 +36,12 @@
 - Signature: `0xc8271fcb`
 - Magic Number: `0x0763`
 
+## Donkey Kong Country
+
+- CRC32: `0xb1743477`
+- Signature: `0x3579ef5e`
+- Magic Number: `0x0764`
+
 ## Doraemon no Quiz Boy
 
 - CRC32: `0x3bbf9ea8`
@@ -126,11 +132,35 @@
 - Signature: `0xa4982ba3`
 - Magic Number: `0x0936`
 
+## Perfect Dark
+
+- CRC32: `0x0601bef6`
+- Signature: `0xa274a58c`
+- Magic Number: `0x09cb`
+
 ## Pokemon: Gold Version
 
 - CRC32: `0x6bde3c3e`
 - Signature: `0x87cc1ad8`
 - Magic Number: `0x09fb`
+
+## Pokemon: Silver Version
+
+- CRC32: `0x8ad48636`
+- Signature: `0xae0b0b80`
+- Magic Number: `0x09ff`
+
+## Pokemon Pinball
+
+- CRC32: `0x03ce8d9a`
+- Signature: `0x54d0f986`
+- Magic Number: `0x0a0b`
+
+## Pokemon Trading Card Game
+
+- CRC32: `0x81069d53`
+- Signature: `0x8d570590`
+- Magic Number: `0x0a12`
 
 ## Rocman X Gold + 4 in 1
 
@@ -144,8 +174,39 @@
 - Signature: `0x2573fb55`
 - Magic Number: `0x0a8c`
 
+## Shantae
+
+- CRC32: `0xe994b59b`
+- Signature: `0xa64c02f5`
+- Magic Number: `0x0abf`
+
+## Star Wars Episode I: Racer
+
+- CRC32: `0x0ebc5758`
+- Signature: `0x94322471`
+- Magic Number: `0x0af6`
+
+## Super Mario Bros. Deluxe
+
+- CRC32: `0x90ab047b`
+- Signature: `0x67cc9064`
+- Magic Number: `0x0b0b`
+
+## Tetris DX
+
+- CRC32: `0x69989152`
+- Signature: `0xa7ff9fe0`
+- Magic Number: `0x0b3b`
+
+## Toki Tori
+
+- CRC32: `0x0a0f9289`
+- Signature: `0x9ea0c519`
+- Magic Number: `0x0b4d`
+
 ## Wario Land 3
 
 - CRC32: `0x480d0259`
 - Signature: `0xbf38ca32`
 - Magic Number: `0x0ba1`
+

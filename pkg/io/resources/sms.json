@@ -15,6 +15,13 @@
   },
   {
     "system": 4,
+    "name": "Sonic Chaos",
+    "crc": "0xaedf3bdf",
+    "signature": "0x72433d43",
+    "magic": "0x1ab7"
+  },
+  {
+    "system": 4,
     "name": "Sonic the Hedgehog",
     "crc": "0xb519e833",
     "signature": "0xf150f769",
