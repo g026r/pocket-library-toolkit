@@ -47,6 +47,31 @@ func (s System) String() string {
 	}
 }
 
+func (s System) FullString() string {
+	switch s {
+	case GB:
+		return "Game Boy"
+	case GBC:
+		return "Game Boy Color"
+	case GBA:
+		return "Game Boy Advance"
+	case GG:
+		return "Game Gear"
+	case SMS:
+		return "Sega Master System"
+	case NGP:
+		return "Neo Geo Pocket"
+	case NGPC:
+		return "Neo Geo Pocket Color"
+	case PCE:
+		return "PC Engine"
+	case Lynx:
+		return "Lynx"
+	default:
+		return "unknown"
+	}
+}
+
 // ThumbFile maps certain systems that share thumbs.bin with others to the correct system
 func (s System) ThumbFile() System {
 	switch s {

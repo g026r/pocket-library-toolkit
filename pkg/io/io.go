@@ -546,6 +546,8 @@ func SaveInternal(i io.Writer, entries []models.Entry) error {
 		return err
 	}
 
+	b = append(b, '\n')
+
 	_, err = i.Write(b)
 
 	return err
