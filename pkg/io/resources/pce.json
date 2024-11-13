@@ -8,10 +8,24 @@
   },
   {
     "system": 7,
+    "name": "Adventure Island",
+    "crc": "0x8e71d4f3",
+    "signature": "0x2e438154",
+    "magic": "0x1b96"
+  },
+  {
+    "system": 7,
     "name": "Aero Blasters",
     "crc": "0x25be2b81",
     "signature": "0xbc8f9af1",
     "magic": "0x1b97"
+  },
+  {
+    "system": 7,
+    "name": "After Burner II",
+    "crc": "0xca72a828",
+    "signature": "0x9efe7948",
+    "magic": "0x1b99"
   },
   {
     "system": 7,
@@ -22,10 +36,52 @@
   },
   {
     "system": 7,
+    "name": "Alien Crush",
+    "crc": "0xea488494",
+    "signature": "0x82d7d21d",
+    "magic": "0x1b9d"
+  },
+  {
+    "system": 7,
+    "name": "Ankoku Densetsu",
+    "crc": "0xcacc06fb",
+    "signature": "0x90405b87",
+    "magic": "0x1ba0"
+  },
+  {
+    "system": 7,
+    "name": "Aoi Blink",
+    "crc": "0x08a09b9a",
+    "signature": "0xd272cb40",
+    "magic": "0x1ba1"
+  },
+  {
+    "system": 7,
     "name": "Atomic Robo-Kid Special",
     "crc": "0xdd175efd",
     "signature": "0x2fec6b12",
     "magic": "0x1ba5"
+  },
+  {
+    "system": 7,
+    "name": "Battle Lode Runner",
+    "crc": "0x59e44f45",
+    "signature": "0x67372018",
+    "magic": "0x1bad"
+  },
+  {
+    "system": 7,
+    "name": "Blazing Lazers",
+    "crc": "0xb4a1b0f6",
+    "signature": "0xc075b6e4",
+    "magic": "0x1bb2"
+  },
+  {
+    "system": 7,
+    "name": "Bloody Wolf",
+    "crc": "0x37baf6bc",
+    "signature": "0xbba036e5",
+    "magic": "0x1bb4"
   },
   {
     "system": 7,
@@ -71,6 +127,20 @@
   },
   {
     "system": 7,
+    "name": "Burning Angels",
+    "crc": "0xd233c05a",
+    "signature": "0x4d60f717",
+    "magic": "0x1bc6"
+  },
+  {
+    "system": 7,
+    "name": "Cadash",
+    "crc": "0x8dc0d85f",
+    "signature": "0x19170c42",
+    "magic": "0x1bc8"
+  },
+  {
+    "system": 7,
     "name": "Cyber Core",
     "crc": "0xa98d276a",
     "signature": "0x029bf33f",
@@ -113,6 +183,13 @@
   },
   {
     "system": 7,
+    "name": "Download",
+    "crc": "0x85101c20",
+    "signature": "0xacfe97e4",
+    "magic": "0x1bf1"
+  },
+  {
+    "system": 7,
     "name": "Dragon Spirit",
     "crc": "0x01a76935",
     "signature": "0x2838ee71",
@@ -127,6 +204,13 @@
   },
   {
     "system": 7,
+    "name": "Dungeon Explorer",
+    "crc": "0x1b1a80a2",
+    "signature": "0x7324ea25",
+    "magic": "0x1bf9"
+  },
+  {
+    "system": 7,
     "name": "F1 Circus",
     "crc": "0xe14dee08",
     "signature": "0x72948b84",
@@ -138,6 +222,13 @@
     "crc": "0x72cb0f9d",
     "signature": "0x387d85e2",
     "magic": "0x1c05"
+  },
+  {
+    "system": 7,
+    "name": "Final Blaster",
+    "crc": "0xc90971ba",
+    "signature": "0x7462f44a",
+    "magic": "0x1c08"
   },
   {
     "system": 7,
@@ -176,6 +267,13 @@
   },
   {
     "system": 7,
+    "name": "Genpei Toumaden - Kan no Ni",
+    "crc": "0x8793758c",
+    "signature": "0xd1c02548",
+    "magic": "0x1c1d"
+  },
+  {
+    "system": 7,
     "name": "Gradius",
     "crc": "0x0517da65",
     "signature": "0x9bd6124b",
@@ -190,10 +288,31 @@
   },
   {
     "system": 7,
+    "name": "Hanii in the Sky",
+    "crc": "0xbf3e2cc7",
+    "signature": "0xe79cbcd5",
+    "magic": "0x1c26"
+  },
+  {
+    "system": 7,
+    "name": "Hanii on the Road",
+    "crc": "0x9897fa86",
+    "signature": "0xcfd79a62",
+    "magic": "0x1c27"
+  },
+  {
+    "system": 7,
     "name": "Heavy Unit",
     "crc": "0xeb923de5",
     "signature": "0x626a1972",
     "magic": "0x1c29"
+  },
+  {
+    "system": 7,
+    "name": "Honoo no Toukyuuji - Dodge Danpei",
+    "crc": "0xb01ee703",
+    "signature": "0xb2ee2e9b",
+    "magic": "0x1c2d"
   },
   {
     "system": 7,
@@ -218,6 +337,20 @@
   },
   {
     "system": 7,
+    "name": "Kaizou Choujin Shubibinman",
+    "crc": "0xa9084d6e",
+    "signature": "0x20878cbb",
+    "magic": "0x1c3b"
+  },
+  {
+    "system": 7,
+    "name": "Kaizou Choujin Shubibinman 2 - Aratanaru Teki",
+    "crc": "0x109ba474",
+    "signature": "0x39555a63",
+    "magic": "0x1c3c"
+  },
+  {
+    "system": 7,
     "name": "Keith Courage in Alpha Zones",
     "crc": "0x474d7a72",
     "signature": "0xfedd366b",
@@ -229,6 +362,27 @@
     "crc": "0xc0cb5add",
     "signature": "0x4741fd87",
     "magic": "0x1c41"
+  },
+  {
+    "system": 7,
+    "name": "Kyuukyoku Tiger",
+    "crc": "0x09509315",
+    "signature": "0x70e2dc2a",
+    "magic": "0x1c4c"
+  },
+  {
+    "system": 7,
+    "name": "Makyou Densetsu",
+    "crc": "0xd4c5af46",
+    "signature": "0x30ff63ab",
+    "magic": "0x1c5f"
+  },
+  {
+    "system": 7,
+    "name": "Momotarou Katsugeki",
+    "crc": "0x345f43e9",
+    "signature": "0xccd1a86d",
+    "magic": "0x1c69"
   },
   {
     "system": 7,
@@ -253,6 +407,20 @@
   },
   {
     "system": 7,
+    "name": "Ninja Spirit",
+    "crc": "0xde8af1c1",
+    "signature": "0x6c2052d5",
+    "magic": "0x1c81"
+  },
+  {
+    "system": 7,
+    "name": "Ordyne",
+    "crc": "0x8c565cb6",
+    "signature": "0xde0dda71",
+    "magic": "0x1c85"
+  },
+  {
+    "system": 7,
     "name": "Out Run",
     "crc": "0xe203f223",
     "signature": "0xbc6c5150",
@@ -260,10 +428,24 @@
   },
   {
     "system": 7,
+    "name": "P-47 - The Freedom Fighter",
+    "crc": "0x7632db90",
+    "signature": "0x1df9f5a9",
+    "magic": "0x1c8a"
+  },
+  {
+    "system": 7,
     "name": "Pac-Land",
     "crc": "0x14fad3ba",
     "signature": "0x25696e56",
     "magic": "0x1c8b"
+  },
+  {
+    "system": 7,
+    "name": "Paranoia",
+    "crc": "0x9893e0e6",
+    "signature": "0x30f0b4d1",
+    "magic": "0x1c8e"
   },
   {
     "system": 7,
@@ -278,6 +460,27 @@
     "crc": "0x647718f9",
     "signature": "0x7dec5df2",
     "magic": "0x1c91"
+  },
+  {
+    "system": 7,
+    "name": "PC Denjin - Punkic Cyborgs",
+    "crc": "0x740491c2",
+    "signature": "0x4300579e",
+    "magic": "0x1c92"
+  },
+  {
+    "system": 7,
+    "name": "PC Genjin - Pithecanthropus Computerurus",
+    "crc": "0x2cb5cd55",
+    "signature": "0x5cf2eaef",
+    "magic": "0x1c97"
+  },
+  {
+    "system": 7,
+    "name": "PC Genjin 2 - Pithecanthropus Computerurus",
+    "crc": "0x3028f7ca",
+    "signature": "0xcbec7aa7",
+    "magic": "0x1c98"
   },
   {
     "system": 7,
@@ -309,6 +512,20 @@
   },
   {
     "system": 7,
+    "name": "Psycho Chaser",
+    "crc": "0x03883ee8",
+    "signature": "0x377c09a7",
+    "magic": "0x1cac"
+  },
+  {
+    "system": 7,
+    "name": "R-Type",
+    "crc": "0x91ce5156",
+    "signature": "0x41032bdc",
+    "magic": "0x1cb1"
+  },
+  {
+    "system": 7,
     "name": "R-Type I",
     "crc": "0xcec3d28a",
     "signature": "0x0163fb7b",
@@ -320,6 +537,20 @@
     "crc": "0xf207ecae",
     "signature": "0xb1d6a166",
     "magic": "0x1cb4"
+  },
+  {
+    "system": 7,
+    "name": "Rabio Lepus Special",
+    "crc": "0xd8373de6",
+    "signature": "0xfe48ff59",
+    "magic": "0x1cb5"
+  },
+  {
+    "system": 7,
+    "name": "Raiden",
+    "crc": "0x850829f2",
+    "signature": "0x00845d3d",
+    "magic": "0x1cb7"
   },
   {
     "system": 7,
@@ -351,10 +582,24 @@
   },
   {
     "system": 7,
+    "name": "Sinistron",
+    "crc": "0x4f6e2dbd",
+    "signature": "0xce5457d3",
+    "magic": "0x1ccd"
+  },
+  {
+    "system": 7,
     "name": "Soldier Blade",
     "crc": "0x8420b12b",
     "signature": "0xcba7ac1e",
     "magic": "0x1ccf"
+  },
+  {
+    "system": 7,
+    "name": "Son Son II",
+    "crc": "0xd7921df2",
+    "signature": "0x77370ee3",
+    "magic": "0x1cd3"
   },
   {
     "system": 7,
@@ -365,6 +610,27 @@
   },
   {
     "system": 7,
+    "name": "Space Invaders - Fukkatsu no Hi",
+    "crc": "0x99496db3",
+    "signature": "0x4e733c1c",
+    "magic": "0x1cd8"
+  },
+  {
+    "system": 7,
+    "name": "Splatterhouse",
+    "crc": "0x6b319457",
+    "signature": "0x500204bd",
+    "magic": "0x1cdb"
+  },
+  {
+    "system": 7,
+    "name": "Street Fighter II' - Champion Edition",
+    "crc": "0xd15cb6bb",
+    "signature": "0xc9711e0b",
+    "magic": "0x1cde"
+  },
+  {
+    "system": 7,
     "name": "Super Star Soldier",
     "crc": "0x5d0e3105",
     "signature": "0x0eef6faa",
@@ -372,10 +638,38 @@
   },
   {
     "system": 7,
+    "name": "Takahashi Meijin no Shin Bouken-jima",
+    "crc": "0xe415ea19",
+    "signature": "0x5ca23939",
+    "magic": "0x1cea"
+  },
+  {
+    "system": 7,
     "name": "Thunder Blade",
     "crc": "0xddc3e809",
     "signature": "0x99e5921a",
     "magic": "0x1cf2"
+  },
+  {
+    "system": 7,
+    "name": "Tora e no Michi",
+    "crc": "0x82ae3b16",
+    "signature": "0x2c5cee9a",
+    "magic": "0x1cf9"
+  },
+  {
+    "system": 7,
+    "name": "Tricky Kick",
+    "crc": "0x48e6fd34",
+    "signature": "0x2a5f020e",
+    "magic": "0x1cfd"
+  },
+  {
+    "system": 7,
+    "name": "Valkyrie no Densetsu",
+    "crc": "0xa3303978",
+    "signature": "0x90336ae9",
+    "magic": "0x1d0a"
   },
   {
     "system": 7,

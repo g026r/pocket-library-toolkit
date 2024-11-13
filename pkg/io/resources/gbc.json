@@ -43,6 +43,13 @@
   },
   {
     "system": 1,
+    "name": "Donkey Kong Country",
+    "crc": "0xb1743477",
+    "signature": "0x3579ef5e",
+    "magic": "0x0764"
+  },
+  {
+    "system": 1,
     "name": "Doraemon no Quiz Boy",
     "crc": "0x3bbf9ea8",
     "signature": "0x9b1b3096",
@@ -148,10 +155,38 @@
   },
   {
     "system": 1,
+    "name": "Perfect Dark",
+    "crc": "0x0601bef6",
+    "signature": "0xa274a58c",
+    "magic": "0x09cb"
+  },
+  {
+    "system": 1,
     "name": "Pokemon: Gold Version",
     "crc": "0x6bde3c3e",
     "signature": "0x87cc1ad8",
     "magic": "0x09fb"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon: Silver Version",
+    "crc": "0x8ad48636",
+    "signature": "0xae0b0b80",
+    "magic": "0x09ff"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon Pinball",
+    "crc": "0x03ce8d9a",
+    "signature": "0x54d0f986",
+    "magic": "0x0a0b"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon Trading Card Game",
+    "crc": "0x81069d53",
+    "signature": "0x8d570590",
+    "magic": "0x0a12"
   },
   {
     "system": 1,
@@ -166,6 +201,41 @@
     "crc": "0xfc1d4089",
     "signature": "0x2573fb55",
     "magic": "0x0a8c"
+  },
+  {
+    "system": 1,
+    "name": "Shantae",
+    "crc": "0xe994b59b",
+    "signature": "0xa64c02f5",
+    "magic": "0x0abf"
+  },
+  {
+    "system": 1,
+    "name": "Star Wars Episode I: Racer",
+    "crc": "0x0ebc5758",
+    "signature": "0x94322471",
+    "magic": "0x0af6"
+  },
+  {
+    "system": 1,
+    "name": "Super Mario Bros. Deluxe",
+    "crc": "0x90ab047b",
+    "signature": "0x67cc9064",
+    "magic": "0x0b0b"
+  },
+  {
+    "system": 1,
+    "name": "Tetris DX",
+    "crc": "0x69989152",
+    "signature": "0xa7ff9fe0",
+    "magic": "0x0b3b"
+  },
+  {
+    "system": 1,
+    "name": "Toki Tori",
+    "crc": "0x0a0f9289",
+    "signature": "0x9ea0c519",
+    "magic": "0x0b4d"
   },
   {
     "system": 1,

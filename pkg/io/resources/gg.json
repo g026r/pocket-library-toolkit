@@ -1,6 +1,27 @@
 [
   {
     "system": 3,
+    "name": "Streets of Rage II",
+    "crc": "0x0b618409",
+    "signature": "0x0731bb8b",
+    "magic": "0x176b"
+  },
+  {
+    "system": 3,
+    "name": "Battletoads",
+    "crc": "0xcb3cd075",
+    "signature": "0x72a45806",
+    "magic": "0x1770"
+  },
+  {
+    "system": 3,
+    "name": "Bram Stoker's Dracula",
+    "crc": "0x69ebe5fa",
+    "signature": "0xa78c876e",
+    "magic": "0x1777"
+  },
+  {
+    "system": 3,
     "name": "Castle of Illusion Starring Mickey Mouse",
     "crc": "0x59840fd6",
     "signature": "0x7c3d8290",
@@ -19,6 +40,20 @@
     "crc": "0x5a136d7e",
     "signature": "0xd8a8eed6",
     "magic": "0x179b"
+  },
+  {
+    "system": 3,
+    "name": "Double Dragon",
+    "crc": "0x1307a290",
+    "signature": "0xc8ee94ce",
+    "magic": "0x17a9"
+  },
+  {
+    "system": 3,
+    "name": "Dynamite Headdy",
+    "crc": "0x610ff95c",
+    "signature": "0x9ec04287",
+    "magic": "0x17b2"
   },
   {
     "system": 3,
@@ -43,6 +78,13 @@
   },
   {
     "system": 3,
+    "name": "Shinobi II: The Silent Fury",
+    "crc": "0x6201c694",
+    "signature": "0x7d82cf65",
+    "magic": "0x17df"
+  },
+  {
+    "system": 3,
     "name": "Gunstar Heroes",
     "crc": "0xc3c52767",
     "signature": "0xe2b366bb",
@@ -54,6 +96,13 @@
     "crc": "0xdab0f265",
     "signature": "0x41117e28",
     "magic": "0x17f8"
+  },
+  {
+    "system": 3,
+    "name": "Jurassic Park",
+    "crc": "0xbd6f2321",
+    "signature": "0x331b2689",
+    "magic": "0x1811"
   },
   {
     "system": 3,
@@ -71,6 +120,13 @@
   },
   {
     "system": 3,
+    "name": "Legend of Illusion Starring Mickey Mouse",
+    "crc": "0xce5ad8b7",
+    "signature": "0x63fcc174",
+    "magic": "0x181f"
+  },
+  {
+    "system": 3,
     "name": "Lemmings",
     "crc": "0x0fde7baa",
     "signature": "0x1b39218d",
@@ -85,10 +141,52 @@
   },
   {
     "system": 3,
+    "name": "Psychic World",
+    "crc": "0x73779b22",
+    "signature": "0xab844ea6",
+    "magic": "0x188a"
+  },
+  {
+    "system": 3,
+    "name": "Ristar: The Shooting Star",
+    "crc": "0xefe65b3b",
+    "signature": "0x63c3f82c",
+    "magic": "0x189b"
+  },
+  {
+    "system": 3,
     "name": "Sonic Chaos",
     "crc": "0x663f2abb",
     "signature": "0x066e484d",
     "magic": "0x18be"
+  },
+  {
+    "system": 3,
+    "name": "Sonic Drift 2",
+    "crc": "0xd6e8a305",
+    "signature": "0x9be82dbb",
+    "magic": "0x18c0"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog Spinball",
+    "crc": "0xa9210434",
+    "signature": "0x0b02b76a",
+    "magic": "0x18c2"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog: Triple Trouble",
+    "crc": "0xd23a2a93",
+    "signature": "0xc90f0acb",
+    "magic": "0x18c3"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog",
+    "crc": "0xd163356e",
+    "signature": "0x9be034fc",
+    "magic": "0x18c4"
   },
   {
     "system": 3,

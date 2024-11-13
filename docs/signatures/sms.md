@@ -12,6 +12,12 @@
 - Signature: `0xfa3b0e9b`
 - Magic Number: `0x19a7`
 
+## Sonic Chaos
+
+- CRC32: `0xaedf3bdf`
+- Signature: `0x72433d43`
+- Magic Number: `0x1ab7`
+
 ## Sonic the Hedgehog
 
 - CRC32: `0xb519e833`
