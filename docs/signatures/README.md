@@ -2,7 +2,7 @@
 
 Looking for the Pocket's cartridge signature, CRC32 hash, or magic number for a given cartridge?
 
-The following pages list the ones I have been able to discover.
+The following pages list the ones I have been able to discover. Games are ordered by internal magic number. While this usually equates to alphabetically within a given platform, that is not always true.
 
 * [Game Boy](./gb.md)
 * [Game Boy Color](./gbc.md)
