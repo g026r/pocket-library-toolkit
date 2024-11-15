@@ -1,6 +1,13 @@
 [
   {
     "system": 4,
+    "name": "Asterix",
+    "crc": "0x8c9d5be8",
+    "signature": "0x449df5b3",
+    "magic": "0x1960"
+  },
+  {
+    "system": 4,
     "name": "Choplifter",
     "crc": "0x4a21c15f",
     "signature": "0xa42d8baf",

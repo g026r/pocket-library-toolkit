@@ -1,5 +1,11 @@
 # Sega Master System CRC32s, cartridge signatures, and magic numbers
 
+## Asterix
+
+- CRC32: `0x8c9d5be8`
+- Signature: `0x449df5b3`
+- Magic Number: `0x1960`
+
 ## Choplifter
 
 - CRC32: `0x4a21c15f`

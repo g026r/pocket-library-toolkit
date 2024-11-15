@@ -485,4 +485,3 @@
 - CRC32: `0x31594b7a`
 - Signature: `0x6163c07f`
 - Magic Number: `0x1719`
-

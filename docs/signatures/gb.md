@@ -18,6 +18,12 @@
 - Signature: `0x03048a20`
 - Magic Number: `0x0022`
 
+## Teenage Mutant Ninja Turtles III: Radical Rescue
+
+- CRC32: `0x58832bbc`
+- Signature: `0xd922a989`
+- Magic Number: `0x0024`
+
 ## Tetris 2
 
 - CRC32: `0xaa4a1edb`
@@ -60,6 +66,12 @@
 - Signature: `0xe1afe549`
 - Magic Number: `0x007a`
 
+## Avenging Spirit
+
+- CRC32: `0xcf2ba5f7`
+- Signature: `0x769ab181`
+- Magic Number: `0x0085`
+
 ## Balloon Kid
 
 - CRC32: `0xd4b655ec`
@@ -83,6 +95,12 @@
 - CRC32: `0xb0c3361b`
 - Signature: `0xc78367f8`
 - Magic Number: `0x0091`
+
+## Castlevania Legends
+
+- CRC32: `0xad9c17fb`
+- Signature: `0x7df55ef8`
+- Magic Number: `0x00bf`
 
 ## Donkey Kong
 
@@ -204,6 +222,18 @@
 - Signature: `0xa552159a`
 - Magic Number: `0x016d`
 
+## Mega Man IV
+
+- CRC32: `0xabcea00d`
+- Signature: `0xb237b8a5`
+- Magic Number: `0x0173`
+
+## Mega Man V
+
+- CRC32: `0x72e6d21d`
+- Signature: `0xf3651e3f`
+- Magic Number: `0x0174`
+
 ## Mercenary Force
 
 - CRC32: `0x9bb5ba03`
@@ -228,11 +258,29 @@
 - Signature: `0xbd38389e`
 - Magic Number: `0x01c0`
 
+## Pokemon: Red Version
+
+- CRC32: `0x9f7fdd53`
+- Signature: `0x67b57ed2`
+- Magic Number: `0x01c1`
+
 ## Pokemon: Yellow Version: Special Pikachu Edition
 
 - CRC32: `0x7d527d62`
 - Signature: `0x0183202b`
 - Magic Number: `0x01c2`
+
+## Rolan's Curse
+
+- CRC32: `0x1a602590`
+- Signature: `0x2205f469`
+- Magic Number: `0x01e1`
+
+## Rolan's Curse II
+
+- CRC32: `0x2754f360`
+- Signature: `0x2d9ff683`
+- Magic Number: `0x01e2`
 
 ## Space Invaders
 
@@ -269,6 +317,12 @@
 - CRC32: `0x44256a2f`
 - Signature: `0x7f633f5f`
 - Magic Number: `0x026a`
+
+## Chikyuu Kaihou Gun ZAS
+
+- CRC32: `0x7bfd1cff`
+- Signature: `0x0d93a246`
+- Magic Number: `0x0277`
 
 ## Contra
 
@@ -329,6 +383,12 @@
 - CRC32: `0x6226d280`
 - Signature: `0x5690030f`
 - Magic Number: `0x0311`
+
+## God Medicine: Fukkokuban
+
+- CRC32: `0x847e0772`
+- Signature: `0x65f2a9a9`
+- Magic Number: `0x031c`
 
 ## Golf
 
@@ -510,11 +570,23 @@
 - Signature: `0xfaf2fb52`
 - Magic Number: `0x05c2`
 
+## Trip World
+
+- CRC32: `0x85d910b9`
+- Signature: `0x70a95859`
+- Magic Number: `0x05dc`
+
 ## TwinBee da!!
 
 - CRC32: `0x017fd6f5`
 - Signature: `0xc1520986`
 - Magic Number: `0x05ea`
+
+## Ultraman Ball
+
+- CRC32: `0x468d1a2e`
+- Signature: `0x0fc2194a`
+- Magic Number: `0x05f1`
 
 ## Vattle Giuce
 
@@ -534,3 +606,8 @@
 - Signature: `0x86575c60`
 - Magic Number: `0x0618`
 
+## Adventures of Lolo
+
+- CRC32: `0x176d2eeb`
+- Signature: `0x725006f6`
+- Magic Number: `0x0641`
