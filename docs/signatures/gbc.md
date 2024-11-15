@@ -24,6 +24,18 @@
 - Signature: `0x64b34b61`
 - Magic Number: `0x06a5`
 
+## Blaster Master: Enemy Below
+
+- CRC32: `0x2f91e17c`
+- Signature: `0xe079a207`
+- Magic Number: `0x06d7`
+
+## Bomberman Quest
+
+- CRC32: `0x5a9b9ae6`
+- Signature: `0x188c0773`
+- Magic Number: `0x06e7`
+
 ## Crystalis
 
 - CRC32: `0x909bb02d`
@@ -90,6 +102,12 @@
 - Signature: `0xbb5e9bee`
 - Magic Number: `0x08b2`
 
+## Legend of the River King 2
+
+- CRC32: `0x840fd525`
+- Signature: `0xb7e19329`
+- Magic Number: `0x08bc`
+
 ## Legend of the River King GB
 
 - CRC32: `0x87ef9530`
@@ -132,11 +150,23 @@
 - Signature: `0xa4982ba3`
 - Magic Number: `0x0936`
 
+## Metal Gear Solid
+
+- CRC32: `0x04b0c5d6`
+- Signature: `0x7212c8f5`
+- Magic Number: `0x0943`
+
 ## Perfect Dark
 
 - CRC32: `0x0601bef6`
 - Signature: `0xa274a58c`
 - Magic Number: `0x09cb`
+
+## Pokemon: Crystal Version
+
+- CRC32: `0x3358e30a`
+- Signature: `0xd2024312`
+- Magic Number: `0x09f7`
 
 ## Pokemon: Gold Version
 
@@ -162,6 +192,18 @@
 - Signature: `0x8d570590`
 - Magic Number: `0x0a12`
 
+## Project S-11
+
+- CRC32: `0x20cee2e8`
+- Signature: `0x3055b212`
+- Magic Number: `0x0a3a`
+
+## Resident Evil Gaiden
+
+- CRC32: `0xf8c5021b`
+- Signature: `0xed452433`
+- Magic Number: `0x0a69`
+
 ## Rocman X Gold + 4 in 1
 
 - CRC32: `0x7e1351cf`
@@ -179,6 +221,18 @@
 - CRC32: `0xe994b59b`
 - Signature: `0xa64c02f5`
 - Magic Number: `0x0abf`
+
+## Space Marauder
+
+- CRC32: `0x4f83b35e`
+- Signature: `0xdcdbef82`
+- Magic Number: `0x0ae2`
+
+## Star Ocean: Blue Sphere
+
+- CRC32: `0x8c7ddbda`
+- Signature: `0x45b569a9`
+- Magic Number: `0x0af2`
 
 ## Star Wars Episode I: Racer
 
@@ -210,3 +264,8 @@
 - Signature: `0xbf38ca32`
 - Magic Number: `0x0ba1`
 
+## Revelations - The Demon Slayer
+
+- CRC32: `0xd1a65d74`
+- Signature: `0xc9c79a15`
+- Magic Number: `0x0bf2`

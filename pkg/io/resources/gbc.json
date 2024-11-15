@@ -29,6 +29,20 @@
   },
   {
     "system": 1,
+    "name": "Blaster Master: Enemy Below",
+    "crc": "0x2f91e17c",
+    "signature": "0xe079a207",
+    "magic": "0x06d7"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Quest",
+    "crc": "0x5a9b9ae6",
+    "signature": "0x188c0773",
+    "magic": "0x06e7"
+  },
+  {
+    "system": 1,
     "name": "Crystalis",
     "crc": "0x909bb02d",
     "signature": "0x3e16f9de",
@@ -106,6 +120,13 @@
   },
   {
     "system": 1,
+    "name": "Legend of the River King 2",
+    "crc": "0x840fd525",
+    "signature": "0xb7e19329",
+    "magic": "0x08bc"
+  },
+  {
+    "system": 1,
     "name": "Legend of the River King GB",
     "crc": "0x87ef9530",
     "signature": "0xc9310bc1",
@@ -155,10 +176,24 @@
   },
   {
     "system": 1,
+    "name": "Metal Gear Solid",
+    "crc": "0x04b0c5d6",
+    "signature": "0x7212c8f5",
+    "magic": "0x0943"
+  },
+  {
+    "system": 1,
     "name": "Perfect Dark",
     "crc": "0x0601bef6",
     "signature": "0xa274a58c",
     "magic": "0x09cb"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon: Crystal Version",
+    "crc": "0x3358e30a",
+    "signature": "0xd2024312",
+    "magic": "0x09f7"
   },
   {
     "system": 1,
@@ -190,6 +225,20 @@
   },
   {
     "system": 1,
+    "name": "Project S-11",
+    "crc": "0x20cee2e8",
+    "signature": "0x3055b212",
+    "magic": "0x0a3a"
+  },
+  {
+    "system": 1,
+    "name": "Resident Evil Gaiden",
+    "crc": "0xf8c5021b",
+    "signature": "0xed452433",
+    "magic": "0x0a69"
+  },
+  {
+    "system": 1,
     "name": "Rocman X Gold + 4 in 1",
     "crc": "0x7e1351cf",
     "signature": "0xe3ec02fa",
@@ -208,6 +257,20 @@
     "crc": "0xe994b59b",
     "signature": "0xa64c02f5",
     "magic": "0x0abf"
+  },
+  {
+    "system": 1,
+    "name": "Space Marauder",
+    "crc": "0x4f83b35e",
+    "signature": "0xdcdbef82",
+    "magic": "0x0ae2"
+  },
+  {
+    "system": 1,
+    "name": "Star Ocean: Blue Sphere",
+    "crc": "0x8c7ddbda",
+    "signature": "0x45b569a9",
+    "magic": "0x0af2"
   },
   {
     "system": 1,
@@ -243,5 +306,12 @@
     "crc": "0x480d0259",
     "signature": "0xbf38ca32",
     "magic": "0x0ba1"
+  },
+  {
+    "system": 1,
+    "name": "Revelations - The Demon Slayer",
+    "crc": "0xd1a65d74",
+    "signature": "0xc9c79a15",
+    "magic": "0x0bf2"
   }
 ]

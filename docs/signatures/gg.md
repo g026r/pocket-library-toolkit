@@ -191,4 +191,3 @@
 - CRC32: `0x9977fcb3`
 - Signature: `0x9fa70149`
 - Magic Number: `0x190d`
-
