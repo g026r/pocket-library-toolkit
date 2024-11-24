@@ -324,6 +324,12 @@
 - Signature: `0x0d93a246`
 - Magic Number: `0x0277`
 
+## Choplifter II
+
+- CRC32: `0x5109f484`
+- Signature: `0x72d98af4`
+- Magic Number: `0x0279`
+
 ## Contra
 
 - CRC32: `0xcde6de15`
@@ -611,3 +617,9 @@
 - CRC32: `0x176d2eeb`
 - Signature: `0x725006f6`
 - Magic Number: `0x0641`
+
+## Aero Star
+
+- CRC32: `0xdfa3b28a`
+- Signature: `0xdffb4dcc`
+- Magic Number: `0x0642`
