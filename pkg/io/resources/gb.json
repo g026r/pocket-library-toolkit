@@ -379,6 +379,13 @@
   },
   {
     "system": 0,
+    "name": "Choplifter II",
+    "crc": "0x5109f484",
+    "signature": "0x72d98af4",
+    "magic": "0x0279"
+  },
+  {
+    "system": 0,
     "name": "Contra",
     "crc": "0xcde6de15",
     "signature": "0x8fa9502c",
@@ -712,5 +719,12 @@
     "crc": "0x176d2eeb",
     "signature": "0x725006f6",
     "magic": "0x0641"
+  },
+  {
+    "system": 0,
+    "name": "Aero Star",
+    "crc": "0xdfa3b28a",
+    "signature": "0xdffb4dcc",
+    "magic": "0x0642"
   }
 ]
