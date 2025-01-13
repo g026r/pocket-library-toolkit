@@ -50,6 +50,13 @@
   },
   {
     "system": 1,
+    "name": "Daiku no Gen-san: Kachikachi no Tonkachi ga Kachi",
+    "crc": "0xe2071293",
+    "signature": "0x97350783",
+    "magic": "0x073b"
+  },
+  {
+    "system": 1,
     "name": "Donkey Kong 2001",
     "crc": "0xcb065eba",
     "signature": "0xc8271fcb",
@@ -155,6 +162,13 @@
   },
   {
     "system": 1,
+    "name": "Magical Drop",
+    "crc": "0xe4188a79",
+    "signature": "0xd487a918",
+    "magic": "0x0909"
+  },
+  {
+    "system": 1,
     "name": "Medarot 4: Kuwagata Version",
     "crc": "0x6a29b9d8",
     "signature": "0xcb142d26",
@@ -250,6 +264,13 @@
     "crc": "0xfc1d4089",
     "signature": "0x2573fb55",
     "magic": "0x0a8c"
+  },
+  {
+    "system": 1,
+    "name": "Shanghai Pocket",
+    "crc": "0xa5e3ece9",
+    "signature": "0x9be11703",
+    "magic": "0x0abe"
   },
   {
     "system": 1,

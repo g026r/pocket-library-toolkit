@@ -288,6 +288,12 @@
 - Signature: `0x5c81854d`
 - Magic Number: `0x114c`
 
+## Konami Collector's Series: Arcade Advanced
+
+- CRC32: `0x2db31825`
+- Signature: `0x04a3953a`
+- Magic Number: `0x115c`
+
 ## Lady Sia
 
 - CRC32: `0x139e95bd`

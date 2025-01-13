@@ -18,6 +18,12 @@
 - Signature: `0x03048a20`
 - Magic Number: `0x0022`
 
+## Teenage Mutant Ninja Turtles II: Back from the Sewers
+
+- CRC32: `0x44f51c73`
+- Signature: `0x0720c629`
+- Magic Number: `0x0023`
+
 ## Teenage Mutant Ninja Turtles III: Radical Rescue
 
 - CRC32: `0x58832bbc`
@@ -29,6 +35,12 @@
 - CRC32: `0xaa4a1edb`
 - Signature: `0xe0ea84ca`
 - Magic Number: `0x0027`
+
+## Tetris Blast
+
+- CRC32: `0x7be5a73f`
+- Signature: `0xbaa9cbb9`
+- Magic Number: `0x002c`
 
 ## Tiny Toon Adventures: Babs' Big Break
 
@@ -66,6 +78,12 @@
 - Signature: `0xe1afe549`
 - Magic Number: `0x007a`
 
+## A-mazing Tater
+
+- CRC32: `0xd229ac62`
+- Signature: `0x61bbf48e`
+- Magic Number: `0x007b`
+
 ## Avenging Spirit
 
 - CRC32: `0xcf2ba5f7`
@@ -96,11 +114,29 @@
 - Signature: `0xc78367f8`
 - Magic Number: `0x0091`
 
+## Bonk's Adventure
+
+- CRC32: `0xa7cdbb96`
+- Signature: `0x902016ed`
+- Magic Number: `0x00a2`
+
+## Bubble Bobble Part 2
+
+- CRC32: `0x4106d781`
+- Signature: `0x1ba7291f`
+- Magic Number: `0x00ad`
+
 ## Castlevania Legends
 
 - CRC32: `0xad9c17fb`
 - Signature: `0x7df55ef8`
 - Magic Number: `0x00bf`
+
+## Darkwing Duck
+
+- CRC32: `0x238b9646`
+- Signature: `0xc7df757a`
+- Magic Number: `0x00d6`
 
 ## Donkey Kong
 
@@ -185,6 +221,12 @@
 - CRC32: `0x90f87d57`
 - Signature: `0x3a7b0909`
 - Magic Number: `0x011c`
+
+## Heiankyo Alien
+
+- CRC32: `0x1495bbe5`
+- Signature: `0x9f7b6031`
+- Magic Number: `0x0122`
 
 ## Kid Dracula
 
@@ -282,6 +324,12 @@
 - Signature: `0x2d9ff683`
 - Magic Number: `0x01e2`
 
+## Shanghai
+
+- CRC32: `0x580fcb18`
+- Signature: `0x980615e6`
+- Magic Number: `0x01e8`
+
 ## Space Invaders
 
 - CRC32: `0x7f0f5762`
@@ -299,6 +347,12 @@
 - CRC32: `0x6c41d3cd`
 - Signature: `0xeaa1f4dc`
 - Magic Number: `0x0228`
+
+## BattleCity
+
+- CRC32: `0xa37a814a`
+- Signature: `0x02c7dac3`
+- Magic Number: `0x0233`
 
 ## Bubble Bobble
 
@@ -510,6 +564,12 @@
 - Signature: `0xb9c0b830`
 - Magic Number: `0x0502`
 
+## Red Arremer: Makai Mura Gaiden
+
+- CRC32: `0xae0122aa`
+- Signature: `0x85f45a29`
+- Magic Number: `0x050c`
+
 ## Rockman World
 
 - CRC32: `0x3be6ac04`
@@ -545,6 +605,12 @@
 - CRC32: `0x575d6d9d`
 - Signature: `0x8df1c039`
 - Magic Number: `0x0529`
+
+## Saigo no Nindou
+
+- CRC32: `0xb864a3b6`
+- Signature: `0x225af361`
+- Magic Number: `0x052b`
 
 ## Shippo de Bun
 
@@ -623,3 +689,9 @@
 - CRC32: `0xdfa3b28a`
 - Signature: `0xdffb4dcc`
 - Magic Number: `0x0642`
+
+## Makaimura Gaiden - The Demon Darkness
+
+- CRC32: `0xcfa358de`
+- Signature: `0xdd4b95ca`
+- Magic Number: `0x065a`

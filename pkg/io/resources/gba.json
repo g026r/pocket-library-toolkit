@@ -337,6 +337,13 @@
   },
   {
     "system": 2,
+    "name": "Konami Collector's Series: Arcade Advanced",
+    "crc": "0x2db31825",
+    "signature": "0x04a3953a",
+    "magic": "0x115c"
+  },
+  {
+    "system": 2,
     "name": "Lady Sia",
     "crc": "0x139e95bd",
     "signature": "0x29775378",

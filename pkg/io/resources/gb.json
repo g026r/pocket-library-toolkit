@@ -22,6 +22,13 @@
   },
   {
     "system": 0,
+    "name": "Teenage Mutant Ninja Turtles II: Back from the Sewers",
+    "crc": "0x44f51c73",
+    "signature": "0x0720c629",
+    "magic": "0x0023"
+  },
+  {
+    "system": 0,
     "name": "Teenage Mutant Ninja Turtles III: Radical Rescue",
     "crc": "0x58832bbc",
     "signature": "0xd922a989",
@@ -33,6 +40,13 @@
     "crc": "0xaa4a1edb",
     "signature": "0xe0ea84ca",
     "magic": "0x0027"
+  },
+  {
+    "system": 0,
+    "name": "Tetris Blast",
+    "crc": "0x7be5a73f",
+    "signature": "0xbaa9cbb9",
+    "magic": "0x002c"
   },
   {
     "system": 0,
@@ -78,6 +92,13 @@
   },
   {
     "system": 0,
+    "name": "A-mazing Tater",
+    "crc": "0xd229ac62",
+    "signature": "0x61bbf48e",
+    "magic": "0x007b"
+  },
+  {
+    "system": 0,
     "name": "Avenging Spirit",
     "crc": "0xcf2ba5f7",
     "signature": "0x769ab181",
@@ -113,10 +134,31 @@
   },
   {
     "system": 0,
+    "name": "Bonk's Adventure",
+    "crc": "0xa7cdbb96",
+    "signature": "0x902016ed",
+    "magic": "0x00a2"
+  },
+  {
+    "system": 0,
+    "name": "Bubble Bobble Part 2",
+    "crc": "0x4106d781",
+    "signature": "0x1ba7291f",
+    "magic": "0x00ad"
+  },
+  {
+    "system": 0,
     "name": "Castlevania Legends",
     "crc": "0xad9c17fb",
     "signature": "0x7df55ef8",
     "magic": "0x00bf"
+  },
+  {
+    "system": 0,
+    "name": "Darkwing Duck",
+    "crc": "0x238b9646",
+    "signature": "0xc7df757a",
+    "magic": "0x00d6"
   },
   {
     "system": 0,
@@ -215,6 +257,13 @@
     "crc": "0x90f87d57",
     "signature": "0x3a7b0909",
     "magic": "0x011c"
+  },
+  {
+    "system": 0,
+    "name": "Heiankyo Alien",
+    "crc": "0x1495bbe5",
+    "signature": "0x9f7b6031",
+    "magic": "0x0122"
   },
   {
     "system": 0,
@@ -330,6 +379,13 @@
   },
   {
     "system": 0,
+    "name": "Shanghai",
+    "crc": "0x580fcb18",
+    "signature": "0x980615e6",
+    "magic": "0x01e8"
+  },
+  {
+    "system": 0,
     "name": "Space Invaders",
     "crc": "0x7f0f5762",
     "signature": "0xfdc2f429",
@@ -348,6 +404,13 @@
     "crc": "0x6c41d3cd",
     "signature": "0xeaa1f4dc",
     "magic": "0x0228"
+  },
+  {
+    "system": 0,
+    "name": "BattleCity",
+    "crc": "0xa37a814a",
+    "signature": "0x02c7dac3",
+    "magic": "0x0233"
   },
   {
     "system": 0,
@@ -596,6 +659,13 @@
   },
   {
     "system": 0,
+    "name": "Red Arremer: Makai Mura Gaiden",
+    "crc": "0xae0122aa",
+    "signature": "0x85f45a29",
+    "magic": "0x050c"
+  },
+  {
+    "system": 0,
     "name": "Rockman World",
     "crc": "0x3be6ac04",
     "signature": "0x16667989",
@@ -635,6 +705,13 @@
     "crc": "0x575d6d9d",
     "signature": "0x8df1c039",
     "magic": "0x0529"
+  },
+  {
+    "system": 0,
+    "name": "Saigo no Nindou",
+    "crc": "0xb864a3b6",
+    "signature": "0x225af361",
+    "magic": "0x052b"
   },
   {
     "system": 0,
@@ -726,5 +803,12 @@
     "crc": "0xdfa3b28a",
     "signature": "0xdffb4dcc",
     "magic": "0x0642"
+  },
+  {
+    "system": 0,
+    "name": "Makaimura Gaiden - The Demon Darkness",
+    "crc": "0xcfa358de",
+    "signature": "0xdd4b95ca",
+    "magic": "0x065a"
   }
 ]

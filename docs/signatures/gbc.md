@@ -42,6 +42,12 @@
 - Signature: `0x3e16f9de`
 - Magic Number: `0x072f`
 
+## Daiku no Gen-san: Kachikachi no Tonkachi ga Kachi
+
+- CRC32: `0xe2071293`
+- Signature: `0x97350783`
+- Magic Number: `0x073b`
+
 ## Donkey Kong 2001
 
 - CRC32: `0xcb065eba`
@@ -132,6 +138,12 @@
 - Signature: `0x5355f407`
 - Magic Number: `0x08ca`
 
+## Magical Drop
+
+- CRC32: `0xe4188a79`
+- Signature: `0xd487a918`
+- Magic Number: `0x0909`
+
 ## Medarot 4: Kuwagata Version
 
 - CRC32: `0x6a29b9d8`
@@ -215,6 +227,12 @@
 - CRC32: `0xfc1d4089`
 - Signature: `0x2573fb55`
 - Magic Number: `0x0a8c`
+
+## Shanghai Pocket
+
+- CRC32: `0xa5e3ece9`
+- Signature: `0x9be11703`
+- Magic Number: `0x0abe`
 
 ## Shantae
 
