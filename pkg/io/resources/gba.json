@@ -148,6 +148,13 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 03 - Ice Climber",
+    "crc": "0xd0aef472",
+    "signature": "0x19de64ca",
+    "magic": "0x0f3f"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 06 - Pac-Man",
     "crc": "0x91acf642",
     "signature": "0x04acebd6",
@@ -180,6 +187,13 @@
     "crc": "0x42a027ab",
     "signature": "0x6d0563a3",
     "magic": "0x0f47"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 12 - Clu Clu Land",
+    "crc": "0x8b3219fe",
+    "signature": "0x7d2a9fec",
+    "magic": "0x0f48"
   },
   {
     "system": 2,
