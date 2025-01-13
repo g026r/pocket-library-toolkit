@@ -92,6 +92,13 @@
   },
   {
     "system": 1,
+    "name": "Dragon Warrior Monsters 2: Cobi's Journey",
+    "crc": "0xab7bfdd5",
+    "signature": "0xea4fa5f4",
+    "magic": "0x078d"
+  },
+  {
+    "system": 1,
     "name": "Harvest Moon 2 GBC",
     "crc": "0x08906220",
     "signature": "0x8bbec1e3",
@@ -201,6 +208,13 @@
     "crc": "0x04b0c5d6",
     "signature": "0x7212c8f5",
     "magic": "0x0943"
+  },
+  {
+    "system": 1,
+    "name": "Mr. Driller",
+    "crc": "0x492c0ebf",
+    "signature": "0x9fed8f6b",
+    "magic": "0x0979"
   },
   {
     "system": 1,

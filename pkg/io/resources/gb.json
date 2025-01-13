@@ -85,6 +85,13 @@
   },
   {
     "system": 0,
+    "name": "Adventure Island II: Aliens in Paradise",
+    "crc": "0x783066cf",
+    "signature": "0x3365dd1d",
+    "magic": "0x006f"
+  },
+  {
+    "system": 0,
     "name": "Amazing Penguin",
     "crc": "0x3011d5ca",
     "signature": "0xbbc5a35c",
@@ -495,6 +502,13 @@
     "crc": "0x5109f484",
     "signature": "0x72d98af4",
     "magic": "0x0279"
+  },
+  {
+    "system": 0,
+    "name": "Choplifter III",
+    "crc": "0x1b3b46ef",
+    "signature": "0x41f2ace5",
+    "magic": "0x027a"
   },
   {
     "system": 0,

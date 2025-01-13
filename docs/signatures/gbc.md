@@ -78,6 +78,12 @@
 - Signature: `0xfd55ebf8`
 - Magic Number: `0x078b`
 
+## Dragon Warrior Monsters 2: Cobi's Journey
+
+- CRC32: `0xab7bfdd5`
+- Signature: `0xea4fa5f4`
+- Magic Number: `0x078d`
+
 ## Harvest Moon 2 GBC
 
 - CRC32: `0x08906220`
@@ -173,6 +179,12 @@
 - CRC32: `0x04b0c5d6`
 - Signature: `0x7212c8f5`
 - Magic Number: `0x0943`
+
+## Mr. Driller
+
+- CRC32: `0x492c0ebf`
+- Signature: `0x9fed8f6b`
+- Magic Number: `0x0979`
 
 ## Ohasuta Yama-chan & Raymond
 

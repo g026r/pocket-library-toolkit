@@ -72,6 +72,12 @@
 - Signature: `0x45a3622e`
 - Magic Number: `0x006e`
 
+## Adventure Island II: Aliens in Paradise
+
+- CRC32: `0x783066cf`
+- Signature: `0x3365dd1d`
+- Magic Number: `0x006f`
+
 ## Amazing Penguin
 
 - CRC32: `0x3011d5ca`
@@ -425,6 +431,12 @@
 - CRC32: `0x5109f484`
 - Signature: `0x72d98af4`
 - Magic Number: `0x0279`
+
+## Choplifter III
+
+- CRC32: `0x1b3b46ef`
+- Signature: `0x41f2ace5`
+- Magic Number: `0x027a`
 
 ## Contra
 
