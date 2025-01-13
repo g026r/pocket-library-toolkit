@@ -228,6 +228,12 @@
 - Signature: `0x8d570590`
 - Magic Number: `0x0a12`
 
+## Prince of Persia
+
+- CRC32: `0xe6bec6d1`
+- Signature: `0x6448e616`
+- Magic Number: `0x0a32`
+
 ## Project S-11
 
 - CRC32: `0x20cee2e8`

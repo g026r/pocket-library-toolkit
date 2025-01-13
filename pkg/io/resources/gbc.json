@@ -267,6 +267,13 @@
   },
   {
     "system": 1,
+    "name": "Prince of Persia",
+    "crc": "0xe6bec6d1",
+    "signature": "0x6448e616",
+    "magic": "0x0a32"
+  },
+  {
+    "system": 1,
     "name": "Project S-11",
     "crc": "0x20cee2e8",
     "signature": "0x3055b212",

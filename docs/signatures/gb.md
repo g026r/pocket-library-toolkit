@@ -138,6 +138,12 @@
 - Signature: `0x902016ed`
 - Magic Number: `0x00a2`
 
+## Bonk's Revenge
+
+- CRC32: `0xf1344b78`
+- Signature: `0x728f80fd`
+- Magic Number: `0x00a3`
+
 ## Bubble Bobble Part 2
 
 - CRC32: `0x4106d781`
@@ -353,6 +359,12 @@
 - CRC32: `0x7d527d62`
 - Signature: `0x0183202b`
 - Magic Number: `0x01c2`
+
+## Prince of Persia
+
+- CRC32: `0x2bd995f1`
+- Signature: `0x1e2cc56a`
+- Magic Number: `0x01c8`
 
 ## Rolan's Curse
 
@@ -689,6 +701,12 @@
 - CRC32: `0x29e0911a`
 - Signature: `0xcfd140e3`
 - Magic Number: `0x0599`
+
+## Super Robot Taisen
+
+- CRC32: `0x7dd9d7d6`
+- Signature: `0xfd31028d`
+- Magic Number: `0x059e`
 
 ## Tetris
 

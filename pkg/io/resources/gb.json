@@ -162,6 +162,13 @@
   },
   {
     "system": 0,
+    "name": "Bonk's Revenge",
+    "crc": "0xf1344b78",
+    "signature": "0x728f80fd",
+    "magic": "0x00a3"
+  },
+  {
+    "system": 0,
     "name": "Bubble Bobble Part 2",
     "crc": "0x4106d781",
     "signature": "0x1ba7291f",
@@ -411,6 +418,13 @@
     "crc": "0x7d527d62",
     "signature": "0x0183202b",
     "magic": "0x01c2"
+  },
+  {
+    "system": 0,
+    "name": "Prince of Persia",
+    "crc": "0x2bd995f1",
+    "signature": "0x1e2cc56a",
+    "magic": "0x01c8"
   },
   {
     "system": 0,
@@ -803,6 +817,13 @@
     "crc": "0x29e0911a",
     "signature": "0xcfd140e3",
     "magic": "0x0599"
+  },
+  {
+    "system": 0,
+    "name": "Super Robot Taisen",
+    "crc": "0x7dd9d7d6",
+    "signature": "0xfd31028d",
+    "magic": "0x059e"
   },
   {
     "system": 0,
