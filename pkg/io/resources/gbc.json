@@ -169,6 +169,13 @@
   },
   {
     "system": 1,
+    "name": "Mario Golf",
+    "crc": "0x905ad0cb",
+    "signature": "0xd7eaeecc",
+    "magic": "0x0916"
+  },
+  {
+    "system": 1,
     "name": "Medarot 4: Kuwagata Version",
     "crc": "0x6a29b9d8",
     "signature": "0xcb142d26",
@@ -194,6 +201,13 @@
     "crc": "0x04b0c5d6",
     "signature": "0x7212c8f5",
     "magic": "0x0943"
+  },
+  {
+    "system": 1,
+    "name": "Ohasuta Yama-chan \u0026 Raymond",
+    "crc": "0x840ef32f",
+    "signature": "0xf5619195",
+    "magic": "0x09b6"
   },
   {
     "system": 1,

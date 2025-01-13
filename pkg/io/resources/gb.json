@@ -78,6 +78,13 @@
   },
   {
     "system": 0,
+    "name": "Adventure Island",
+    "crc": "0x64f4fa44",
+    "signature": "0x45a3622e",
+    "magic": "0x006e"
+  },
+  {
+    "system": 0,
     "name": "Amazing Penguin",
     "crc": "0x3011d5ca",
     "signature": "0xbbc5a35c",
@@ -134,6 +141,13 @@
   },
   {
     "system": 0,
+    "name": "Bionic Commando",
+    "crc": "0x41dbb5fb",
+    "signature": "0x2dd36a59",
+    "magic": "0x009a"
+  },
+  {
+    "system": 0,
     "name": "Bonk's Adventure",
     "crc": "0xa7cdbb96",
     "signature": "0x902016ed",
@@ -155,10 +169,24 @@
   },
   {
     "system": 0,
+    "name": "Contra: The Alien Wars",
+    "crc": "0xf1c81eb0",
+    "signature": "0x48926117",
+    "magic": "0x00cb"
+  },
+  {
+    "system": 0,
     "name": "Darkwing Duck",
     "crc": "0x238b9646",
     "signature": "0xc7df757a",
     "magic": "0x00d6"
+  },
+  {
+    "system": 0,
+    "name": "David Crane's The Rescue of Princess Blobette Starring A Boy and His Blob",
+    "crc": "0x8210a03f",
+    "signature": "0x1208f999",
+    "magic": "0x00d7"
   },
   {
     "system": 0,
@@ -194,6 +222,13 @@
     "crc": "0x2bbbb54d",
     "signature": "0x74c30c50",
     "magic": "0x00ec"
+  },
+  {
+    "system": 0,
+    "name": "DuckTales 2",
+    "crc": "0xb151509d",
+    "signature": "0x09c721ef",
+    "magic": "0x00ed"
   },
   {
     "system": 0,
@@ -292,6 +327,13 @@
     "crc": "0x8dc07c35",
     "signature": "0x37477393",
     "magic": "0x0152"
+  },
+  {
+    "system": 0,
+    "name": "Kwirk: He's A-maze-ing!",
+    "crc": "0x21c98af2",
+    "signature": "0xdc8a2ded",
+    "magic": "0x0159"
   },
   {
     "system": 0,
@@ -411,6 +453,13 @@
     "crc": "0xa37a814a",
     "signature": "0x02c7dac3",
     "magic": "0x0233"
+  },
+  {
+    "system": 0,
+    "name": "Boulder Dash",
+    "crc": "0x644aec3e",
+    "signature": "0xf37f54f0",
+    "magic": "0x024f"
   },
   {
     "system": 0,

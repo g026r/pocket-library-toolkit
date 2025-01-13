@@ -66,6 +66,12 @@
 - Signature: `0x5379a582`
 - Magic Number: `0x004b`
 
+## Adventure Island
+
+- CRC32: `0x64f4fa44`
+- Signature: `0x45a3622e`
+- Magic Number: `0x006e`
+
 ## Amazing Penguin
 
 - CRC32: `0x3011d5ca`
@@ -114,6 +120,12 @@
 - Signature: `0xc78367f8`
 - Magic Number: `0x0091`
 
+## Bionic Commando
+
+- CRC32: `0x41dbb5fb`
+- Signature: `0x2dd36a59`
+- Magic Number: `0x009a`
+
 ## Bonk's Adventure
 
 - CRC32: `0xa7cdbb96`
@@ -132,11 +144,23 @@
 - Signature: `0x7df55ef8`
 - Magic Number: `0x00bf`
 
+## Contra: The Alien Wars
+
+- CRC32: `0xf1c81eb0`
+- Signature: `0x48926117`
+- Magic Number: `0x00cb`
+
 ## Darkwing Duck
 
 - CRC32: `0x238b9646`
 - Signature: `0xc7df757a`
 - Magic Number: `0x00d6`
+
+## David Crane's The Rescue of Princess Blobette Starring A Boy and His Blob
+
+- CRC32: `0x8210a03f`
+- Signature: `0x1208f999`
+- Magic Number: `0x00d7`
 
 ## Donkey Kong
 
@@ -167,6 +191,12 @@
 - CRC32: `0x2bbbb54d`
 - Signature: `0x74c30c50`
 - Magic Number: `0x00ec`
+
+## DuckTales 2
+
+- CRC32: `0xb151509d`
+- Signature: `0x09c721ef`
+- Magic Number: `0x00ed`
 
 ## Exodus: Journey to the Promised Land
 
@@ -251,6 +281,12 @@
 - CRC32: `0x8dc07c35`
 - Signature: `0x37477393`
 - Magic Number: `0x0152`
+
+## Kwirk: He's A-maze-ing!
+
+- CRC32: `0x21c98af2`
+- Signature: `0xdc8a2ded`
+- Magic Number: `0x0159`
 
 ## The Legend of Zelda: Link's Awakening
 
@@ -353,6 +389,12 @@
 - CRC32: `0xa37a814a`
 - Signature: `0x02c7dac3`
 - Magic Number: `0x0233`
+
+## Boulder Dash
+
+- CRC32: `0x644aec3e`
+- Signature: `0xf37f54f0`
+- Magic Number: `0x024f`
 
 ## Bubble Bobble
 

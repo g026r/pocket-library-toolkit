@@ -144,6 +144,12 @@
 - Signature: `0xd487a918`
 - Magic Number: `0x0909`
 
+## Mario Golf
+
+- CRC32: `0x905ad0cb`
+- Signature: `0xd7eaeecc`
+- Magic Number: `0x0916`
+
 ## Medarot 4: Kuwagata Version
 
 - CRC32: `0x6a29b9d8`
@@ -167,6 +173,12 @@
 - CRC32: `0x04b0c5d6`
 - Signature: `0x7212c8f5`
 - Magic Number: `0x0943`
+
+## Ohasuta Yama-chan & Raymond
+
+- CRC32: `0x840ef32f`
+- Signature: `0xf5619195`
+- Magic Number: `0x09b6`
 
 ## Perfect Dark
 
