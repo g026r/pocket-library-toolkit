@@ -126,6 +126,12 @@
 - Signature: `0xb2f00993`
 - Magic Number: `0x0f3e`
 
+## Famicom Mini 03 - Ice Climber
+
+- CRC32: `0xd0aef472`
+- Signature: `0x19de64ca`
+- Magic Number: `0x0f3f`
+
 ## Famicom Mini 06 - Pac-Man
 
 - CRC32: `0x91acf642`
@@ -155,6 +161,12 @@
 - CRC32: `0x42a027ab`
 - Signature: `0x6d0563a3`
 - Magic Number: `0x0f47`
+
+## Famicom Mini 12 - Clu Clu Land
+
+- CRC32: `0x8b3219fe`
+- Signature: `0x7d2a9fec`
+- Magic Number: `0x0f48`
 
 ## Famicom Mini 13 - Balloon Fight
 
