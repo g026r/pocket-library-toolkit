@@ -342,6 +342,12 @@
 - Signature: `0x0024e03a`
 - Magic Number: `0x0182`
 
+## Mystical Ninja Starring Goemon
+
+- CRC32: `0xfafb343c`
+- Signature: `0xd73b7c1b`
+- Magic Number: `0x0191`
+
 ## Ninja Gaiden Shadow
 
 - CRC32: `0xd3741a3a`

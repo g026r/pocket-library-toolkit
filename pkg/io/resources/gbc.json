@@ -323,6 +323,13 @@
   },
   {
     "system": 1,
+    "name": "Sgt. Rock: On the Frontline",
+    "crc": "0x521a2f77",
+    "signature": "0xabeb4475",
+    "magic": "0x0ab5"
+  },
+  {
+    "system": 1,
     "name": "Shanghai Pocket",
     "crc": "0xa5e3ece9",
     "signature": "0x9be11703",
@@ -383,6 +390,13 @@
     "crc": "0x480d0259",
     "signature": "0xbf38ca32",
     "magic": "0x0ba1"
+  },
+  {
+    "system": 1,
+    "name": "Wendy: Every Witch Way",
+    "crc": "0x4ac6907b",
+    "signature": "0x578f7567",
+    "magic": "0x0bab"
   },
   {
     "system": 1,

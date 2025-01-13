@@ -400,6 +400,13 @@
   },
   {
     "system": 0,
+    "name": "Mystical Ninja Starring Goemon",
+    "crc": "0xfafb343c",
+    "signature": "0xd73b7c1b",
+    "magic": "0x0191"
+  },
+  {
+    "system": 0,
     "name": "Ninja Gaiden Shadow",
     "crc": "0xd3741a3a",
     "signature": "0xc03dcd76",

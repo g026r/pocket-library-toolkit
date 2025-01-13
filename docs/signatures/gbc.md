@@ -276,6 +276,12 @@
 - Signature: `0x2573fb55`
 - Magic Number: `0x0a8c`
 
+## Sgt. Rock: On the Frontline
+
+- CRC32: `0x521a2f77`
+- Signature: `0xabeb4475`
+- Magic Number: `0x0ab5`
+
 ## Shanghai Pocket
 
 - CRC32: `0xa5e3ece9`
@@ -329,6 +335,12 @@
 - CRC32: `0x480d0259`
 - Signature: `0xbf38ca32`
 - Magic Number: `0x0ba1`
+
+## Wendy: Every Witch Way
+
+- CRC32: `0x4ac6907b`
+- Signature: `0x578f7567`
+- Magic Number: `0x0bab`
 
 ## Revelations - The Demon Slayer
 
