@@ -342,6 +342,12 @@
 - Signature: `0x0024e03a`
 - Magic Number: `0x0182`
 
+## Ninja Gaiden Shadow
+
+- CRC32: `0xd3741a3a`
+- Signature: `0xc03dcd76`
+- Magic Number: `0x01a4`
+
 ## Nintendo World Cup
 
 - CRC32: `0x96c24e13`

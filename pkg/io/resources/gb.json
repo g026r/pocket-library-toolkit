@@ -400,6 +400,13 @@
   },
   {
     "system": 0,
+    "name": "Ninja Gaiden Shadow",
+    "crc": "0xd3741a3a",
+    "signature": "0xc03dcd76",
+    "magic": "0x01a4"
+  },
+  {
+    "system": 0,
     "name": "Nintendo World Cup",
     "crc": "0x96c24e13",
     "signature": "0x30149bab",

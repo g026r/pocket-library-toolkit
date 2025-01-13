@@ -225,6 +225,13 @@
   },
   {
     "system": 1,
+    "name": "Nushi Tsuri Adventure: Kite no Bouken",
+    "crc": "0xac52f6ef",
+    "signature": "0xffdef408",
+    "magic": "0x09b1"
+  },
+  {
+    "system": 1,
     "name": "Ohasuta Yama-chan \u0026 Raymond",
     "crc": "0x840ef32f",
     "signature": "0xf5619195",

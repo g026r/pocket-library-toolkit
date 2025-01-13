@@ -192,6 +192,12 @@
 - Signature: `0x9fed8f6b`
 - Magic Number: `0x0979`
 
+## Nushi Tsuri Adventure: Kite no Bouken
+
+- CRC32: `0xac52f6ef`
+- Signature: `0xffdef408`
+- Magic Number: `0x09b1`
+
 ## Ohasuta Yama-chan & Raymond
 
 - CRC32: `0x840ef32f`
