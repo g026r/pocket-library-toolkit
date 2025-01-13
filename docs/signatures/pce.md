@@ -576,6 +576,13 @@
 - Signature: `0x90336ae9`
 - Magic Number: `0x1d0a`
 
+
+## W-Ring - The Double Rings
+
+- CRC32: `0xbe990010`
+- Signature: `0x347d37fb`
+- Magic Number: `0x1d13`
+
 ## Xevious - Fardraut Saga
 
 - CRC32: `0xf8f85eec`
