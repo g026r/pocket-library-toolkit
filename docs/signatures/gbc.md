@@ -90,6 +90,12 @@
 - Signature: `0xea4fa5f4`
 - Magic Number: `0x078d`
 
+## Dragon Warrior Monsters 2: Tara's Adventure
+
+- CRC32: `0x35ec5fb2`
+- Signature: `0xb81b166a`
+- Magic Number: `0x078e`
+
 ## Harvest Moon 2 GBC
 
 - CRC32: `0x08906220`

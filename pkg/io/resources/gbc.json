@@ -106,6 +106,13 @@
   },
   {
     "system": 1,
+    "name": "Dragon Warrior Monsters 2: Tara's Adventure",
+    "crc": "0x35ec5fb2",
+    "signature": "0xb81b166a",
+    "magic": "0x078e"
+  },
+  {
+    "system": 1,
     "name": "Harvest Moon 2 GBC",
     "crc": "0x08906220",
     "signature": "0x8bbec1e3",
