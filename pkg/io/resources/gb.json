@@ -85,6 +85,13 @@
   },
   {
     "system": 0,
+    "name": "Adventure Island II: Aliens in Paradise",
+    "crc": "0x783066cf",
+    "signature": "0x3365dd1d",
+    "magic": "0x006f"
+  },
+  {
+    "system": 0,
     "name": "Amazing Penguin",
     "crc": "0x3011d5ca",
     "signature": "0xbbc5a35c",
@@ -152,6 +159,13 @@
     "crc": "0xa7cdbb96",
     "signature": "0x902016ed",
     "magic": "0x00a2"
+  },
+  {
+    "system": 0,
+    "name": "Bonk's Revenge",
+    "crc": "0xf1344b78",
+    "signature": "0x728f80fd",
+    "magic": "0x00a3"
   },
   {
     "system": 0,
@@ -372,6 +386,13 @@
   },
   {
     "system": 0,
+    "name": "Milon's Secret Castle",
+    "crc": "0x62b4cc8c",
+    "signature": "0xfdf3bc33",
+    "magic": "0x017e"
+  },
+  {
+    "system": 0,
     "name": "Mole Mania",
     "crc": "0x2c36c74c",
     "signature": "0x0024e03a",
@@ -404,6 +425,13 @@
     "crc": "0x7d527d62",
     "signature": "0x0183202b",
     "magic": "0x01c2"
+  },
+  {
+    "system": 0,
+    "name": "Prince of Persia",
+    "crc": "0x2bd995f1",
+    "signature": "0x1e2cc56a",
+    "magic": "0x01c8"
   },
   {
     "system": 0,
@@ -495,6 +523,13 @@
     "crc": "0x5109f484",
     "signature": "0x72d98af4",
     "magic": "0x0279"
+  },
+  {
+    "system": 0,
+    "name": "Choplifter III",
+    "crc": "0x1b3b46ef",
+    "signature": "0x41f2ace5",
+    "magic": "0x027a"
   },
   {
     "system": 0,
@@ -617,6 +652,13 @@
   },
   {
     "system": 0,
+    "name": "Kinin Koumaroku Oni",
+    "crc": "0xb7f48649",
+    "signature": "0x2cb7edfd",
+    "magic": "0x03a6"
+  },
+  {
+    "system": 0,
     "name": "Kirby no Pinball",
     "crc": "0x8b44fb7d",
     "signature": "0xb64c97f0",
@@ -656,6 +698,13 @@
     "crc": "0xb338dae7",
     "signature": "0xc54db109",
     "magic": "0x0457"
+  },
+  {
+    "system": 0,
+    "name": "Parasol Stars: Rainbow Islands II",
+    "crc": "0xc35ad128",
+    "signature": "0x3c620ab1",
+    "magic": "0x04a0"
   },
   {
     "system": 0,
@@ -789,6 +838,13 @@
     "crc": "0x29e0911a",
     "signature": "0xcfd140e3",
     "magic": "0x0599"
+  },
+  {
+    "system": 0,
+    "name": "Super Robot Taisen",
+    "crc": "0x7dd9d7d6",
+    "signature": "0xfd31028d",
+    "magic": "0x059e"
   },
   {
     "system": 0,

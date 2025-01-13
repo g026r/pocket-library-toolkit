@@ -72,6 +72,12 @@
 - Signature: `0x45a3622e`
 - Magic Number: `0x006e`
 
+## Adventure Island II: Aliens in Paradise
+
+- CRC32: `0x783066cf`
+- Signature: `0x3365dd1d`
+- Magic Number: `0x006f`
+
 ## Amazing Penguin
 
 - CRC32: `0x3011d5ca`
@@ -131,6 +137,12 @@
 - CRC32: `0xa7cdbb96`
 - Signature: `0x902016ed`
 - Magic Number: `0x00a2`
+
+## Bonk's Revenge
+
+- CRC32: `0xf1344b78`
+- Signature: `0x728f80fd`
+- Magic Number: `0x00a3`
 
 ## Bubble Bobble Part 2
 
@@ -318,6 +330,12 @@
 - Signature: `0xa974ddb4`
 - Magic Number: `0x0176`
 
+## Milon's Secret Castle
+
+- CRC32: `0x62b4cc8c`
+- Signature: `0xfdf3bc33`
+- Magic Number: `0x017e`
+
 ## Mole Mania
 
 - CRC32: `0x2c36c74c`
@@ -347,6 +365,12 @@
 - CRC32: `0x7d527d62`
 - Signature: `0x0183202b`
 - Magic Number: `0x01c2`
+
+## Prince of Persia
+
+- CRC32: `0x2bd995f1`
+- Signature: `0x1e2cc56a`
+- Magic Number: `0x01c8`
 
 ## Rolan's Curse
 
@@ -425,6 +449,12 @@
 - CRC32: `0x5109f484`
 - Signature: `0x72d98af4`
 - Magic Number: `0x0279`
+
+## Choplifter III
+
+- CRC32: `0x1b3b46ef`
+- Signature: `0x41f2ace5`
+- Magic Number: `0x027a`
 
 ## Contra
 
@@ -528,6 +558,12 @@
 - Signature: `0x344575bf`
 - Magic Number: `0x038d`
 
+## Kinin Koumaroku Oni
+
+- CRC32: `0xb7f48649`
+- Signature: `0x2cb7edfd`
+- Magic Number: `0x03a6`
+
 ## Kirby no Pinball
 
 - CRC32: `0x8b44fb7d`
@@ -563,6 +599,12 @@
 - CRC32: `0xb338dae7`
 - Signature: `0xc54db109`
 - Magic Number: `0x0457`
+
+## Parasol Stars: Rainbow Islands II
+
+- CRC32: `0xc35ad128`
+- Signature: `0x3c620ab1`
+- Magic Number: `0x04a0`
 
 ## Parodius Da!
 
@@ -677,6 +719,12 @@
 - CRC32: `0x29e0911a`
 - Signature: `0xcfd140e3`
 - Magic Number: `0x0599`
+
+## Super Robot Taisen
+
+- CRC32: `0x7dd9d7d6`
+- Signature: `0xfd31028d`
+- Magic Number: `0x059e`
 
 ## Tetris
 
