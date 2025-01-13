@@ -78,6 +78,12 @@
 - Signature: `0xfd55ebf8`
 - Magic Number: `0x078b`
 
+## Dragon Warrior Monsters
+
+- CRC32: `0xe56c35b1`
+- Signature: `0xc503d159`
+- Magic Number: `0x078c`
+
 ## Dragon Warrior Monsters 2: Cobi's Journey
 
 - CRC32: `0xab7bfdd5`

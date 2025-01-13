@@ -92,6 +92,13 @@
   },
   {
     "system": 1,
+    "name": "Dragon Warrior Monsters",
+    "crc": "0xe56c35b1",
+    "signature": "0xc503d159",
+    "magic": "0x078c"
+  },
+  {
+    "system": 1,
     "name": "Dragon Warrior Monsters 2: Cobi's Journey",
     "crc": "0xab7bfdd5",
     "signature": "0xea4fa5f4",
