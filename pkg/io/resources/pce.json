@@ -673,6 +673,13 @@
   },
   {
     "system": 7,
+    "name": "W-Ring - The Double Rings",
+    "crc": "0xbe990010",
+    "signature": "0x347d37fb",
+    "magic": "0x1d13"
+  },
+  {
+    "system": 7,
     "name": "Xevious - Fardraut Saga",
     "crc": "0xf8f85eec",
     "signature": "0xd4c0eadc",
