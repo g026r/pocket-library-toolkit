@@ -240,6 +240,12 @@
 - Signature: `0x3055b212`
 - Magic Number: `0x0a3a`
 
+## Rainbow Islands
+
+- CRC32: `0x6decc6b3`
+- Signature: `0xad1344f3`
+- Magic Number: `0x0a51`
+
 ## Resident Evil Gaiden
 
 - CRC32: `0xf8c5021b`

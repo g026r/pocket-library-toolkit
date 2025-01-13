@@ -330,6 +330,12 @@
 - Signature: `0xa974ddb4`
 - Magic Number: `0x0176`
 
+## Milon's Secret Castle
+
+- CRC32: `0x62b4cc8c`
+- Signature: `0xfdf3bc33`
+- Magic Number: `0x017e`
+
 ## Mole Mania
 
 - CRC32: `0x2c36c74c`
@@ -552,6 +558,12 @@
 - Signature: `0x344575bf`
 - Magic Number: `0x038d`
 
+## Kinin Koumaroku Oni
+
+- CRC32: `0xb7f48649`
+- Signature: `0x2cb7edfd`
+- Magic Number: `0x03a6`
+
 ## Kirby no Pinball
 
 - CRC32: `0x8b44fb7d`
@@ -587,6 +599,12 @@
 - CRC32: `0xb338dae7`
 - Signature: `0xc54db109`
 - Magic Number: `0x0457`
+
+## Parasol Stars: Rainbow Islands II
+
+- CRC32: `0xc35ad128`
+- Signature: `0x3c620ab1`
+- Magic Number: `0x04a0`
 
 ## Parodius Da!
 

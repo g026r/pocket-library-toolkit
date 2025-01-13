@@ -386,6 +386,13 @@
   },
   {
     "system": 0,
+    "name": "Milon's Secret Castle",
+    "crc": "0x62b4cc8c",
+    "signature": "0xfdf3bc33",
+    "magic": "0x017e"
+  },
+  {
+    "system": 0,
     "name": "Mole Mania",
     "crc": "0x2c36c74c",
     "signature": "0x0024e03a",
@@ -645,6 +652,13 @@
   },
   {
     "system": 0,
+    "name": "Kinin Koumaroku Oni",
+    "crc": "0xb7f48649",
+    "signature": "0x2cb7edfd",
+    "magic": "0x03a6"
+  },
+  {
+    "system": 0,
     "name": "Kirby no Pinball",
     "crc": "0x8b44fb7d",
     "signature": "0xb64c97f0",
@@ -684,6 +698,13 @@
     "crc": "0xb338dae7",
     "signature": "0xc54db109",
     "magic": "0x0457"
+  },
+  {
+    "system": 0,
+    "name": "Parasol Stars: Rainbow Islands II",
+    "crc": "0xc35ad128",
+    "signature": "0x3c620ab1",
+    "magic": "0x04a0"
   },
   {
     "system": 0,

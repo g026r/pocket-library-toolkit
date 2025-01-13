@@ -281,6 +281,13 @@
   },
   {
     "system": 1,
+    "name": "Rainbow Islands",
+    "crc": "0x6decc6b3",
+    "signature": "0xad1344f3",
+    "magic": "0x0a51"
+  },
+  {
+    "system": 1,
     "name": "Resident Evil Gaiden",
     "crc": "0xf8c5021b",
     "signature": "0xed452433",
