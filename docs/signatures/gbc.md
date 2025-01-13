@@ -90,6 +90,12 @@
 - Signature: `0xea4fa5f4`
 - Magic Number: `0x078d`
 
+## Dragon Warrior Monsters 2: Tara's Adventure
+
+- CRC32: `0x35ec5fb2`
+- Signature: `0xb81b166a`
+- Magic Number: `0x078e`
+
 ## Harvest Moon 2 GBC
 
 - CRC32: `0x08906220`
@@ -192,6 +198,12 @@
 - Signature: `0x9fed8f6b`
 - Magic Number: `0x0979`
 
+## Nushi Tsuri Adventure: Kite no Bouken
+
+- CRC32: `0xac52f6ef`
+- Signature: `0xffdef408`
+- Magic Number: `0x09b1`
+
 ## Ohasuta Yama-chan & Raymond
 
 - CRC32: `0x840ef32f`
@@ -270,6 +282,12 @@
 - Signature: `0x2573fb55`
 - Magic Number: `0x0a8c`
 
+## Sgt. Rock: On the Frontline
+
+- CRC32: `0x521a2f77`
+- Signature: `0xabeb4475`
+- Magic Number: `0x0ab5`
+
 ## Shanghai Pocket
 
 - CRC32: `0xa5e3ece9`
@@ -323,6 +341,12 @@
 - CRC32: `0x480d0259`
 - Signature: `0xbf38ca32`
 - Magic Number: `0x0ba1`
+
+## Wendy: Every Witch Way
+
+- CRC32: `0x4ac6907b`
+- Signature: `0x578f7567`
+- Magic Number: `0x0bab`
 
 ## Revelations - The Demon Slayer
 
