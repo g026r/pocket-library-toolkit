@@ -141,6 +141,13 @@
   },
   {
     "system": 3,
+    "name": "The Lucky Dime Caper Starring Donald Duck",
+    "crc": "0x07a7815a",
+    "signature": "0x42da3fd6",
+    "magic": "0x1825"
+  },
+  {
+    "system": 3,
     "name": "Psychic World",
     "crc": "0x73779b22",
     "signature": "0xab844ea6",

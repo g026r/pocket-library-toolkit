@@ -120,6 +120,12 @@
 - Signature: `0x9062b5ec`
 - Magic Number: `0x1821`
 
+## The Lucky Dime Caper Starring Donald Duck
+
+- CRC32: `0x07a7815a`
+- Signature: `0x42da3fd6`
+- Magic Number: `0x1825`
+
 ## Psychic World
 
 - CRC32: `0x73779b22`
