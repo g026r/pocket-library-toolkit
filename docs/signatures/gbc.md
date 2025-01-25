@@ -156,7 +156,7 @@
 - Signature: `0xc9310bc1`
 - Magic Number: `0x08bd`
 
-## The Legend of Zelda: Link's Awakening DX
+## The Legend of Zelda: Link's Awakening DX (Rev 0)
 
 - CRC32: `0x97822948`
 - Signature: `0x8df72475`
