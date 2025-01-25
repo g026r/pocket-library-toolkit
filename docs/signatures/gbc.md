@@ -6,6 +6,12 @@
 - Signature: `0xacaad162`
 - Magic Number: `0x0660`
 
+## 1942
+
+- CRC32: `0x87431672`
+- Signature: `0xa3b251b9`
+- Magic Number: `0x0667`
+
 ## Action Replay Online
 
 - CRC32: `0x04c8c858`
@@ -23,6 +29,12 @@
 - CRC32: `0x5c95d5a2`
 - Signature: `0x64b34b61`
 - Magic Number: `0x06a5`
+
+## Bionic Commando: Elite Forces
+
+- CRC32: `0xa663cf31`
+- Signature: `0x563c78fb`
+- Magic Number: `0x06d3`
 
 ## Blaster Master: Enemy Below
 
@@ -138,7 +150,7 @@
 - Signature: `0xc9310bc1`
 - Magic Number: `0x08bd`
 
-## The Legend of Zelda: Link's Awakening DX
+## The Legend of Zelda: Link's Awakening DX (Rev 0)
 
 - CRC32: `0x97822948`
 - Signature: `0x8df72475`

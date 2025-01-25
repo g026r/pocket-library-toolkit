@@ -638,6 +638,13 @@
   },
   {
     "system": 0,
+    "name": "Heiankyou Alien",
+    "crc": "0x08bf29c9",
+    "signature": "0xc0c247e7",
+    "magic": "0x034d"
+  },
+  {
+    "system": 0,
     "name": "Hoshi no Kirby 2",
     "crc": "0x4bedf22c",
     "signature": "0xa3148977",
@@ -733,6 +740,13 @@
     "crc": "0xa9e62e88",
     "signature": "0x020de12b",
     "magic": "0x04a5"
+  },
+  {
+    "system": 0,
+    "name": "Penta Dragon",
+    "crc": "0x1e2efaee",
+    "signature": "0xbf054d4d",
+    "magic": "0x04a7"
   },
   {
     "system": 0,
@@ -859,6 +873,13 @@
     "crc": "0x7dd9d7d6",
     "signature": "0xfd31028d",
     "magic": "0x059e"
+  },
+  {
+    "system": 0,
+    "name": "Tetris",
+    "crc": "0x63f9407d",
+    "signature": "0xc7f871be",
+    "magic": "0x05c1"
   },
   {
     "system": 0,

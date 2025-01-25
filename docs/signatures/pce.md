@@ -576,7 +576,6 @@
 - Signature: `0x90336ae9`
 - Magic Number: `0x1d0a`
 
-
 ## W-Ring - The Double Rings
 
 - CRC32: `0xbe990010`
