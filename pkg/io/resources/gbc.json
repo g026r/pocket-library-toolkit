@@ -8,6 +8,13 @@
   },
   {
     "system": 1,
+    "name": "1942",
+    "crc": "0x87431672",
+    "signature": "0xa3b251b9",
+    "magic": "0x0667"
+  },
+  {
+    "system": 1,
     "name": "Action Replay Online",
     "crc": "0x04c8c858",
     "signature": "0x4c08f8e7",
@@ -26,6 +33,13 @@
     "crc": "0x5c95d5a2",
     "signature": "0x64b34b61",
     "magic": "0x06a5"
+  },
+  {
+    "system": 1,
+    "name": "Bionic Commando: Elite Forces",
+    "crc": "0xa663cf31",
+    "signature": "0x563c78fb",
+    "magic": "0x06d3"
   },
   {
     "system": 1,

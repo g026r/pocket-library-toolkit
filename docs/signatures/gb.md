@@ -198,13 +198,13 @@
 - Signature: `0x28724549`
 - Magic Number: `0x00e3`
 
-## DuckTales
+## DuckTales (USA)
 
 - CRC32: `0x2bbbb54d`
 - Signature: `0x74c30c50`
 - Magic Number: `0x00ec`
 
-## DuckTales 2
+## DuckTales 2 (USA)
 
 - CRC32: `0xb151509d`
 - Signature: `0x09c721ef`
@@ -246,13 +246,13 @@
 - Signature: `0xc54ac95a`
 - Magic Number: `0x010e`
 
-## Gargoyle's Quest
+## Gargoyle's Quest (Rev 0)
 
 - CRC32: `0x0030e61f`
 - Signature: `0xb5f8cf1d`
 - Magic Number: `0x0113`
 
-## Ghostbusters II
+## Ghostbusters II (USA, Europe)
 
 - CRC32: `0x5821ecd4`
 - Signature: `0xc3e50724`
@@ -300,7 +300,7 @@
 - Signature: `0xdc8a2ded`
 - Magic Number: `0x0159`
 
-## The Legend of Zelda: Link's Awakening
+## The Legend of Zelda: Link's Awakening (Rev 0)
 
 - CRC32: `0x8cf27c90`
 - Signature: `0xbe6d75ef`
@@ -402,7 +402,7 @@
 - Signature: `0x980615e6`
 - Magic Number: `0x01e8`
 
-## Space Invaders
+## Space Invaders (USA)
 
 - CRC32: `0x7f0f5762`
 - Signature: `0xfdc2f429`
@@ -432,7 +432,7 @@
 - Signature: `0xf37f54f0`
 - Magic Number: `0x024f`
 
-## Bubble Bobble
+## Bubble Bobble (Japan)
 
 - CRC32: `0xad9b300c`
 - Signature: `0x54e862c1`
@@ -456,7 +456,7 @@
 - Signature: `0x0d93a246`
 - Magic Number: `0x0277`
 
-## Choplifter II
+## Choplifter II (Japan)
 
 - CRC32: `0x5109f484`
 - Signature: `0x72d98af4`
@@ -486,13 +486,13 @@
 - Signature: `0xfdb98647`
 - Magic Number: `0x0291`
 
-## Donkey Kong
+## Donkey Kong (Rev 1)
 
 - CRC32: `0xf777a5d8`
 - Signature: `0xb85d0158`
 - Magic Number: `0x02a0`
 
-## Double Dragon
+## Double Dragon (Japan)
 
 - CRC32: `0xa0645e8a`
 - Signature: `0xa4bce057`
@@ -545,6 +545,12 @@
 - CRC32: `0x3579e297`
 - Signature: `0xc26feb08`
 - Magic Number: `0x0349`
+
+## Heiankyou Alien (Japan)
+
+- CRC32: `0x08bf29c9`
+- Signature: `0xc0c247e7`
+- Magic Number: `0x034d`
 
 ## Hoshi no Kirby 2
 
@@ -606,7 +612,7 @@
 - Signature: `0x4e27d264`
 - Magic Number: `0x0420`
 
-## Nemesis
+## Nemesis (Japan)
 
 - CRC32: `0xb338dae7`
 - Signature: `0xc54db109`
@@ -630,6 +636,12 @@
 - Signature: `0x020de12b`
 - Magic Number: `0x04a5`
 
+## Penta Dragon
+
+- CRC32: `0x1e2efaee`
+- Signature: `0xbf054d4d`
+- Magic Number: `0x04a7`
+
 ## Picross 2
 
 - CRC32: `0xf5aa5902`
@@ -642,7 +654,7 @@
 - Signature: `0x69e0871d`
 - Magic Number: `0x04ac`
 
-## Pocket Camera
+## Pocket Camera (Rev 1)
 
 - CRC32: `0x73e8ef96`
 - Signature: `0x1d9a45cb`
@@ -654,7 +666,7 @@
 - Signature: `0xfe14af44`
 - Magic Number: `0x0501`
 
-## Quarth
+## Quarth (Japan)
 
 - CRC32: `0x40e5adc9`
 - Signature: `0xb9c0b830`
@@ -720,13 +732,13 @@
 - Signature: `0x9d6225d9`
 - Magic Number: `0x0566`
 
-## Super Mario Land
+## Super Mario Land (Rev 1)
 
 - CRC32: `0x2c27ec70`
 - Signature: `0x191abcf6`
 - Magic Number: `0x0596`
 
-## Super Mario Land 2: 6-tsu no Kinka
+## Super Mario Land 2: 6-tsu no Kinka (Rev 2)
 
 - CRC32: `0x29e0911a`
 - Signature: `0xcfd140e3`
@@ -738,13 +750,19 @@
 - Signature: `0xfd31028d`
 - Magic Number: `0x059e`
 
+## Tetris (Minuet)
+
+- CRC32: `0x63f9407d`
+- Signature: `0xc7f871be`
+- Magic Number: `0x05c1`
+
 ## Tetris
 
 - CRC32: `0x46df91ad`
 - Signature: `0xfaf2fb52`
 - Magic Number: `0x05c2`
 
-## Trip World
+## Trip World (Europe)
 
 - CRC32: `0x85d910b9`
 - Signature: `0x70a95859`
