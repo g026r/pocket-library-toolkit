@@ -57,6 +57,13 @@
   },
   {
     "system": 1,
+    "name": "Classic Bubble Bobble",
+    "crc": "0xc1b22246",
+    "signature": "0x812a06eb",
+    "magic": "0x071f"
+  },
+  {
+    "system": 1,
     "name": "Crystalis",
     "crc": "0x909bb02d",
     "signature": "0x3e16f9de",

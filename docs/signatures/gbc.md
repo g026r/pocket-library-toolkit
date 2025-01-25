@@ -48,6 +48,12 @@
 - Signature: `0x188c0773`
 - Magic Number: `0x06e7`
 
+## Classic Bubble Bobble
+
+- CRC32: `0xc1b22246`
+- Signature: `0x812a06eb`
+- Magic Number: `0x071f`
+
 ## Crystalis
 
 - CRC32: `0x909bb02d`
@@ -150,7 +156,7 @@
 - Signature: `0xc9310bc1`
 - Magic Number: `0x08bd`
 
-## The Legend of Zelda: Link's Awakening DX (Rev 0)
+## The Legend of Zelda: Link's Awakening DX
 
 - CRC32: `0x97822948`
 - Signature: `0x8df72475`

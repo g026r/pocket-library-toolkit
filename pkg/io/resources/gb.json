@@ -232,14 +232,14 @@
   },
   {
     "system": 0,
-    "name": "DuckTales",
+    "name": "DuckTales (USA)",
     "crc": "0x2bbbb54d",
     "signature": "0x74c30c50",
     "magic": "0x00ec"
   },
   {
     "system": 0,
-    "name": "DuckTales 2",
+    "name": "DuckTales 2 (USA)",
     "crc": "0xb151509d",
     "signature": "0x09c721ef",
     "magic": "0x00ed"
@@ -288,14 +288,14 @@
   },
   {
     "system": 0,
-    "name": "Gargoyle's Quest",
+    "name": "Gargoyle's Quest (Rev 0)",
     "crc": "0x0030e61f",
     "signature": "0xb5f8cf1d",
     "magic": "0x0113"
   },
   {
     "system": 0,
-    "name": "Ghostbusters II",
+    "name": "Ghostbusters II (USA, Europe)",
     "crc": "0x5821ecd4",
     "signature": "0xc3e50724",
     "magic": "0x0118"
@@ -309,7 +309,7 @@
   },
   {
     "system": 0,
-    "name": "Heiankyo Alien",
+    "name": "Heiankyo Alien (USA, Europe)",
     "crc": "0x1495bbe5",
     "signature": "0x9f7b6031",
     "magic": "0x0122"
@@ -351,7 +351,14 @@
   },
   {
     "system": 0,
-    "name": "The Legend of Zelda: Link's Awakening",
+    "name": "Legend of the River King GB",
+    "crc": "0xa6e685dc",
+    "signature": "0xc0148aaf",
+    "magic": "0x015d"
+  },
+  {
+    "system": 0,
+    "name": "The Legend of Zelda: Link's Awakening (Rev 0)",
     "crc": "0x8cf27c90",
     "signature": "0xbe6d75ef",
     "magic": "0x0160"
@@ -470,7 +477,7 @@
   },
   {
     "system": 0,
-    "name": "Space Invaders",
+    "name": "Space Invaders (USA)",
     "crc": "0x7f0f5762",
     "signature": "0xfdc2f429",
     "magic": "0x01f7"
@@ -505,7 +512,7 @@
   },
   {
     "system": 0,
-    "name": "Bubble Bobble",
+    "name": "Bubble Bobble (Japan)",
     "crc": "0xad9b300c",
     "signature": "0x54e862c1",
     "magic": "0x0255"
@@ -533,7 +540,7 @@
   },
   {
     "system": 0,
-    "name": "Choplifter II",
+    "name": "Choplifter II (Japan)",
     "crc": "0x5109f484",
     "signature": "0x72d98af4",
     "magic": "0x0279"
@@ -568,14 +575,14 @@
   },
   {
     "system": 0,
-    "name": "Donkey Kong",
+    "name": "Donkey Kong (Rev 1)",
     "crc": "0xf777a5d8",
     "signature": "0xb85d0158",
     "magic": "0x02a0"
   },
   {
     "system": 0,
-    "name": "Double Dragon",
+    "name": "Double Dragon (Japan)",
     "crc": "0xa0645e8a",
     "signature": "0xa4bce057",
     "magic": "0x02ac"
@@ -638,7 +645,7 @@
   },
   {
     "system": 0,
-    "name": "Heiankyou Alien",
+    "name": "Heiankyou Alien (Japan)",
     "crc": "0x08bf29c9",
     "signature": "0xc0c247e7",
     "magic": "0x034d"
@@ -715,7 +722,7 @@
   },
   {
     "system": 0,
-    "name": "Nemesis",
+    "name": "Nemesis (Japan)",
     "crc": "0xb338dae7",
     "signature": "0xc54db109",
     "magic": "0x0457"
@@ -764,7 +771,7 @@
   },
   {
     "system": 0,
-    "name": "Pocket Camera",
+    "name": "Pocket Camera (Rev 1)",
     "crc": "0x73e8ef96",
     "signature": "0x1d9a45cb",
     "magic": "0x04b8"
@@ -778,7 +785,7 @@
   },
   {
     "system": 0,
-    "name": "Quarth",
+    "name": "Quarth (Japan)",
     "crc": "0x40e5adc9",
     "signature": "0xb9c0b830",
     "magic": "0x0502"
@@ -855,14 +862,14 @@
   },
   {
     "system": 0,
-    "name": "Super Mario Land",
+    "name": "Super Mario Land (Rev 1)",
     "crc": "0x2c27ec70",
     "signature": "0x191abcf6",
     "magic": "0x0596"
   },
   {
     "system": 0,
-    "name": "Super Mario Land 2: 6-tsu no Kinka",
+    "name": "Super Mario Land 2: 6-tsu no Kinka (Rev 2)",
     "crc": "0x29e0911a",
     "signature": "0xcfd140e3",
     "magic": "0x0599"
@@ -876,7 +883,7 @@
   },
   {
     "system": 0,
-    "name": "Tetris",
+    "name": "Tetris (Minuet)",
     "crc": "0x63f9407d",
     "signature": "0xc7f871be",
     "magic": "0x05c1"
@@ -890,7 +897,7 @@
   },
   {
     "system": 0,
-    "name": "Trip World",
+    "name": "Trip World (Europe)",
     "crc": "0x85d910b9",
     "signature": "0x70a95859",
     "magic": "0x05dc"

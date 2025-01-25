@@ -264,7 +264,7 @@
 - Signature: `0x3a7b0909`
 - Magic Number: `0x011c`
 
-## Heiankyo Alien
+## Heiankyo Alien (USA, Europe)
 
 - CRC32: `0x1495bbe5`
 - Signature: `0x9f7b6031`
@@ -299,6 +299,12 @@
 - CRC32: `0x21c98af2`
 - Signature: `0xdc8a2ded`
 - Magic Number: `0x0159`
+
+## Legend of the River King GB
+
+- CRC32: `0xa6e685dc`
+- Signature: `0xc0148aaf`
+- Magic Number: `0x015d`
 
 ## The Legend of Zelda: Link's Awakening (Rev 0)
 
