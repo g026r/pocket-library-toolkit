@@ -48,6 +48,12 @@
 - Signature: `0x188c0773`
 - Magic Number: `0x06e7`
 
+## Classic Bubble Bobble
+
+- CRC32: `0xc1b22246`
+- Signature: `0x812a06eb`
+- Magic Number: `0x071f`
+
 ## Crystalis
 
 - CRC32: `0x909bb02d`
