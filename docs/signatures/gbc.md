@@ -30,6 +30,12 @@
 - Signature: `0x64b34b61`
 - Magic Number: `0x06a5`
 
+## Balloon Fight GB
+
+- CRC32: `0xd2af64ce`
+- Signature: `0x80fa3cda`
+- Magic Number: `0x06aa`
+
 ## Bionic Commando: Elite Forces
 
 - CRC32: `0xa663cf31`
@@ -359,6 +365,12 @@
 - CRC32: `0x480d0259`
 - Signature: `0xbf38ca32`
 - Magic Number: `0x0ba1`
+
+## Wario Land II (USA, Europe)
+
+- CRC32: `0x047bdf80`
+- Signature: `0x972e1358`
+- Magic Number: `0x0ba2`
 
 ## Wendy: Every Witch Way
 

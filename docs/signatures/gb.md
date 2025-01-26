@@ -150,6 +150,12 @@
 - Signature: `0x1ba7291f`
 - Magic Number: `0x00ad`
 
+## Bubble Ghost (USA, Europe)
+
+- CRC32: `0x843068fd`
+- Signature: `0x1d858e3c`
+- Magic Number: `0x00ae`
+
 ## Castlevania Legends
 
 - CRC32: `0xad9c17fb`
@@ -593,6 +599,12 @@
 - CRC32: `0x8b44fb7d`
 - Signature: `0xb64c97f0`
 - Magic Number: `0x03aa`
+
+## Sagaia
+
+- CRC32: `0xe43da090`
+- Signature: `0x4b80fe56`
+- Magic Number: `0x03e8`
 
 ## Mani 4 in 1 - Taito
 

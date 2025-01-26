@@ -176,6 +176,13 @@
   },
   {
     "system": 0,
+    "name": "Bubble Ghost (USA, Europe)",
+    "crc": "0x843068fd",
+    "signature": "0x1d858e3c",
+    "magic": "0x00ae"
+  },
+  {
+    "system": 0,
     "name": "Castlevania Legends",
     "crc": "0xad9c17fb",
     "signature": "0x7df55ef8",
@@ -358,7 +365,7 @@
   },
   {
     "system": 0,
-    "name": "The Legend of Zelda: Link's Awakening (USA, Europe) (Rev 0) (Rev 0)",
+    "name": "The Legend of Zelda: Link's Awakening (USA, Europe) (Rev 0)",
     "crc": "0x8cf27c90",
     "signature": "0xbe6d75ef",
     "magic": "0x0160"
