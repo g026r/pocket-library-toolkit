@@ -8,14 +8,14 @@
   },
   {
     "system": 3,
-    "name": "Battletoads",
+    "name": "Battletoads (Japan, Europe)",
     "crc": "0xcb3cd075",
     "signature": "0x72a45806",
     "magic": "0x1770"
   },
   {
     "system": 3,
-    "name": "Bram Stoker's Dracula",
+    "name": "Bram Stoker's Dracula (Europe)",
     "crc": "0x69ebe5fa",
     "signature": "0xa78c876e",
     "magic": "0x1777"
@@ -29,7 +29,7 @@
   },
   {
     "system": 3,
-    "name": "Columns",
+    "name": "Columns (Rev 2)",
     "crc": "0x83fa26d9",
     "signature": "0xb5eec6cf",
     "magic": "0x1793"
@@ -50,14 +50,14 @@
   },
   {
     "system": 3,
-    "name": "Dynamite Headdy",
+    "name": "Dynamite Headdy (USA, Europe)",
     "crc": "0x610ff95c",
     "signature": "0x9ec04287",
     "magic": "0x17b2"
   },
   {
     "system": 3,
-    "name": "Fantasy Zone",
+    "name": "Fantasy Zone (USA, Europe)",
     "crc": "0xd69097e8",
     "signature": "0xb9adf48a",
     "magic": "0x17c4"
@@ -99,7 +99,7 @@
   },
   {
     "system": 3,
-    "name": "Jurassic Park",
+    "name": "Jurassic Park (USA, Europe, Brazil)",
     "crc": "0xbd6f2321",
     "signature": "0x331b2689",
     "magic": "0x1811"
@@ -134,7 +134,7 @@
   },
   {
     "system": 3,
-    "name": "The Lion King",
+    "name": "The Lion King (Europe)",
     "crc": "0x0cd9c20b",
     "signature": "0x9062b5ec",
     "magic": "0x1821"
@@ -148,7 +148,7 @@
   },
   {
     "system": 3,
-    "name": "Psychic World",
+    "name": "Psychic World (USA, Europe, Brazil)",
     "crc": "0x73779b22",
     "signature": "0xab844ea6",
     "magic": "0x188a"
@@ -190,14 +190,14 @@
   },
   {
     "system": 3,
-    "name": "Sonic the Hedgehog",
+    "name": "Sonic the Hedgehog (Rev 1)",
     "crc": "0xd163356e",
     "signature": "0x9be034fc",
     "magic": "0x18c4"
   },
   {
     "system": 3,
-    "name": "Sonic the Hedgehog",
+    "name": "Sonic the Hedgehog (Rev 0)",
     "crc": "0x3e31cb8c",
     "signature": "0xb512d08f",
     "magic": "0x18c5"
@@ -225,7 +225,7 @@
   },
   {
     "system": 3,
-    "name": "Wonder Boy",
+    "name": "Wonder Boy (Japan)",
     "crc": "0x9977fcb3",
     "signature": "0x9fa70149",
     "magic": "0x190d"

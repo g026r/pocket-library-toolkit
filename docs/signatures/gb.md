@@ -1,6 +1,6 @@
 # Game Boy CRC32s, cartridge signatures, and magic numbers
 
-## Super Mario Land 2: 6 Golden Coins
+## Super Mario Land 2: 6 Golden Coins (Rev 2)
 
 - CRC32: `0x635a9112`
 - Signature: `0x3738e6f5`
@@ -30,7 +30,7 @@
 - Signature: `0xd922a989`
 - Magic Number: `0x0024`
 
-## Tetris 2
+## Tetris 2 (USA)
 
 - CRC32: `0xaa4a1edb`
 - Signature: `0xe0ea84ca`
@@ -114,19 +114,19 @@
 - Signature: `0x73e96f62`
 - Magic Number: `0x0088`
 
-## Batman: Return of the Joker
+## Batman: Return of the Joker (USA, Europe)
 
 - CRC32: `0x5124bbec`
 - Signature: `0x49841f02`
 - Magic Number: `0x008a`
 
-## Battletoads
+## Battletoads (USA, Europe)
 
 - CRC32: `0xb0c3361b`
 - Signature: `0xc78367f8`
 - Magic Number: `0x0091`
 
-## Bionic Commando
+## Bionic Commando (USA)
 
 - CRC32: `0x41dbb5fb`
 - Signature: `0x2dd36a59`
@@ -162,25 +162,25 @@
 - Signature: `0x48926117`
 - Magic Number: `0x00cb`
 
-## Darkwing Duck
+## Darkwing Duck (USA)
 
 - CRC32: `0x238b9646`
 - Signature: `0xc7df757a`
 - Magic Number: `0x00d6`
 
-## David Crane's The Rescue of Princess Blobette Starring A Boy and His Blob
+## David Crane's The Rescue of Princess Blobette Starring A Boy and His Blob (USA)
 
 - CRC32: `0x8210a03f`
 - Signature: `0x1208f999`
 - Magic Number: `0x00d7`
 
-## Donkey Kong
+## Donkey Kong (Rev 0)
 
 - CRC32: `0xedab3378`
 - Signature: `0xac0d7c12`
 - Magic Number: `0x00df`
 
-## Donkey Kong Land
+## Donkey Kong Land (USA, Europe)
 
 - CRC32: `0x49dc0d37`
 - Signature: `0x732d15ca`
@@ -192,7 +192,7 @@
 - Signature: `0xbfcc1d70`
 - Magic Number: `0x00e1`
 
-## Donkey Kong Land III
+## Donkey Kong Land III (Rev 0)
 
 - CRC32: `0xb40c159c`
 - Signature: `0x28724549`
@@ -300,13 +300,13 @@
 - Signature: `0xdc8a2ded`
 - Magic Number: `0x0159`
 
-## Legend of the River King GB
+## Legend of the River King GB (USA)
 
 - CRC32: `0xa6e685dc`
 - Signature: `0xc0148aaf`
 - Magic Number: `0x015d`
 
-## The Legend of Zelda: Link's Awakening (Rev 0)
+## The Legend of Zelda: Link's Awakening (USA, Europe) (Rev 0)
 
 - CRC32: `0x8cf27c90`
 - Signature: `0xbe6d75ef`
@@ -318,13 +318,13 @@
 - Signature: `0xa552159a`
 - Magic Number: `0x016d`
 
-## Mega Man IV
+## Mega Man IV (USA)
 
 - CRC32: `0xabcea00d`
 - Signature: `0xb237b8a5`
 - Magic Number: `0x0173`
 
-## Mega Man V
+## Mega Man V (USA)
 
 - CRC32: `0x72e6d21d`
 - Signature: `0xf3651e3f`
@@ -348,7 +348,7 @@
 - Signature: `0x0024e03a`
 - Magic Number: `0x0182`
 
-## Mystical Ninja Starring Goemon
+## Mystical Ninja Starring Goemon (USA)
 
 - CRC32: `0xfafb343c`
 - Signature: `0xd73b7c1b`
@@ -384,7 +384,7 @@
 - Signature: `0x0183202b`
 - Magic Number: `0x01c2`
 
-## Prince of Persia
+## Prince of Persia (USA)
 
 - CRC32: `0x2bd995f1`
 - Signature: `0x1e2cc56a`
@@ -402,7 +402,7 @@
 - Signature: `0x2d9ff683`
 - Magic Number: `0x01e2`
 
-## Shanghai
+## Shanghai (USA)
 
 - CRC32: `0x580fcb18`
 - Signature: `0x980615e6`
@@ -432,7 +432,7 @@
 - Signature: `0x02c7dac3`
 - Magic Number: `0x0233`
 
-## Boulder Dash
+## Boulder Dash (Europe)
 
 - CRC32: `0x644aec3e`
 - Signature: `0xf37f54f0`
@@ -504,7 +504,7 @@
 - Signature: `0xa4bce057`
 - Magic Number: `0x02ac`
 
-## Dr. Mario
+## Dr. Mario (Rev 0)
 
 - CRC32: `0x10c98dd1`
 - Signature: `0x54346b63`
@@ -582,7 +582,7 @@
 - Signature: `0x344575bf`
 - Magic Number: `0x038d`
 
-## Kinin Koumaroku Oni
+## Kinin Koumaroku Oni (Rev 0)
 
 - CRC32: `0xb7f48649`
 - Signature: `0x2cb7edfd`
@@ -762,7 +762,7 @@
 - Signature: `0xc7f871be`
 - Magic Number: `0x05c1`
 
-## Tetris
+## Tetris (Rev 1)
 
 - CRC32: `0x46df91ad`
 - Signature: `0xfaf2fb52`
@@ -810,7 +810,7 @@
 - Signature: `0x725006f6`
 - Magic Number: `0x0641`
 
-## Aero Star
+## Aero Star (Japan)
 
 - CRC32: `0xdfa3b28a`
 - Signature: `0xdffb4dcc`

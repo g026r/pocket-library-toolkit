@@ -6,13 +6,13 @@
 - Signature: `0x0731bb8b`
 - Magic Number: `0x176b`
 
-## Battletoads
+## Battletoads (Japan, Europe)
 
 - CRC32: `0xcb3cd075`
 - Signature: `0x72a45806`
 - Magic Number: `0x1770`
 
-## Bram Stoker's Dracula
+## Bram Stoker's Dracula (Europe)
 
 - CRC32: `0x69ebe5fa`
 - Signature: `0xa78c876e`
@@ -24,7 +24,7 @@
 - Signature: `0x7c3d8290`
 - Magic Number: `0x1782`
 
-## Columns
+## Columns (Rev 2)
 
 - CRC32: `0x83fa26d9`
 - Signature: `0xb5eec6cf`
@@ -42,13 +42,13 @@
 - Signature: `0xc8ee94ce`
 - Magic Number: `0x17a9`
 
-## Dynamite Headdy
+## Dynamite Headdy (USA, Europe)
 
 - CRC32: `0x610ff95c`
 - Signature: `0x9ec04287`
 - Magic Number: `0x17b2`
 
-## Fantasy Zone
+## Fantasy Zone (USA, Europe)
 
 - CRC32: `0xd69097e8`
 - Signature: `0xb9adf48a`
@@ -84,7 +84,7 @@
 - Signature: `0x41117e28`
 - Magic Number: `0x17f8`
 
-## Jurassic Park
+## Jurassic Park (USA, Europe, Brazil)
 
 - CRC32: `0xbd6f2321`
 - Signature: `0x331b2689`
@@ -114,7 +114,7 @@
 - Signature: `0x1b39218d`
 - Magic Number: `0x1820`
 
-## The Lion King
+## The Lion King (Europe)
 
 - CRC32: `0x0cd9c20b`
 - Signature: `0x9062b5ec`
@@ -126,7 +126,7 @@
 - Signature: `0x42da3fd6`
 - Magic Number: `0x1825`
 
-## Psychic World
+## Psychic World (USA, Europe, Brazil)
 
 - CRC32: `0x73779b22`
 - Signature: `0xab844ea6`
@@ -162,13 +162,13 @@
 - Signature: `0xc90f0acb`
 - Magic Number: `0x18c3`
 
-## Sonic the Hedgehog
+## Sonic the Hedgehog (Rev 1)
 
 - CRC32: `0xd163356e`
 - Signature: `0x9be034fc`
 - Magic Number: `0x18c4`
 
-## Sonic the Hedgehog
+## Sonic the Hedgehog (Rev 0)
 
 - CRC32: `0x3e31cb8c`
 - Signature: `0xb512d08f`
@@ -192,7 +192,7 @@
 - Signature: `0x07fcc33b`
 - Magic Number: `0x190b`
 
-## Wonder Boy
+## Wonder Boy (Japan)
 
 - CRC32: `0x9977fcb3`
 - Signature: `0x9fa70149`
