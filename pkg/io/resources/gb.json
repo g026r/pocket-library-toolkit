@@ -1,7 +1,7 @@
 [
   {
     "system": 0,
-    "name": "Super Mario Land 2: 6 Golden Coins",
+    "name": "Super Mario Land 2: 6 Golden Coins (Rev 2)",
     "crc": "0x635a9112",
     "signature": "0x3738e6f5",
     "magic": "0x0010"
@@ -36,7 +36,7 @@
   },
   {
     "system": 0,
-    "name": "Tetris 2",
+    "name": "Tetris 2 (USA)",
     "crc": "0xaa4a1edb",
     "signature": "0xe0ea84ca",
     "magic": "0x0027"
@@ -134,21 +134,21 @@
   },
   {
     "system": 0,
-    "name": "Batman: Return of the Joker",
+    "name": "Batman: Return of the Joker (USA, Europe)",
     "crc": "0x5124bbec",
     "signature": "0x49841f02",
     "magic": "0x008a"
   },
   {
     "system": 0,
-    "name": "Battletoads",
+    "name": "Battletoads (USA, Europe)",
     "crc": "0xb0c3361b",
     "signature": "0xc78367f8",
     "magic": "0x0091"
   },
   {
     "system": 0,
-    "name": "Bionic Commando",
+    "name": "Bionic Commando (USA)",
     "crc": "0x41dbb5fb",
     "signature": "0x2dd36a59",
     "magic": "0x009a"
@@ -190,28 +190,28 @@
   },
   {
     "system": 0,
-    "name": "Darkwing Duck",
+    "name": "Darkwing Duck (USA)",
     "crc": "0x238b9646",
     "signature": "0xc7df757a",
     "magic": "0x00d6"
   },
   {
     "system": 0,
-    "name": "David Crane's The Rescue of Princess Blobette Starring A Boy and His Blob",
+    "name": "David Crane's The Rescue of Princess Blobette Starring A Boy and His Blob (USA)",
     "crc": "0x8210a03f",
     "signature": "0x1208f999",
     "magic": "0x00d7"
   },
   {
     "system": 0,
-    "name": "Donkey Kong",
+    "name": "Donkey Kong (Rev 0)",
     "crc": "0xedab3378",
     "signature": "0xac0d7c12",
     "magic": "0x00df"
   },
   {
     "system": 0,
-    "name": "Donkey Kong Land",
+    "name": "Donkey Kong Land (USA, Europe)",
     "crc": "0x49dc0d37",
     "signature": "0x732d15ca",
     "magic": "0x00e0"
@@ -225,7 +225,7 @@
   },
   {
     "system": 0,
-    "name": "Donkey Kong Land III",
+    "name": "Donkey Kong Land III (Rev 0)",
     "crc": "0xb40c159c",
     "signature": "0x28724549",
     "magic": "0x00e3"
@@ -351,14 +351,14 @@
   },
   {
     "system": 0,
-    "name": "Legend of the River King GB",
+    "name": "Legend of the River King GB (USA)",
     "crc": "0xa6e685dc",
     "signature": "0xc0148aaf",
     "magic": "0x015d"
   },
   {
     "system": 0,
-    "name": "The Legend of Zelda: Link's Awakening (Rev 0)",
+    "name": "The Legend of Zelda: Link's Awakening (USA, Europe) (Rev 0) (Rev 0)",
     "crc": "0x8cf27c90",
     "signature": "0xbe6d75ef",
     "magic": "0x0160"
@@ -372,14 +372,14 @@
   },
   {
     "system": 0,
-    "name": "Mega Man IV",
+    "name": "Mega Man IV (USA)",
     "crc": "0xabcea00d",
     "signature": "0xb237b8a5",
     "magic": "0x0173"
   },
   {
     "system": 0,
-    "name": "Mega Man V",
+    "name": "Mega Man V (USA)",
     "crc": "0x72e6d21d",
     "signature": "0xf3651e3f",
     "magic": "0x0174"
@@ -407,7 +407,7 @@
   },
   {
     "system": 0,
-    "name": "Mystical Ninja Starring Goemon",
+    "name": "Mystical Ninja Starring Goemon (USA)",
     "crc": "0xfafb343c",
     "signature": "0xd73b7c1b",
     "magic": "0x0191"
@@ -449,7 +449,7 @@
   },
   {
     "system": 0,
-    "name": "Prince of Persia",
+    "name": "Prince of Persia (USA)",
     "crc": "0x2bd995f1",
     "signature": "0x1e2cc56a",
     "magic": "0x01c8"
@@ -470,7 +470,7 @@
   },
   {
     "system": 0,
-    "name": "Shanghai",
+    "name": "Shanghai (USA)",
     "crc": "0x580fcb18",
     "signature": "0x980615e6",
     "magic": "0x01e8"
@@ -505,7 +505,7 @@
   },
   {
     "system": 0,
-    "name": "Boulder Dash",
+    "name": "Boulder Dash (Europe)",
     "crc": "0x644aec3e",
     "signature": "0xf37f54f0",
     "magic": "0x024f"
@@ -589,7 +589,7 @@
   },
   {
     "system": 0,
-    "name": "Dr. Mario",
+    "name": "Dr. Mario (Rev 0)",
     "crc": "0x10c98dd1",
     "signature": "0x54346b63",
     "magic": "0x02b5"
@@ -680,7 +680,7 @@
   },
   {
     "system": 0,
-    "name": "Kinin Koumaroku Oni",
+    "name": "Kinin Koumaroku Oni (Rev 0)",
     "crc": "0xb7f48649",
     "signature": "0x2cb7edfd",
     "magic": "0x03a6"
@@ -890,7 +890,7 @@
   },
   {
     "system": 0,
-    "name": "Tetris",
+    "name": "Tetris (Rev 1)",
     "crc": "0x46df91ad",
     "signature": "0xfaf2fb52",
     "magic": "0x05c2"
@@ -946,7 +946,7 @@
   },
   {
     "system": 0,
-    "name": "Aero Star",
+    "name": "Aero Star (Japan)",
     "crc": "0xdfa3b28a",
     "signature": "0xdffb4dcc",
     "magic": "0x0642"

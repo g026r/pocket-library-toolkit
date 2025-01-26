@@ -50,7 +50,7 @@
   },
   {
     "system": 1,
-    "name": "Bomberman Quest",
+    "name": "Bomberman Quest (Europe)",
     "crc": "0x5a9b9ae6",
     "signature": "0x188c0773",
     "magic": "0x06e7"
@@ -134,7 +134,7 @@
   },
   {
     "system": 1,
-    "name": "Harvest Moon 2 GBC",
+    "name": "Harvest Moon 2 GBC (USA)",
     "crc": "0x08906220",
     "signature": "0x8bbec1e3",
     "magic": "0x082c"
@@ -148,14 +148,14 @@
   },
   {
     "system": 1,
-    "name": "Harvest Moon GB",
+    "name": "Harvest Moon GB (Europe)",
     "crc": "0xc8a6f68a",
     "signature": "0xb17319f3",
     "magic": "0x082e"
   },
   {
     "system": 1,
-    "name": "Harvest Moon GB",
+    "name": "Harvest Moon GB (USA)",
     "crc": "0xab5738a1",
     "signature": "0xaf3f157c",
     "magic": "0x0830"
@@ -169,49 +169,49 @@
   },
   {
     "system": 1,
-    "name": "Legend of the River King 2",
+    "name": "Legend of the River King 2 (USA)",
     "crc": "0x840fd525",
     "signature": "0xb7e19329",
     "magic": "0x08bc"
   },
   {
     "system": 1,
-    "name": "Legend of the River King GB",
+    "name": "Legend of the River King GB (Europe)",
     "crc": "0x87ef9530",
     "signature": "0xc9310bc1",
     "magic": "0x08bd"
   },
   {
     "system": 1,
-    "name": "The Legend of Zelda: Link's Awakening DX (Rev 0)",
+    "name": "The Legend of Zelda: Link's Awakening DX (USA, Europe) (Rev 0)",
     "crc": "0x97822948",
     "signature": "0x8df72475",
     "magic": "0x08c6"
   },
   {
     "system": 1,
-    "name": "The Legend of Zelda: Oracle of Ages",
+    "name": "The Legend of Zelda: Oracle of Ages (USA)",
     "crc": "0x3800a387",
     "signature": "0x117b9089",
     "magic": "0x08c8"
   },
   {
     "system": 1,
-    "name": "The Legend of Zelda: Oracle of Seasons",
+    "name": "The Legend of Zelda: Oracle of Seasons (USA)",
     "crc": "0xd7e9f5d7",
     "signature": "0x5355f407",
     "magic": "0x08ca"
   },
   {
     "system": 1,
-    "name": "Magical Drop",
+    "name": "Magical Drop (USA)",
     "crc": "0xe4188a79",
     "signature": "0xd487a918",
     "magic": "0x0909"
   },
   {
     "system": 1,
-    "name": "Mario Golf",
+    "name": "Mario Golf (USA)",
     "crc": "0x905ad0cb",
     "signature": "0xd7eaeecc",
     "magic": "0x0916"
@@ -239,14 +239,14 @@
   },
   {
     "system": 1,
-    "name": "Metal Gear Solid",
+    "name": "Metal Gear Solid (USA)",
     "crc": "0x04b0c5d6",
     "signature": "0x7212c8f5",
     "magic": "0x0943"
   },
   {
     "system": 1,
-    "name": "Mr. Driller",
+    "name": "Mr. Driller (USA)",
     "crc": "0x492c0ebf",
     "signature": "0x9fed8f6b",
     "magic": "0x0979"
@@ -274,7 +274,7 @@
   },
   {
     "system": 1,
-    "name": "Pokemon: Crystal Version",
+    "name": "Pokemon: Crystal Version (USA, Europe) (Rev 1)",
     "crc": "0x3358e30a",
     "signature": "0xd2024312",
     "magic": "0x09f7"
@@ -295,14 +295,14 @@
   },
   {
     "system": 1,
-    "name": "Pokemon Pinball",
+    "name": "Pokemon Pinball (USA)",
     "crc": "0x03ce8d9a",
     "signature": "0x54d0f986",
     "magic": "0x0a0b"
   },
   {
     "system": 1,
-    "name": "Pokemon Trading Card Game",
+    "name": "Pokemon Trading Card Game (USA)",
     "crc": "0x81069d53",
     "signature": "0x8d570590",
     "magic": "0x0a12"
@@ -330,7 +330,7 @@
   },
   {
     "system": 1,
-    "name": "Resident Evil Gaiden",
+    "name": "Resident Evil Gaiden (USA)",
     "crc": "0xf8c5021b",
     "signature": "0xed452433",
     "magic": "0x0a69"
@@ -344,7 +344,7 @@
   },
   {
     "system": 1,
-    "name": "R-Type DX",
+    "name": "R-Type DX (USA, Europe)",
     "crc": "0xfc1d4089",
     "signature": "0x2573fb55",
     "magic": "0x0a8c"
@@ -358,7 +358,7 @@
   },
   {
     "system": 1,
-    "name": "Shanghai Pocket",
+    "name": "Shanghai Pocket (USA)",
     "crc": "0xa5e3ece9",
     "signature": "0x9be11703",
     "magic": "0x0abe"
@@ -393,7 +393,7 @@
   },
   {
     "system": 1,
-    "name": "Super Mario Bros. Deluxe",
+    "name": "Super Mario Bros. Deluxe (USA, Europe) (Rev 1)",
     "crc": "0x90ab047b",
     "signature": "0x67cc9064",
     "magic": "0x0b0b"

@@ -1,6 +1,6 @@
 # Sega Master System CRC32s, cartridge signatures, and magic numbers
 
-## Asterix
+## Asterix (Rev 1)
 
 - CRC32: `0x8c9d5be8`
 - Signature: `0x449df5b3`
@@ -30,7 +30,7 @@
 - Signature: `0xf150f769`
 - Magic Number: `0x1ab9`
 
-## Sonic the Hedgehog 2
+## Sonic the Hedgehog 2 (Rev 0)
 
 - CRC32: `0x5b3b922c`
 - Signature: `0xf6a1d62e`
@@ -42,7 +42,7 @@
 - Signature: `0x81c8bc58`
 - Magic Number: `0x1b04`
 
-## Zillion
+## Zillion (Rev 2)
 
 - CRC32: `0x7ba54510`
 - Signature: `0xa7e33a29`

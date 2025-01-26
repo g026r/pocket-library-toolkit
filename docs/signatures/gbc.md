@@ -42,7 +42,7 @@
 - Signature: `0xe079a207`
 - Magic Number: `0x06d7`
 
-## Bomberman Quest
+## Bomberman Quest (Europe)
 
 - CRC32: `0x5a9b9ae6`
 - Signature: `0x188c0773`
@@ -114,7 +114,7 @@
 - Signature: `0xb81b166a`
 - Magic Number: `0x078e`
 
-## Harvest Moon 2 GBC
+## Harvest Moon 2 GBC (USA)
 
 - CRC32: `0x08906220`
 - Signature: `0x8bbec1e3`
@@ -126,13 +126,13 @@
 - Signature: `0xba2aeef7`
 - Magic Number: `0x082d`
 
-## Harvest Moon GB
+## Harvest Moon GB (Europe)
 
 - CRC32: `0xc8a6f68a`
 - Signature: `0xb17319f3`
 - Magic Number: `0x082e`
 
-## Harvest Moon GB
+## Harvest Moon GB (USA)
 
 - CRC32: `0xab5738a1`
 - Signature: `0xaf3f157c`
@@ -144,43 +144,43 @@
 - Signature: `0xbb5e9bee`
 - Magic Number: `0x08b2`
 
-## Legend of the River King 2
+## Legend of the River King 2 (USA)
 
 - CRC32: `0x840fd525`
 - Signature: `0xb7e19329`
 - Magic Number: `0x08bc`
 
-## Legend of the River King GB
+## Legend of the River King GB (Europe)
 
 - CRC32: `0x87ef9530`
 - Signature: `0xc9310bc1`
 - Magic Number: `0x08bd`
 
-## The Legend of Zelda: Link's Awakening DX (Rev 0)
+## The Legend of Zelda: Link's Awakening DX (USA, Europe) (Rev 0)
 
 - CRC32: `0x97822948`
 - Signature: `0x8df72475`
 - Magic Number: `0x08c6`
 
-## The Legend of Zelda: Oracle of Ages
+## The Legend of Zelda: Oracle of Ages (USA)
 
 - CRC32: `0x3800a387`
 - Signature: `0x117b9089`
 - Magic Number: `0x08c8`
 
-## The Legend of Zelda: Oracle of Seasons
+## The Legend of Zelda: Oracle of Seasons (USA)
 
 - CRC32: `0xd7e9f5d7`
 - Signature: `0x5355f407`
 - Magic Number: `0x08ca`
 
-## Magical Drop
+## Magical Drop (USA)
 
 - CRC32: `0xe4188a79`
 - Signature: `0xd487a918`
 - Magic Number: `0x0909`
 
-## Mario Golf
+## Mario Golf (USA)
 
 - CRC32: `0x905ad0cb`
 - Signature: `0xd7eaeecc`
@@ -204,13 +204,13 @@
 - Signature: `0xa4982ba3`
 - Magic Number: `0x0936`
 
-## Metal Gear Solid
+## Metal Gear Solid (USA)
 
 - CRC32: `0x04b0c5d6`
 - Signature: `0x7212c8f5`
 - Magic Number: `0x0943`
 
-## Mr. Driller
+## Mr. Driller (USA)
 
 - CRC32: `0x492c0ebf`
 - Signature: `0x9fed8f6b`
@@ -234,7 +234,7 @@
 - Signature: `0xa274a58c`
 - Magic Number: `0x09cb`
 
-## Pokemon: Crystal Version
+## Pokemon: Crystal Version (USA, Europe) (Rev 1)
 
 - CRC32: `0x3358e30a`
 - Signature: `0xd2024312`
@@ -252,13 +252,13 @@
 - Signature: `0xae0b0b80`
 - Magic Number: `0x09ff`
 
-## Pokemon Pinball
+## Pokemon Pinball (USA)
 
 - CRC32: `0x03ce8d9a`
 - Signature: `0x54d0f986`
 - Magic Number: `0x0a0b`
 
-## Pokemon Trading Card Game
+## Pokemon Trading Card Game (USA)
 
 - CRC32: `0x81069d53`
 - Signature: `0x8d570590`
@@ -282,7 +282,7 @@
 - Signature: `0xad1344f3`
 - Magic Number: `0x0a51`
 
-## Resident Evil Gaiden
+## Resident Evil Gaiden (USA)
 
 - CRC32: `0xf8c5021b`
 - Signature: `0xed452433`
@@ -294,7 +294,7 @@
 - Signature: `0xe3ec02fa`
 - Magic Number: `0x0a7f`
 
-## R-Type DX
+## R-Type DX (USA, Europe)
 
 - CRC32: `0xfc1d4089`
 - Signature: `0x2573fb55`
@@ -306,7 +306,7 @@
 - Signature: `0xabeb4475`
 - Magic Number: `0x0ab5`
 
-## Shanghai Pocket
+## Shanghai Pocket (USA)
 
 - CRC32: `0xa5e3ece9`
 - Signature: `0x9be11703`
@@ -336,7 +336,7 @@
 - Signature: `0x94322471`
 - Magic Number: `0x0af6`
 
-## Super Mario Bros. Deluxe
+## Super Mario Bros. Deluxe (USA, Europe) (Rev 1)
 
 - CRC32: `0x90ab047b`
 - Signature: `0x67cc9064`

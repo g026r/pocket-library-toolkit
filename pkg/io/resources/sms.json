@@ -1,7 +1,7 @@
 [
   {
     "system": 4,
-    "name": "Asterix",
+    "name": "Asterix (Rev 1)",
     "crc": "0x8c9d5be8",
     "signature": "0x449df5b3",
     "magic": "0x1960"
@@ -36,7 +36,7 @@
   },
   {
     "system": 4,
-    "name": "Sonic the Hedgehog 2",
+    "name": "Sonic the Hedgehog 2 (Rev 0)",
     "crc": "0x5b3b922c",
     "signature": "0xf6a1d62e",
     "magic": "0x1abb"
@@ -50,7 +50,7 @@
   },
   {
     "system": 4,
-    "name": "Zillion",
+    "name": "Zillion (Rev 2)",
     "crc": "0x7ba54510",
     "signature": "0xa7e33a29",
     "magic": "0x1b29"
