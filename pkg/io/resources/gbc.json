@@ -36,6 +36,13 @@
   },
   {
     "system": 1,
+    "name": "Balloon Fight GB",
+    "crc": "0xd2af64ce",
+    "signature": "0x80fa3cda",
+    "magic": "0x06aa"
+  },
+  {
+    "system": 1,
     "name": "Bionic Commando: Elite Forces",
     "crc": "0xa663cf31",
     "signature": "0x563c78fb",
@@ -418,6 +425,13 @@
     "crc": "0x480d0259",
     "signature": "0xbf38ca32",
     "magic": "0x0ba1"
+  },
+  {
+    "system": 1,
+    "name": "Wario Land II (USA, Europe)",
+    "crc": "0x047bdf80",
+    "signature": "0x972e1358",
+    "magic": "0x0ba2"
   },
   {
     "system": 1,
