@@ -1,21 +1,21 @@
 [
   {
     "system": 6,
-    "name": "Fantastic Night Dreams Cotton",
+    "name": "Fantastic Night Dreams Cotton (Japan)",
     "crc": "0xb8a12409",
     "signature": "0x74e36925",
     "magic": "0x1b40"
   },
   {
     "system": 6,
-    "name": "Faselei!",
+    "name": "Faselei! (Japan)",
     "crc": "0x8f585838",
     "signature": "0x01df72bb",
     "magic": "0x1b41"
   },
   {
     "system": 6,
-    "name": "Faselei!",
+    "name": "Faselei! (Europe)",
     "crc": "0xe705e30e",
     "signature": "0xc23983a1",
     "magic": "0x1b42"

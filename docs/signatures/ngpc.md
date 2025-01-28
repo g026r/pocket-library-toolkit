@@ -1,18 +1,18 @@
 # Neo Geo Pocket Color CRC32s, cartridge signatures, and magic numbers
 
-## Fantastic Night Dreams Cotton
+## Fantastic Night Dreams Cotton (Japan)
 
 - CRC32: `0xb8a12409`
 - Signature: `0x74e36925`
 - Magic Number: `0x1b40`
 
-## Faselei!
+## Faselei! (Japan)
 
 - CRC32: `0x8f585838`
 - Signature: `0x01df72bb`
 - Magic Number: `0x1b41`
 
-## Faselei!
+## Faselei! (Europe)
 
 - CRC32: `0xe705e30e`
 - Signature: `0xc23983a1`
