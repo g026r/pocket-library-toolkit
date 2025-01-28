@@ -904,6 +904,13 @@
   },
   {
     "system": 0,
+    "name": "Tobu Tobu Girl",
+    "crc": "0xed12be6c",
+    "signature": "0x7322e7c5",
+    "magic": "0x05cd"
+  },
+  {
+    "system": 0,
     "name": "Trip World (Europe)",
     "crc": "0x85d910b9",
     "signature": "0x70a95859",
