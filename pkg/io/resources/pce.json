@@ -29,14 +29,14 @@
   },
   {
     "system": 7,
-    "name": "Alien Crush",
+    "name": "Alien Crush (Japan)",
     "crc": "0x60edf4e1",
     "signature": "0x7bec04a0",
     "magic": "0x1b9c"
   },
   {
     "system": 7,
-    "name": "Alien Crush",
+    "name": "Alien Crush (USA)",
     "crc": "0xea488494",
     "signature": "0x82d7d21d",
     "magic": "0x1b9d"
@@ -232,7 +232,7 @@
   },
   {
     "system": 7,
-    "name": "Final Lap Twin",
+    "name": "Final Lap Twin (USA)",
     "crc": "0x26408ea3",
     "signature": "0x2b173ac5",
     "magic": "0x1c0a"
@@ -414,7 +414,7 @@
   },
   {
     "system": 7,
-    "name": "Ordyne",
+    "name": "Ordyne (Japan)",
     "crc": "0x8c565cb6",
     "signature": "0xde0dda71",
     "magic": "0x1c85"
@@ -435,7 +435,7 @@
   },
   {
     "system": 7,
-    "name": "Pac-Land",
+    "name": "Pac-Land (Japan)",
     "crc": "0x14fad3ba",
     "signature": "0x25696e56",
     "magic": "0x1c8b"
@@ -449,7 +449,7 @@
   },
   {
     "system": 7,
-    "name": "Parasol Stars - The Story of Bubble Bobble III",
+    "name": "Parasol Stars - The Story of Bubble Bobble III (Japan)",
     "crc": "0x51e86451",
     "signature": "0xf6924c79",
     "magic": "0x1c8f"
@@ -498,7 +498,7 @@
   },
   {
     "system": 7,
-    "name": "Power Golf",
+    "name": "Power Golf (Japan)",
     "crc": "0xea324f07",
     "signature": "0xbc90582b",
     "magic": "0x1c9f"
@@ -589,7 +589,7 @@
   },
   {
     "system": 7,
-    "name": "Soldier Blade",
+    "name": "Soldier Blade (Japan)",
     "crc": "0x8420b12b",
     "signature": "0xcba7ac1e",
     "magic": "0x1ccf"
@@ -631,7 +631,7 @@
   },
   {
     "system": 7,
-    "name": "Super Star Soldier",
+    "name": "Super Star Soldier (Japan)",
     "crc": "0x5d0e3105",
     "signature": "0x0eef6faa",
     "magic": "0x1ce4"

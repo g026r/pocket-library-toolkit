@@ -24,13 +24,13 @@
 - Signature: `0x9efe7948`
 - Magic Number: `0x1b99`
 
-## Alien Crush
+## Alien Crush (Japan)
 
 - CRC32: `0x60edf4e1`
 - Signature: `0x7bec04a0`
 - Magic Number: `0x1b9c`
 
-## Alien Crush
+## Alien Crush (USA)
 
 - CRC32: `0xea488494`
 - Signature: `0x82d7d21d`
@@ -198,7 +198,7 @@
 - Signature: `0x7462f44a`
 - Magic Number: `0x1c08`
 
-## Final Lap Twin
+## Final Lap Twin (USA)
 
 - CRC32: `0x26408ea3`
 - Signature: `0x2b173ac5`
@@ -354,7 +354,7 @@
 - Signature: `0x6c2052d5`
 - Magic Number: `0x1c81`
 
-## Ordyne
+## Ordyne (Japan)
 
 - CRC32: `0x8c565cb6`
 - Signature: `0xde0dda71`
@@ -372,7 +372,7 @@
 - Signature: `0x1df9f5a9`
 - Magic Number: `0x1c8a`
 
-## Pac-Land
+## Pac-Land (Japan)
 
 - CRC32: `0x14fad3ba`
 - Signature: `0x25696e56`
@@ -384,7 +384,7 @@
 - Signature: `0x30f0b4d1`
 - Magic Number: `0x1c8e`
 
-## Parasol Stars - The Story of Bubble Bobble III
+## Parasol Stars - The Story of Bubble Bobble III (Japan)
 
 - CRC32: `0x51e86451`
 - Signature: `0xf6924c79`
@@ -426,7 +426,7 @@
 - Signature: `0xf193e7f6`
 - Magic Number: `0x1c9d`
 
-## Power Golf
+## Power Golf (Japan)
 
 - CRC32: `0xea324f07`
 - Signature: `0xbc90582b`
@@ -504,7 +504,7 @@
 - Signature: `0xce5457d3`
 - Magic Number: `0x1ccd`
 
-## Soldier Blade
+## Soldier Blade (Jaoan)
 
 - CRC32: `0x8420b12b`
 - Signature: `0xcba7ac1e`
@@ -540,7 +540,7 @@
 - Signature: `0xc9711e0b`
 - Magic Number: `0x1cde`
 
-## Super Star Soldier
+## Super Star Soldier (Japan)
 
 - CRC32: `0x5d0e3105`
 - Signature: `0x0eef6faa`
