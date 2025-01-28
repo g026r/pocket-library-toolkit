@@ -600,12 +600,6 @@
 - Signature: `0xb64c97f0`
 - Magic Number: `0x03aa`
 
-## Sagaia
-
-- CRC32: `0xe43da090`
-- Signature: `0x4b80fe56`
-- Magic Number: `0x03e8`
-
 ## Mani 4 in 1 - Taito
 
 - CRC32: `0x5bfc3ef5`
@@ -779,6 +773,12 @@
 - CRC32: `0x46df91ad`
 - Signature: `0xfaf2fb52`
 - Magic Number: `0x05c2`
+
+## Tobu Tobu Girl
+
+- CRC32: `0xed12be6c`
+- Signature: `0x7322e7c5`
+- Magic Number: `0x05cd`
 
 ## Trip World (Europe)
 
