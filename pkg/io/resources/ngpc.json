@@ -8,14 +8,14 @@
   },
   {
     "system": 6,
-    "name": "Faselei!",
+    "name": "Faselei! (Japan)",
     "crc": "0x8f585838",
     "signature": "0x01df72bb",
     "magic": "0x1b41"
   },
   {
     "system": 6,
-    "name": "Faselei!",
+    "name": "Faselei! (Europe)",
     "crc": "0xe705e30e",
     "signature": "0xc23983a1",
     "magic": "0x1b42"
