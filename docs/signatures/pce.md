@@ -504,7 +504,7 @@
 - Signature: `0xce5457d3`
 - Magic Number: `0x1ccd`
 
-## Soldier Blade (Jaoan)
+## Soldier Blade (Japan)
 
 - CRC32: `0x8420b12b`
 - Signature: `0xcba7ac1e`

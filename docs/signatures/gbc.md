@@ -360,6 +360,12 @@
 - Signature: `0x9ea0c519`
 - Magic Number: `0x0b4d`
 
+## Tyrannosaurus Tex
+
+- CRC32: `0xe90504c1`
+- Signature: `0x84145bc3`
+- Magic Number: `0x0b88`
+
 ## Wario Land 3
 
 - CRC32: `0x480d0259`
