@@ -421,6 +421,13 @@
   },
   {
     "system": 1,
+    "name": "Tyrannosaurus Tex",
+    "crc": "0xe90504c1",
+    "signature": "0x84145bc3",
+    "magic": "0x0b88"
+  },
+  {
+    "system": 1,
     "name": "Wario Land 3",
     "crc": "0x480d0259",
     "signature": "0xbf38ca32",
