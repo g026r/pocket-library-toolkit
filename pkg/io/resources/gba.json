@@ -57,6 +57,13 @@
   },
   {
     "system": 2,
+    "name": "ChuChu Rocket! (Japan)",
+    "crc": "0x2c8c1b5a",
+    "signature": "0x697980f4",
+    "magic": "0x0ddd"
+  },
+  {
+    "system": 2,
     "name": "Classic NES Series - Metroid",
     "crc": "0x9a243b9b",
     "signature": "0x00a4ae05",
@@ -208,6 +215,13 @@
     "crc": "0xee4c3504",
     "signature": "0x4a57126b",
     "magic": "0x0f4c"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 17 - Takahashi Meijin no Bouken-jima",
+    "crc": "0x53286f51",
+    "signature": "0x79e91751",
+    "magic": "0x0f4d"
   },
   {
     "system": 2,

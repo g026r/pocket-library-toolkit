@@ -48,6 +48,12 @@
 - Signature: `0x9738a6c2`
 - Magic Number: `0x0dbb`
 
+## ChuChu Rocket! (Japan)
+
+- CRC32: `0x2c8c1b5a`
+- Signature: `0x697980f4`
+- Magic Number: `0x0ddd`
+
 ## Classic NES Series - Metroid
 
 - CRC32: `0x9a243b9b`
@@ -179,6 +185,12 @@
 - CRC32: `0xee4c3504`
 - Signature: `0x4a57126b`
 - Magic Number: `0x0f4c`
+
+## Famicom Mini 17 - Takahashi Meijin no Bouken-jima
+
+- CRC32: `0x53286f51`
+- Signature: `0x79e91751`
+- Magic Number: `0x0f4d`
 
 ## Famicom Mini 19 - Twin Bee
 
