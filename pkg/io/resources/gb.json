@@ -624,6 +624,13 @@
   },
   {
     "system": 0,
+    "name": "GB Genjin 2",
+    "crc": "0x6f7ad5d9",
+    "signature": "0x64bb29e6",
+    "magic": "0x0308"
+  },
+  {
+    "system": 0,
     "name": "Genki Bakuhatsu Gambaruger",
     "crc": "0x6226d280",
     "signature": "0x5690030f",
@@ -775,6 +782,13 @@
     "crc": "0x1b3a89c6",
     "signature": "0x69e0871d",
     "magic": "0x04ac"
+  },
+  {
+    "system": 0,
+    "name": "Pipe Dream (Japan)",
+    "crc": "0xd8b4aea4",
+    "signature": "0x514d3f2c",
+    "magic": "0x04b1"
   },
   {
     "system": 0,
