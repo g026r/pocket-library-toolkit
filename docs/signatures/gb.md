@@ -534,6 +534,12 @@
 - Signature: `0xf0e6a0ab`
 - Magic Number: `0x0307`
 
+## GB Genjin 2
+
+- CRC32: `0x6f7ad5d9`
+- Signature: `0x64bb29e6`
+- Magic Number: `0x0308`
+
 ## Genki Bakuhatsu Gambaruger
 
 - CRC32: `0x6226d280`
@@ -665,6 +671,12 @@
 - CRC32: `0x1b3a89c6`
 - Signature: `0x69e0871d`
 - Magic Number: `0x04ac`
+
+## Pipe Dream (Japan)
+
+- CRC32: `0xd8b4aea4`
+- Signature: `0x514d3f2c`
+- Magic Number: `0x04b1`
 
 ## Pocket Camera (Rev 1)
 
