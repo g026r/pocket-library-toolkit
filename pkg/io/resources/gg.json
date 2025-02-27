@@ -162,6 +162,13 @@
   },
   {
     "system": 3,
+    "name": "Sonic \u0026 Tails",
+    "crc": "0x8ac0dade",
+    "signature": "0x8c6cf350",
+    "magic": "0x18bc"
+  },
+  {
+    "system": 3,
     "name": "Sonic Chaos",
     "crc": "0x663f2abb",
     "signature": "0x066e484d",
