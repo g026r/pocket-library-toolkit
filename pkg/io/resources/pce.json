@@ -253,6 +253,13 @@
   },
   {
     "system": 7,
+    "name": "Fire Pro Wrestling - Combination Tag",
+    "crc": "0x90ed6575",
+    "signature": "0x33f31e56",
+    "magic": "0x1c0e"
+  },
+  {
+    "system": 7,
     "name": "Formation Soccer - Human Cup '90",
     "crc": "0x85a1e7b6",
     "signature": "0x052b0d59",
