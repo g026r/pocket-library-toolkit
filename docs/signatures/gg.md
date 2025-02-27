@@ -138,6 +138,12 @@
 - Signature: `0x63c3f82c`
 - Magic Number: `0x189b`
 
+## Sonic & Tails
+
+- CRC32: `0x8ac0dade`
+- Signature: `0x8c6cf350`
+- Magic Number: `0x18bc`
+
 ## Sonic Chaos
 
 - CRC32: `0x663f2abb`
