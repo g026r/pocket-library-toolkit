@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/g026r/pocket-library-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/root"
 )
 
 // main provides a simple application to fix played times & nothing else.
@@ -16,22 +17,26 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	root := filepath.Dir(ex)
+	root, err := root.OpenRoot(filepath.Dir(ex))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer root.Close()
 
-	p, err := io.LoadPlaytimes(os.DirFS(root))
+	p, err := io.LoadPlaytimes(root.FS())
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	complete := false
-	out, err := os.CreateTemp(root, "playtimes_*.bin")
+	out, err := root.CreateTemp("System/Played Games", "playtimes_*.tmp")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer func() {
 		_ = out.Close()
 		if complete { // Overwrite the original with the temp file if successful; delete it if not.
-			err = os.Rename(out.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root))
+			err = os.Rename(out.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root.Name()))
 		} else {
 			err = os.Remove(out.Name())
 		}

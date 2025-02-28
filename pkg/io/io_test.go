@@ -106,8 +106,8 @@ func TestSaveThumbsFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	thumbs_bin := make([]byte, fi.Size())
-	if _, err := f.Read(thumbs_bin); err != nil {
+	thumbsBin := make([]byte, fi.Size())
+	if _, err := f.Read(thumbsBin); err != nil {
 		t.Fatal(err)
 	}
 
@@ -119,7 +119,7 @@ func TestSaveThumbsFile(t *testing.T) {
 	tick := make(chan any, 1)
 	defer close(tick)
 	go func() {
-		for _ = range tick {
+		for range tick {
 		} // Do nothing. We're just trying to keep the program from deadlocking
 	}()
 
@@ -127,11 +127,11 @@ func TestSaveThumbsFile(t *testing.T) {
 		t.Errorf("Expected nil; got %v", err)
 	}
 	out := w.Bytes()
-	if len(out) != len(thumbs_bin) {
-		t.Errorf("thumbs.bin length is wrong. Expected %d, got %d", len(thumbs_bin), len(out))
+	if len(out) != len(thumbsBin) {
+		t.Errorf("thumbs.bin length is wrong. Expected %d, got %d", len(thumbsBin), len(out))
 	} else {
 		for i := range out {
-			if out[i] != thumbs_bin[i] {
+			if out[i] != thumbsBin[i] {
 				t.Errorf("thumbs.bin does not match expected starting at byte 0x%04x", i)
 				break
 			}
@@ -243,8 +243,8 @@ func TestSaveLibrary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	list_bin := make([]byte, fi.Size())
-	if _, err := cmpList.Read(list_bin); err != nil {
+	listBin := make([]byte, fi.Size())
+	if _, err := cmpList.Read(listBin); err != nil {
 		t.Fatal(err)
 	}
 
@@ -265,15 +265,15 @@ func TestSaveLibrary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	playtimes_bin := make([]byte, fi.Size())
-	if _, err := cmpPlay.Read(playtimes_bin); err != nil {
+	playtimesBin := make([]byte, fi.Size())
+	if _, err := cmpPlay.Read(playtimesBin); err != nil {
 		t.Fatal(err)
 	}
 
 	tick := make(chan any, 1)
 	defer close(tick)
 	go func() {
-		for _ = range tick {
+		for range tick {
 		} // Do nothing. We're just trying to keep the program from deadlocking
 	}()
 
@@ -283,23 +283,23 @@ func TestSaveLibrary(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected nil but got %v", err)
 	}
-	list_bytes := list.Bytes()
-	play_bytes := play.Bytes()
-	if len(list_bytes) != len(list_bin) {
-		t.Errorf("Expected %d bytes but got %d", len(list_bin), len(list_bytes))
+	listBytes := list.Bytes()
+	playBytes := play.Bytes()
+	if len(listBytes) != len(listBin) {
+		t.Errorf("Expected %d bytes but got %d", len(listBin), len(listBytes))
 	} else {
-		for i := range list_bytes {
-			if list_bytes[i] != list_bin[i] {
+		for i := range listBytes {
+			if listBytes[i] != listBin[i] {
 				t.Errorf("list.bin differs starting at byte 0x%04x", i)
 				break
 			}
 		}
 	}
-	if len(play_bytes) != len(playtimes_bin) {
-		t.Errorf("Expected %d bytes but got %d", len(playtimes_bin), len(play_bytes))
+	if len(playBytes) != len(playtimesBin) {
+		t.Errorf("Expected %d bytes but got %d", len(playtimesBin), len(playBytes))
 	} else {
-		for i := range play_bytes {
-			if play_bytes[i] != playtimes_bin[i] {
+		for i := range playBytes {
+			if playBytes[i] != playtimesBin[i] {
 				t.Errorf("playtimes.bin differs starting at byte 0x%04x", i)
 				break
 			}
