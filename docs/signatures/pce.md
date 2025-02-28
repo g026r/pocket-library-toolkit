@@ -216,6 +216,12 @@
 - Signature: `0x49c4d224`
 - Magic Number: `0x1c0c`
 
+## Fire Pro Wrestling - Combination Tag
+
+- CRC32: `0x90ed6575`
+- Signature: `0x33f31e56`
+- Magic Number: `0x1c0e`
+
 ## Formation Soccer - Human Cup '90
 
 - CRC32: `0x85a1e7b6`
