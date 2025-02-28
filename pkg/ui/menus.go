@@ -52,7 +52,6 @@ var (
 	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(blue)
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
-	italic            = lipgloss.NewStyle().Italic(true)
 	blue              = lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"}
 )
 
