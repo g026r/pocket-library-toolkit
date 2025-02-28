@@ -612,6 +612,12 @@
 - Signature: `0x4b80fe56`
 - Magic Number: `0x03e8`
 
+## Sagaia
+
+- CRC32: `0xe43da090`
+- Signature: `0x4b80fe56`
+- Magic Number: `0x03e8`
+
 ## Mani 4 in 1 - Irem
 
 - CRC32: `0xcb48b6d0`
