@@ -50,13 +50,6 @@
   },
   {
     "system": 4,
-    "name": "Wonder Boy III: The Dragon's Trap",
-    "crc": "0x679e1676",
-    "signature": "0x81c8bc58",
-    "magic": "0x1b04"
-  },
-  {
-    "system": 4,
     "name": "Zillion (Rev 2)",
     "crc": "0x7ba54510",
     "signature": "0xa7e33a29",

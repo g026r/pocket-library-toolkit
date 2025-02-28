@@ -54,12 +54,6 @@
 - Signature: `0x2fec6b12`
 - Magic Number: `0x1ba5`
 
-## Mr. Heli no Daibouken
-
-- CRC32: `0x2cb92290`
-- Signature: `0x2fec6b12`
-- Magic Number: `0x1ba5`
-
 ## Battle Lode Runner
 
 - CRC32: `0x59e44f45`

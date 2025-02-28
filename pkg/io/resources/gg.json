@@ -99,13 +99,6 @@
   },
   {
     "system": 3,
-    "name": "Vampire: Master of Darkness",
-    "crc": "0x7ec64025",
-    "signature": "0x41117e28",
-    "magic": "0x17f8"
-  },
-  {
-    "system": 3,
     "name": "Jurassic Park (USA, Europe, Brazil)",
     "crc": "0xbd6f2321",
     "signature": "0x331b2689",

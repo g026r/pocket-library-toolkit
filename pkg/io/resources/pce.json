@@ -64,13 +64,6 @@
   },
   {
     "system": 7,
-    "name": "Mr. Heli no Daibouken",
-    "crc": "0x2cb92290",
-    "signature": "0x2fec6b12",
-    "magic": "0x1ba5"
-  },
-  {
-    "system": 7,
     "name": "Battle Lode Runner",
     "crc": "0x59e44f45",
     "signature": "0x67372018",

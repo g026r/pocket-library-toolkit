@@ -84,12 +84,6 @@
 - Signature: `0x41117e28`
 - Magic Number: `0x17f8`
 
-## Vampire: Master of Darkness
-
-- CRC32: `0x7ec64025`
-- Signature: `0x41117e28`
-- Magic Number: `0x17f8`
-
 ## Jurassic Park (USA, Europe, Brazil)
 
 - CRC32: `0xbd6f2321`

@@ -715,13 +715,6 @@
   },
   {
     "system": 0,
-    "name": "Sagaia",
-    "crc": "0xe43da090",
-    "signature": "0x4b80fe56",
-    "magic": "0x03e8"
-  },
-  {
-    "system": 0,
     "name": "Mani 4 in 1 - Irem",
     "crc": "0xcb48b6d0",
     "signature": "0xc4bdb30c",

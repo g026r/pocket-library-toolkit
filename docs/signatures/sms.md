@@ -42,12 +42,6 @@
 - Signature: `0x81c8bc58`
 - Magic Number: `0x1b04`
 
-## Wonder Boy III: The Dragon's Trap
-
-- CRC32: `0x679e1676`
-- Signature: `0x81c8bc58`
-- Magic Number: `0x1b04`
-
 ## Zillion (Rev 2)
 
 - CRC32: `0x7ba54510`
