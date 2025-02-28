@@ -50,6 +50,11 @@ func nextRandom() string {
 func (r *Root) CreateTemp(dir, pattern string) (*os.File, error) {
 	if dir == "" {
 		dir = os.TempDir()
+		// Root requires paths to be relative to the root dir.
+		// This is a hack, but I can't think of anything better yet
+		if os.IsPathSeparator(dir[0]) {
+			dir = dir[1:]
+		}
 	}
 
 	prefix, suffix, err := prefixAndSuffix(pattern)
@@ -98,9 +103,14 @@ func prefixAndSuffix(pattern string) (prefix, suffix string, err error) {
 // If dir is the empty string, MkdirTemp uses the default directory for temporary files, as returned by TempDir.
 // Multiple programs or goroutines calling MkdirTemp simultaneously will not choose the same directory.
 // It is the caller's responsibility to remove the directory when it is no longer needed.
-func (r Root) MkdirTemp(dir, pattern string) (string, error) {
+func (r *Root) MkdirTemp(dir, pattern string) (string, error) {
 	if dir == "" {
 		dir = os.TempDir()
+		// Root requires paths to be relative to the root dir.
+		// This is a hack, but I can't think of anything better yet
+		if os.IsPathSeparator(dir[0]) {
+			dir = dir[1:]
+		}
 	}
 
 	prefix, suffix, err := prefixAndSuffix(pattern)
