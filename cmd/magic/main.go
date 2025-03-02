@@ -52,11 +52,12 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 
 		// Create the json files
 		d, err := os.Getwd()
-		md := filepath.Join(d, "docs/signatures")
-		jsons := filepath.Join(d, "/pkg/io/resources")
 		if err != nil {
 			return err
 		}
+
+		md := filepath.Join(d, "docs/signatures")
+		jsons := filepath.Join(d, "/pkg/io/resources")
 		j, err := os.Create(filepath.Join(jsons, fmt.Sprintf("%s.json", strings.ToLower(k.String()))))
 		if err != nil {
 			return err
