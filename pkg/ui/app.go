@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"path/filepath"
 	"runtime"
 	"slices"
 	"strings"
@@ -340,6 +341,16 @@ func (m *Model) save() tea.Msg {
 		// 3. Deletes them if we weren't
 		// TODO: Clean this up to make it all more manageable
 
+		rmTempFiles := func() {
+			// Function remove all the temp files when unsuccessful
+			// Exists as a variable so it can be called repeatedly
+			_ = os.Remove(tmpList.Name())
+			_ = os.Remove(tmpPlaytimes.Name())
+			for _, v := range tmpThumbs {
+				_ = os.Remove(v.Name())
+			}
+		}
+
 		// Clean everything up
 		_ = tmpList.Close()
 		_ = tmpPlaytimes.Close()
@@ -348,24 +359,23 @@ func (m *Model) save() tea.Msg {
 		}
 		if success {
 			t := time.Now().Format("20060102_150405")
-			if err := m.backupAndRename(m.rootDir, "/System/Played Games/list.bin", tmpList, t); err != nil {
+			if err := m.backupAndRename(m.rootDir, "System/Played Games/list.bin", tmpList, t); err != nil {
+				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
-			if err := m.backupAndRename(m.rootDir, "/System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
+			if err := m.backupAndRename(m.rootDir, "System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
+				// TODO: Technically this could leave things in an inconsistent state, as it might fail when renaming the playtimes , resulting in an inconsistency between it & list.bin
+				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
 			for k, v := range tmpThumbs {
-				if err := m.backupAndRename(m.rootDir, fmt.Sprintf("/System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
+				if err := m.backupAndRename(m.rootDir, fmt.Sprintf("System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
+					rmTempFiles()
 					log.Fatal(errorStyle.Render(err.Error()))
 				}
 			}
 		} else {
-			// Remove all the files as we weren't successful
-			_ = os.Remove(tmpList.Name())
-			_ = os.Remove(tmpPlaytimes.Name())
-			for _, v := range tmpThumbs {
-				_ = os.Remove(v.Name())
-			}
+			rmTempFiles()
 		}
 		m.percent = 1.0
 	}()
@@ -455,7 +465,7 @@ func (m *Model) genFull() tea.Msg {
 	total := 0.0
 	// Calculate what our total percentage is so we can show the progress bar
 	for _, sys := range models.ValidThumbsFiles {
-		de, err := m.rootDir.FS().(fs.ReadDirFS).ReadDir(fmt.Sprintf("System/Library/Images/%s", strings.ToLower(sys.String())))
+		de, err := m.rootDir.FS().(fs.ReadDirFS).ReadDir(filepath.Join("System/Library/Images", strings.ToLower(sys.String())))
 		if errors.Is(err, fs.ErrNotExist) {
 			// Directory doesn't exist. Just continue
 			continue
@@ -470,7 +480,7 @@ func (m *Model) genFull() tea.Msg {
 	}
 
 	for _, sys := range models.ValidThumbsFiles {
-		de, err := m.rootDir.FS().(fs.ReadDirFS).ReadDir(fmt.Sprintf("System/Library/Images/%s", strings.ToLower(sys.String())))
+		de, err := m.rootDir.FS().(fs.ReadDirFS).ReadDir(filepath.Join("System/Library/Images", strings.ToLower(sys.String())))
 		if errors.Is(err, fs.ErrNotExist) {
 			// Directory doesn't exist. Just continue
 			continue
@@ -975,7 +985,7 @@ func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 }
 
 func (m *Model) backupAndRename(root *root.Root, path string, tempFile *os.File, time string) error {
-	file := fmt.Sprintf("%s%s", root.Name(), path)
+  file := filepath.Join(root.Name(), path)
 	if m.Backup {
 		if err := os.Rename(file, fmt.Sprintf("%s_%s.bak", strings.TrimSuffix(file, ".bin"), time)); err != nil && !errors.Is(err, fs.ErrNotExist) {
 			return err
