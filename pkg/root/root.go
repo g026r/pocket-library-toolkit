@@ -26,6 +26,15 @@ func OpenRoot(dir string) (*Root, error) {
 	return &Root{r}, nil
 }
 
+func (r *Root) OpenRoot(dir string) (*Root, error) {
+	nr, err := r.Root.OpenRoot(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Root{nr}, nil
+}
+
 // random number source provided by runtime.
 // We generate random temporary file names so that there's a good
 // chance the file doesn't exist yet - keeps the number of tries in
