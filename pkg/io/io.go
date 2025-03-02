@@ -69,7 +69,7 @@ func (c Config) SaveConfig() error {
 		}
 	}
 
-	return os.WriteFile(fmt.Sprintf("%s/pocket-toolkit.json", dir), b, 0644)
+	return os.WriteFile(filepath.Join(dir, "pocket-toolkit.json"), b, 0644)
 }
 
 type jsonEntry struct {
@@ -385,7 +385,7 @@ func LoadConfig() (Config, error) {
 		}
 	}
 
-	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-toolkit.json", dir))
+	b, err := os.ReadFile(filepath.Join(dir, "pocket-toolkit.json"))
 	if errors.Is(err, fs.ErrNotExist) {
 		return c, nil // Doesn't exist. Use defaults
 	} else if err != nil {
