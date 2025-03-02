@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/binary"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -31,7 +30,7 @@ func main() {
 	defer func() {
 		_ = out.Close()
 		if complete { // Overwrite the original with the temp file if successful; delete it if not.
-			err = os.Rename(out.Name(), fmt.Sprintf("%s/System/Played Games/playtimes.bin", root))
+			err = os.Rename(out.Name(), filepath.Join(root, "System/Played Games/playtimes.bin"))
 		} else {
 			err = os.Remove(out.Name())
 		}
