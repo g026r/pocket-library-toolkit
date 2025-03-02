@@ -60,7 +60,7 @@ func (c Config) SaveConfig() error {
 		return err
 	}
 
-	dir, f := filepath.Split(dir)
+	f := filepath.Base(dir)
 	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
 	if f == "main" || f == "___main" {
 		dir, err = os.Getwd()
@@ -376,7 +376,7 @@ func LoadConfig() (Config, error) {
 		return c, err
 	}
 
-	dir, f := filepath.Split(dir)
+	f := filepath.Base(dir)
 	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
 	if f == "main" || f == "___main" {
 		dir, err = os.Getwd()
