@@ -758,11 +758,14 @@ func (m *Model) shiftInput(i int) (tea.Model, tea.Cmd) {
 			}
 		}
 	}
+
+	// If this sends it out of bounds, wrap around to the other side
 	if m.focusedInput >= len(m.gameInput) {
-		m.focusedInput = len(m.gameInput) - 1
-	} else if m.focusedInput < 0 {
 		m.focusedInput = 0
+	} else if m.focusedInput < 0 {
+		m.focusedInput = len(m.gameInput) - 1
 	}
+
 	m.gameInput[m.focusedInput].Style(focusedStyle)
 
 	if t, ok := m.gameInput[m.focusedInput].(*Input); ok {
