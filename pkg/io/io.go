@@ -55,18 +55,10 @@ func (c Config) SaveConfig() error {
 	if err != nil {
 		return err
 	}
-	dir, err := os.Executable()
+
+	dir, err := getConfigDir()
 	if err != nil {
 		return err
-	}
-
-	f := filepath.Base(dir)
-	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
-	if f == "main" || f == "___main" {
-		dir, err = os.Getwd()
-		if err != nil {
-			return err
-		}
 	}
 
 	return os.WriteFile(fmt.Sprintf("%s/pocket-toolkit.json", dir), b, 0644)
@@ -371,18 +363,9 @@ func LoadConfig() (Config, error) {
 		Backup:          true,
 		CheckPlaytimes:  true,
 	}
-	dir, err := os.Executable()
+	dir, err := getConfigDir()
 	if err != nil {
 		return c, err
-	}
-
-	f := filepath.Base(dir)
-	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
-	if f == "main" || f == "___main" {
-		dir, err = os.Getwd()
-		if err != nil {
-			return c, err
-		}
 	}
 
 	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-toolkit.json", dir))
@@ -571,4 +554,24 @@ func ReadSeekerCloser(fs fs.FS, filename string) (io.ReadSeekCloser, error) {
 	} else {
 		return rs, nil
 	}
+}
+
+func getConfigDir() (string, error) {
+	var dir string
+	exec, err := os.Executable()
+	if err != nil {
+		return "", err
+	}
+
+	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
+	if f := filepath.Base(exec); f == "main" || f == "___main" {
+		dir, err = os.Getwd()
+		if err != nil {
+			return "", err
+		}
+	} else {
+		dir = filepath.Dir(exec)
+	}
+
+	return dir, nil
 }
