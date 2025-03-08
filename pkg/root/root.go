@@ -7,9 +7,14 @@ package root
 
 import (
 	"errors"
+	"fmt"
 	"os"
+	"path/filepath"
 	_ "unsafe" // for go:linkname
 )
+
+// pathEscapes is the error message for os.errPathEscapes since it's not exported & we therefore can't errors.Is it
+const pathEscapes = "path escapes from parent"
 
 // Root is a simple wrapper for os.Root to allow it to create temp files
 type Root struct {
@@ -33,6 +38,21 @@ func (r *Root) OpenRoot(dir string) (*Root, error) {
 	}
 
 	return &Root{nr}, nil
+}
+
+// Rename is a wrapper for os.Rename that forces the oldpath & newpath to be located under the Root object
+// See [os.Rename] for more info.
+func (r *Root) Rename(oldpath, newpath string) error {
+	_, err := r.Lstat(oldpath)
+	if err != nil && err.Error() == pathEscapes {
+		return fmt.Errorf("oldpath: %w", err)
+	}
+	_, err = r.Lstat(newpath)
+	if err != nil && err.Error() == pathEscapes {
+		return fmt.Errorf("newpath: %w", err)
+	}
+
+	return os.Rename(filepath.Join(r.Name(), oldpath), filepath.Join(r.Name(), newpath))
 }
 
 // random number source provided by runtime.
@@ -132,7 +152,7 @@ func (r *Root) MkdirTemp(dir, pattern string) (string, error) {
 			return "", &os.PathError{Op: "mkdirtemp", Path: dir + string(os.PathSeparator) + prefix + "*" + suffix, Err: os.ErrExist}
 		}
 		if os.IsNotExist(err) {
-			if _, err := os.Stat(dir); os.IsNotExist(err) {
+			if _, err := r.Stat(dir); os.IsNotExist(err) {
 				return "", err
 			}
 		}

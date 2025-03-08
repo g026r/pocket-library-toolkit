@@ -985,13 +985,12 @@ func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 }
 
 func (m *Model) backupAndRename(root *root.Root, path string, tempFile *os.File, time string) error {
-  file := filepath.Join(root.Name(), path)
 	if m.Backup {
-		if err := os.Rename(file, fmt.Sprintf("%s_%s.bak", strings.TrimSuffix(file, ".bin"), time)); err != nil && !errors.Is(err, fs.ErrNotExist) {
+		if err := root.Rename(path, fmt.Sprintf("%s_%s.bak", strings.TrimSuffix(path, ".bin"), time)); err != nil && !errors.Is(err, fs.ErrNotExist) {
 			return err
 		}
 	}
-	return os.Rename(tempFile.Name(), file)
+	return root.Rename(strings.TrimPrefix(strings.Replace(tempFile.Name(), root.Name(), "", 1), "/"), path)
 }
 
 // pop is the ESC action for basically everything but main menu
