@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/g026r/pocket-library-toolkit/pkg/root"
 )
 
 const (
@@ -48,13 +50,13 @@ func HexStringTransform(s string) (uint32, error) {
 // GetRoot finds the path to the Pocket root dir.
 // If an argument was passed, it uses that.
 // If an argument wasn't passed, it uses the current directory.
-func GetRoot() (string, error) {
+func GetRoot() (*root.Root, error) {
 	var d string
 	var err error
 	switch len(os.Args) {
 	case 1:
 		if d, err = os.Executable(); err != nil {
-			return "", err
+			return nil, err
 		}
 		d = filepath.Dir(d)
 	case 2:
@@ -64,17 +66,17 @@ func GetRoot() (string, error) {
 
 	d, err = filepath.Abs(d)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	fi, err := os.Stat(d)
 	if err != nil {
-		return "", err
+		return nil, err
 	} else if !fi.IsDir() {
-		return "", fmt.Errorf("%s is not a directory", d)
+		return nil, fmt.Errorf("%s is not a directory", d)
 	}
 
-	return d, nil
+	return root.OpenRoot(d)
 }
 
 func DetermineResizing(i image.Image) (int, int) {
