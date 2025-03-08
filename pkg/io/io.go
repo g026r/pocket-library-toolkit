@@ -61,7 +61,7 @@ func (c Config) SaveConfig() error {
 		return err
 	}
 
-  return os.WriteFile(filepath.Join(dir, "pocket-toolkit.json"), b, 0644)
+	return os.WriteFile(filepath.Join(dir, "pocket-toolkit.json"), b, 0644)
 }
 
 type jsonEntry struct {
