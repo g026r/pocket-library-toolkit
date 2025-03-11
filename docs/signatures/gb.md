@@ -486,6 +486,12 @@
 - Signature: `0x8fa9502c`
 - Magic Number: `0x027f`
 
+## Crayon Shin-chan 3: Ora no Gokigen Athletic
+
+- CRC32: `0x24a12807`
+- Signature: `0x25e1bf4b`
+- Magic Number: `0x0289`
+
 ## Daiku no Gen-san: Ghost Building Company
 
 - CRC32: `0x9e0d2b45`
@@ -569,6 +575,12 @@
 - CRC32: `0x08bf29c9`
 - Signature: `0xc0c247e7`
 - Magic Number: `0x034d`
+
+## Hoshi no Kirby (Rev. 1)
+
+- CRC32: `0x04342c83`
+- Signature: `0x531759df`
+- Magic Number: `0x035f`
 
 ## Hoshi no Kirby 2
 
@@ -827,6 +839,12 @@
 - CRC32: `0x75e1d268`
 - Signature: `0x86575c60`
 - Magic Number: `0x0618`
+
+## Yu-Gi-Oh! Duel Monsters
+
+- CRC32: `0x8875ec54`
+- Signature: `0xf28337a7`
+- Magic Number: `0x0627`
 
 ## Adventures of Lolo
 

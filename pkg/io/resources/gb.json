@@ -568,6 +568,13 @@
   },
   {
     "system": 0,
+    "name": "Crayon Shin-chan 3: Ora no Gokigen Athletic",
+    "crc": "0x24a12807",
+    "signature": "0x25e1bf4b",
+    "magic": "0x0289"
+  },
+  {
+    "system": 0,
     "name": "Daiku no Gen-san: Ghost Building Company",
     "crc": "0x9e0d2b45",
     "signature": "0xe6e7691e",
@@ -663,6 +670,13 @@
     "crc": "0x08bf29c9",
     "signature": "0xc0c247e7",
     "magic": "0x034d"
+  },
+  {
+    "system": 0,
+    "name": "Hoshi no Kirby (Rev. 1)",
+    "crc": "0x04342c83",
+    "signature": "0x531759df",
+    "magic": "0x035f"
   },
   {
     "system": 0,
@@ -964,6 +978,13 @@
     "crc": "0x75e1d268",
     "signature": "0x86575c60",
     "magic": "0x0618"
+  },
+  {
+    "system": 0,
+    "name": "Yu-Gi-Oh! Duel Monsters",
+    "crc": "0x8875ec54",
+    "signature": "0xf28337a7",
+    "magic": "0x0627"
   },
   {
     "system": 0,
