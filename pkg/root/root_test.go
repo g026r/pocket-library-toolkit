@@ -227,3 +227,68 @@ func TestRoot_MkdirTemp_BadPattern(t *testing.T) {
 		})
 	}
 }
+
+func TestRoot_Rename(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+
+	tests := []struct {
+		pattern string
+		wantErr bool
+	}{
+		{"success", false},
+		{"../path-escapes", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.pattern, func(t *testing.T) {
+			sut, err := OpenRoot(tmpDir)
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer sut.Close()
+
+			tmpFile, err := sut.CreateTemp("", "*.tmp")
+			if err != nil {
+				t.Fatalf("failed to create temp file: %v", err)
+			}
+			tmpFile.Close()
+
+			err = sut.Rename(filepath.Base(tmpFile.Name()), tt.pattern)
+			if tt.wantErr {
+				if err == nil {
+					t.Errorf("Rename(..., %#q) succeeded, expected error", tt.pattern)
+				}
+			} else if err != nil {
+				t.Errorf("%s: %v", tt.pattern, err)
+			}
+		})
+	}
+
+	t.Run("source-escapes", func(t *testing.T) {
+		sut, err := OpenRoot(tmpDir)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer sut.Close()
+
+		err = sut.Rename("/source-escapes", "doesnt-matter")
+		if err == nil {
+			t.Errorf("Rename(..., %#q) succeeded, expected error", "source-escapes")
+		}
+	})
+
+	t.Run("not-found", func(t *testing.T) {
+		sut, err := OpenRoot(tmpDir)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer sut.Close()
+
+		err = sut.Rename("not-found", "doesnt-matter")
+		if err == nil {
+			t.Errorf("Rename(..., %#q) succeeded, expected error", "source-escapes")
+		}
+	})
+}

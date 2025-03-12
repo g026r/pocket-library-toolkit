@@ -7,6 +7,7 @@ package root
 
 import (
 	"errors"
+	_ "errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -44,11 +45,12 @@ func (r *Root) OpenRoot(dir string) (*Root, error) {
 // See [os.Rename] for more info.
 func (r *Root) Rename(oldpath, newpath string) error {
 	_, err := r.Lstat(oldpath)
-	if err != nil && err.Error() == pathEscapes {
+	if err != nil && errors.Unwrap(err).Error() == pathEscapes {
 		return fmt.Errorf("oldpath: %w", err)
 	}
 	_, err = r.Lstat(newpath)
-	if err != nil && err.Error() == pathEscapes {
+	_ = errors.Unwrap(err)
+	if err != nil && errors.Unwrap(err).Error() == pathEscapes {
 		return fmt.Errorf("newpath: %w", err)
 	}
 
