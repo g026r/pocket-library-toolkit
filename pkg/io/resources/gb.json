@@ -568,6 +568,13 @@
   },
   {
     "system": 0,
+    "name": "Crayon Shin-chan 3: Ora no Gokigen Athletic",
+    "crc": "0x24a12807",
+    "signature": "0x25e1bf4b",
+    "magic": "0x0289"
+  },
+  {
+    "system": 0,
     "name": "Daiku no Gen-san: Ghost Building Company",
     "crc": "0x9e0d2b45",
     "signature": "0xe6e7691e",
@@ -617,6 +624,20 @@
   },
   {
     "system": 0,
+    "name": "Game de Hakken!! Tamagotchi: Osutchi to Mesutchi",
+    "crc": "0x9694d69d",
+    "signature": "0x1ee30341",
+    "magic": "0x02fd"
+  },
+  {
+    "system": 0,
+    "name": "Game de Hakken!! Tamagotchi 2",
+    "crc": "0x19889c43",
+    "signature": "0x7155bfcc",
+    "magic": "0x02ff"
+  },
+  {
+    "system": 0,
     "name": "GB Genjin",
     "crc": "0x690227f6",
     "signature": "0xf0e6a0ab",
@@ -663,6 +684,13 @@
     "crc": "0x08bf29c9",
     "signature": "0xc0c247e7",
     "magic": "0x034d"
+  },
+  {
+    "system": 0,
+    "name": "Hoshi no Kirby (Rev. 1)",
+    "crc": "0x04342c83",
+    "signature": "0x531759df",
+    "magic": "0x035f"
   },
   {
     "system": 0,
@@ -869,6 +897,13 @@
   },
   {
     "system": 0,
+    "name": "SD Gundam: SD Sengokuden: Kunitori Monogatari",
+    "crc": "0x016a0552",
+    "signature": "0x175e9117",
+    "magic": "0x0536"
+  },
+  {
+    "system": 0,
     "name": "Shippo de Bun",
     "crc": "0x56410442",
     "signature": "0xa21327fb",
@@ -964,6 +999,13 @@
     "crc": "0x75e1d268",
     "signature": "0x86575c60",
     "magic": "0x0618"
+  },
+  {
+    "system": 0,
+    "name": "Yu-Gi-Oh! Duel Monsters",
+    "crc": "0x8875ec54",
+    "signature": "0xf28337a7",
+    "magic": "0x0627"
   },
   {
     "system": 0,
