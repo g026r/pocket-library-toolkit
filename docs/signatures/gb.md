@@ -534,6 +534,18 @@
 - Signature: `0x8bd14307`
 - Magic Number: `0x02b8`
 
+## Game de Hakken!! Tamagotchi: Osutchi to Mesutchi
+
+- CRC32: `0x9694d69d`
+- Signature: `0x1ee30341`
+- Magic Number: `0x02fd`
+
+## Game de Hakken!! Tamagotchi 2
+
+- CRC32: `0x19889c43`
+- Signature: `0x7155bfcc`
+- Magic Number: `0x02ff`
+
 ## GB Genjin
 
 - CRC32: `0x690227f6`
@@ -755,6 +767,12 @@
 - CRC32: `0xb864a3b6`
 - Signature: `0x225af361`
 - Magic Number: `0x052b`
+
+## SD Gundam: SD Sengokuden: Kunitori Monogatari
+
+- CRC32: `0x016a0552`
+- Signature: `0x175e9117`
+- Magic Number: `0x0536`
 
 ## Shippo de Bun
 
