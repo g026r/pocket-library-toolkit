@@ -593,3 +593,9 @@
 - CRC32: `0xf8f85eec`
 - Signature: `0xd4c0eadc`
 - Magic Number: `0x1d1e`
+
+## Mr. Heli no Daibouken
+
+- CRC32: `0x2cb92290`
+- Signature: `0x47a93d4c`
+- Magic Number: `0x1d27`

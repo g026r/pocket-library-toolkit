@@ -276,6 +276,12 @@
 - Signature: `0x9f7b6031`
 - Magic Number: `0x0122`
 
+## James Bond 007
+
+- CRC32: `0xca3bc3ce`
+- Signature: `0xc594d955`
+- Magic Number: `0x0139`
+
 ## Kid Dracula
 
 - CRC32: `0xf27294b7`
@@ -875,6 +881,12 @@
 - CRC32: `0xdfa3b28a`
 - Signature: `0xdffb4dcc`
 - Magic Number: `0x0642`
+
+## Alleyway
+
+- CRC32: `0x5cc01586`
+- Signature: `0x20ff7a23`
+- Magic Number: `0x064f`
 
 ## Makaimura Gaiden - The Demon Darkness
 
