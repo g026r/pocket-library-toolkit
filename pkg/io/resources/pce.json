@@ -691,5 +691,12 @@
     "crc": "0xf8f85eec",
     "signature": "0xd4c0eadc",
     "magic": "0x1d1e"
+  },
+  {
+    "system": 7,
+    "name": "Mr. Heli no Daibouken",
+    "crc": "0x2cb92290",
+    "signature": "0x47a93d4c",
+    "magic": "0x1d27"
   }
 ]
