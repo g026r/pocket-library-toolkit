@@ -348,7 +348,7 @@
 - Signature: `0x8623d919`
 - Magic Number: `0x1c75`
 
-## Neutopia
+## Neutopia (USA)
 
 - CRC32: `0xa9a94e1b`
 - Signature: `0x41219fb4`
