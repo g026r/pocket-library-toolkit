@@ -348,6 +348,12 @@
 - Signature: `0x8623d919`
 - Magic Number: `0x1c75`
 
+## Neutopia (USA)
+
+- CRC32: `0xa9a94e1b`
+- Signature: `0x41219fb4`
+- Magic Number: `0x1c79`
+
 ## NewZealand Story, The
 
 - CRC32: `0x8e4d75a8`

@@ -407,6 +407,13 @@
   },
   {
     "system": 7,
+    "name": "Neutopia (USA)",
+    "crc": "0xa9a94e1b",
+    "signature": "0x41219fb4",
+    "magic": "0x1c79"
+  },
+  {
+    "system": 7,
     "name": "NewZealand Story, The",
     "crc": "0x8e4d75a8",
     "signature": "0x5704f385",
