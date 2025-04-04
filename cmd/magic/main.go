@@ -11,6 +11,7 @@ import (
 
 	"github.com/g026r/pocket-library-toolkit/pkg/io"
 	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/root"
 )
 
 func main() {
@@ -21,8 +22,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	root, err := root.OpenRoot(dir)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer root.Close()
 
-	entries, err := io.LoadEntries(os.DirFS(dir))
+	entries, err := io.LoadEntries(root.FS())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,9 +62,14 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 			return err
 		}
 
-		md := filepath.Join(d, "docs/signatures")
-		jsons := filepath.Join(d, "/pkg/io/resources")
-		j, err := os.Create(filepath.Join(jsons, fmt.Sprintf("%s.json", strings.ToLower(k.String()))))
+		root, err := root.OpenRoot(d)
+		if err != nil {
+			return err
+		}
+		defer root.Close()
+
+
+		j, err := root.Create(filepath.Join("pkg/io/resources", fmt.Sprintf("%s.json", strings.ToLower(k.String()))))
 		if err != nil {
 			return err
 		}
@@ -69,7 +80,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 		_ = j.Close()
 
 		// Create the .md files
-		m, err := os.Create(filepath.Join(md, fmt.Sprintf("%s.md", strings.ToLower(k.String()))))
+		m, err := root.Create(filepath.Join("docs/signatures", fmt.Sprintf("%s.md", strings.ToLower(k.String()))))
 		if err != nil {
 			return err
 		}
