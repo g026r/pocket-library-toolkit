@@ -407,6 +407,13 @@
   },
   {
     "system": 7,
+    "name": "Neutopia (USA)",
+    "crc": "0xa9a94e1b",
+    "signature": "0x41219fb4",
+    "magic": "0x1c79"
+  },
+  {
+    "system": 7,
     "name": "NewZealand Story, The",
     "crc": "0x8e4d75a8",
     "signature": "0x5704f385",
@@ -691,5 +698,12 @@
     "crc": "0xf8f85eec",
     "signature": "0xd4c0eadc",
     "magic": "0x1d1e"
+  },
+  {
+    "system": 7,
+    "name": "Mr. Heli no Daibouken",
+    "crc": "0x2cb92290",
+    "signature": "0x47a93d4c",
+    "magic": "0x1d27"
   }
 ]

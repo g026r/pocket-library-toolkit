@@ -323,6 +323,13 @@
   },
   {
     "system": 0,
+    "name": "James Bond 007",
+    "crc": "0xca3bc3ce",
+    "signature": "0xc594d955",
+    "magic": "0x0139"
+  },
+  {
+    "system": 0,
     "name": "Kid Dracula",
     "crc": "0xf27294b7",
     "signature": "0x8b2a6066",
@@ -1020,6 +1027,13 @@
     "crc": "0xdfa3b28a",
     "signature": "0xdffb4dcc",
     "magic": "0x0642"
+  },
+  {
+    "system": 0,
+    "name": "Alleyway",
+    "crc": "0x5cc01586",
+    "signature": "0x20ff7a23",
+    "magic": "0x064f"
   },
   {
     "system": 0,
