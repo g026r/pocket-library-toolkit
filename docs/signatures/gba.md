@@ -510,6 +510,12 @@
 - Signature: `0x7ac2020a`
 - Magic Number: `0x16d0`
 
+## WarioWare, Inc.: Mega Microgame$!
+
+- CRC32: `0x785d8b8c`
+- Signature: `0xd226151f`
+- Magic Number: `0x16d4`
+
 ## Yoshi no Banyuuinryoku
 
 - CRC32: `0x31594b7a`

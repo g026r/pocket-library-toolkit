@@ -596,6 +596,13 @@
   },
   {
     "system": 2,
+    "name": "WarioWare, Inc.: Mega Microgame$!",
+    "crc": "0x785d8b8c",
+    "signature": "0xd226151f",
+    "magic": "0x16d4"
+  },
+  {
+    "system": 2,
     "name": "Yoshi no Banyuuinryoku",
     "crc": "0x31594b7a",
     "signature": "0x6163c07f",

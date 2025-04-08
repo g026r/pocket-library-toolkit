@@ -54,6 +54,12 @@
 - Signature: `0x8dfed08d`
 - Magic Number: `0x003d`
 
+## Wario Blast featuring Bomberman!
+
+- CRC32: `0x927b57a1`
+- Signature: `0x0c156939`
+- Magic Number: `0x0049`
+
 ## Wario Land II
 
 - CRC32: `0x9c54358d`
@@ -96,6 +102,12 @@
 - Signature: `0x61bbf48e`
 - Magic Number: `0x007b`
 
+## Atomic Punk
+
+- CRC32: `0xc4720897`
+- Signature: `0xef32bed0`
+- Magic Number: `0x0083`
+
 ## Avenging Spirit
 
 - CRC32: `0xcf2ba5f7`
@@ -107,6 +119,12 @@
 - CRC32: `0xd4b655ec`
 - Signature: `0x83127d5d`
 - Magic Number: `0x0086`
+
+## Barbie: Game Girl
+
+- CRC32: `0x94c26cdf`
+- Signature: `0x2d45110a`
+- Magic Number: `0x0087`
 
 ## Bart Simpson's Escape from Camp Deadly
 
@@ -131,6 +149,18 @@
 - CRC32: `0x41dbb5fb`
 - Signature: `0x2dd36a59`
 - Magic Number: `0x009a`
+
+## Blaster Master Boy
+
+- CRC32: `0x3b2c7118`
+- Signature: `0x33e68487`
+- Magic Number: `0x009d`
+
+## Bomberman GB (USA, Europe)
+
+- CRC32: `0xf372d175`
+- Signature: `0x4b4c8fcc`
+- Magic Number: `0x00a1`
 
 ## Bonk's Adventure
 
@@ -167,6 +197,12 @@
 - CRC32: `0xf1c81eb0`
 - Signature: `0x48926117`
 - Magic Number: `0x00cb`
+
+## Cyraid
+
+- CRC32: `0x9d00da55`
+- Signature: `0x7a69e12e`
+- Magic Number: `0x00d2`
 
 ## Darkwing Duck (USA)
 
@@ -432,17 +468,71 @@
 - Signature: `0x513007f6`
 - Magic Number: `0x0207`
 
+## Bakuretsu Senshi Warrior
+
+- CRC32: `0xecf1b801`
+- Signature: `0xa39a4d6b`
+- Magic Number: `0x021f`
+
 ## Batman: The Video Game
 
 - CRC32: `0x6c41d3cd`
 - Signature: `0xeaa1f4dc`
 - Magic Number: `0x0228`
 
+## The Battle of Olympus
+
+- CRC32: `0xca450e93`
+- Signature: `0x23eb892e`
+- Magic Number: `0x022f`
+
 ## BattleCity
 
 - CRC32: `0xa37a814a`
 - Signature: `0x02c7dac3`
 - Magic Number: `0x0233`
+
+## Blaster Master Jr.
+
+- CRC32: `0xe9f9016f`
+- Signature: `0x9451cdfb`
+- Magic Number: `0x023f`
+
+## Bomber Boy
+
+- CRC32: `0xef9595ac`
+- Signature: `0xb13e954f`
+- Magic Number: `0x0247`
+
+## Bomber King: Scenario 2
+
+- CRC32: `0xb8fe9077`
+- Signature: `0xf948fafa`
+- Magic Number: `0x0248`
+
+## Bomber Man Collection
+
+- CRC32: `0x509a6b73`
+- Signature: `0x4ec907a0`
+- Magic Number: `0x0249`
+
+## Bomber Man GB (Japan)
+
+- CRC32: `0x94337d56`
+- Signature: `0xd183b96d`
+- Magic Number: `0x024a`
+
+## Bomber Man GB 2
+
+- CRC32: `0x6157443b`
+- Signature: `0x46b18cad`
+- Magic Number: `0x024b`
+
+## Bomber Man GB 3
+
+- CRC32: `0xf658b7a7`
+- Signature: `0x0ebd73d8`
+- Magic Number: `0x024c`
 
 ## Boulder Dash (Europe)
 
@@ -461,6 +551,12 @@
 - CRC32: `0x5a1a20f3`
 - Signature: `0xe2eb4e33`
 - Magic Number: `0x025b`
+
+## Burning Paper
+
+- CRC32: `0x88f8c991`
+- Signature: `0x627c707f`
+- Magic Number: `0x025d`
 
 ## Cave Noire
 
@@ -539,6 +635,24 @@
 - CRC32: `0x8709434b`
 - Signature: `0x8bd14307`
 - Magic Number: `0x02b8`
+
+## Dynablaster
+
+- CRC32: `0x9677d157`
+- Signature: `0x4f2ebbbb`
+- Magic Number: `0x02cc`
+
+## Game Boy Wars
+
+- CRC32: `0xf5d364db`
+- Signature: `0x10e76438`
+- Magic Number: `0x02fa`
+
+## Game Boy Wars Turbo
+
+- CRC32: `0x94563424`
+- Signature: `0xaa791ed9`
+- Magic Number: `0x02fc`
 
 ## Game de Hakken!! Tamagotchi: Osutchi to Mesutchi
 
@@ -648,6 +762,18 @@
 - Signature: `0xc4bdb30c`
 - Magic Number: `0x03ea`
 
+## Megami Tensei Gaiden: Last Bible
+
+- CRC32: `0xfe9dd4c0`
+- Signature: `0x072e17b7`
+- Magic Number: `0x0403`
+
+## Megami Tensei Gaiden: Last Bible II
+
+- CRC32: `0xf8e519d9`
+- Signature: `0xb19f0d23`
+- Magic Number: `0x0404`
+
 ## Metroid II: Return of Samus
 
 - CRC32: `0xdee05370`
@@ -707,6 +833,18 @@
 - CRC32: `0xd8b4aea4`
 - Signature: `0x514d3f2c`
 - Magic Number: `0x04b1`
+
+## Pocket Bomberman (Europe)
+
+- CRC32: `0x0fd1ae54`
+- Signature: `0xcd6930e4`
+- Magic Number: `0x04b6`
+
+## Pocket Bomber Man (Japan)
+
+- CRC32: `0x212b47a5`
+- Signature: `0xeadf5907`
+- Magic Number: `0x04b7`
 
 ## Pocket Camera (Rev 1)
 
@@ -792,6 +930,12 @@
 - Signature: `0x9d6225d9`
 - Magic Number: `0x0566`
 
+## Super Donkey Kong GB
+
+- CRC32: `0x695f4600`
+- Signature: `0xf8ba918c`
+- Magic Number: `0x0591`
+
 ## Super Mario Land (Rev 1)
 
 - CRC32: `0x2c27ec70`
@@ -863,6 +1007,12 @@
 - CRC32: `0x75e1d268`
 - Signature: `0x86575c60`
 - Magic Number: `0x0618`
+
+## Yakuman (Rev 0)
+
+- CRC32: `0x3134ea60`
+- Signature: `0x60185330`
+- Magic Number: `0x061b`
 
 ## Yu-Gi-Oh! Duel Monsters
 
