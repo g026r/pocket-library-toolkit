@@ -48,11 +48,59 @@
 - Signature: `0xe079a207`
 - Magic Number: `0x06d7`
 
+## Bomber Man Max: Ain Version
+
+- CRC32: `0x545e0da2`
+- Signature: `0x4c0ec8ce`
+- Magic Number: `0x06e2`
+
+## Bomberman Max: Blue Champion
+
+- CRC32: `0x5ccb66cf`
+- Signature: `0xc54c7df4`
+- Magic Number: `0x06e3`
+
+## Bomber Man Max: Hikari no Yuusha
+
+- CRC32: `0x7a44ce88`
+- Signature: `0x8f362805`
+- Magic Number: `0x06e4`
+
+## Bomberman Max: Red Challenger
+
+- CRC32: `0x4853f586`
+- Signature: `0x6ad90546`
+- Magic Number: `0x06e5`
+
+## Bomber Man Max: Yami no Senshi
+
+- CRC32: `0x48b60e8e`
+- Signature: `0x6c05e466`
+- Magic Number: `0x06e6`
+
 ## Bomberman Quest (Europe)
 
 - CRC32: `0x5a9b9ae6`
 - Signature: `0x188c0773`
 - Magic Number: `0x06e7`
+
+## Bomber Man Quest (Japan)
+
+- CRC32: `0x55210934`
+- Signature: `0x2ffdc3c5`
+- Magic Number: `0x06e8`
+
+## Bomberman Quest (USA)
+
+- CRC32: `0xa089c656`
+- Signature: `0x8ef666b1`
+- Magic Number: `0x06e9`
+
+## Bomberman Selection
+
+- CRC32: `0xaf2b426e`
+- Signature: `0x73656b77`
+- Magic Number: `0x06ea`
 
 ## Classic Bubble Bobble
 
@@ -119,6 +167,18 @@
 - CRC32: `0x35ec5fb2`
 - Signature: `0xb81b166a`
 - Magic Number: `0x078e`
+
+## The Fish Files
+
+- CRC32: `0xd6abc1f8`
+- Signature: `0xd1e844b5`
+- Magic Number: `0x07bc`
+
+## Ghosts'n Goblins
+
+- CRC32: `0xae024c23`
+- Signature: `0xf17880e2`
+- Magic Number: `0x07f3`
 
 ## Harvest Moon 2 GBC (USA)
 
@@ -210,6 +270,18 @@
 - Signature: `0xa4982ba3`
 - Magic Number: `0x0936`
 
+## Megami Tensei Gaiden: Last Bible
+
+- CRC32: `0xbd9ba639`
+- Signature: `0xba0519af`
+- Magic Number: `0x0937`
+
+## Megami Tensei Gaiden: Last Bible II
+
+- CRC32: `0x9caa00b5`
+- Signature: `0x81657c69`
+- Magic Number: `0x0938`
+
 ## Metal Gear Solid (USA)
 
 - CRC32: `0x04b0c5d6`
@@ -239,6 +311,12 @@
 - CRC32: `0x0601bef6`
 - Signature: `0xa274a58c`
 - Magic Number: `0x09cb`
+
+## Pocket Bomberman
+
+- CRC32: `0xfa2a66e9`
+- Signature: `0x68980a59`
+- Magic Number: `0x09d4`
 
 ## Pokemon: Crystal Version (USA, Europe) (Rev 1)
 
@@ -347,6 +425,18 @@
 - CRC32: `0x90ab047b`
 - Signature: `0x67cc9064`
 - Magic Number: `0x0b0b`
+
+## Super Mario Bros. Deluxe (USA, Europe) (Rev 0)
+
+- CRC32: `0xa4cd26ff`
+- Signature: `0x1e1c5834`
+- Magic Number: `0x0b0d`
+
+## Survival Kids
+
+- CRC32: `0xc46aba56`
+- Signature: `0xdaac498a`
+- Magic Number: `0x0b18`
 
 ## Tetris DX
 

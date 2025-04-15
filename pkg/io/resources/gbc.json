@@ -57,10 +57,66 @@
   },
   {
     "system": 1,
+    "name": "Bomber Man Max: Ain Version",
+    "crc": "0x545e0da2",
+    "signature": "0x4c0ec8ce",
+    "magic": "0x06e2"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Max: Blue Champion",
+    "crc": "0x5ccb66cf",
+    "signature": "0xc54c7df4",
+    "magic": "0x06e3"
+  },
+  {
+    "system": 1,
+    "name": "Bomber Man Max: Hikari no Yuusha",
+    "crc": "0x7a44ce88",
+    "signature": "0x8f362805",
+    "magic": "0x06e4"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Max: Red Challenger",
+    "crc": "0x4853f586",
+    "signature": "0x6ad90546",
+    "magic": "0x06e5"
+  },
+  {
+    "system": 1,
+    "name": "Bomber Man Max: Yami no Senshi",
+    "crc": "0x48b60e8e",
+    "signature": "0x6c05e466",
+    "magic": "0x06e6"
+  },
+  {
+    "system": 1,
     "name": "Bomberman Quest (Europe)",
     "crc": "0x5a9b9ae6",
     "signature": "0x188c0773",
     "magic": "0x06e7"
+  },
+  {
+    "system": 1,
+    "name": "Bomber Man Quest (Japan)",
+    "crc": "0x55210934",
+    "signature": "0x2ffdc3c5",
+    "magic": "0x06e8"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Quest (USA)",
+    "crc": "0xa089c656",
+    "signature": "0x8ef666b1",
+    "magic": "0x06e9"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Selection",
+    "crc": "0xaf2b426e",
+    "signature": "0x73656b77",
+    "magic": "0x06ea"
   },
   {
     "system": 1,
@@ -138,6 +194,20 @@
     "crc": "0x35ec5fb2",
     "signature": "0xb81b166a",
     "magic": "0x078e"
+  },
+  {
+    "system": 1,
+    "name": "The Fish Files",
+    "crc": "0xd6abc1f8",
+    "signature": "0xd1e844b5",
+    "magic": "0x07bc"
+  },
+  {
+    "system": 1,
+    "name": "Ghosts'n Goblins",
+    "crc": "0xae024c23",
+    "signature": "0xf17880e2",
+    "magic": "0x07f3"
   },
   {
     "system": 1,
@@ -246,6 +316,20 @@
   },
   {
     "system": 1,
+    "name": "Megami Tensei Gaiden: Last Bible",
+    "crc": "0xbd9ba639",
+    "signature": "0xba0519af",
+    "magic": "0x0937"
+  },
+  {
+    "system": 1,
+    "name": "Megami Tensei Gaiden: Last Bible II",
+    "crc": "0x9caa00b5",
+    "signature": "0x81657c69",
+    "magic": "0x0938"
+  },
+  {
+    "system": 1,
     "name": "Metal Gear Solid (USA)",
     "crc": "0x04b0c5d6",
     "signature": "0x7212c8f5",
@@ -278,6 +362,13 @@
     "crc": "0x0601bef6",
     "signature": "0xa274a58c",
     "magic": "0x09cb"
+  },
+  {
+    "system": 1,
+    "name": "Pocket Bomberman",
+    "crc": "0xfa2a66e9",
+    "signature": "0x68980a59",
+    "magic": "0x09d4"
   },
   {
     "system": 1,
@@ -404,6 +495,20 @@
     "crc": "0x90ab047b",
     "signature": "0x67cc9064",
     "magic": "0x0b0b"
+  },
+  {
+    "system": 1,
+    "name": "Super Mario Bros. Deluxe (USA, Europe) (Rev 0)",
+    "crc": "0xa4cd26ff",
+    "signature": "0x1e1c5834",
+    "magic": "0x0b0d"
+  },
+  {
+    "system": 1,
+    "name": "Survival Kids",
+    "crc": "0xc46aba56",
+    "signature": "0xdaac498a",
+    "magic": "0x0b18"
   },
   {
     "system": 1,

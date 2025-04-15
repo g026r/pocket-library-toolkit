@@ -64,6 +64,13 @@
   },
   {
     "system": 0,
+    "name": "Wario Blast featuring Bomberman!",
+    "crc": "0x927b57a1",
+    "signature": "0x0c156939",
+    "magic": "0x0049"
+  },
+  {
+    "system": 0,
     "name": "Wario Land II",
     "crc": "0x9c54358d",
     "signature": "0x67ad6fef",
@@ -113,6 +120,13 @@
   },
   {
     "system": 0,
+    "name": "Atomic Punk",
+    "crc": "0xc4720897",
+    "signature": "0xef32bed0",
+    "magic": "0x0083"
+  },
+  {
+    "system": 0,
     "name": "Avenging Spirit",
     "crc": "0xcf2ba5f7",
     "signature": "0x769ab181",
@@ -124,6 +138,13 @@
     "crc": "0xd4b655ec",
     "signature": "0x83127d5d",
     "magic": "0x0086"
+  },
+  {
+    "system": 0,
+    "name": "Barbie: Game Girl",
+    "crc": "0x94c26cdf",
+    "signature": "0x2d45110a",
+    "magic": "0x0087"
   },
   {
     "system": 0,
@@ -152,6 +173,20 @@
     "crc": "0x41dbb5fb",
     "signature": "0x2dd36a59",
     "magic": "0x009a"
+  },
+  {
+    "system": 0,
+    "name": "Blaster Master Boy",
+    "crc": "0x3b2c7118",
+    "signature": "0x33e68487",
+    "magic": "0x009d"
+  },
+  {
+    "system": 0,
+    "name": "Bomberman GB (USA, Europe)",
+    "crc": "0xf372d175",
+    "signature": "0x4b4c8fcc",
+    "magic": "0x00a1"
   },
   {
     "system": 0,
@@ -194,6 +229,13 @@
     "crc": "0xf1c81eb0",
     "signature": "0x48926117",
     "magic": "0x00cb"
+  },
+  {
+    "system": 0,
+    "name": "Cyraid",
+    "crc": "0x9d00da55",
+    "signature": "0x7a69e12e",
+    "magic": "0x00d2"
   },
   {
     "system": 0,
@@ -505,6 +547,13 @@
   },
   {
     "system": 0,
+    "name": "Bakuretsu Senshi Warrior",
+    "crc": "0xecf1b801",
+    "signature": "0xa39a4d6b",
+    "magic": "0x021f"
+  },
+  {
+    "system": 0,
     "name": "Batman: The Video Game",
     "crc": "0x6c41d3cd",
     "signature": "0xeaa1f4dc",
@@ -512,10 +561,66 @@
   },
   {
     "system": 0,
+    "name": "The Battle of Olympus",
+    "crc": "0xca450e93",
+    "signature": "0x23eb892e",
+    "magic": "0x022f"
+  },
+  {
+    "system": 0,
     "name": "BattleCity",
     "crc": "0xa37a814a",
     "signature": "0x02c7dac3",
     "magic": "0x0233"
+  },
+  {
+    "system": 0,
+    "name": "Blaster Master Jr.",
+    "crc": "0xe9f9016f",
+    "signature": "0x9451cdfb",
+    "magic": "0x023f"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Boy",
+    "crc": "0xef9595ac",
+    "signature": "0xb13e954f",
+    "magic": "0x0247"
+  },
+  {
+    "system": 0,
+    "name": "Bomber King: Scenario 2",
+    "crc": "0xb8fe9077",
+    "signature": "0xf948fafa",
+    "magic": "0x0248"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man Collection",
+    "crc": "0x509a6b73",
+    "signature": "0x4ec907a0",
+    "magic": "0x0249"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man GB (Japan)",
+    "crc": "0x94337d56",
+    "signature": "0xd183b96d",
+    "magic": "0x024a"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man GB 2",
+    "crc": "0x6157443b",
+    "signature": "0x46b18cad",
+    "magic": "0x024b"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man GB 3",
+    "crc": "0xf658b7a7",
+    "signature": "0x0ebd73d8",
+    "magic": "0x024c"
   },
   {
     "system": 0,
@@ -537,6 +642,13 @@
     "crc": "0x5a1a20f3",
     "signature": "0xe2eb4e33",
     "magic": "0x025b"
+  },
+  {
+    "system": 0,
+    "name": "Burning Paper",
+    "crc": "0x88f8c991",
+    "signature": "0x627c707f",
+    "magic": "0x025d"
   },
   {
     "system": 0,
@@ -628,6 +740,27 @@
     "crc": "0x8709434b",
     "signature": "0x8bd14307",
     "magic": "0x02b8"
+  },
+  {
+    "system": 0,
+    "name": "Dynablaster",
+    "crc": "0x9677d157",
+    "signature": "0x4f2ebbbb",
+    "magic": "0x02cc"
+  },
+  {
+    "system": 0,
+    "name": "Game Boy Wars",
+    "crc": "0xf5d364db",
+    "signature": "0x10e76438",
+    "magic": "0x02fa"
+  },
+  {
+    "system": 0,
+    "name": "Game Boy Wars Turbo",
+    "crc": "0x94563424",
+    "signature": "0xaa791ed9",
+    "magic": "0x02fc"
   },
   {
     "system": 0,
@@ -757,6 +890,20 @@
   },
   {
     "system": 0,
+    "name": "Megami Tensei Gaiden: Last Bible",
+    "crc": "0xfe9dd4c0",
+    "signature": "0x072e17b7",
+    "magic": "0x0403"
+  },
+  {
+    "system": 0,
+    "name": "Megami Tensei Gaiden: Last Bible II",
+    "crc": "0xf8e519d9",
+    "signature": "0xb19f0d23",
+    "magic": "0x0404"
+  },
+  {
+    "system": 0,
     "name": "Metroid II: Return of Samus",
     "crc": "0xdee05370",
     "signature": "0x11474e07",
@@ -824,6 +971,20 @@
     "crc": "0xd8b4aea4",
     "signature": "0x514d3f2c",
     "magic": "0x04b1"
+  },
+  {
+    "system": 0,
+    "name": "Pocket Bomberman (Europe)",
+    "crc": "0x0fd1ae54",
+    "signature": "0xcd6930e4",
+    "magic": "0x04b6"
+  },
+  {
+    "system": 0,
+    "name": "Pocket Bomber Man (Japan)",
+    "crc": "0x212b47a5",
+    "signature": "0xeadf5907",
+    "magic": "0x04b7"
   },
   {
     "system": 0,
@@ -925,6 +1086,13 @@
   },
   {
     "system": 0,
+    "name": "Super Donkey Kong GB",
+    "crc": "0x695f4600",
+    "signature": "0xf8ba918c",
+    "magic": "0x0591"
+  },
+  {
+    "system": 0,
     "name": "Super Mario Land (Rev 1)",
     "crc": "0x2c27ec70",
     "signature": "0x191abcf6",
@@ -1006,6 +1174,13 @@
     "crc": "0x75e1d268",
     "signature": "0x86575c60",
     "magic": "0x0618"
+  },
+  {
+    "system": 0,
+    "name": "Yakuman (Rev 0)",
+    "crc": "0x3134ea60",
+    "signature": "0x60185330",
+    "magic": "0x061b"
   },
   {
     "system": 0,
