@@ -8,6 +8,13 @@
   },
   {
     "system": 1,
+    "name": "1942",
+    "crc": "0x87431672",
+    "signature": "0xa3b251b9",
+    "magic": "0x0667"
+  },
+  {
+    "system": 1,
     "name": "Action Replay Online",
     "crc": "0x04c8c858",
     "signature": "0x4c08f8e7",
@@ -29,6 +36,97 @@
   },
   {
     "system": 1,
+    "name": "Balloon Fight GB",
+    "crc": "0xd2af64ce",
+    "signature": "0x80fa3cda",
+    "magic": "0x06aa"
+  },
+  {
+    "system": 1,
+    "name": "Bionic Commando: Elite Forces",
+    "crc": "0xa663cf31",
+    "signature": "0x563c78fb",
+    "magic": "0x06d3"
+  },
+  {
+    "system": 1,
+    "name": "Blaster Master: Enemy Below",
+    "crc": "0x2f91e17c",
+    "signature": "0xe079a207",
+    "magic": "0x06d7"
+  },
+  {
+    "system": 1,
+    "name": "Bomber Man Max: Ain Version",
+    "crc": "0x545e0da2",
+    "signature": "0x4c0ec8ce",
+    "magic": "0x06e2"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Max: Blue Champion",
+    "crc": "0x5ccb66cf",
+    "signature": "0xc54c7df4",
+    "magic": "0x06e3"
+  },
+  {
+    "system": 1,
+    "name": "Bomber Man Max: Hikari no Yuusha",
+    "crc": "0x7a44ce88",
+    "signature": "0x8f362805",
+    "magic": "0x06e4"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Max: Red Challenger",
+    "crc": "0x4853f586",
+    "signature": "0x6ad90546",
+    "magic": "0x06e5"
+  },
+  {
+    "system": 1,
+    "name": "Bomber Man Max: Yami no Senshi",
+    "crc": "0x48b60e8e",
+    "signature": "0x6c05e466",
+    "magic": "0x06e6"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Quest (Europe)",
+    "crc": "0x5a9b9ae6",
+    "signature": "0x188c0773",
+    "magic": "0x06e7"
+  },
+  {
+    "system": 1,
+    "name": "Bomber Man Quest (Japan)",
+    "crc": "0x55210934",
+    "signature": "0x2ffdc3c5",
+    "magic": "0x06e8"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Quest (USA)",
+    "crc": "0xa089c656",
+    "signature": "0x8ef666b1",
+    "magic": "0x06e9"
+  },
+  {
+    "system": 1,
+    "name": "Bomberman Selection",
+    "crc": "0xaf2b426e",
+    "signature": "0x73656b77",
+    "magic": "0x06ea"
+  },
+  {
+    "system": 1,
+    "name": "Classic Bubble Bobble",
+    "crc": "0xc1b22246",
+    "signature": "0x812a06eb",
+    "magic": "0x071f"
+  },
+  {
+    "system": 1,
     "name": "Crystalis",
     "crc": "0x909bb02d",
     "signature": "0x3e16f9de",
@@ -36,10 +134,24 @@
   },
   {
     "system": 1,
+    "name": "Daiku no Gen-san: Kachikachi no Tonkachi ga Kachi",
+    "crc": "0xe2071293",
+    "signature": "0x97350783",
+    "magic": "0x073b"
+  },
+  {
+    "system": 1,
     "name": "Donkey Kong 2001",
     "crc": "0xcb065eba",
     "signature": "0xc8271fcb",
     "magic": "0x0763"
+  },
+  {
+    "system": 1,
+    "name": "Donkey Kong Country",
+    "crc": "0xb1743477",
+    "signature": "0x3579ef5e",
+    "magic": "0x0764"
   },
   {
     "system": 1,
@@ -64,7 +176,42 @@
   },
   {
     "system": 1,
-    "name": "Harvest Moon 2 GBC",
+    "name": "Dragon Warrior Monsters",
+    "crc": "0xe56c35b1",
+    "signature": "0xc503d159",
+    "magic": "0x078c"
+  },
+  {
+    "system": 1,
+    "name": "Dragon Warrior Monsters 2: Cobi's Journey",
+    "crc": "0xab7bfdd5",
+    "signature": "0xea4fa5f4",
+    "magic": "0x078d"
+  },
+  {
+    "system": 1,
+    "name": "Dragon Warrior Monsters 2: Tara's Adventure",
+    "crc": "0x35ec5fb2",
+    "signature": "0xb81b166a",
+    "magic": "0x078e"
+  },
+  {
+    "system": 1,
+    "name": "The Fish Files",
+    "crc": "0xd6abc1f8",
+    "signature": "0xd1e844b5",
+    "magic": "0x07bc"
+  },
+  {
+    "system": 1,
+    "name": "Ghosts'n Goblins",
+    "crc": "0xae024c23",
+    "signature": "0xf17880e2",
+    "magic": "0x07f3"
+  },
+  {
+    "system": 1,
+    "name": "Harvest Moon 2 GBC (USA)",
     "crc": "0x08906220",
     "signature": "0x8bbec1e3",
     "magic": "0x082c"
@@ -78,14 +225,14 @@
   },
   {
     "system": 1,
-    "name": "Harvest Moon GB",
+    "name": "Harvest Moon GB (Europe)",
     "crc": "0xc8a6f68a",
     "signature": "0xb17319f3",
     "magic": "0x082e"
   },
   {
     "system": 1,
-    "name": "Harvest Moon GB",
+    "name": "Harvest Moon GB (USA)",
     "crc": "0xab5738a1",
     "signature": "0xaf3f157c",
     "magic": "0x0830"
@@ -99,31 +246,52 @@
   },
   {
     "system": 1,
-    "name": "Legend of the River King GB",
+    "name": "Legend of the River King 2 (USA)",
+    "crc": "0x840fd525",
+    "signature": "0xb7e19329",
+    "magic": "0x08bc"
+  },
+  {
+    "system": 1,
+    "name": "Legend of the River King GB (Europe)",
     "crc": "0x87ef9530",
     "signature": "0xc9310bc1",
     "magic": "0x08bd"
   },
   {
     "system": 1,
-    "name": "The Legend of Zelda: Link's Awakening DX",
+    "name": "The Legend of Zelda: Link's Awakening DX (USA, Europe) (Rev 0)",
     "crc": "0x97822948",
     "signature": "0x8df72475",
     "magic": "0x08c6"
   },
   {
     "system": 1,
-    "name": "The Legend of Zelda: Oracle of Ages",
+    "name": "The Legend of Zelda: Oracle of Ages (USA)",
     "crc": "0x3800a387",
     "signature": "0x117b9089",
     "magic": "0x08c8"
   },
   {
     "system": 1,
-    "name": "The Legend of Zelda: Oracle of Seasons",
+    "name": "The Legend of Zelda: Oracle of Seasons (USA)",
     "crc": "0xd7e9f5d7",
     "signature": "0x5355f407",
     "magic": "0x08ca"
+  },
+  {
+    "system": 1,
+    "name": "Magical Drop (USA)",
+    "crc": "0xe4188a79",
+    "signature": "0xd487a918",
+    "magic": "0x0909"
+  },
+  {
+    "system": 1,
+    "name": "Mario Golf (USA)",
+    "crc": "0x905ad0cb",
+    "signature": "0xd7eaeecc",
+    "magic": "0x0916"
   },
   {
     "system": 1,
@@ -148,10 +316,122 @@
   },
   {
     "system": 1,
+    "name": "Megami Tensei Gaiden: Last Bible",
+    "crc": "0xbd9ba639",
+    "signature": "0xba0519af",
+    "magic": "0x0937"
+  },
+  {
+    "system": 1,
+    "name": "Megami Tensei Gaiden: Last Bible II",
+    "crc": "0x9caa00b5",
+    "signature": "0x81657c69",
+    "magic": "0x0938"
+  },
+  {
+    "system": 1,
+    "name": "Metal Gear Solid (USA)",
+    "crc": "0x04b0c5d6",
+    "signature": "0x7212c8f5",
+    "magic": "0x0943"
+  },
+  {
+    "system": 1,
+    "name": "Mr. Driller (USA)",
+    "crc": "0x492c0ebf",
+    "signature": "0x9fed8f6b",
+    "magic": "0x0979"
+  },
+  {
+    "system": 1,
+    "name": "Nushi Tsuri Adventure: Kite no Bouken",
+    "crc": "0xac52f6ef",
+    "signature": "0xffdef408",
+    "magic": "0x09b1"
+  },
+  {
+    "system": 1,
+    "name": "Ohasuta Yama-chan \u0026 Raymond",
+    "crc": "0x840ef32f",
+    "signature": "0xf5619195",
+    "magic": "0x09b6"
+  },
+  {
+    "system": 1,
+    "name": "Perfect Dark",
+    "crc": "0x0601bef6",
+    "signature": "0xa274a58c",
+    "magic": "0x09cb"
+  },
+  {
+    "system": 1,
+    "name": "Pocket Bomberman",
+    "crc": "0xfa2a66e9",
+    "signature": "0x68980a59",
+    "magic": "0x09d4"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon: Crystal Version (USA, Europe) (Rev 1)",
+    "crc": "0x3358e30a",
+    "signature": "0xd2024312",
+    "magic": "0x09f7"
+  },
+  {
+    "system": 1,
     "name": "Pokemon: Gold Version",
     "crc": "0x6bde3c3e",
     "signature": "0x87cc1ad8",
     "magic": "0x09fb"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon: Silver Version",
+    "crc": "0x8ad48636",
+    "signature": "0xae0b0b80",
+    "magic": "0x09ff"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon Pinball (USA)",
+    "crc": "0x03ce8d9a",
+    "signature": "0x54d0f986",
+    "magic": "0x0a0b"
+  },
+  {
+    "system": 1,
+    "name": "Pokemon Trading Card Game (USA)",
+    "crc": "0x81069d53",
+    "signature": "0x8d570590",
+    "magic": "0x0a12"
+  },
+  {
+    "system": 1,
+    "name": "Prince of Persia",
+    "crc": "0xe6bec6d1",
+    "signature": "0x6448e616",
+    "magic": "0x0a32"
+  },
+  {
+    "system": 1,
+    "name": "Project S-11",
+    "crc": "0x20cee2e8",
+    "signature": "0x3055b212",
+    "magic": "0x0a3a"
+  },
+  {
+    "system": 1,
+    "name": "Rainbow Islands",
+    "crc": "0x6decc6b3",
+    "signature": "0xad1344f3",
+    "magic": "0x0a51"
+  },
+  {
+    "system": 1,
+    "name": "Resident Evil Gaiden (USA)",
+    "crc": "0xf8c5021b",
+    "signature": "0xed452433",
+    "magic": "0x0a69"
   },
   {
     "system": 1,
@@ -162,10 +442,94 @@
   },
   {
     "system": 1,
-    "name": "R-Type DX",
+    "name": "R-Type DX (USA, Europe)",
     "crc": "0xfc1d4089",
     "signature": "0x2573fb55",
     "magic": "0x0a8c"
+  },
+  {
+    "system": 1,
+    "name": "Sgt. Rock: On the Frontline",
+    "crc": "0x521a2f77",
+    "signature": "0xabeb4475",
+    "magic": "0x0ab5"
+  },
+  {
+    "system": 1,
+    "name": "Shanghai Pocket (USA)",
+    "crc": "0xa5e3ece9",
+    "signature": "0x9be11703",
+    "magic": "0x0abe"
+  },
+  {
+    "system": 1,
+    "name": "Shantae",
+    "crc": "0xe994b59b",
+    "signature": "0xa64c02f5",
+    "magic": "0x0abf"
+  },
+  {
+    "system": 1,
+    "name": "Space Marauder",
+    "crc": "0x4f83b35e",
+    "signature": "0xdcdbef82",
+    "magic": "0x0ae2"
+  },
+  {
+    "system": 1,
+    "name": "Star Ocean: Blue Sphere",
+    "crc": "0x8c7ddbda",
+    "signature": "0x45b569a9",
+    "magic": "0x0af2"
+  },
+  {
+    "system": 1,
+    "name": "Star Wars Episode I: Racer",
+    "crc": "0x0ebc5758",
+    "signature": "0x94322471",
+    "magic": "0x0af6"
+  },
+  {
+    "system": 1,
+    "name": "Super Mario Bros. Deluxe (USA, Europe) (Rev 1)",
+    "crc": "0x90ab047b",
+    "signature": "0x67cc9064",
+    "magic": "0x0b0b"
+  },
+  {
+    "system": 1,
+    "name": "Super Mario Bros. Deluxe (USA, Europe) (Rev 0)",
+    "crc": "0xa4cd26ff",
+    "signature": "0x1e1c5834",
+    "magic": "0x0b0d"
+  },
+  {
+    "system": 1,
+    "name": "Survival Kids",
+    "crc": "0xc46aba56",
+    "signature": "0xdaac498a",
+    "magic": "0x0b18"
+  },
+  {
+    "system": 1,
+    "name": "Tetris DX",
+    "crc": "0x69989152",
+    "signature": "0xa7ff9fe0",
+    "magic": "0x0b3b"
+  },
+  {
+    "system": 1,
+    "name": "Toki Tori",
+    "crc": "0x0a0f9289",
+    "signature": "0x9ea0c519",
+    "magic": "0x0b4d"
+  },
+  {
+    "system": 1,
+    "name": "Tyrannosaurus Tex",
+    "crc": "0xe90504c1",
+    "signature": "0x84145bc3",
+    "magic": "0x0b88"
   },
   {
     "system": 1,
@@ -173,5 +537,26 @@
     "crc": "0x480d0259",
     "signature": "0xbf38ca32",
     "magic": "0x0ba1"
+  },
+  {
+    "system": 1,
+    "name": "Wario Land II (USA, Europe)",
+    "crc": "0x047bdf80",
+    "signature": "0x972e1358",
+    "magic": "0x0ba2"
+  },
+  {
+    "system": 1,
+    "name": "Wendy: Every Witch Way",
+    "crc": "0x4ac6907b",
+    "signature": "0x578f7567",
+    "magic": "0x0bab"
+  },
+  {
+    "system": 1,
+    "name": "Revelations - The Demon Slayer",
+    "crc": "0xd1a65d74",
+    "signature": "0xc9c79a15",
+    "magic": "0x0bf2"
   }
 ]

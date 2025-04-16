@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"path/filepath"
 	"runtime"
 	"slices"
 	"strings"
@@ -20,9 +21,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/g026r/pocket-toolkit/pkg/io"
-	"github.com/g026r/pocket-toolkit/pkg/models"
-	"github.com/g026r/pocket-toolkit/pkg/util"
+	"github.com/g026r/pocket-library-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/root"
+	"github.com/g026r/pocket-library-toolkit/pkg/util"
 )
 
 //go:embed version.txt
@@ -58,7 +60,7 @@ func tickCmd() tea.Cmd {
 }
 
 type Model struct {
-	rootDir      string
+	rootDir      *root.Root
 	entries      []models.Entry
 	thumbnails   map[models.System]models.Thumbnails
 	internal     map[models.System][]models.Entry // internal is a map of all known possible entries, grouped by system. For eventual use with add & adv. editing, maybe.
@@ -254,7 +256,6 @@ func (m *Model) initSystem() tea.Msg {
 		return errMsg{err, true}
 	}
 	m.rootDir = d
-	rootFs := os.DirFS(d)
 
 	c, err := io.LoadConfig()
 	if err != nil {
@@ -262,13 +263,13 @@ func (m *Model) initSystem() tea.Msg {
 	}
 	*m.Config = c
 
-	e, err := io.LoadEntries(rootFs)
+	e, err := io.LoadEntries(m.rootDir.FS())
 	if err != nil {
 		return errMsg{err, true}
 	}
 	m.entries = e
 
-	p, err := io.LoadPlaytimes(rootFs)
+	p, err := io.LoadPlaytimes(m.rootDir.FS())
 	if err != nil {
 		return errMsg{err, true}
 	}
@@ -284,7 +285,10 @@ func (m *Model) initSystem() tea.Msg {
 		m.entries[i].Times = p[i]
 	}
 
-	t, err := io.LoadThumbs(rootFs)
+	// Now that list.bin & playtimes.bin have been synced, we can sort them.
+	slices.SortFunc(m.entries, models.EntrySort)
+
+	t, err := io.LoadThumbs(m.rootDir.FS())
 	if err != nil {
 		return errMsg{err, true}
 	}
@@ -313,18 +317,18 @@ func (m *Model) save() tea.Msg {
 	var err error
 
 	success := false
-	tmpList, err := os.CreateTemp(fmt.Sprintf("%s/System/Played Games", m.rootDir), "list_*.tmp")
+	tmpList, err := m.rootDir.CreateTemp("System/Played Games", "list_*.tmp")
 	if err != nil {
 		return errMsg{err, true}
 	}
-	tmpPlaytimes, err := os.CreateTemp(fmt.Sprintf("%s/System/Played Games", m.rootDir), "playtimes_*.tmp")
+	tmpPlaytimes, err := m.rootDir.CreateTemp("System/Played Games", "playtimes_*.tmp")
 	if err != nil {
 		return errMsg{err, true}
 	}
 	tmpThumbs := make(map[models.System]*os.File)
 	for k, v := range m.thumbnails {
 		if v.Modified || m.SaveUnmodified {
-			tmpThumbs[k], err = os.CreateTemp(fmt.Sprintf("%s/System/Library/Images/", m.rootDir), fmt.Sprintf("%s_thumbs_*.tmp", strings.ToLower(k.String())))
+			tmpThumbs[k], err = m.rootDir.CreateTemp("System/Library/Images/", fmt.Sprintf("%s_thumbs_*.tmp", strings.ToLower(k.String())))
 			if err != nil {
 				return errMsg{err, true}
 			}
@@ -337,6 +341,16 @@ func (m *Model) save() tea.Msg {
 		// 3. Deletes them if we weren't
 		// TODO: Clean this up to make it all more manageable
 
+		rmTempFiles := func() {
+			// Function remove all the temp files when unsuccessful
+			// Exists as a variable so it can be called repeatedly
+			_ = os.Remove(tmpList.Name())
+			_ = os.Remove(tmpPlaytimes.Name())
+			for _, v := range tmpThumbs {
+				_ = os.Remove(v.Name())
+			}
+		}
+
 		// Clean everything up
 		_ = tmpList.Close()
 		_ = tmpPlaytimes.Close()
@@ -345,24 +359,23 @@ func (m *Model) save() tea.Msg {
 		}
 		if success {
 			t := time.Now().Format("20060102_150405")
-			if err := m.backupAndRename(m.rootDir, "/System/Played Games/list.bin", tmpList, t); err != nil {
+			if err := m.backupAndRename(m.rootDir, "System/Played Games/list.bin", tmpList, t); err != nil {
+				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
-			if err := m.backupAndRename(m.rootDir, "/System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
+			if err := m.backupAndRename(m.rootDir, "System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
+				// TODO: Technically this could leave things in an inconsistent state, as it might fail when renaming the playtimes , resulting in an inconsistency between it & list.bin
+				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
 			for k, v := range tmpThumbs {
-				if err := m.backupAndRename(m.rootDir, fmt.Sprintf("/System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
+				if err := m.backupAndRename(m.rootDir, fmt.Sprintf("System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
+					rmTempFiles()
 					log.Fatal(errorStyle.Render(err.Error()))
 				}
 			}
 		} else {
-			// Remove all the files as we weren't successful
-			_ = os.Remove(tmpList.Name())
-			_ = os.Remove(tmpPlaytimes.Name())
-			for _, v := range tmpThumbs {
-				_ = os.Remove(v.Name())
-			}
+			rmTempFiles()
 		}
 		m.percent = 1.0
 	}()
@@ -452,7 +465,7 @@ func (m *Model) genFull() tea.Msg {
 	total := 0.0
 	// Calculate what our total percentage is so we can show the progress bar
 	for _, sys := range models.ValidThumbsFiles {
-		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.rootDir, strings.ToLower(sys.String())))
+		de, err := m.rootDir.FS().(fs.ReadDirFS).ReadDir(filepath.Join("System/Library/Images", strings.ToLower(sys.String())))
 		if errors.Is(err, fs.ErrNotExist) {
 			// Directory doesn't exist. Just continue
 			continue
@@ -467,7 +480,7 @@ func (m *Model) genFull() tea.Msg {
 	}
 
 	for _, sys := range models.ValidThumbsFiles {
-		de, err := os.ReadDir(fmt.Sprintf("%s/System/Library/Images/%s", m.rootDir, strings.ToLower(sys.String())))
+		de, err := m.rootDir.FS().(fs.ReadDirFS).ReadDir(filepath.Join("System/Library/Images", strings.ToLower(sys.String())))
 		if errors.Is(err, fs.ErrNotExist) {
 			// Directory doesn't exist. Just continue
 			continue
@@ -488,7 +501,7 @@ func (m *Model) genFull() tea.Msg {
 				// Not a valid file name. Skip
 				continue
 			}
-			i, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, binary.BigEndian.Uint32(b))
+			i, err := io.GenerateThumbnail(m.rootDir.FS(), sys, binary.BigEndian.Uint32(b))
 			if errors.Is(err, io.ErrSixteenBitImage) {
 				continue // Can't handle 16-bit images at the moment due to a lack of documentation & examples
 			} else if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
@@ -514,7 +527,7 @@ func (m *Model) genMissing() tea.Msg {
 		if !slices.ContainsFunc(m.thumbnails[sys].Images, func(image models.Image) bool {
 			return image.Crc32 == e.Crc32
 		}) {
-			img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
+			img, err := io.GenerateThumbnail(m.rootDir.FS(), sys, e.Crc32)
 			if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
 				continue
 			} else if err != nil { // We only care if it was something other than a not existing error
@@ -539,7 +552,7 @@ func (m *Model) regenLib() tea.Msg {
 	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
 
-		img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
+		img, err := io.GenerateThumbnail(m.rootDir.FS(), sys, e.Crc32)
 		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
 			continue
 		} else if err != nil { // We only care if it was something other than a not existing error
@@ -566,7 +579,7 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		m.percent = 0.0
 		sys := e.System.ThumbFile()
-		img, err := io.GenerateThumbnail(os.DirFS(m.rootDir), sys, e.Crc32)
+		img, err := io.GenerateThumbnail(m.rootDir.FS(), sys, e.Crc32)
 		m.percent = .50                                                              // These percentages are just made up.
 		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) { // Doesn't exist. That's fine.
 			m.percent = 1.0
@@ -745,11 +758,14 @@ func (m *Model) shiftInput(i int) (tea.Model, tea.Cmd) {
 			}
 		}
 	}
+
+	// If this sends it out of bounds, wrap around to the other side
 	if m.focusedInput >= len(m.gameInput) {
-		m.focusedInput = len(m.gameInput) - 1
-	} else if m.focusedInput < 0 {
 		m.focusedInput = 0
+	} else if m.focusedInput < 0 {
+		m.focusedInput = len(m.gameInput) - 1
 	}
+
 	m.gameInput[m.focusedInput].Style(focusedStyle)
 
 	if t, ok := m.gameInput[m.focusedInput].(*Input); ok {
@@ -971,14 +987,13 @@ func (m *Model) configChange(key menuKey) (*Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m *Model) backupAndRename(root string, path string, tempFile *os.File, time string) error {
-	file := fmt.Sprintf("%s%s", root, path)
+func (m *Model) backupAndRename(root *root.Root, path string, tempFile *os.File, time string) error {
 	if m.Backup {
-		if err := os.Rename(file, fmt.Sprintf("%s_%s.bak", strings.TrimSuffix(file, ".bin"), time)); err != nil && !errors.Is(err, fs.ErrNotExist) {
+		if err := root.Rename(path, fmt.Sprintf("%s_%s.bak", strings.TrimSuffix(path, ".bin"), time)); err != nil && !errors.Is(err, fs.ErrNotExist) {
 			return err
 		}
 	}
-	return os.Rename(tempFile.Name(), file)
+	return root.Rename(strings.TrimPrefix(strings.Replace(tempFile.Name(), root.Name(), "", 1), "/"), path)
 }
 
 // pop is the ESC action for basically everything but main menu

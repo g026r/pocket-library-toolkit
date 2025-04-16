@@ -1,6 +1,13 @@
 [
   {
     "system": 0,
+    "name": "Super Mario Land 2: 6 Golden Coins (Rev 2)",
+    "crc": "0x635a9112",
+    "signature": "0x3738e6f5",
+    "magic": "0x0010"
+  },
+  {
+    "system": 0,
     "name": "Super R.C. Pro-Am",
     "crc": "0x7960f33f",
     "signature": "0x4c453436",
@@ -15,10 +22,31 @@
   },
   {
     "system": 0,
-    "name": "Tetris 2",
+    "name": "Teenage Mutant Ninja Turtles II: Back from the Sewers",
+    "crc": "0x44f51c73",
+    "signature": "0x0720c629",
+    "magic": "0x0023"
+  },
+  {
+    "system": 0,
+    "name": "Teenage Mutant Ninja Turtles III: Radical Rescue",
+    "crc": "0x58832bbc",
+    "signature": "0xd922a989",
+    "magic": "0x0024"
+  },
+  {
+    "system": 0,
+    "name": "Tetris 2 (USA)",
     "crc": "0xaa4a1edb",
     "signature": "0xe0ea84ca",
     "magic": "0x0027"
+  },
+  {
+    "system": 0,
+    "name": "Tetris Blast",
+    "crc": "0x7be5a73f",
+    "signature": "0xbaa9cbb9",
+    "magic": "0x002c"
   },
   {
     "system": 0,
@@ -36,6 +64,13 @@
   },
   {
     "system": 0,
+    "name": "Wario Blast featuring Bomberman!",
+    "crc": "0x927b57a1",
+    "signature": "0x0c156939",
+    "magic": "0x0049"
+  },
+  {
+    "system": 0,
     "name": "Wario Land II",
     "crc": "0x9c54358d",
     "signature": "0x67ad6fef",
@@ -47,6 +82,20 @@
     "crc": "0xa6595506",
     "signature": "0x5379a582",
     "magic": "0x004b"
+  },
+  {
+    "system": 0,
+    "name": "Adventure Island",
+    "crc": "0x64f4fa44",
+    "signature": "0x45a3622e",
+    "magic": "0x006e"
+  },
+  {
+    "system": 0,
+    "name": "Adventure Island II: Aliens in Paradise",
+    "crc": "0x783066cf",
+    "signature": "0x3365dd1d",
+    "magic": "0x006f"
   },
   {
     "system": 0,
@@ -64,6 +113,27 @@
   },
   {
     "system": 0,
+    "name": "A-mazing Tater",
+    "crc": "0xd229ac62",
+    "signature": "0x61bbf48e",
+    "magic": "0x007b"
+  },
+  {
+    "system": 0,
+    "name": "Atomic Punk",
+    "crc": "0xc4720897",
+    "signature": "0xef32bed0",
+    "magic": "0x0083"
+  },
+  {
+    "system": 0,
+    "name": "Avenging Spirit",
+    "crc": "0xcf2ba5f7",
+    "signature": "0x769ab181",
+    "magic": "0x0085"
+  },
+  {
+    "system": 0,
     "name": "Balloon Kid",
     "crc": "0xd4b655ec",
     "signature": "0x83127d5d",
@@ -71,17 +141,157 @@
   },
   {
     "system": 0,
-    "name": "Batman: Return of the Joker",
+    "name": "Barbie: Game Girl",
+    "crc": "0x94c26cdf",
+    "signature": "0x2d45110a",
+    "magic": "0x0087"
+  },
+  {
+    "system": 0,
+    "name": "Bart Simpson's Escape from Camp Deadly",
+    "crc": "0x5546a382",
+    "signature": "0x73e96f62",
+    "magic": "0x0088"
+  },
+  {
+    "system": 0,
+    "name": "Batman: Return of the Joker (USA, Europe)",
     "crc": "0x5124bbec",
     "signature": "0x49841f02",
     "magic": "0x008a"
   },
   {
     "system": 0,
-    "name": "DuckTales",
+    "name": "Battletoads (USA, Europe)",
+    "crc": "0xb0c3361b",
+    "signature": "0xc78367f8",
+    "magic": "0x0091"
+  },
+  {
+    "system": 0,
+    "name": "Bionic Commando (USA)",
+    "crc": "0x41dbb5fb",
+    "signature": "0x2dd36a59",
+    "magic": "0x009a"
+  },
+  {
+    "system": 0,
+    "name": "Blaster Master Boy",
+    "crc": "0x3b2c7118",
+    "signature": "0x33e68487",
+    "magic": "0x009d"
+  },
+  {
+    "system": 0,
+    "name": "Bomberman GB (USA, Europe)",
+    "crc": "0xf372d175",
+    "signature": "0x4b4c8fcc",
+    "magic": "0x00a1"
+  },
+  {
+    "system": 0,
+    "name": "Bonk's Adventure",
+    "crc": "0xa7cdbb96",
+    "signature": "0x902016ed",
+    "magic": "0x00a2"
+  },
+  {
+    "system": 0,
+    "name": "Bonk's Revenge",
+    "crc": "0xf1344b78",
+    "signature": "0x728f80fd",
+    "magic": "0x00a3"
+  },
+  {
+    "system": 0,
+    "name": "Bubble Bobble Part 2",
+    "crc": "0x4106d781",
+    "signature": "0x1ba7291f",
+    "magic": "0x00ad"
+  },
+  {
+    "system": 0,
+    "name": "Bubble Ghost (USA, Europe)",
+    "crc": "0x843068fd",
+    "signature": "0x1d858e3c",
+    "magic": "0x00ae"
+  },
+  {
+    "system": 0,
+    "name": "Castlevania Legends",
+    "crc": "0xad9c17fb",
+    "signature": "0x7df55ef8",
+    "magic": "0x00bf"
+  },
+  {
+    "system": 0,
+    "name": "Contra: The Alien Wars",
+    "crc": "0xf1c81eb0",
+    "signature": "0x48926117",
+    "magic": "0x00cb"
+  },
+  {
+    "system": 0,
+    "name": "Cyraid",
+    "crc": "0x9d00da55",
+    "signature": "0x7a69e12e",
+    "magic": "0x00d2"
+  },
+  {
+    "system": 0,
+    "name": "Darkwing Duck (USA)",
+    "crc": "0x238b9646",
+    "signature": "0xc7df757a",
+    "magic": "0x00d6"
+  },
+  {
+    "system": 0,
+    "name": "David Crane's The Rescue of Princess Blobette Starring A Boy and His Blob (USA)",
+    "crc": "0x8210a03f",
+    "signature": "0x1208f999",
+    "magic": "0x00d7"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong (Rev 0)",
+    "crc": "0xedab3378",
+    "signature": "0xac0d7c12",
+    "magic": "0x00df"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong Land (USA, Europe)",
+    "crc": "0x49dc0d37",
+    "signature": "0x732d15ca",
+    "magic": "0x00e0"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong Land 2",
+    "crc": "0x2827e5d4",
+    "signature": "0xbfcc1d70",
+    "magic": "0x00e1"
+  },
+  {
+    "system": 0,
+    "name": "Donkey Kong Land III (Rev 0)",
+    "crc": "0xb40c159c",
+    "signature": "0x28724549",
+    "magic": "0x00e3"
+  },
+  {
+    "system": 0,
+    "name": "DuckTales (USA)",
     "crc": "0x2bbbb54d",
     "signature": "0x74c30c50",
     "magic": "0x00ec"
+  },
+  {
+    "system": 0,
+    "name": "DuckTales 2 (USA)",
+    "crc": "0xb151509d",
+    "signature": "0x09c721ef",
+    "magic": "0x00ed"
   },
   {
     "system": 0,
@@ -120,14 +330,21 @@
   },
   {
     "system": 0,
-    "name": "Gargoyle's Quest",
+    "name": "Game Boy Camera",
+    "crc": "0x4640909f",
+    "signature": "0xc54ac95a",
+    "magic": "0x010e"
+  },
+  {
+    "system": 0,
+    "name": "Gargoyle's Quest (Rev 0)",
     "crc": "0x0030e61f",
     "signature": "0xb5f8cf1d",
     "magic": "0x0113"
   },
   {
     "system": 0,
-    "name": "Ghostbusters II",
+    "name": "Ghostbusters II (USA, Europe)",
     "crc": "0x5821ecd4",
     "signature": "0xc3e50724",
     "magic": "0x0118"
@@ -138,6 +355,20 @@
     "crc": "0x90f87d57",
     "signature": "0x3a7b0909",
     "magic": "0x011c"
+  },
+  {
+    "system": 0,
+    "name": "Heiankyo Alien (USA, Europe)",
+    "crc": "0x1495bbe5",
+    "signature": "0x9f7b6031",
+    "magic": "0x0122"
+  },
+  {
+    "system": 0,
+    "name": "James Bond 007",
+    "crc": "0xca3bc3ce",
+    "signature": "0xc594d955",
+    "magic": "0x0139"
   },
   {
     "system": 0,
@@ -162,7 +393,28 @@
   },
   {
     "system": 0,
-    "name": "The Legend of Zelda: Link's Awakening",
+    "name": "Kirby's Dream Land 2",
+    "crc": "0x8dc07c35",
+    "signature": "0x37477393",
+    "magic": "0x0152"
+  },
+  {
+    "system": 0,
+    "name": "Kwirk: He's A-maze-ing!",
+    "crc": "0x21c98af2",
+    "signature": "0xdc8a2ded",
+    "magic": "0x0159"
+  },
+  {
+    "system": 0,
+    "name": "Legend of the River King GB (USA)",
+    "crc": "0xa6e685dc",
+    "signature": "0xc0148aaf",
+    "magic": "0x015d"
+  },
+  {
+    "system": 0,
+    "name": "The Legend of Zelda: Link's Awakening (USA, Europe) (Rev 0)",
     "crc": "0x8cf27c90",
     "signature": "0xbe6d75ef",
     "magic": "0x0160"
@@ -176,6 +428,20 @@
   },
   {
     "system": 0,
+    "name": "Mega Man IV (USA)",
+    "crc": "0xabcea00d",
+    "signature": "0xb237b8a5",
+    "magic": "0x0173"
+  },
+  {
+    "system": 0,
+    "name": "Mega Man V (USA)",
+    "crc": "0x72e6d21d",
+    "signature": "0xf3651e3f",
+    "magic": "0x0174"
+  },
+  {
+    "system": 0,
     "name": "Mercenary Force",
     "crc": "0x9bb5ba03",
     "signature": "0xa974ddb4",
@@ -183,10 +449,31 @@
   },
   {
     "system": 0,
+    "name": "Milon's Secret Castle",
+    "crc": "0x62b4cc8c",
+    "signature": "0xfdf3bc33",
+    "magic": "0x017e"
+  },
+  {
+    "system": 0,
     "name": "Mole Mania",
     "crc": "0x2c36c74c",
     "signature": "0x0024e03a",
     "magic": "0x0182"
+  },
+  {
+    "system": 0,
+    "name": "Mystical Ninja Starring Goemon (USA)",
+    "crc": "0xfafb343c",
+    "signature": "0xd73b7c1b",
+    "magic": "0x0191"
+  },
+  {
+    "system": 0,
+    "name": "Ninja Gaiden Shadow",
+    "crc": "0xd3741a3a",
+    "signature": "0xc03dcd76",
+    "magic": "0x01a4"
   },
   {
     "system": 0,
@@ -204,6 +491,13 @@
   },
   {
     "system": 0,
+    "name": "Pokemon: Red Version",
+    "crc": "0x9f7fdd53",
+    "signature": "0x67b57ed2",
+    "magic": "0x01c1"
+  },
+  {
+    "system": 0,
     "name": "Pokemon: Yellow Version: Special Pikachu Edition",
     "crc": "0x7d527d62",
     "signature": "0x0183202b",
@@ -211,7 +505,35 @@
   },
   {
     "system": 0,
-    "name": "Space Invaders",
+    "name": "Prince of Persia (USA)",
+    "crc": "0x2bd995f1",
+    "signature": "0x1e2cc56a",
+    "magic": "0x01c8"
+  },
+  {
+    "system": 0,
+    "name": "Rolan's Curse",
+    "crc": "0x1a602590",
+    "signature": "0x2205f469",
+    "magic": "0x01e1"
+  },
+  {
+    "system": 0,
+    "name": "Rolan's Curse II",
+    "crc": "0x2754f360",
+    "signature": "0x2d9ff683",
+    "magic": "0x01e2"
+  },
+  {
+    "system": 0,
+    "name": "Shanghai (USA)",
+    "crc": "0x580fcb18",
+    "signature": "0x980615e6",
+    "magic": "0x01e8"
+  },
+  {
+    "system": 0,
+    "name": "Space Invaders (USA)",
     "crc": "0x7f0f5762",
     "signature": "0xfdc2f429",
     "magic": "0x01f7"
@@ -225,6 +547,13 @@
   },
   {
     "system": 0,
+    "name": "Bakuretsu Senshi Warrior",
+    "crc": "0xecf1b801",
+    "signature": "0xa39a4d6b",
+    "magic": "0x021f"
+  },
+  {
+    "system": 0,
     "name": "Batman: The Video Game",
     "crc": "0x6c41d3cd",
     "signature": "0xeaa1f4dc",
@@ -232,7 +561,77 @@
   },
   {
     "system": 0,
-    "name": "Bubble Bobble",
+    "name": "The Battle of Olympus",
+    "crc": "0xca450e93",
+    "signature": "0x23eb892e",
+    "magic": "0x022f"
+  },
+  {
+    "system": 0,
+    "name": "BattleCity",
+    "crc": "0xa37a814a",
+    "signature": "0x02c7dac3",
+    "magic": "0x0233"
+  },
+  {
+    "system": 0,
+    "name": "Blaster Master Jr.",
+    "crc": "0xe9f9016f",
+    "signature": "0x9451cdfb",
+    "magic": "0x023f"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Boy",
+    "crc": "0xef9595ac",
+    "signature": "0xb13e954f",
+    "magic": "0x0247"
+  },
+  {
+    "system": 0,
+    "name": "Bomber King: Scenario 2",
+    "crc": "0xb8fe9077",
+    "signature": "0xf948fafa",
+    "magic": "0x0248"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man Collection",
+    "crc": "0x509a6b73",
+    "signature": "0x4ec907a0",
+    "magic": "0x0249"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man GB (Japan)",
+    "crc": "0x94337d56",
+    "signature": "0xd183b96d",
+    "magic": "0x024a"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man GB 2",
+    "crc": "0x6157443b",
+    "signature": "0x46b18cad",
+    "magic": "0x024b"
+  },
+  {
+    "system": 0,
+    "name": "Bomber Man GB 3",
+    "crc": "0xf658b7a7",
+    "signature": "0x0ebd73d8",
+    "magic": "0x024c"
+  },
+  {
+    "system": 0,
+    "name": "Boulder Dash (Europe)",
+    "crc": "0x644aec3e",
+    "signature": "0xf37f54f0",
+    "magic": "0x024f"
+  },
+  {
+    "system": 0,
+    "name": "Bubble Bobble (Japan)",
     "crc": "0xad9b300c",
     "signature": "0x54e862c1",
     "magic": "0x0255"
@@ -246,10 +645,52 @@
   },
   {
     "system": 0,
+    "name": "Burning Paper",
+    "crc": "0x88f8c991",
+    "signature": "0x627c707f",
+    "magic": "0x025d"
+  },
+  {
+    "system": 0,
+    "name": "Cave Noire",
+    "crc": "0x44256a2f",
+    "signature": "0x7f633f5f",
+    "magic": "0x026a"
+  },
+  {
+    "system": 0,
+    "name": "Chikyuu Kaihou Gun ZAS",
+    "crc": "0x7bfd1cff",
+    "signature": "0x0d93a246",
+    "magic": "0x0277"
+  },
+  {
+    "system": 0,
+    "name": "Choplifter II (Japan)",
+    "crc": "0x5109f484",
+    "signature": "0x72d98af4",
+    "magic": "0x0279"
+  },
+  {
+    "system": 0,
+    "name": "Choplifter III",
+    "crc": "0x1b3b46ef",
+    "signature": "0x41f2ace5",
+    "magic": "0x027a"
+  },
+  {
+    "system": 0,
     "name": "Contra",
     "crc": "0xcde6de15",
     "signature": "0x8fa9502c",
     "magic": "0x027f"
+  },
+  {
+    "system": 0,
+    "name": "Crayon Shin-chan 3: Ora no Gokigen Athletic",
+    "crc": "0x24a12807",
+    "signature": "0x25e1bf4b",
+    "magic": "0x0289"
   },
   {
     "system": 0,
@@ -267,21 +708,21 @@
   },
   {
     "system": 0,
-    "name": "Donkey Kong",
+    "name": "Donkey Kong (Rev 1)",
     "crc": "0xf777a5d8",
     "signature": "0xb85d0158",
     "magic": "0x02a0"
   },
   {
     "system": 0,
-    "name": "Double Dragon",
+    "name": "Double Dragon (Japan)",
     "crc": "0xa0645e8a",
     "signature": "0xa4bce057",
     "magic": "0x02ac"
   },
   {
     "system": 0,
-    "name": "Dr. Mario",
+    "name": "Dr. Mario (Rev 0)",
     "crc": "0x10c98dd1",
     "signature": "0x54346b63",
     "magic": "0x02b5"
@@ -302,6 +743,41 @@
   },
   {
     "system": 0,
+    "name": "Dynablaster",
+    "crc": "0x9677d157",
+    "signature": "0x4f2ebbbb",
+    "magic": "0x02cc"
+  },
+  {
+    "system": 0,
+    "name": "Game Boy Wars",
+    "crc": "0xf5d364db",
+    "signature": "0x10e76438",
+    "magic": "0x02fa"
+  },
+  {
+    "system": 0,
+    "name": "Game Boy Wars Turbo",
+    "crc": "0x94563424",
+    "signature": "0xaa791ed9",
+    "magic": "0x02fc"
+  },
+  {
+    "system": 0,
+    "name": "Game de Hakken!! Tamagotchi: Osutchi to Mesutchi",
+    "crc": "0x9694d69d",
+    "signature": "0x1ee30341",
+    "magic": "0x02fd"
+  },
+  {
+    "system": 0,
+    "name": "Game de Hakken!! Tamagotchi 2",
+    "crc": "0x19889c43",
+    "signature": "0x7155bfcc",
+    "magic": "0x02ff"
+  },
+  {
+    "system": 0,
     "name": "GB Genjin",
     "crc": "0x690227f6",
     "signature": "0xf0e6a0ab",
@@ -309,10 +785,24 @@
   },
   {
     "system": 0,
+    "name": "GB Genjin 2",
+    "crc": "0x6f7ad5d9",
+    "signature": "0x64bb29e6",
+    "magic": "0x0308"
+  },
+  {
+    "system": 0,
     "name": "Genki Bakuhatsu Gambaruger",
     "crc": "0x6226d280",
     "signature": "0x5690030f",
     "magic": "0x0311"
+  },
+  {
+    "system": 0,
+    "name": "God Medicine: Fukkokuban",
+    "crc": "0x847e0772",
+    "signature": "0x65f2a9a9",
+    "magic": "0x031c"
   },
   {
     "system": 0,
@@ -327,6 +817,20 @@
     "crc": "0x3579e297",
     "signature": "0xc26feb08",
     "magic": "0x0349"
+  },
+  {
+    "system": 0,
+    "name": "Heiankyou Alien (Japan)",
+    "crc": "0x08bf29c9",
+    "signature": "0xc0c247e7",
+    "magic": "0x034d"
+  },
+  {
+    "system": 0,
+    "name": "Hoshi no Kirby (Rev. 1)",
+    "crc": "0x04342c83",
+    "signature": "0x531759df",
+    "magic": "0x035f"
   },
   {
     "system": 0,
@@ -351,6 +855,20 @@
   },
   {
     "system": 0,
+    "name": "Kaeru no Tame ni Kane wa Naru",
+    "crc": "0xc18cd57a",
+    "signature": "0x344575bf",
+    "magic": "0x038d"
+  },
+  {
+    "system": 0,
+    "name": "Kinin Koumaroku Oni (Rev 0)",
+    "crc": "0xb7f48649",
+    "signature": "0x2cb7edfd",
+    "magic": "0x03a6"
+  },
+  {
+    "system": 0,
     "name": "Kirby no Pinball",
     "crc": "0x8b44fb7d",
     "signature": "0xb64c97f0",
@@ -372,6 +890,20 @@
   },
   {
     "system": 0,
+    "name": "Megami Tensei Gaiden: Last Bible",
+    "crc": "0xfe9dd4c0",
+    "signature": "0x072e17b7",
+    "magic": "0x0403"
+  },
+  {
+    "system": 0,
+    "name": "Megami Tensei Gaiden: Last Bible II",
+    "crc": "0xf8e519d9",
+    "signature": "0xb19f0d23",
+    "magic": "0x0404"
+  },
+  {
+    "system": 0,
     "name": "Metroid II: Return of Samus",
     "crc": "0xdee05370",
     "signature": "0x11474e07",
@@ -386,10 +918,17 @@
   },
   {
     "system": 0,
-    "name": "Nemesis",
+    "name": "Nemesis (Japan)",
     "crc": "0xb338dae7",
     "signature": "0xc54db109",
     "magic": "0x0457"
+  },
+  {
+    "system": 0,
+    "name": "Parasol Stars: Rainbow Islands II",
+    "crc": "0xc35ad128",
+    "signature": "0x3c620ab1",
+    "magic": "0x04a0"
   },
   {
     "system": 0,
@@ -407,6 +946,13 @@
   },
   {
     "system": 0,
+    "name": "Penta Dragon",
+    "crc": "0x1e2efaee",
+    "signature": "0xbf054d4d",
+    "magic": "0x04a7"
+  },
+  {
+    "system": 0,
     "name": "Picross 2",
     "crc": "0xf5aa5902",
     "signature": "0xcd78f3bd",
@@ -421,7 +967,28 @@
   },
   {
     "system": 0,
-    "name": "Pocket Camera",
+    "name": "Pipe Dream (Japan)",
+    "crc": "0xd8b4aea4",
+    "signature": "0x514d3f2c",
+    "magic": "0x04b1"
+  },
+  {
+    "system": 0,
+    "name": "Pocket Bomberman (Europe)",
+    "crc": "0x0fd1ae54",
+    "signature": "0xcd6930e4",
+    "magic": "0x04b6"
+  },
+  {
+    "system": 0,
+    "name": "Pocket Bomber Man (Japan)",
+    "crc": "0x212b47a5",
+    "signature": "0xeadf5907",
+    "magic": "0x04b7"
+  },
+  {
+    "system": 0,
+    "name": "Pocket Camera (Rev 1)",
     "crc": "0x73e8ef96",
     "signature": "0x1d9a45cb",
     "magic": "0x04b8"
@@ -435,10 +1002,17 @@
   },
   {
     "system": 0,
-    "name": "Quarth",
+    "name": "Quarth (Japan)",
     "crc": "0x40e5adc9",
     "signature": "0xb9c0b830",
     "magic": "0x0502"
+  },
+  {
+    "system": 0,
+    "name": "Red Arremer: Makai Mura Gaiden",
+    "crc": "0xae0122aa",
+    "signature": "0x85f45a29",
+    "magic": "0x050c"
   },
   {
     "system": 0,
@@ -484,6 +1058,20 @@
   },
   {
     "system": 0,
+    "name": "Saigo no Nindou",
+    "crc": "0xb864a3b6",
+    "signature": "0x225af361",
+    "magic": "0x052b"
+  },
+  {
+    "system": 0,
+    "name": "SD Gundam: SD Sengokuden: Kunitori Monogatari",
+    "crc": "0x016a0552",
+    "signature": "0x175e9117",
+    "magic": "0x0536"
+  },
+  {
+    "system": 0,
     "name": "Shippo de Bun",
     "crc": "0x56410442",
     "signature": "0xa21327fb",
@@ -498,24 +1086,59 @@
   },
   {
     "system": 0,
-    "name": "Super Mario Land",
+    "name": "Super Donkey Kong GB",
+    "crc": "0x695f4600",
+    "signature": "0xf8ba918c",
+    "magic": "0x0591"
+  },
+  {
+    "system": 0,
+    "name": "Super Mario Land (Rev 1)",
     "crc": "0x2c27ec70",
     "signature": "0x191abcf6",
     "magic": "0x0596"
   },
   {
     "system": 0,
-    "name": "Super Mario Land 2: 6-tsu no Kinka",
+    "name": "Super Mario Land 2: 6-tsu no Kinka (Rev 2)",
     "crc": "0x29e0911a",
     "signature": "0xcfd140e3",
     "magic": "0x0599"
   },
   {
     "system": 0,
-    "name": "Tetris",
+    "name": "Super Robot Taisen",
+    "crc": "0x7dd9d7d6",
+    "signature": "0xfd31028d",
+    "magic": "0x059e"
+  },
+  {
+    "system": 0,
+    "name": "Tetris (Minuet)",
+    "crc": "0x63f9407d",
+    "signature": "0xc7f871be",
+    "magic": "0x05c1"
+  },
+  {
+    "system": 0,
+    "name": "Tetris (Rev 1)",
     "crc": "0x46df91ad",
     "signature": "0xfaf2fb52",
     "magic": "0x05c2"
+  },
+  {
+    "system": 0,
+    "name": "Tobu Tobu Girl",
+    "crc": "0xed12be6c",
+    "signature": "0x7322e7c5",
+    "magic": "0x05cd"
+  },
+  {
+    "system": 0,
+    "name": "Trip World (Europe)",
+    "crc": "0x85d910b9",
+    "signature": "0x70a95859",
+    "magic": "0x05dc"
   },
   {
     "system": 0,
@@ -523,6 +1146,13 @@
     "crc": "0x017fd6f5",
     "signature": "0xc1520986",
     "magic": "0x05ea"
+  },
+  {
+    "system": 0,
+    "name": "Ultraman Ball",
+    "crc": "0x468d1a2e",
+    "signature": "0x0fc2194a",
+    "magic": "0x05f1"
   },
   {
     "system": 0,
@@ -544,5 +1174,47 @@
     "crc": "0x75e1d268",
     "signature": "0x86575c60",
     "magic": "0x0618"
+  },
+  {
+    "system": 0,
+    "name": "Yakuman (Rev 0)",
+    "crc": "0x3134ea60",
+    "signature": "0x60185330",
+    "magic": "0x061b"
+  },
+  {
+    "system": 0,
+    "name": "Yu-Gi-Oh! Duel Monsters",
+    "crc": "0x8875ec54",
+    "signature": "0xf28337a7",
+    "magic": "0x0627"
+  },
+  {
+    "system": 0,
+    "name": "Adventures of Lolo",
+    "crc": "0x176d2eeb",
+    "signature": "0x725006f6",
+    "magic": "0x0641"
+  },
+  {
+    "system": 0,
+    "name": "Aero Star (Japan)",
+    "crc": "0xdfa3b28a",
+    "signature": "0xdffb4dcc",
+    "magic": "0x0642"
+  },
+  {
+    "system": 0,
+    "name": "Alleyway",
+    "crc": "0x5cc01586",
+    "signature": "0x20ff7a23",
+    "magic": "0x064f"
+  },
+  {
+    "system": 0,
+    "name": "Makaimura Gaiden - The Demon Darkness",
+    "crc": "0xcfa358de",
+    "signature": "0xdd4b95ca",
+    "magic": "0x065a"
   }
 ]

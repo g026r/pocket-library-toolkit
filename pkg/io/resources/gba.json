@@ -1,6 +1,13 @@
 [
   {
     "system": 2,
+    "name": "007: NightFire",
+    "crc": "0x56c83c16",
+    "signature": "0x0f85fe98",
+    "magic": "0x0bf4"
+  },
+  {
+    "system": 2,
     "name": "Advance Wars",
     "crc": "0x26fd0fc9",
     "signature": "0x902c19b9",
@@ -12,6 +19,13 @@
     "crc": "0x5ad0e571",
     "signature": "0xe0848197",
     "magic": "0x0c84"
+  },
+  {
+    "system": 2,
+    "name": "Boktai: The Sun Is in Your Hand",
+    "crc": "0xe715ac45",
+    "signature": "0x6fc3aa2c",
+    "magic": "0x0d4b"
   },
   {
     "system": 2,
@@ -33,6 +47,20 @@
     "crc": "0x88c1b562",
     "signature": "0x4baf4e18",
     "magic": "0x0db8"
+  },
+  {
+    "system": 2,
+    "name": "Castlevania Double Pack",
+    "crc": "0xdbcecc7d",
+    "signature": "0x9738a6c2",
+    "magic": "0x0dbb"
+  },
+  {
+    "system": 2,
+    "name": "ChuChu Rocket! (Japan)",
+    "crc": "0x2c8c1b5a",
+    "signature": "0x697980f4",
+    "magic": "0x0ddd"
   },
   {
     "system": 2,
@@ -71,6 +99,27 @@
   },
   {
     "system": 2,
+    "name": "Densetsu no Stafy",
+    "crc": "0xfae94c8b",
+    "signature": "0x1ad75932",
+    "magic": "0x0e58"
+  },
+  {
+    "system": 2,
+    "name": "Densetsu no Stafy 2",
+    "crc": "0xea73eb54",
+    "signature": "0x53683771",
+    "magic": "0x0e59"
+  },
+  {
+    "system": 2,
+    "name": "Densetsu no Stafy 3",
+    "crc": "0xfcaf1aa8",
+    "signature": "0x33f4f1b0",
+    "magic": "0x0e5b"
+  },
+  {
+    "system": 2,
     "name": "Donkey Kong Country",
     "crc": "0x12f7a968",
     "signature": "0xc5d23096",
@@ -92,10 +141,24 @@
   },
   {
     "system": 2,
+    "name": "Doom",
+    "crc": "0x58c641b3",
+    "signature": "0xf6b366e0",
+    "magic": "0x0ea7"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 02 - Donkey Kong",
     "crc": "0x071c3f2b",
     "signature": "0xb2f00993",
     "magic": "0x0f3e"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 03 - Ice Climber",
+    "crc": "0xd0aef472",
+    "signature": "0x19de64ca",
+    "magic": "0x0f3f"
   },
   {
     "system": 2,
@@ -134,6 +197,13 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 12 - Clu Clu Land",
+    "crc": "0x8b3219fe",
+    "signature": "0x7d2a9fec",
+    "magic": "0x0f48"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 13 - Balloon Fight",
     "crc": "0xa01f014a",
     "signature": "0x59723945",
@@ -145,6 +215,13 @@
     "crc": "0xee4c3504",
     "signature": "0x4a57126b",
     "magic": "0x0f4c"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 17 - Takahashi Meijin no Bouken-jima",
+    "crc": "0x53286f51",
+    "signature": "0x79e91751",
+    "magic": "0x0f4d"
   },
   {
     "system": 2,
@@ -190,6 +267,20 @@
   },
   {
     "system": 2,
+    "name": "Final Fantasy IV Advance",
+    "crc": "0xfeeebde4",
+    "signature": "0x95bdc487",
+    "magic": "0x0f78"
+  },
+  {
+    "system": 2,
+    "name": "Final Fantasy Tactics Advance",
+    "crc": "0x5645e56c",
+    "signature": "0x8edd8d63",
+    "magic": "0x0f7b"
+  },
+  {
+    "system": 2,
     "name": "Final Fantasy V Advance",
     "crc": "0x7a24ab0c",
     "signature": "0xb179be43",
@@ -201,6 +292,13 @@
     "crc": "0xd708f5ab",
     "signature": "0xeef5fab6",
     "magic": "0x0f81"
+  },
+  {
+    "system": 2,
+    "name": "Golden Sun: The Lost Age",
+    "crc": "0x606a1c4d",
+    "signature": "0x7eeaba96",
+    "magic": "0x1031"
   },
   {
     "system": 2,
@@ -218,10 +316,38 @@
   },
   {
     "system": 2,
+    "name": "GT Advance: Championship Racing",
+    "crc": "0x8c411acc",
+    "signature": "0x328cab2c",
+    "magic": "0x1044"
+  },
+  {
+    "system": 2,
     "name": "Gunstar Super Heroes",
     "crc": "0x7cd86b02",
     "signature": "0xb2323b7f",
     "magic": "0x1051"
+  },
+  {
+    "system": 2,
+    "name": "Hoshi no Kirby: Kagami no Daimeikyuu",
+    "crc": "0x683d772c",
+    "signature": "0x9ee74053",
+    "magic": "0x10a4"
+  },
+  {
+    "system": 2,
+    "name": "Hoshi no Kirby: Yume no Izumi Deluxe",
+    "crc": "0xc55a3c2c",
+    "signature": "0xbe79f386",
+    "magic": "0x10a5"
+  },
+  {
+    "system": 2,
+    "name": "Iridion 3D",
+    "crc": "0x34189e74",
+    "signature": "0x01dd32ee",
+    "magic": "0x10df"
   },
   {
     "system": 2,
@@ -236,6 +362,20 @@
     "crc": "0x9f2a3048",
     "signature": "0x5c81854d",
     "magic": "0x114c"
+  },
+  {
+    "system": 2,
+    "name": "Konami Collector's Series: Arcade Advanced",
+    "crc": "0x2db31825",
+    "signature": "0x04a3953a",
+    "magic": "0x115c"
+  },
+  {
+    "system": 2,
+    "name": "Lady Sia",
+    "crc": "0x139e95bd",
+    "signature": "0x29775378",
+    "magic": "0x117e"
   },
   {
     "system": 2,
@@ -260,6 +400,13 @@
   },
   {
     "system": 2,
+    "name": "Made in Wario",
+    "crc": "0x87a0eea0",
+    "signature": "0x5f59fbdd",
+    "magic": "0x11e3"
+  },
+  {
+    "system": 2,
     "name": "Mario \u0026 Luigi: Superstar Saga",
     "crc": "0xe718d850",
     "signature": "0x341e13a9",
@@ -271,6 +418,20 @@
     "crc": "0xed316e37",
     "signature": "0x6d4c5b1d",
     "magic": "0x120a"
+  },
+  {
+    "system": 2,
+    "name": "Mario vs. Donkey Kong",
+    "crc": "0x25c394d1",
+    "signature": "0xee1d05f6",
+    "magic": "0x1215"
+  },
+  {
+    "system": 2,
+    "name": "Mawaru: Made in Wario",
+    "crc": "0xe69964f1",
+    "signature": "0xf9ee7685",
+    "magic": "0x1223"
   },
   {
     "system": 2,
@@ -316,6 +477,48 @@
   },
   {
     "system": 2,
+    "name": "Zoku Bokura no Taiyou: Taiyou Shounen Django",
+    "crc": "0x71e2cd01",
+    "signature": "0xfb12d528",
+    "magic": "0x134f"
+  },
+  {
+    "system": 2,
+    "name": "Pokemon: Emerald Version",
+    "crc": "0x1f1c08fb",
+    "signature": "0x02c53277",
+    "magic": "0x13b5"
+  },
+  {
+    "system": 2,
+    "name": "Pokemon: Fire Red Version",
+    "crc": "0xdd88761c",
+    "signature": "0x15999ac8",
+    "magic": "0x13b7"
+  },
+  {
+    "system": 2,
+    "name": "Pokemon: Leaf Green Version",
+    "crc": "0xdaffecec",
+    "signature": "0x9fcf9320",
+    "magic": "0x13ba"
+  },
+  {
+    "system": 2,
+    "name": "Pokemon: Ruby Version",
+    "crc": "0xaeac73e6",
+    "signature": "0x6a03cbfb",
+    "magic": "0x13bf"
+  },
+  {
+    "system": 2,
+    "name": "Pokemon: Sapphire Version",
+    "crc": "0x554dedc4",
+    "signature": "0xdca26458",
+    "magic": "0x13c2"
+  },
+  {
+    "system": 2,
     "name": "River City Ransom EX",
     "crc": "0x8686436e",
     "signature": "0x74c9940c",
@@ -327,6 +530,20 @@
     "crc": "0x41bb7f8a",
     "signature": "0x137d6fb3",
     "magic": "0x1473"
+  },
+  {
+    "system": 2,
+    "name": "Screw Breaker: Goushin DoriRureRo",
+    "crc": "0xb17532ee",
+    "signature": "0xfa8f28f2",
+    "magic": "0x14a4"
+  },
+  {
+    "system": 2,
+    "name": "Sonic Advance",
+    "crc": "0x63f70fd8",
+    "signature": "0x20564563",
+    "magic": "0x152b"
   },
   {
     "system": 2,
@@ -365,9 +582,30 @@
   },
   {
     "system": 2,
+    "name": "Tony Hawk's Pro Skater 2",
+    "crc": "0x812dc57a",
+    "signature": "0xa4172848",
+    "magic": "0x165d"
+  },
+  {
+    "system": 2,
     "name": "Wario Land 4",
     "crc": "0xd6141609",
     "signature": "0x7ac2020a",
     "magic": "0x16d0"
+  },
+  {
+    "system": 2,
+    "name": "WarioWare, Inc.: Mega Microgame$!",
+    "crc": "0x785d8b8c",
+    "signature": "0xd226151f",
+    "magic": "0x16d4"
+  },
+  {
+    "system": 2,
+    "name": "Yoshi no Banyuuinryoku",
+    "crc": "0x31594b7a",
+    "signature": "0x6163c07f",
+    "magic": "0x1719"
   }
 ]

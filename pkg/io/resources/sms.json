@@ -1,6 +1,13 @@
 [
   {
     "system": 4,
+    "name": "Asterix (Rev 1)",
+    "crc": "0x8c9d5be8",
+    "signature": "0x449df5b3",
+    "magic": "0x1960"
+  },
+  {
+    "system": 4,
     "name": "Choplifter",
     "crc": "0x4a21c15f",
     "signature": "0xa42d8baf",
@@ -15,6 +22,13 @@
   },
   {
     "system": 4,
+    "name": "Sonic Chaos",
+    "crc": "0xaedf3bdf",
+    "signature": "0x72433d43",
+    "magic": "0x1ab7"
+  },
+  {
+    "system": 4,
     "name": "Sonic the Hedgehog",
     "crc": "0xb519e833",
     "signature": "0xf150f769",
@@ -22,7 +36,7 @@
   },
   {
     "system": 4,
-    "name": "Sonic the Hedgehog 2",
+    "name": "Sonic the Hedgehog 2 (Rev 0)",
     "crc": "0x5b3b922c",
     "signature": "0xf6a1d62e",
     "magic": "0x1abb"
@@ -36,7 +50,7 @@
   },
   {
     "system": 4,
-    "name": "Zillion",
+    "name": "Zillion (Rev 2)",
     "crc": "0x7ba54510",
     "signature": "0xa7e33a29",
     "magic": "0x1b29"

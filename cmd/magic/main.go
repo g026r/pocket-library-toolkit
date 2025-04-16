@@ -9,8 +9,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/g026r/pocket-toolkit/pkg/io"
-	"github.com/g026r/pocket-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/root"
 )
 
 func main() {
@@ -21,8 +22,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	root, err := root.OpenRoot(dir)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer root.Close()
 
-	entries, err := io.LoadEntries(os.DirFS(dir))
+	entries, err := io.LoadEntries(root.FS())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,12 +58,18 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 
 		// Create the json files
 		d, err := os.Getwd()
-		md := fmt.Sprintf("%s/docs/signatures", d)
-		jsons := fmt.Sprintf("%s/pkg/io/resources", d)
 		if err != nil {
 			return err
 		}
-		j, err := os.Create(fmt.Sprintf("%s/%s.json", jsons, strings.ToLower(k.String())))
+
+		root, err := root.OpenRoot(d)
+		if err != nil {
+			return err
+		}
+		defer root.Close()
+
+
+		j, err := root.Create(filepath.Join("pkg/io/resources", fmt.Sprintf("%s.json", strings.ToLower(k.String()))))
 		if err != nil {
 			return err
 		}
@@ -68,13 +80,16 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 		_ = j.Close()
 
 		// Create the .md files
-		m, err := os.Create(fmt.Sprintf("%s/%s.md", md, strings.ToLower(k.String())))
+		m, err := root.Create(filepath.Join("docs/signatures", fmt.Sprintf("%s.md", strings.ToLower(k.String()))))
 		if err != nil {
 			return err
 		}
 		defer m.Close() // defer exists for the early returns. We'll close it manually at the end of the loop as well.
+		if _, err := m.WriteString(fmt.Sprintf("# %s CRC32s, cartridge signatures, and magic numbers\n", k.FullString())); err != nil {
+			return err
+		}
 		for _, e := range v {
-			if _, err := m.WriteString(fmt.Sprintf("## %s\n\n", e.Name)); err != nil {
+			if _, err := m.WriteString(fmt.Sprintf("\n## %s\n\n", e.Name)); err != nil {
 				return err
 			}
 			if _, err := m.WriteString(fmt.Sprintf("- CRC32: `0x%08x`\n", e.Crc32)); err != nil {
@@ -83,7 +98,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 			if _, err := m.WriteString(fmt.Sprintf("- Signature: `0x%08x`\n", e.Sig)); err != nil {
 				return err
 			}
-			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `0x%04x`\n\n", e.Magic)); err != nil {
+			if _, err := m.WriteString(fmt.Sprintf("- Magic Number: `0x%04x`\n", e.Magic)); err != nil {
 				return err
 			}
 		}

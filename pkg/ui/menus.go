@@ -12,8 +12,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/g026r/pocket-toolkit/pkg/io"
-	"github.com/g026r/pocket-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/io"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
 )
 
 // menuKey consists of all the possible menu actions
@@ -52,7 +52,6 @@ var (
 	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(blue)
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
-	italic            = lipgloss.NewStyle().Italic(true)
 	blue              = lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"}
 )
 

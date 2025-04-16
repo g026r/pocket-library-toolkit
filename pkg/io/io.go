@@ -17,8 +17,8 @@ import (
 
 	"github.com/disintegration/imaging"
 
-	"github.com/g026r/pocket-toolkit/pkg/models"
-	"github.com/g026r/pocket-toolkit/pkg/util"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/util"
 )
 
 //go:embed resources/*.json
@@ -55,21 +55,13 @@ func (c Config) SaveConfig() error {
 	if err != nil {
 		return err
 	}
-	dir, err := os.Executable()
+
+	dir, err := getConfigDir()
 	if err != nil {
 		return err
 	}
 
-	dir, f := filepath.Split(dir)
-	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
-	if f == "main" || f == "___main" {
-		dir, err = os.Getwd()
-		if err != nil {
-			return err
-		}
-	}
-
-	return os.WriteFile(fmt.Sprintf("%s/pocket-toolkit.json", dir), b, 0644)
+	return os.WriteFile(filepath.Join(dir, "pocket-toolkit.json"), b, 0644)
 }
 
 type jsonEntry struct {
@@ -147,8 +139,7 @@ func LoadEntries(root fs.FS) ([]models.Entry, error) {
 		}
 	}
 
-	// Should already be sorted. But just in case.
-	slices.SortFunc(entries, models.EntrySort)
+	// Don't sort just yet as we need to associate these with the playtimes.bin entries. So just return as is.
 	return entries, nil
 }
 
@@ -372,21 +363,12 @@ func LoadConfig() (Config, error) {
 		Backup:          true,
 		CheckPlaytimes:  true,
 	}
-	dir, err := os.Executable()
+	dir, err := getConfigDir()
 	if err != nil {
 		return c, err
 	}
 
-	dir, f := filepath.Split(dir)
-	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
-	if f == "main" || f == "___main" {
-		dir, err = os.Getwd()
-		if err != nil {
-			return c, err
-		}
-	}
-
-	b, err := os.ReadFile(fmt.Sprintf("%s/pocket-toolkit.json", dir))
+	b, err := os.ReadFile(filepath.Join(dir, "pocket-toolkit.json"))
 	if errors.Is(err, fs.ErrNotExist) {
 		return c, nil // Doesn't exist. Use defaults
 	} else if err != nil {
@@ -547,6 +529,8 @@ func SaveInternal(i io.Writer, entries []models.Entry) error {
 		return err
 	}
 
+	b = append(b, '\n')
+
 	_, err = i.Write(b)
 
 	return err
@@ -570,4 +554,24 @@ func ReadSeekerCloser(fs fs.FS, filename string) (io.ReadSeekCloser, error) {
 	} else {
 		return rs, nil
 	}
+}
+
+func getConfigDir() (string, error) {
+	var dir string
+	exec, err := os.Executable()
+	if err != nil {
+		return "", err
+	}
+
+	// FIXME: Hack for when I'm testing changes. Could cause problems if someone renames the executable
+	if f := filepath.Base(exec); f == "main" || f == "___main" {
+		dir, err = os.Getwd()
+		if err != nil {
+			return "", err
+		}
+	} else {
+		dir = filepath.Dir(exec)
+	}
+
+	return dir, nil
 }

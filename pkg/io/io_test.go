@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/g026r/pocket-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/models"
 )
 
 func TestSaveInternal(t *testing.T) {
@@ -78,7 +78,7 @@ func TestLoadPlaytimes(t *testing.T) {
 			err: true,
 		},
 		"testdata/valid": {
-			count: 230,
+			count: 239,
 		},
 	}
 
@@ -106,8 +106,8 @@ func TestSaveThumbsFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	thumbs_bin := make([]byte, fi.Size())
-	if _, err := f.Read(thumbs_bin); err != nil {
+	thumbsBin := make([]byte, fi.Size())
+	if _, err := f.Read(thumbsBin); err != nil {
 		t.Fatal(err)
 	}
 
@@ -119,7 +119,7 @@ func TestSaveThumbsFile(t *testing.T) {
 	tick := make(chan any, 1)
 	defer close(tick)
 	go func() {
-		for _ = range tick {
+		for range tick {
 		} // Do nothing. We're just trying to keep the program from deadlocking
 	}()
 
@@ -127,11 +127,11 @@ func TestSaveThumbsFile(t *testing.T) {
 		t.Errorf("Expected nil; got %v", err)
 	}
 	out := w.Bytes()
-	if len(out) != len(thumbs_bin) {
-		t.Errorf("thumbs.bin length is wrong. Expected %d, got %d", len(thumbs_bin), len(out))
+	if len(out) != len(thumbsBin) {
+		t.Errorf("thumbs.bin length is wrong. Expected %d, got %d", len(thumbsBin), len(out))
 	} else {
 		for i := range out {
-			if out[i] != thumbs_bin[i] {
+			if out[i] != thumbsBin[i] {
 				t.Errorf("thumbs.bin does not match expected starting at byte 0x%04x", i)
 				break
 			}
@@ -148,8 +148,8 @@ func TestLoadEntries(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Expected nil got %v", err)
 		}
-		if len(e) != 230 {
-			t.Errorf("Expected 299 entries; got %d", len(e))
+		if len(e) != 239 {
+			t.Errorf("Expected 239 entries; got %d", len(e))
 		}
 
 		// Verify first, last, and a midpoint entry
@@ -171,37 +171,37 @@ func TestLoadEntries(t *testing.T) {
 		}
 
 		sut = e[len(e)-1]
-		if sut.Name != "Xevious - Fardraut Saga" {
-			t.Errorf("Expected %q, got %q", "Xevious - Fardraut Saga", sut.Name)
+		if sut.Name != "Zillion" {
+			t.Errorf("Expected %q, got %q", "Zillion", sut.Name)
 		}
-		if sut.Sig != 0xd4c0eadc {
-			t.Errorf("Expected 0x%08x, got 0x%08x", 0xd4c0eadc, sut.Sig)
+		if sut.Sig != 0xa7e33a29 {
+			t.Errorf("Expected 0x%08x, got 0x%08x", 0xa7e33a29, sut.Sig)
 		}
-		if sut.Crc32 != 0xf8f85eec {
-			t.Errorf("Expected 0x%08x, got 0x%08x", 0xf8f85eec, sut.Crc32)
+		if sut.Crc32 != 0x7ba54510 {
+			t.Errorf("Expected 0x%08x, got 0x%08x", 0x7ba54510, sut.Crc32)
 		}
-		if sut.Magic != 0x1d1e {
-			t.Errorf("Expected 0x%04x, got 0x%04x", 0x1d1e, sut.Magic)
+		if sut.Magic != 0x1b29 {
+			t.Errorf("Expected 0x%04x, got 0x%04x", 0x1b29, sut.Magic)
 		}
-		if sut.System != models.PCE {
-			t.Errorf("Expected 0x%08x, got 0x%08x", models.PCE.String(), sut.System.String())
+		if sut.System != models.SMS {
+			t.Errorf("Expected %s, got %s", models.SMS.String(), sut.System.String())
 		}
 
 		sut = e[len(e)/2]
-		if sut.Name != "Kinetic Connection" {
-			t.Errorf("Expected %q, got %q", "Kinetic Connection", sut.Name)
+		if sut.Name != "Kirby & the Amazing Mirror" {
+			t.Errorf("Expected %q, got %q", "Kirby & the Amazing Mirror", sut.Name)
 		}
-		if sut.Sig != 0x9bb34518 {
-			t.Errorf("Expected 0x%08x, got 0x%08x", 0x9bb34518, sut.Sig)
+		if sut.Sig != 0x5c81854d {
+			t.Errorf("Expected 0x%08x, got 0x%08x", 0x5c81854d, sut.Sig)
 		}
-		if sut.Crc32 != 0x4af7f2aa {
-			t.Errorf("Expected 0x%08x, got 0x%08x", 0x4af7f2aa, sut.Crc32)
+		if sut.Crc32 != 0x9f2a3048 {
+			t.Errorf("Expected 0x%08x, got 0x%08x", 0x9f2a3048, sut.Crc32)
 		}
-		if sut.Magic != 0x1817 {
-			t.Errorf("Expected 0x%04x, got 0x%04x", 0x1817, sut.Magic)
+		if sut.Magic != 0x114c {
+			t.Errorf("Expected 0x%04x, got 0x%04x", 0x114c, sut.Magic)
 		}
-		if sut.System != models.GG {
-			t.Errorf("Expected 0x%08x, got 0x%08x", models.GG.String(), sut.System.String())
+		if sut.System != models.GBA {
+			t.Errorf("Expected %s, got %s", models.GBA.String(), sut.System.String())
 		}
 	})
 
@@ -243,8 +243,8 @@ func TestSaveLibrary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	list_bin := make([]byte, fi.Size())
-	if _, err := cmpList.Read(list_bin); err != nil {
+	listBin := make([]byte, fi.Size())
+	if _, err := cmpList.Read(listBin); err != nil {
 		t.Fatal(err)
 	}
 
@@ -265,15 +265,15 @@ func TestSaveLibrary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	playtimes_bin := make([]byte, fi.Size())
-	if _, err := cmpPlay.Read(playtimes_bin); err != nil {
+	playtimesBin := make([]byte, fi.Size())
+	if _, err := cmpPlay.Read(playtimesBin); err != nil {
 		t.Fatal(err)
 	}
 
 	tick := make(chan any, 1)
 	defer close(tick)
 	go func() {
-		for _ = range tick {
+		for range tick {
 		} // Do nothing. We're just trying to keep the program from deadlocking
 	}()
 
@@ -283,23 +283,23 @@ func TestSaveLibrary(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected nil but got %v", err)
 	}
-	list_bytes := list.Bytes()
-	play_bytes := play.Bytes()
-	if len(list_bytes) != len(list_bin) {
-		t.Errorf("Expected %d bytes but got %d", len(list_bin), len(list_bytes))
+	listBytes := list.Bytes()
+	playBytes := play.Bytes()
+	if len(listBytes) != len(listBin) {
+		t.Errorf("Expected %d bytes but got %d", len(listBin), len(listBytes))
 	} else {
-		for i := range list_bytes {
-			if list_bytes[i] != list_bin[i] {
+		for i := range listBytes {
+			if listBytes[i] != listBin[i] {
 				t.Errorf("list.bin differs starting at byte 0x%04x", i)
 				break
 			}
 		}
 	}
-	if len(play_bytes) != len(playtimes_bin) {
-		t.Errorf("Expected %d bytes but got %d", len(playtimes_bin), len(play_bytes))
+	if len(playBytes) != len(playtimesBin) {
+		t.Errorf("Expected %d bytes but got %d", len(playtimesBin), len(playBytes))
 	} else {
-		for i := range play_bytes {
-			if play_bytes[i] != playtimes_bin[i] {
+		for i := range playBytes {
+			if playBytes[i] != playtimesBin[i] {
 				t.Errorf("playtimes.bin differs starting at byte 0x%04x", i)
 				break
 			}

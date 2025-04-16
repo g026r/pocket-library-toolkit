@@ -1,6 +1,27 @@
 [
   {
     "system": 8,
+    "name": "Batman Returns",
+    "crc": "0x68cd6dcb",
+    "signature": "0x252e013f",
+    "magic": "0x1d29"
+  },
+  {
+    "system": 8,
+    "name": "Battle Wheels",
+    "crc": "0x57efff37",
+    "signature": "0x14d88d7d",
+    "magic": "0x1d2a"
+  },
+  {
+    "system": 8,
+    "name": "Blue Lightning",
+    "crc": "0x35af173c",
+    "signature": "0xdb268331",
+    "magic": "0x1d2f"
+  },
+  {
+    "system": 8,
     "name": "Chip's Challenge",
     "crc": "0xf45f784a",
     "signature": "0x7876e6ec",
@@ -22,6 +43,13 @@
   },
   {
     "system": 8,
+    "name": "Electrocop",
+    "crc": "0x765d742d",
+    "signature": "0xd3a403ab",
+    "magic": "0x1d3d"
+  },
+  {
+    "system": 8,
     "name": "Gates of Zendocon",
     "crc": "0xd852dba7",
     "signature": "0x36a5818e",
@@ -29,9 +57,135 @@
   },
   {
     "system": 8,
+    "name": "Gauntlet - The Third Encounter",
+    "crc": "0x8e0908e5",
+    "signature": "0x39c1e356",
+    "magic": "0x1d43"
+  },
+  {
+    "system": 8,
+    "name": "Hydra",
+    "crc": "0x8980a322",
+    "signature": "0x8af12b8c",
+    "magic": "0x1d47"
+  },
+  {
+    "system": 8,
+    "name": "Joust",
+    "crc": "0x85a2a177",
+    "signature": "0xe86a7424",
+    "magic": "0x1d4a"
+  },
+  {
+    "system": 8,
+    "name": "Ninja Gaiden",
+    "crc": "0x5adf25f0",
+    "signature": "0x6cd71c71",
+    "magic": "0x1d57"
+  },
+  {
+    "system": 8,
+    "name": "Paperboy",
+    "crc": "0xd6a4c70b",
+    "signature": "0x0ce80f09",
+    "magic": "0x1d5a"
+  },
+  {
+    "system": 8,
+    "name": "Rampage",
+    "crc": "0x490033c9",
+    "signature": "0xc84efe9d",
+    "magic": "0x1d60"
+  },
+  {
+    "system": 8,
+    "name": "Rampart",
+    "crc": "0xadab7883",
+    "signature": "0xc438b9fe",
+    "magic": "0x1d61"
+  },
+  {
+    "system": 8,
+    "name": "RoadBlasters",
+    "crc": "0x47f69051",
+    "signature": "0x1c780a73",
+    "magic": "0x1d62"
+  },
+  {
+    "system": 8,
+    "name": "Robotron 2084",
+    "crc": "0x7117e9f7",
+    "signature": "0xe660aba1",
+    "magic": "0x1d64"
+  },
+  {
+    "system": 8,
+    "name": "Rygar",
+    "crc": "0x1dfca564",
+    "signature": "0xc6579018",
+    "magic": "0x1d65"
+  },
+  {
+    "system": 8,
     "name": "S.T.U.N. Runner",
     "crc": "0x4b3bf84f",
     "signature": "0xef95c9bc",
     "magic": "0x1d66"
+  },
+  {
+    "system": 8,
+    "name": "Scrapyard Dog",
+    "crc": "0xca0d1bda",
+    "signature": "0x09023252",
+    "magic": "0x1d67"
+  },
+  {
+    "system": 8,
+    "name": "Shadow of the Beast",
+    "crc": "0xd43a8430",
+    "signature": "0x8712e21c",
+    "magic": "0x1d68"
+  },
+  {
+    "system": 8,
+    "name": "Switchblade II",
+    "crc": "0x63144491",
+    "signature": "0xc15591a0",
+    "magic": "0x1d6f"
+  },
+  {
+    "system": 8,
+    "name": "Todd's Adventures in Slime World",
+    "crc": "0x39bf3c25",
+    "signature": "0xaf137168",
+    "magic": "0x1d70"
+  },
+  {
+    "system": 8,
+    "name": "Toki",
+    "crc": "0x52b94a6c",
+    "signature": "0xfe1cd3d7",
+    "magic": "0x1d71"
+  },
+  {
+    "system": 8,
+    "name": "Warbirds",
+    "crc": "0xa6ae2301",
+    "signature": "0xe74af0ef",
+    "magic": "0x1d75"
+  },
+  {
+    "system": 8,
+    "name": "Xybots",
+    "crc": "0xcac9a246",
+    "signature": "0xe0f0ba97",
+    "magic": "0x1d79"
+  },
+  {
+    "system": 8,
+    "name": "Zarlor Mercenary",
+    "crc": "0x35bc4ff9",
+    "signature": "0x37951692",
+    "magic": "0x1d7b"
   }
 ]

@@ -1,6 +1,27 @@
 [
   {
     "system": 3,
+    "name": "Streets of Rage II",
+    "crc": "0x0b618409",
+    "signature": "0x0731bb8b",
+    "magic": "0x176b"
+  },
+  {
+    "system": 3,
+    "name": "Battletoads (Japan, Europe)",
+    "crc": "0xcb3cd075",
+    "signature": "0x72a45806",
+    "magic": "0x1770"
+  },
+  {
+    "system": 3,
+    "name": "Bram Stoker's Dracula (Europe)",
+    "crc": "0x69ebe5fa",
+    "signature": "0xa78c876e",
+    "magic": "0x1777"
+  },
+  {
+    "system": 3,
     "name": "Castle of Illusion Starring Mickey Mouse",
     "crc": "0x59840fd6",
     "signature": "0x7c3d8290",
@@ -8,7 +29,7 @@
   },
   {
     "system": 3,
-    "name": "Columns",
+    "name": "Columns (Rev 2)",
     "crc": "0x83fa26d9",
     "signature": "0xb5eec6cf",
     "magic": "0x1793"
@@ -22,7 +43,21 @@
   },
   {
     "system": 3,
-    "name": "Fantasy Zone",
+    "name": "Double Dragon",
+    "crc": "0x1307a290",
+    "signature": "0xc8ee94ce",
+    "magic": "0x17a9"
+  },
+  {
+    "system": 3,
+    "name": "Dynamite Headdy (USA, Europe)",
+    "crc": "0x610ff95c",
+    "signature": "0x9ec04287",
+    "magic": "0x17b2"
+  },
+  {
+    "system": 3,
+    "name": "Fantasy Zone (USA, Europe)",
     "crc": "0xd69097e8",
     "signature": "0xb9adf48a",
     "magic": "0x17c4"
@@ -43,6 +78,13 @@
   },
   {
     "system": 3,
+    "name": "Shinobi II: The Silent Fury",
+    "crc": "0x6201c694",
+    "signature": "0x7d82cf65",
+    "magic": "0x17df"
+  },
+  {
+    "system": 3,
     "name": "Gunstar Heroes",
     "crc": "0xc3c52767",
     "signature": "0xe2b366bb",
@@ -54,6 +96,13 @@
     "crc": "0xdab0f265",
     "signature": "0x41117e28",
     "magic": "0x17f8"
+  },
+  {
+    "system": 3,
+    "name": "Jurassic Park (USA, Europe, Brazil)",
+    "crc": "0xbd6f2321",
+    "signature": "0x331b2689",
+    "magic": "0x1811"
   },
   {
     "system": 3,
@@ -71,6 +120,13 @@
   },
   {
     "system": 3,
+    "name": "Legend of Illusion Starring Mickey Mouse",
+    "crc": "0xce5ad8b7",
+    "signature": "0x63fcc174",
+    "magic": "0x181f"
+  },
+  {
+    "system": 3,
     "name": "Lemmings",
     "crc": "0x0fde7baa",
     "signature": "0x1b39218d",
@@ -78,10 +134,38 @@
   },
   {
     "system": 3,
-    "name": "The Lion King",
+    "name": "The Lion King (Europe)",
     "crc": "0x0cd9c20b",
     "signature": "0x9062b5ec",
     "magic": "0x1821"
+  },
+  {
+    "system": 3,
+    "name": "The Lucky Dime Caper Starring Donald Duck",
+    "crc": "0x07a7815a",
+    "signature": "0x42da3fd6",
+    "magic": "0x1825"
+  },
+  {
+    "system": 3,
+    "name": "Psychic World (USA, Europe, Brazil)",
+    "crc": "0x73779b22",
+    "signature": "0xab844ea6",
+    "magic": "0x188a"
+  },
+  {
+    "system": 3,
+    "name": "Ristar: The Shooting Star",
+    "crc": "0xefe65b3b",
+    "signature": "0x63c3f82c",
+    "magic": "0x189b"
+  },
+  {
+    "system": 3,
+    "name": "Sonic \u0026 Tails",
+    "crc": "0x8ac0dade",
+    "signature": "0x8c6cf350",
+    "magic": "0x18bc"
   },
   {
     "system": 3,
@@ -92,7 +176,35 @@
   },
   {
     "system": 3,
-    "name": "Sonic the Hedgehog",
+    "name": "Sonic Drift 2",
+    "crc": "0xd6e8a305",
+    "signature": "0x9be82dbb",
+    "magic": "0x18c0"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog Spinball",
+    "crc": "0xa9210434",
+    "signature": "0x0b02b76a",
+    "magic": "0x18c2"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog: Triple Trouble",
+    "crc": "0xd23a2a93",
+    "signature": "0xc90f0acb",
+    "magic": "0x18c3"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog (Rev 1)",
+    "crc": "0xd163356e",
+    "signature": "0x9be034fc",
+    "magic": "0x18c4"
+  },
+  {
+    "system": 3,
+    "name": "Sonic the Hedgehog (Rev 0)",
     "crc": "0x3e31cb8c",
     "signature": "0xb512d08f",
     "magic": "0x18c5"
@@ -120,7 +232,7 @@
   },
   {
     "system": 3,
-    "name": "Wonder Boy",
+    "name": "Wonder Boy (Japan)",
     "crc": "0x9977fcb3",
     "signature": "0x9fa70149",
     "magic": "0x190d"
