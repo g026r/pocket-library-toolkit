@@ -24,6 +24,12 @@
 - Signature: `0x6fc3aa2c`
 - Magic Number: `0x0d4b`
 
+## Bomberman Tournament
+
+- CRC32: `0x240282e6`
+- Signature: `0xaa3373c7`
+- Magic Number: `0x0d5c`
+
 ## Castlevania: Aria of Sorrow
 
 - CRC32: `0x35536183`
