@@ -29,6 +29,13 @@
   },
   {
     "system": 2,
+    "name": "Bomberman Tournament",
+    "crc": "0x240282e6",
+    "signature": "0xaa3373c7",
+    "magic": "0x0d5c"
+  },
+  {
+    "system": 2,
     "name": "Castlevania: Aria of Sorrow",
     "crc": "0x35536183",
     "signature": "0x1495b6ce",

@@ -954,6 +954,12 @@
 - Signature: `0xfd31028d`
 - Magic Number: `0x059e`
 
+## Takahashi Meijin no Bouken-jima II
+
+- CRC32: `0xf1071e08`
+- Signature: `0xe7472386`
+- Magic Number: `0x05ac`
+
 ## Tetris (Minuet)
 
 - CRC32: `0x63f9407d`
