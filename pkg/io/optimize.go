@@ -117,7 +117,7 @@ func initialize(r root.Root, sys models.System) error {
 		return fmt.Errorf("error checking backup dir: %w", err)
 	}
 
-	if err := os.Rename(strings.ToLower(sys.String()), strings.ToLower(sys.String())+backupSuffix); err != nil {
+	if err := r.Rename(strings.ToLower(sys.String()), strings.ToLower(sys.String())+backupSuffix); err != nil {
 		return fmt.Errorf("rename error: %w", err)
 	}
 
