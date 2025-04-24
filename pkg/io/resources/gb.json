@@ -1114,6 +1114,13 @@
   },
   {
     "system": 0,
+    "name": "Takahashi Meijin no Bouken-jima II",
+    "crc": "0xf1071e08",
+    "signature": "0xe7472386",
+    "magic": "0x05ac"
+  },
+  {
+    "system": 0,
     "name": "Tetris (Minuet)",
     "crc": "0x63f9407d",
     "signature": "0xc7f871be",
