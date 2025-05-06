@@ -180,6 +180,12 @@
 - Signature: `0x4a6aa234`
 - Magic Number: `0x0f46`
 
+## Famicom Mini 09 - Bomberman
+
+- CRC32: `0xc1116e40`
+- Signature: `0xffdf70c1`
+- Magic Number: `0x0f46`
+
 ## Famicom Mini 11 - Mario Bros.
 
 - CRC32: `0x42a027ab`
@@ -197,6 +203,12 @@
 - CRC32: `0xa01f014a`
 - Signature: `0x59723945`
 - Magic Number: `0x0f49`
+
+## Famicom Mini 14 - Wrecking Crew
+
+- CRC32: `0xadac99bd`
+- Signature: `0x63b53a12`
+- Magic Number: `0x0f4b`
 
 ## Famicom Mini 16 - Dig Dug
 

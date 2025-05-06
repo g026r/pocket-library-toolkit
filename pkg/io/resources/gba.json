@@ -211,6 +211,13 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 09 - Bomberman",
+    "crc": "0xc1116e40",
+    "signature": "0xffdf70c1",
+    "magic": "0x0f46"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 11 - Mario Bros.",
     "crc": "0x42a027ab",
     "signature": "0x6d0563a3",
@@ -229,6 +236,13 @@
     "crc": "0xa01f014a",
     "signature": "0x59723945",
     "magic": "0x0f49"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 14 - Wrecking Crew",
+    "crc": "0xadac99bd",
+    "signature": "0x63b53a12",
+    "magic": "0x0f4b"
   },
   {
     "system": 2,
