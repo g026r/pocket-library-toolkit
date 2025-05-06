@@ -24,6 +24,12 @@
 - Signature: `0x6fc3aa2c`
 - Magic Number: `0x0d4b`
 
+## Bomber Man Jetters: Densetsu no Bomber Man
+
+- CRC32: `0x70c423b8`
+- Signature: `0x857018fd`
+- Magic Number: `0x0d53`
+
 ## Bomberman Tournament
 
 - CRC32: `0x240282e6`
@@ -138,6 +144,12 @@
 - Signature: `0xb2f00993`
 - Magic Number: `0x0f3e`
 
+## Famicom Mini 01 - Super Mario Bros. (Rev 1)
+
+- CRC32: `0xcd2604dd`
+- Signature: `0xad3bf77e`
+- Magic Number: `0x0f3e`
+
 ## Famicom Mini 03 - Ice Climber
 
 - CRC32: `0xd0aef472`
@@ -168,6 +180,12 @@
 - Signature: `0x4a6aa234`
 - Magic Number: `0x0f46`
 
+## Famicom Mini 09 - Bomberman
+
+- CRC32: `0xc1116e40`
+- Signature: `0xffdf70c1`
+- Magic Number: `0x0f46`
+
 ## Famicom Mini 11 - Mario Bros.
 
 - CRC32: `0x42a027ab`
@@ -186,6 +204,12 @@
 - Signature: `0x59723945`
 - Magic Number: `0x0f49`
 
+## Famicom Mini 14 - Wrecking Crew
+
+- CRC32: `0xadac99bd`
+- Signature: `0x63b53a12`
+- Magic Number: `0x0f4b`
+
 ## Famicom Mini 16 - Dig Dug
 
 - CRC32: `0xee4c3504`
@@ -202,6 +226,12 @@
 
 - CRC32: `0x2f390212`
 - Signature: `0x4c2ff45f`
+- Magic Number: `0x0f4f`
+
+## Famicom Mini 18 - Makaimura
+
+- CRC32: `0x8a7964ca`
+- Signature: `0x821f8452`
 - Magic Number: `0x0f4f`
 
 ## Famicom Mini 21 - Super Mario Bros. 2
@@ -467,6 +497,12 @@
 - CRC32: `0xb17532ee`
 - Signature: `0xfa8f28f2`
 - Magic Number: `0x14a4`
+
+## Shaman King: Master of Spirits 2
+
+- CRC32: `0x201e3412`
+- Signature: `0xcab92e24`
+- Magic Number: `0x14c0`
 
 ## Sonic Advance
 

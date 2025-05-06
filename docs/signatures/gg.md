@@ -126,6 +126,12 @@
 - Signature: `0x42da3fd6`
 - Magic Number: `0x1825`
 
+## Mappy
+
+- CRC32: `0x01d2dd2a`
+- Signature: `0x6a1f771e`
+- Magic Number: `0x1835`
+
 ## Psychic World (USA, Europe, Brazil)
 
 - CRC32: `0x73779b22`
