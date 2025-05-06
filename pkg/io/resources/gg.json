@@ -148,6 +148,13 @@
   },
   {
     "system": 3,
+    "name": "Mappy",
+    "crc": "0x01d2dd2a",
+    "signature": "0x6a1f771e",
+    "magic": "0x1835"
+  },
+  {
+    "system": 3,
     "name": "Psychic World (USA, Europe, Brazil)",
     "crc": "0x73779b22",
     "signature": "0xab844ea6",

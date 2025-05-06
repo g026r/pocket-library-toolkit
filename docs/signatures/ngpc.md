@@ -1,5 +1,11 @@
 # Neo Geo Pocket Color CRC32s, cartridge signatures, and magic numbers
 
+## Dynamite Slugger
+
+- CRC32: `0x7f1779cd`
+- Signature: `0xbed36ceb`
+- Magic Number: `0x1b3e`
+
 ## Fantastic Night Dreams Cotton (Japan)
 
 - CRC32: `0xb8a12409`
