@@ -974,6 +974,13 @@
   },
   {
     "system": 0,
+    "name": "Pitman",
+    "crc": "0xa0b68136",
+    "signature": "0x4fc85da6",
+    "magic": "0x04b2"
+  },
+  {
+    "system": 0,
     "name": "Pocket Bomberman (Europe)",
     "crc": "0x0fd1ae54",
     "signature": "0xcd6930e4",
@@ -1006,6 +1013,13 @@
     "crc": "0x40e5adc9",
     "signature": "0xb9c0b830",
     "magic": "0x0502"
+  },
+  {
+    "system": 0,
+    "name": "Quiz Sekai wa Show by Shoubai!!",
+    "crc": "0xd8c33dcd",
+    "signature": "0xbbcbc86b",
+    "magic": "0x0504"
   },
   {
     "system": 0,

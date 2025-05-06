@@ -29,6 +29,13 @@
   },
   {
     "system": 2,
+    "name": "Bomber Man Jetters: Densetsu no Bomber Man",
+    "crc": "0x70c423b8",
+    "signature": "0x857018fd",
+    "magic": "0x0d53"
+  },
+  {
+    "system": 2,
     "name": "Bomberman Tournament",
     "crc": "0x240282e6",
     "signature": "0xaa3373c7",
@@ -162,6 +169,13 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 01 - Super Mario Bros. (Rev 1)",
+    "crc": "0xcd2604dd",
+    "signature": "0xad3bf77e",
+    "magic": "0x0f3e"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 03 - Ice Climber",
     "crc": "0xd0aef472",
     "signature": "0x19de64ca",
@@ -235,6 +249,13 @@
     "name": "Famicom Mini 19 - Twin Bee",
     "crc": "0x2f390212",
     "signature": "0x4c2ff45f",
+    "magic": "0x0f4f"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 18 - Makaimura",
+    "crc": "0x8a7964ca",
+    "signature": "0x821f8452",
     "magic": "0x0f4f"
   },
   {
@@ -544,6 +565,13 @@
     "crc": "0xb17532ee",
     "signature": "0xfa8f28f2",
     "magic": "0x14a4"
+  },
+  {
+    "system": 2,
+    "name": "Shaman King: Master of Spirits 2",
+    "crc": "0x201e3412",
+    "signature": "0xcab92e24",
+    "magic": "0x14c0"
   },
   {
     "system": 2,

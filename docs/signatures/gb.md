@@ -834,6 +834,12 @@
 - Signature: `0x514d3f2c`
 - Magic Number: `0x04b1`
 
+## Pitman
+
+- CRC32: `0xa0b68136`
+- Signature: `0x4fc85da6`
+- Magic Number: `0x04b2`
+
 ## Pocket Bomberman (Europe)
 
 - CRC32: `0x0fd1ae54`
@@ -863,6 +869,12 @@
 - CRC32: `0x40e5adc9`
 - Signature: `0xb9c0b830`
 - Magic Number: `0x0502`
+
+## Quiz Sekai wa Show by Shoubai!!
+
+- CRC32: `0xd8c33dcd`
+- Signature: `0xbbcbc86b`
+- Magic Number: `0x0504`
 
 ## Red Arremer: Makai Mura Gaiden
 
