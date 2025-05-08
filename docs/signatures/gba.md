@@ -150,6 +150,12 @@
 - Signature: `0xb2f00993`
 - Magic Number: `0x0f3e`
 
+## Famicom Mini 01 - Super Mario Bros. (Rev 1)
+
+- CRC32: `0xcd2604dd`
+- Signature: `0xad3bf77e`
+- Magic Number: `0x0f3e`
+
 ## Famicom Mini 03 - Ice Climber
 
 - CRC32: `0xd0aef472`
@@ -184,6 +190,12 @@
 
 - CRC32: `0x1e23bad4`
 - Signature: `0x4a6aa234`
+- Magic Number: `0x0f46`
+
+## Famicom Mini 09 - Bomberman
+
+- CRC32: `0xc1116e40`
+- Signature: `0xffdf70c1`
 - Magic Number: `0x0f46`
 
 ## Famicom Mini 11 - Mario Bros.
@@ -232,6 +244,12 @@
 
 - CRC32: `0x2f390212`
 - Signature: `0x4c2ff45f`
+- Magic Number: `0x0f4f`
+
+## Famicom Mini 18 - Makaimura
+
+- CRC32: `0x8a7964ca`
+- Signature: `0x821f8452`
 - Magic Number: `0x0f4f`
 
 ## Famicom Mini 21 - Super Mario Bros. 2
