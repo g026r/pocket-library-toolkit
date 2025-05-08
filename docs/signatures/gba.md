@@ -138,16 +138,16 @@
 - Signature: `0xf6b366e0`
 - Magic Number: `0x0ea7`
 
-## Famicom Mini 02 - Donkey Kong
-
-- CRC32: `0x071c3f2b`
-- Signature: `0xb2f00993`
-- Magic Number: `0x0f3e`
-
 ## Famicom Mini 01 - Super Mario Bros. (Rev 1)
 
 - CRC32: `0xcd2604dd`
 - Signature: `0xad3bf77e`
+- Magic Number: `0x0f3e`
+
+## Famicom Mini 02 - Donkey Kong
+
+- CRC32: `0x071c3f2b`
+- Signature: `0xb2f00993`
 - Magic Number: `0x0f3e`
 
 ## Famicom Mini 03 - Ice Climber
@@ -174,16 +174,16 @@
 - Signature: `0x977d319d`
 - Magic Number: `0x0f44`
 
-## Famicom Mini 10 - Star Soldier
-
-- CRC32: `0x1e23bad4`
-- Signature: `0x4a6aa234`
-- Magic Number: `0x0f46`
-
 ## Famicom Mini 09 - Bomberman
 
 - CRC32: `0xc1116e40`
 - Signature: `0xffdf70c1`
+- Magic Number: `0x0f46`
+
+## Famicom Mini 10 - Star Soldier
+
+- CRC32: `0x1e23bad4`
+- Signature: `0x4a6aa234`
 - Magic Number: `0x0f46`
 
 ## Famicom Mini 11 - Mario Bros.
@@ -222,16 +222,16 @@
 - Signature: `0x79e91751`
 - Magic Number: `0x0f4d`
 
-## Famicom Mini 19 - Twin Bee
-
-- CRC32: `0x2f390212`
-- Signature: `0x4c2ff45f`
-- Magic Number: `0x0f4f`
-
 ## Famicom Mini 18 - Makaimura
 
 - CRC32: `0x8a7964ca`
 - Signature: `0x821f8452`
+- Magic Number: `0x0f4f`
+
+## Famicom Mini 19 - Twin Bee
+
+- CRC32: `0x2f390212`
+- Signature: `0x4c2ff45f`
 - Magic Number: `0x0f4f`
 
 ## Famicom Mini 21 - Super Mario Bros. 2
@@ -479,6 +479,12 @@
 - CRC32: `0x554dedc4`
 - Signature: `0xdca26458`
 - Magic Number: `0x13c2`
+
+## Rhythm Tengoku (Rev 1)
+
+- CRC32: `0xa6cd88e1`
+- Signature: `0x991adafc`
+- Magic Number: `0x1447`
 
 ## River City Ransom EX
 

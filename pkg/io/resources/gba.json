@@ -162,16 +162,16 @@
   },
   {
     "system": 2,
-    "name": "Famicom Mini 02 - Donkey Kong",
-    "crc": "0x071c3f2b",
-    "signature": "0xb2f00993",
+    "name": "Famicom Mini 01 - Super Mario Bros. (Rev 1)",
+    "crc": "0xcd2604dd",
+    "signature": "0xad3bf77e",
     "magic": "0x0f3e"
   },
   {
     "system": 2,
-    "name": "Famicom Mini 01 - Super Mario Bros. (Rev 1)",
-    "crc": "0xcd2604dd",
-    "signature": "0xad3bf77e",
+    "name": "Famicom Mini 02 - Donkey Kong",
+    "crc": "0x071c3f2b",
+    "signature": "0xb2f00993",
     "magic": "0x0f3e"
   },
   {
@@ -204,16 +204,16 @@
   },
   {
     "system": 2,
-    "name": "Famicom Mini 10 - Star Soldier",
-    "crc": "0x1e23bad4",
-    "signature": "0x4a6aa234",
+    "name": "Famicom Mini 09 - Bomberman",
+    "crc": "0xc1116e40",
+    "signature": "0xffdf70c1",
     "magic": "0x0f46"
   },
   {
     "system": 2,
-    "name": "Famicom Mini 09 - Bomberman",
-    "crc": "0xc1116e40",
-    "signature": "0xffdf70c1",
+    "name": "Famicom Mini 10 - Star Soldier",
+    "crc": "0x1e23bad4",
+    "signature": "0x4a6aa234",
     "magic": "0x0f46"
   },
   {
@@ -260,16 +260,16 @@
   },
   {
     "system": 2,
-    "name": "Famicom Mini 19 - Twin Bee",
-    "crc": "0x2f390212",
-    "signature": "0x4c2ff45f",
+    "name": "Famicom Mini 18 - Makaimura",
+    "crc": "0x8a7964ca",
+    "signature": "0x821f8452",
     "magic": "0x0f4f"
   },
   {
     "system": 2,
-    "name": "Famicom Mini 18 - Makaimura",
-    "crc": "0x8a7964ca",
-    "signature": "0x821f8452",
+    "name": "Famicom Mini 19 - Twin Bee",
+    "crc": "0x2f390212",
+    "signature": "0x4c2ff45f",
     "magic": "0x0f4f"
   },
   {
@@ -558,6 +558,13 @@
     "crc": "0x554dedc4",
     "signature": "0xdca26458",
     "magic": "0x13c2"
+  },
+  {
+    "system": 2,
+    "name": "Rhythm Tengoku",
+    "crc": "0xa6cd88e1",
+    "signature": "0x991adafc",
+    "magic": "0x1447"
   },
   {
     "system": 2,
