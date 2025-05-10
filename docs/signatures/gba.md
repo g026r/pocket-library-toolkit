@@ -30,6 +30,12 @@
 - Signature: `0x857018fd`
 - Magic Number: `0x0d53`
 
+## Bomberman Max 2: Blue Advance
+
+- CRC32: `0x94c620f3`
+- Signature: `0xd3627abb`
+- Magic Number: `0x0d56`
+
 ## Bomberman Tournament
 
 - CRC32: `0x240282e6`

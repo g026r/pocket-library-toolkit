@@ -36,6 +36,13 @@
   },
   {
     "system": 2,
+    "name": "Bomberman Max 2: Blue Advance",
+    "crc": "0x94c620f3",
+    "signature": "0xd3627abb",
+    "magic": "0x0d56"
+  },
+  {
+    "system": 2,
     "name": "Bomberman Tournament",
     "crc": "0x240282e6",
     "signature": "0xaa3373c7",
