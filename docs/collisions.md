@@ -17,9 +17,10 @@ another's. Though in a few cases it will confuse different games built on the sa
 TurboGrafx-16 & Lynx signatures do not appear to match with values I've been able to generate. Either the ROM is read
 differently by the Pocket or there is some extra data being added to it by the system.
 
-Collisions listed below are grouped under the signature that the Pocket generates for them. The games are listed in
-alphabetical order, which appears to be the order the Pocket stores its database of signatures in. As such, the first
-entry in each grouping is the game that all cartridges with that signature will map to.
+Collisions listed below are grouped under the signature that the Pocket generates for them. The games are mostly listed
+in alphabetical order, which appears to be the order the Pocket usually stores its database of signatures in. As such, 
+the first entry in each grouping is usually the game that all cartridges with that signature will map to. In those cases
+where I know the collision is not in alphabetical order, I've updated the ordering accordingly.
 
 Also provided is the actual CRC32 of the cart. Useful if e.g. you have both Shining Force Gaiden & Shining Force Gaiden
 II and want different thumbnails for each in your library.
@@ -155,8 +156,8 @@ are a mess. 59 Game Gear games share a cart signature with another game, or 12.6
     * Super Monaco GP _(Japan, Korea)_  `[0x4f686c4a]`
     * Super Monaco GP _(Brazil, Europe, USA)_  `[0xfcf12547]`
 * `0x1ecc7ca8`:
-    * Shinobi  `[0x30f1c984]`
     * The GG Shinobi  `[0x83926bd1]`
+    * Shinobi  `[0x30f1c984]`
 * `0xa0af1447`:
     * The Jungle Book _(Europe)_  `[0x90100884]`
     * The Jungle Book _(USA)_  `[0x30c09f31]`

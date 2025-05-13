@@ -85,6 +85,20 @@
   },
   {
     "system": 3,
+    "name": "Shinobi II: The Silent Fury",
+    "crc": "0x6201c694",
+    "signature": "0x7d82cf65",
+    "magic": "0x17e0"
+  },
+  {
+    "system": 3,
+    "name": "The GG Shinobi",
+    "crc": "0x83926bd1",
+    "signature": "0x1ecc7ca8",
+    "magic": "0x17e1"
+  },
+  {
+    "system": 3,
     "name": "Gunstar Heroes",
     "crc": "0xc3c52767",
     "signature": "0xe2b366bb",
