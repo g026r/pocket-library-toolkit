@@ -390,6 +390,12 @@
 - Signature: `0x5f59fbdd`
 - Magic Number: `0x11e3`
 
+## Magical Quest Starring Mickey & Minnie
+
+- CRC32: `0xb4294fa7`
+- Signature: `0x57a0a676`
+- Magic Number: `0x11ed`
+
 ## Mario & Luigi: Superstar Saga
 
 - CRC32: `0xe718d850`

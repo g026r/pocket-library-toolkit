@@ -456,6 +456,13 @@
   },
   {
     "system": 2,
+    "name": "Magical Quest Starring Mickey \u0026 Minnie",
+    "crc": "0xb4294fa7",
+    "signature": "0x57a0a676",
+    "magic": "0x11ed"
+  },
+  {
+    "system": 2,
     "name": "Mario \u0026 Luigi: Superstar Saga",
     "crc": "0xe718d850",
     "signature": "0x341e13a9",
