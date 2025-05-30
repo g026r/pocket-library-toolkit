@@ -456,7 +456,21 @@
   },
   {
     "system": 2,
-    "name": "Magical Quest Starring Mickey \u0026 Minnie",
+    "name": "Magical Quest 2 Starring Mickey \u0026 Minnie (USA)",
+    "crc": "0x69f1117d",
+    "signature": "0x1cd597ef",
+    "magic": "0x11e9"
+  },
+  {
+    "system": 2,
+    "name": "Magical Quest 3 Starring Mickey \u0026 Donald (Europe)",
+    "crc": "0xaad912f9",
+    "signature": "0xbfe12754",
+    "magic": "0x11ea"
+  },
+  {
+    "system": 2,
+    "name": "Magical Quest Starring Mickey \u0026 Minnie (USA)",
     "crc": "0xb4294fa7",
     "signature": "0x57a0a676",
     "magic": "0x11ed"

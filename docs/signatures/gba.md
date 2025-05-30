@@ -390,7 +390,19 @@
 - Signature: `0x5f59fbdd`
 - Magic Number: `0x11e3`
 
-## Magical Quest Starring Mickey & Minnie
+## Magical Quest 2 Starring Mickey & Minnie (USA)
+
+- CRC32: `0x69f1117d`
+- Signature: `0x1cd597ef`
+- Magic Number: `0x11e9`
+
+## Magical Quest 3 Starring Mickey & Donald (Europe)
+
+- CRC32: `0xaad912f9`
+- Signature: `0xbfe12754`
+- Magic Number: `0x11ea`
+
+## Magical Quest Starring Mickey & Minnie (USA)
 
 - CRC32: `0xb4294fa7`
 - Signature: `0x57a0a676`
