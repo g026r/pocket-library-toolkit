@@ -936,6 +936,12 @@
 - Signature: `0xa21327fb`
 - Magic Number: `0x0550`
 
+## Snow Bros. Jr.
+
+- CRC32: `0xe5a22f5a`
+- Signature: `0x13ac2f8f`
+- Magic Number: `0x0561`
+
 ## SolarStriker
 
 - CRC32: `0x11817103`
