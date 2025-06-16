@@ -18,6 +18,12 @@
 - Signature: `0xfa3b0e9b`
 - Magic Number: `0x19a7`
 
+## Hang-On
+
+- CRC32: `0x5c01adf9`
+- Signature: `0x4ae1fcb5`
+- Magic Number: `0x1a01`
+
 ## Sonic Chaos
 
 - CRC32: `0xaedf3bdf`
@@ -35,6 +41,12 @@
 - CRC32: `0x5b3b922c`
 - Signature: `0xf6a1d62e`
 - Magic Number: `0x1abb`
+
+## Space Harrier
+
+- CRC32: `0xbeddf80e`
+- Signature: `0x0d9ff937`
+- Magic Number: `0x1abf`
 
 ## Turma da Monica em O Resgate
 

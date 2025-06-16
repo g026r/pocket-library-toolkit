@@ -22,6 +22,13 @@
   },
   {
     "system": 4,
+    "name": "Hang-On",
+    "crc": "0x5c01adf9",
+    "signature": "0x4ae1fcb5",
+    "magic": "0x1a01"
+  },
+  {
+    "system": 4,
     "name": "Sonic Chaos",
     "crc": "0xaedf3bdf",
     "signature": "0x72433d43",
@@ -40,6 +47,13 @@
     "crc": "0x5b3b922c",
     "signature": "0xf6a1d62e",
     "magic": "0x1abb"
+  },
+  {
+    "system": 4,
+    "name": "Space Harrier",
+    "crc": "0xbeddf80e",
+    "signature": "0x0d9ff937",
+    "magic": "0x1abf"
   },
   {
     "system": 4,
