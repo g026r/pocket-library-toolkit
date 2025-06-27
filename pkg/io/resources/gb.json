@@ -1093,6 +1093,13 @@
   },
   {
     "system": 0,
+    "name": "Snow Bros. Jr.",
+    "crc": "0xe5a22f5a",
+    "signature": "0x13ac2f8f",
+    "magic": "0x0561"
+  },
+  {
+    "system": 0,
     "name": "SolarStriker",
     "crc": "0x11817103",
     "signature": "0x9d6225d9",

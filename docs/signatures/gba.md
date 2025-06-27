@@ -120,6 +120,12 @@
 - Signature: `0x33f4f1b0`
 - Magic Number: `0x0e5b`
 
+## DK: King of Swing
+
+- CRC32: `0xd610b239`
+- Signature: `0x75dccd19`
+- Magic Number: `0x0e8b`
+
 ## Donkey Kong Country
 
 - CRC32: `0x12f7a968`
@@ -389,6 +395,24 @@
 - CRC32: `0x87a0eea0`
 - Signature: `0x5f59fbdd`
 - Magic Number: `0x11e3`
+
+## Magical Quest 2 Starring Mickey & Minnie (USA)
+
+- CRC32: `0x69f1117d`
+- Signature: `0x1cd597ef`
+- Magic Number: `0x11e9`
+
+## Magical Quest 3 Starring Mickey & Donald (Europe)
+
+- CRC32: `0xaad912f9`
+- Signature: `0xbfe12754`
+- Magic Number: `0x11ea`
+
+## Magical Quest Starring Mickey & Minnie (USA)
+
+- CRC32: `0xb4294fa7`
+- Signature: `0x57a0a676`
+- Magic Number: `0x11ed`
 
 ## Mario & Luigi: Superstar Saga
 
