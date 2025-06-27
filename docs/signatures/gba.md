@@ -120,6 +120,12 @@
 - Signature: `0x33f4f1b0`
 - Magic Number: `0x0e5b`
 
+## DK: King of Swing
+
+- CRC32: `0xd610b239`
+- Signature: `0x75dccd19`
+- Magic Number: `0x0e8b`
+
 ## Donkey Kong Country
 
 - CRC32: `0x12f7a968`

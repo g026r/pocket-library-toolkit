@@ -141,6 +141,13 @@
   },
   {
     "system": 2,
+    "name": "DK: King of Swing",
+    "crc": "0xd610b239",
+    "signature": "0x75dccd19",
+    "magic": "0x0e8b"
+  },
+  {
+    "system": 2,
     "name": "Donkey Kong Country",
     "crc": "0x12f7a968",
     "signature": "0xc5d23096",
