@@ -55,6 +55,7 @@ var (
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
 	blue              = lipgloss.AdaptiveColor{Light: "#006699", Dark: "#00ccff"}
+	// italic            = lipgloss.NewStyle().Italic(true)
 )
 
 // menuItem is used for each menu that isn't a game list
