@@ -15,13 +15,28 @@ import (
 )
 
 const backupSuffix = "_bak"
+const ModeDir = 0o777 // Because using os.ModeDir causes errors with os.Root.Mkdir
 
-func optimize(r root.Root, entries []models.Entry) error {
+// Optimize moves images for games that do not exist in the library from the images folders & places them in a backup
+// directory, as well as moving any images from the backup directory into the images folders.
+// This can improve cart recognition times slightly on slower SD cards, as FAT filesystems are not efficient for large
+// directories like gb or gba, where a full library set is roughly 3,000 images each.
+// r is the root directory for images (i.e. /System/Library/Images)
+// ctr is a pointer to the counter to update for the progress bar
+// entries is the game entries in the library
+func Optimize(r *root.Root, ctr *float64, entries []models.Entry) error {
+	// TODO: Use the ctr properly
 	fileSys := r.FS()
+	// fileSys, err := fs.Sub(r.FS(), "System/Library/Images")
+	// if err != nil {
+	// 	return fmt.Errorf("error opening images dir: %w", err)
+	// }
 
 	// Remove any entries that are no longer in the library from the dir
 	for _, sys := range models.ValidThumbsFiles {
-		initialize(r, sys)
+		if err := initialize(r, sys); err != nil {
+			return fmt.Errorf("initialization error: %w", err)
+		}
 
 		sub, err := fs.ReadDir(fileSys, strings.ToLower(sys.String()))
 		if err != nil {
@@ -36,38 +51,43 @@ func optimize(r root.Root, entries []models.Entry) error {
 				return cmp.Compare(fmt.Sprintf("%08x.bin", entry.Crc32), strings.ToLower(s))
 			})
 			if !found {
-				copyToBackups(r, sys, file.Name())
+				if err := copyToBackups(r, sys, file.Name()); err != nil {
+					return fmt.Errorf("error copying to backups: %w", err)
+				}
 			}
 		}
 	}
 
 	// Copy any missing entries into the dir
 	for _, entry := range entries {
-		sys := strings.ToLower(entry.System.String())
+		sys := entry.System.ThumbFile()
+		sysStr := strings.ToLower(sys.String())
 		bin := fmt.Sprintf("%08x.bin", entry.Crc32)
 
-		imgDir, err := fs.Sub(fileSys, sys)
+		imgDir, err := fs.Sub(fileSys, sysStr)
 		if err != nil && !os.IsNotExist(err) {
 			return err
 		}
 
 		_, err = fs.Stat(imgDir, bin)
 		if os.IsNotExist(err) {
-			copyToImages(r, entry.System, bin)
+			if err := copyToImages(r, sys, bin); err != nil {
+				return fmt.Errorf("error copying to images: %w", err)
+			}
 		}
 	}
 
 	return nil
 }
 
-func copyToBackups(r root.Root, sys models.System, binFile string) error {
+func copyToBackups(r *root.Root, sys models.System, binFile string) error {
 	fileSys := r.FS()
 	sysDir := strings.ToLower(sys.String())
 	backupDir := fmt.Sprintf("%s%s", sysDir, backupSuffix)
 
 	if fi, err := fs.Stat(fileSys, strings.ToLower(sys.String())+backupDir); os.IsNotExist(err) {
-		// TODO: Don't think I need to do this? Since I did it during the initialization
-		r.Mkdir(backupDir, fs.ModeDir)
+		// TODO: Something with this error
+		r.Mkdir(backupDir, ModeDir)
 	} else if err != nil {
 		return err
 	} else if !fi.IsDir() {
@@ -78,14 +98,14 @@ func copyToBackups(r root.Root, sys models.System, binFile string) error {
 	return r.Rename(fmt.Sprintf("%s/%s", sysDir, binFile), fmt.Sprintf("%s/%s", backupDir, binFile))
 }
 
-func copyToImages(r root.Root, sys models.System, binFile string) error {
+func copyToImages(r *root.Root, sys models.System, binFile string) error {
 	fileSys := r.FS()
 	sysDir := strings.ToLower(sys.String())
 	backupDir := fmt.Sprintf("%s%s", sysDir, backupSuffix)
 
 	if fi, err := fs.Stat(fileSys, strings.ToLower(sys.String())); os.IsNotExist(err) {
-		// TODO: Don't think I need to do this? Since I did it during the initialization
-		r.Mkdir(sysDir, fs.ModeDir)
+		// TODO: Something with this error
+		r.Mkdir(sysDir, ModeDir)
 	} else if err != nil {
 		return err
 	} else if !fi.IsDir() {
@@ -97,7 +117,7 @@ func copyToImages(r root.Root, sys models.System, binFile string) error {
 	return r.Rename(fmt.Sprintf("%s/%s", backupDir, binFile), fmt.Sprintf("%s/%s", sysDir, binFile))
 }
 
-func initialize(r root.Root, sys models.System) error {
+func initialize(r *root.Root, sys models.System) error {
 	fi, err := fs.Stat(r.FS(), strings.ToLower(sys.String()))
 	if err != nil && os.IsNotExist(err) {
 		return nil
@@ -121,7 +141,7 @@ func initialize(r root.Root, sys models.System) error {
 		return fmt.Errorf("rename error: %w", err)
 	}
 
-	if err := r.Mkdir(strings.ToLower(sys.String()), fs.ModeDir); err != nil {
+	if err := r.Mkdir(strings.ToLower(sys.String()), ModeDir); err != nil {
 		return fmt.Errorf("mkdir error: %w", err)
 	}
 
