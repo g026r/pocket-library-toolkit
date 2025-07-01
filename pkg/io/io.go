@@ -440,39 +440,39 @@ func LoadConfig() (Config, error) {
 	return c, nil
 }
 
-func LoadInternal() (map[models.System][]models.Entry, error) {
-	dir, err := jsons.ReadDir("resources")
-	if err != nil {
-		return nil, err
-	}
-
-	library := make(map[models.System][]models.Entry)
-	for _, d := range dir {
-		f, err := jsons.ReadFile(fmt.Sprintf("resources/%s", d.Name()))
-		if err != nil {
-			return nil, err
-		}
-		var x []jsonEntry
-		if err := json.Unmarshal(f, &x); err != nil {
-			return nil, err
-		}
-		sys, err := models.Parse(strings.TrimSuffix(d.Name(), ".json"))
-		if err != nil {
-			return nil, err
-		}
-
-		// Oh, for a native map function
-		e := make([]models.Entry, len(x))
-		for i := range x {
-			e[i] = x[i].Entry()
-		}
-
-		slices.SortFunc(e, models.EntrySort)
-		library[sys] = e
-	}
-
-	return library, nil
-}
+// func LoadInternal() (map[models.System][]models.Entry, error) {
+// 	dir, err := jsons.ReadDir("resources")
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	library := make(map[models.System][]models.Entry)
+// 	for _, d := range dir {
+// 		f, err := jsons.ReadFile(fmt.Sprintf("resources/%s", d.Name()))
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		var x []jsonEntry
+// 		if err := json.Unmarshal(f, &x); err != nil {
+// 			return nil, err
+// 		}
+// 		sys, err := models.Parse(strings.TrimSuffix(d.Name(), ".json"))
+// 		if err != nil {
+// 			return nil, err
+// 		}
+//
+// 		// Oh, for a native map function
+// 		e := make([]models.Entry, len(x))
+// 		for i := range x {
+// 			e[i] = x[i].Entry()
+// 		}
+//
+// 		slices.SortFunc(e, models.EntrySort)
+// 		library[sys] = e
+// 	}
+//
+// 	return library, nil
+// }
 
 func SaveLibrary(l io.Writer, p io.Writer, e []models.Entry, tick chan any) error {
 	// Prep list.bin

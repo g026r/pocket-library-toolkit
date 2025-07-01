@@ -3,7 +3,6 @@ package ui
 import (
 	"fmt"
 	goio "io"
-	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -180,24 +179,14 @@ var (
 			if len(m.gameList.VisibleItems()) == 0 {
 				return m, nil
 			}
+			m = m.removeEntry(m.gameList.GlobalIndex())
+			m.gameList.RemoveItem(m.gameList.GlobalIndex())
 			if m.gameList.IsFiltered() {
 				// RemoveItem doesn't reset the filtered list when called
-				// So we're going to do it this way instead {
-				selected := m.gameList.SelectedItem().(models.Entry)
-				for i := range m.entries {
-					if models.EntrySort(m.entries[i], selected) == 0 {
-						m = m.removeEntry(i)
-						cmd := m.gameList.SetItems(slices.Delete(m.gameList.Items(), i, i+1))
-						return m, cmd
-					}
-				}
-			} else {
-				m = m.removeEntry(m.gameList.Index())
-				m.gameList.RemoveItem(m.gameList.Index())
+				// But setting the list of items to a new value does, so do that
+				cmd := m.gameList.SetItems(m.gameList.Items())
+				return m, cmd
 			}
-			// This would be the preferred way, but it doesn't work with the filter
-			// m = m.removeEntry(m.gameList.GlobalIndex())
-			// m.gameList.RemoveItem(m.gameList.GlobalIndex())
 
 			return m, nil
 		},
