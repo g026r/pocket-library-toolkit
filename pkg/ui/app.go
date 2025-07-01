@@ -532,7 +532,7 @@ func (m *Model) genFull() tea.Msg {
 				// Not a valid file name. Skip
 				continue
 			}
-			i, err := io.GenerateThumbnail(m.rootDir.FS(), sys, binary.BigEndian.Uint32(b), m.ThumbnailHandling)
+			i, err := io.GenerateThumbnail(m.rootDir, sys, binary.BigEndian.Uint32(b), m.ThumbnailHandling)
 			if errors.Is(err, io.ErrSixteenBitImage) {
 				continue // Can't handle 16-bit images at the moment due to a lack of documentation & examples
 			} else if err != nil { // This one is based off of existing files, so don't check for os.ErrNotExist
@@ -558,7 +558,7 @@ func (m *Model) genMissing() tea.Msg {
 		if !slices.ContainsFunc(m.thumbnails[sys].Images, func(image models.Image) bool {
 			return image.Crc32 == e.Crc32
 		}) {
-			img, err := io.GenerateThumbnail(m.rootDir.FS(), sys, e.Crc32, m.ThumbnailHandling)
+			img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32, m.ThumbnailHandling)
 			if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
 				continue
 			} else if err != nil { // We only care if it was something other than a not existing error
@@ -583,7 +583,7 @@ func (m *Model) regenLib() tea.Msg {
 	for _, e := range m.entries {
 		sys := e.System.ThumbFile()
 
-		img, err := io.GenerateThumbnail(m.rootDir.FS(), sys, e.Crc32, m.ThumbnailHandling)
+		img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32, m.ThumbnailHandling)
 		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) {
 			continue
 		} else if err != nil { // We only care if it was something other than a not existing error
@@ -610,7 +610,7 @@ func (m *Model) genSingle(e models.Entry) tea.Cmd {
 	return func() tea.Msg {
 		m.percent = 0.0
 		sys := e.System.ThumbFile()
-		img, err := io.GenerateThumbnail(m.rootDir.FS(), sys, e.Crc32, m.ThumbnailHandling)
+		img, err := io.GenerateThumbnail(m.rootDir, sys, e.Crc32, m.ThumbnailHandling)
 		m.percent = .50                                                              // These percentages are just made up.
 		if errors.Is(err, fs.ErrNotExist) || errors.Is(err, io.ErrSixteenBitImage) { // Doesn't exist. That's fine.
 			m.percent = 1.0

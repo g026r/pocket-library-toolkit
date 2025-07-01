@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 
@@ -14,8 +15,8 @@ import (
 	"github.com/g026r/pocket-library-toolkit/pkg/root"
 )
 
-const backupSuffix = "_bak"
-const ModeDir = 0o777 // Because using os.ModeDir causes errors with os.Root.Mkdir
+const backupDir = "bak"
+const modeDir = 0o777 // Because using os.ModeDir causes errors with os.Root.Mkdir
 
 // Optimize moves images for games that do not exist in the library from the images folders & places them in a backup
 // directory, as well as moving any images from the backup directory into the images folders.
@@ -47,6 +48,9 @@ func Optimize(r *root.Root, ctr *float64, entries []models.Entry) error {
 		})
 
 		for _, file := range sub {
+			if file.IsDir() {
+				continue // Skip directories
+			}
 			_, found := slices.BinarySearchFunc(entries, file.Name(), func(entry models.Entry, s string) int {
 				return cmp.Compare(fmt.Sprintf("%08x.bin", entry.Crc32), strings.ToLower(s))
 			})
@@ -83,11 +87,11 @@ func Optimize(r *root.Root, ctr *float64, entries []models.Entry) error {
 func copyToBackups(r *root.Root, sys models.System, binFile string) error {
 	fileSys := r.FS()
 	sysDir := strings.ToLower(sys.String())
-	backupDir := fmt.Sprintf("%s%s", sysDir, backupSuffix)
+	backupDir := filepath.Join(sysDir, backupDir)
 
 	if fi, err := fs.Stat(fileSys, strings.ToLower(sys.String())+backupDir); os.IsNotExist(err) {
 		// TODO: Something with this error
-		r.Mkdir(backupDir, ModeDir)
+		r.Mkdir(backupDir, modeDir)
 	} else if err != nil {
 		return err
 	} else if !fi.IsDir() {
@@ -101,11 +105,11 @@ func copyToBackups(r *root.Root, sys models.System, binFile string) error {
 func copyToImages(r *root.Root, sys models.System, binFile string) error {
 	fileSys := r.FS()
 	sysDir := strings.ToLower(sys.String())
-	backupDir := fmt.Sprintf("%s%s", sysDir, backupSuffix)
+	backupDir := filepath.Join(sysDir, backupDir)
 
 	if fi, err := fs.Stat(fileSys, strings.ToLower(sys.String())); os.IsNotExist(err) {
 		// TODO: Something with this error
-		r.Mkdir(sysDir, ModeDir)
+		r.Mkdir(sysDir, modeDir)
 	} else if err != nil {
 		return err
 	} else if !fi.IsDir() {
@@ -130,18 +134,18 @@ func initialize(r *root.Root, sys models.System) error {
 		return errors.New("not a dir")
 	}
 
-	if fi2, err := fs.Stat(r.FS(), strings.ToLower(sys.String())+backupSuffix); err == nil {
+	if fi2, err := fs.Stat(r.FS(), filepath.Join(strings.ToLower(sys.String()), backupDir)); err == nil {
 		log.Printf("%s already exists", fi2.Name())
 		return nil
 	} else if !os.IsNotExist(err) {
 		return fmt.Errorf("error checking backup dir: %w", err)
 	}
 
-	if err := r.Rename(strings.ToLower(sys.String()), strings.ToLower(sys.String())+backupSuffix); err != nil {
-		return fmt.Errorf("rename error: %w", err)
-	}
+	// if err := r.Rename(strings.ToLower(sys.String()), filepath.Join(strings.ToLower(sys.String()), backupDir)); err != nil {
+	// 	return fmt.Errorf("rename error: %w", err)
+	// }
 
-	if err := r.Mkdir(strings.ToLower(sys.String()), ModeDir); err != nil {
+	if err := r.Mkdir(strings.ToLower(filepath.Join(strings.ToLower(sys.String()), backupDir)), modeDir); err != nil {
 		return fmt.Errorf("mkdir error: %w", err)
 	}
 
