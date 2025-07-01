@@ -866,21 +866,6 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	e.Times.Sig = e.Sig
 
 	if m.Peek() == EditScreen {
-		// if m.gameList.IsFiltered() {
-		// 	// Need to do this as Index() returns position based on the filtered list of items, despite what the godoc says
-		// 	// See: https://github.com/charmbracelet/bubbles/issues/550
-		// 	selected := m.gameList.SelectedItem().(models.Entry)
-		// 	for i := range m.entries {
-		// 		if models.EntrySort(m.entries[i], selected) == 0 {
-		// 			m.entries[i] = e
-		// 			break
-		// 		}
-		// 	}
-		// } else {
-		// 	// Don't use SetItem on gameList as we're going to resort the items
-		// 	// So we'll have to reset the value of Items anyway
-		// 	m.entries[m.gameList.Index()] = e
-		// }
 		m.entries[m.gameList.GlobalIndex()] = e
 	} else {
 		m.entries = append(m.entries, e)
@@ -890,6 +875,7 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	if m.Peek() == EditScreen {
 		// Only reset the items rather than re-initialize the whole list so that we can keep our position in the list + the active filter
+		// Have to do this as a loop as though models.Entry implements the list.Item interface, []models.Entry can't be used in place of []list.Item
 		tmp := make([]list.Item, len(m.entries))
 		for i := range m.entries {
 			tmp[i] = m.entries[i]
