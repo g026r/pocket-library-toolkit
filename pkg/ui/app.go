@@ -60,18 +60,18 @@ func tickCmd() tea.Cmd {
 }
 
 type Model struct {
-	rootDir      *root.Root
-	entries      []models.Entry
-	thumbnails   map[models.System]models.Thumbnails
-	internal     map[models.System][]models.Entry // internal is a map of all known possible entries, grouped by system. For eventual use with add & adv. editing, maybe.
-	*io.Config                                    // io.Config is a pointer as we need to be able to read this value in the configDelegate, which doesn't have access to Model
-	stack                                         // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
-	spinner      spinner.Model                    // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
-	progress     progress.Model                   // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the Model
-	percent      float64                          // the percent of the progress bar; it's a pointer as I'm using it to signal that initialization is done
-	err          error                            // err is used to print out an error if the program has to exit early
-	wait         string                           // wait is the message to display while waiting
-	anyKey       bool                             // anyKey tells View whether we're waiting for a key input or not
+	rootDir    *root.Root
+	entries    []models.Entry
+	thumbnails map[models.System]models.Thumbnails
+	// internal     map[models.System][]models.Entry // internal is a map of all known possible entries, grouped by system. For eventual use with add & adv. editing, maybe.
+	*io.Config                  // io.Config is a pointer as we need to be able to read this value in the configDelegate, which doesn't have access to Model
+	stack                       // stack contains the stack of screens. Useful for when we go up a screen, as a few have multiple possible parents.
+	spinner      spinner.Model  // spinner is used for calls where we don't know the percentage. Mostly this means the initial loading screen
+	progress     progress.Model // progress is used for calls where we do know the percentage; has to be a pointer as the screen size event calls before we've finished initializing the Model
+	percent      float64        // the percent of the progress bar; it's a pointer as I'm using it to signal that initialization is done
+	err          error          // err is used to print out an error if the program has to exit early
+	wait         string         // wait is the message to display while waiting
+	anyKey       bool           // anyKey tells View whether we're waiting for a key input or not
 	mainMenu     list.Model
 	subMenu      list.Model        // subMenu covers the library & thumbnail options: menus where esc goes up a screen but filtering is disabled
 	configMenu   list.Model        // configMenu is a special case as it needs a different delegate renderer from subMenu
@@ -359,17 +359,31 @@ func (m *Model) save() tea.Msg {
 		}
 		if success {
 			t := time.Now().Format("20060102_150405")
-			if err := m.backupAndRename(m.rootDir, "System/Played Games/list.bin", tmpList, t); err != nil {
+			games, err := m.rootDir.OpenRoot("System/Played Games")
+			if err != nil {
+				log.Fatal(errorStyle.Render(err.Error()))
+			}
+			defer games.Close()
+			if err := m.backupAndRename(games, "list.bin", tmpList, t); err != nil {
+				// if err := m.backupAndRename(m.rootDir, "System/Played Games/list.bin", tmpList, t); err != nil {
 				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
-			if err := m.backupAndRename(m.rootDir, "System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
+			if err := m.backupAndRename(games, "playtimes.bin", tmpPlaytimes, t); err != nil {
+				// if err := m.backupAndRename(m.rootDir, "System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
 				// TODO: Technically this could leave things in an inconsistent state, as it might fail when renaming the playtimes , resulting in an inconsistency between it & list.bin
 				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
+
+			images, err := m.rootDir.OpenRoot("System/Library/Images")
+			if err != nil {
+				log.Fatal(errorStyle.Render(err.Error()))
+			}
+			defer images.Close()
 			for k, v := range tmpThumbs {
-				if err := m.backupAndRename(m.rootDir, fmt.Sprintf("System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
+				if err := m.backupAndRename(images, fmt.Sprintf("%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
+					// if err := m.backupAndRename(m.rootDir, fmt.Sprintf("System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
 					rmTempFiles()
 					log.Fatal(errorStyle.Render(err.Error()))
 				}
@@ -454,6 +468,23 @@ func (m *Model) prune() tea.Msg {
 		m.percent = ctr / total
 		m.dedupe(k)
 	}
+	m.percent = 1.0
+	return updateMsg{}
+}
+
+func (m *Model) optimize() tea.Msg {
+	m.percent = 0.0
+
+	images, err := m.rootDir.OpenRoot("System/Library/Images")
+	if err != nil {
+		return errMsg{err: err, fatal: true}
+	}
+	defer images.Close()
+	if err := io.Optimize(images, &m.percent, m.entries); err != nil {
+		// if err := io.Optimize(m.rootDir, &m.percent, m.entries); err != nil {
+		return errMsg{err: err, fatal: true}
+	}
+
 	m.percent = 1.0
 	return updateMsg{}
 }
@@ -835,21 +866,22 @@ func (m *Model) saveEntry() (tea.Model, tea.Cmd) {
 	e.Times.Sig = e.Sig
 
 	if m.Peek() == EditScreen {
-		if m.gameList.IsFiltered() {
-			// Need to do this as Index() returns position based on the filtered list of items, despite what the godoc says
-			// See: https://github.com/charmbracelet/bubbles/issues/550
-			selected := m.gameList.SelectedItem().(models.Entry)
-			for i := range m.entries {
-				if models.EntrySort(m.entries[i], selected) == 0 {
-					m.entries[i] = e
-					break
-				}
-			}
-		} else {
-			// Don't use SetItem on gameList as we're going to resort the items
-			// So we'll have to reset the value of Items anyway
-			m.entries[m.gameList.Index()] = e
-		}
+		// if m.gameList.IsFiltered() {
+		// 	// Need to do this as Index() returns position based on the filtered list of items, despite what the godoc says
+		// 	// See: https://github.com/charmbracelet/bubbles/issues/550
+		// 	selected := m.gameList.SelectedItem().(models.Entry)
+		// 	for i := range m.entries {
+		// 		if models.EntrySort(m.entries[i], selected) == 0 {
+		// 			m.entries[i] = e
+		// 			break
+		// 		}
+		// 	}
+		// } else {
+		// 	// Don't use SetItem on gameList as we're going to resort the items
+		// 	// So we'll have to reset the value of Items anyway
+		// 	m.entries[m.gameList.Index()] = e
+		// }
+		m.entries[m.gameList.GlobalIndex()] = e
 	} else {
 		m.entries = append(m.entries, e)
 	}
@@ -958,6 +990,11 @@ func (m *Model) processMenuItem(key menuKey) (*Model, tea.Cmd) {
 		m.wait = "Generating thumbnails for all games in the Images folder. This may take a while."
 		m.Push(Waiting)
 		return m, tea.Batch(m.genFull, tickCmd())
+	case libOptimize:
+		m.percent = 0.0
+		m.wait = "Optimizing library image folders"
+		m.Push(Waiting)
+		return m, tea.Batch(m.optimize, tickCmd())
 	case cfgShowAdd, cfgAdvEdit, cfgRmThumbs, cfgGenNew, cfgUnmodified, cfgBackup, cfgPlaytimeCheck, cfgCrop, cfgCentre:
 		return m.configChange(key)
 	}

@@ -32,8 +32,17 @@ func OpenRoot(dir string) (*Root, error) {
 	return &Root{r}, nil
 }
 
+// OpenRoot opens a new Root instance under the existing Root.
+// It's not a strict wrapper to os.Root.OpenRoot as that function loses the full filepath, which we need for os.Rename
+// and os.CreateTemp
 func (r *Root) OpenRoot(dir string) (*Root, error) {
-	nr, err := r.Root.OpenRoot(dir)
+	// Don't use this as we lose the full path, which makes os.Rename and the rest break
+	if nr, err := r.Root.OpenRoot(dir); err != nil {
+		return nil, err
+	} else {
+		_ = nr.Close() // We only used this to make certain we weren't escaping any paths, etc
+	}
+	nr, err := os.OpenRoot(filepath.Join(r.Name(), dir))
 	if err != nil {
 		return nil, err
 	}

@@ -30,6 +30,7 @@ const (
 	libEdit
 	libRm
 	libFix
+	libOptimize
 	back
 	tmMissing
 	tmSingle
@@ -86,6 +87,7 @@ var (
 		menuItem{"Edit entry", libEdit},
 		menuItem{"Remove entry", libRm},
 		menuItem{"Fix played times", libFix},
+		menuItem{"Optimize library images", libOptimize},
 		menuItem{"Back", back}}
 	thumbOptions = []list.Item{
 		menuItem{"Generate missing thumbnails", tmMissing},
@@ -139,7 +141,7 @@ var (
 			return m.processMenuItem(m.configMenu.SelectedItem().(menuItem).key)
 		},
 		EditList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
-			if len(m.gameList.Items()) == 0 {
+			if len(m.gameList.VisibleItems()) == 0 {
 				return m, nil
 			}
 			entry := m.gameList.SelectedItem().(models.Entry)
@@ -175,19 +177,16 @@ var (
 			return m, tea.Batch(m.genSingle(entry), tickCmd())
 		},
 		RemoveList: func(m *Model, msg tea.Msg) (*Model, tea.Cmd) {
-			if len(m.gameList.Items()) == 0 {
+			if len(m.gameList.VisibleItems()) == 0 {
 				return m, nil
 			}
 			if m.gameList.IsFiltered() {
-				// Need to do this as Index() returns position based on the filtered list of items, despite what the godoc says
-				// See: https://github.com/charmbracelet/bubbles/issues/550
+				// RemoveItem doesn't reset the filtered list when called
+				// So we're going to do it this way instead {
 				selected := m.gameList.SelectedItem().(models.Entry)
 				for i := range m.entries {
 					if models.EntrySort(m.entries[i], selected) == 0 {
 						m = m.removeEntry(i)
-						// list.Model.RemoveItem is badly broken & can result in misleading behaviour. Do not use it.
-						// See: https://github.com/charmbracelet/bubbles/issues/632
-						// m.gameList.RemoveItem(m.gameList.Index())
 						cmd := m.gameList.SetItems(slices.Delete(m.gameList.Items(), i, i+1))
 						return m, cmd
 					}
@@ -196,6 +195,9 @@ var (
 				m = m.removeEntry(m.gameList.Index())
 				m.gameList.RemoveItem(m.gameList.Index())
 			}
+			// This would be the preferred way, but it doesn't work with the filter
+			// m = m.removeEntry(m.gameList.GlobalIndex())
+			// m.gameList.RemoveItem(m.gameList.GlobalIndex())
 
 			return m, nil
 		},
