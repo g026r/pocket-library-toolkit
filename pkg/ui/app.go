@@ -365,12 +365,10 @@ func (m *Model) save() tea.Msg {
 			}
 			defer games.Close()
 			if err := m.backupAndRename(games, "list.bin", tmpList, t); err != nil {
-				// if err := m.backupAndRename(m.rootDir, "System/Played Games/list.bin", tmpList, t); err != nil {
 				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
 			}
 			if err := m.backupAndRename(games, "playtimes.bin", tmpPlaytimes, t); err != nil {
-				// if err := m.backupAndRename(m.rootDir, "System/Played Games/playtimes.bin", tmpPlaytimes, t); err != nil {
 				// TODO: Technically this could leave things in an inconsistent state, as it might fail when renaming the playtimes , resulting in an inconsistency between it & list.bin
 				rmTempFiles()
 				log.Fatal(errorStyle.Render(err.Error()))
@@ -383,7 +381,6 @@ func (m *Model) save() tea.Msg {
 			defer images.Close()
 			for k, v := range tmpThumbs {
 				if err := m.backupAndRename(images, fmt.Sprintf("%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
-					// if err := m.backupAndRename(m.rootDir, fmt.Sprintf("System/Library/Images/%s_thumbs.bin", strings.ToLower(k.String())), v, t); err != nil {
 					rmTempFiles()
 					log.Fatal(errorStyle.Render(err.Error()))
 				}
