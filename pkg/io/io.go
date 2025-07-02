@@ -457,7 +457,7 @@ func LoadInternal() (map[models.System][]models.Entry, error) {
 
 	library := make(map[models.System][]models.Entry)
 	for _, d := range dir {
-		f, err := jsons.ReadFile(fmt.Sprintf("resources/%s", d.Name()))
+		f, err := jsons.ReadFile(filepath.Join("resources", d.Name()))
 		if err != nil {
 			return nil, err
 		}

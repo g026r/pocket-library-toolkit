@@ -99,7 +99,7 @@ func copyToBackups(r *root.Root, sys models.System, binFile string) error {
 	}
 
 	// TODO: Check to confirm that the file we want to copy actually exists here
-	return r.Rename(fmt.Sprintf("%s/%s", sysDir, binFile), fmt.Sprintf("%s/%s", backupDir, binFile))
+	return r.Rename(filepath.Join(sysDir, binFile), filepath.Join(backupDir, binFile))
 }
 
 func copyToImages(r *root.Root, sys models.System, binFile string) error {
@@ -118,7 +118,7 @@ func copyToImages(r *root.Root, sys models.System, binFile string) error {
 
 	// TODO: Check to make certain the file we're copying actually exists in the full library set
 	// TODO: Or will that just error out here?
-	return r.Rename(fmt.Sprintf("%s/%s", backupDir, binFile), fmt.Sprintf("%s/%s", sysDir, binFile))
+	return r.Rename(filepath.Join(backupDir, binFile), filepath.Join(sysDir, binFile))
 }
 
 func initialize(r *root.Root, sys models.System) error {
