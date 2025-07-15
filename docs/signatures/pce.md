@@ -72,6 +72,12 @@
 - Signature: `0xbba036e5`
 - Magic Number: `0x1bb4`
 
+## Bloody Wolf
+
+- CRC32: `0x37baf6bc`
+- Signature: `0xbba036e5`
+- Magic Number: `0x1bb5`
+
 ## Bomberman
 
 - CRC32: `0x9abb4d1f`

@@ -638,6 +638,13 @@
   },
   {
     "system": 0,
+    "name": "Bubble Bobble Junior",
+    "crc": "0x39e261b9",
+    "signature": "0x23428ca9",
+    "magic": "0x0256"
+  },
+  {
+    "system": 0,
     "name": "Burai Senshi Deluxe",
     "crc": "0x5a1a20f3",
     "signature": "0xe2eb4e33",
