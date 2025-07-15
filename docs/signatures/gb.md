@@ -546,6 +546,12 @@
 - Signature: `0x54e862c1`
 - Magic Number: `0x0255`
 
+## Bubble Bobble Junior
+
+- CRC32: `0x39e261b9`
+- Signature: `0x23428ca9`
+- Magic Number: `0x0256`
+
 ## Burai Senshi Deluxe
 
 - CRC32: `0x5a1a20f3`

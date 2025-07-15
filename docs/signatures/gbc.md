@@ -132,6 +132,12 @@
 - Signature: `0x3579ef5e`
 - Magic Number: `0x0764`
 
+## Donkey Kong GB: Dinky Kong & Dixie Kong
+
+- CRC32: `0x28d7e8d3`
+- Signature: `0xb1096daf`
+- Magic Number: `0x0765`
+
 ## Doraemon no Quiz Boy
 
 - CRC32: `0x3bbf9ea8`

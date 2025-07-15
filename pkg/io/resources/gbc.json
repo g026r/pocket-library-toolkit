@@ -155,6 +155,13 @@
   },
   {
     "system": 1,
+    "name": "Donkey Kong GB: Dinky Kong \u0026 Dixie Kong",
+    "crc": "0x28d7e8d3",
+    "signature": "0xb1096daf",
+    "magic": "0x0765"
+  },
+  {
+    "system": 1,
     "name": "Doraemon no Quiz Boy",
     "crc": "0x3bbf9ea8",
     "signature": "0x9b1b3096",
