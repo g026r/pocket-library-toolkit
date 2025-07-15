@@ -85,6 +85,13 @@
   },
   {
     "system": 7,
+    "name": "Bloody Wolf",
+    "crc": "0x37baf6bc",
+    "signature": "0xbba036e5",
+    "magic": "0x1bb5"
+  },
+  {
+    "system": 7,
     "name": "Bomberman",
     "crc": "0x9abb4d1f",
     "signature": "0xfa0c25cf",
