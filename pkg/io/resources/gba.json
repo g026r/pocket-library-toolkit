@@ -533,6 +533,13 @@
   },
   {
     "system": 2,
+    "name": "Mega Man Zero 3",
+    "crc": "0x2784f3f2",
+    "signature": "0xb43025e7",
+    "magic": "0x125e"
+  },
+  {
+    "system": 2,
     "name": "Metal Slug Advance",
     "crc": "0x3806f4ae",
     "signature": "0xd7a286f7",

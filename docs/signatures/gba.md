@@ -456,6 +456,12 @@
 - Signature: `0x3758e58c`
 - Magic Number: `0x125b`
 
+## Mega Man Zero 3
+
+- CRC32: `0x2784f3f2`
+- Signature: `0xb43025e7`
+- Magic Number: `0x125e`
+
 ## Metal Slug Advance
 
 - CRC32: `0x3806f4ae`
