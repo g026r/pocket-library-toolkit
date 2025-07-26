@@ -176,6 +176,13 @@
   },
   {
     "system": 2,
+    "name": "Drill Dozer",
+    "crc": "0xe60ec183",
+    "signature": "0x5126afad",
+    "magic": "0x0ede"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 01 - Super Mario Bros. (Rev 1)",
     "crc": "0xcd2604dd",
     "signature": "0xad3bf77e",
@@ -530,6 +537,13 @@
     "crc": "0xce1e37bb",
     "signature": "0x3758e58c",
     "magic": "0x125b"
+  },
+  {
+    "system": 2,
+    "name": "Mega Man Zero 3",
+    "crc": "0x2784f3f2",
+    "signature": "0xb43025e7",
+    "magic": "0x125e"
   },
   {
     "system": 2,
