@@ -150,6 +150,12 @@
 - Signature: `0xf6b366e0`
 - Magic Number: `0x0ea7`
 
+## Drill Dozer
+
+- CRC32: `0xe60ec183`
+- Signature: `0x5126afad`
+- Magic Number: `0x0ede`
+
 ## Famicom Mini 01 - Super Mario Bros. (Rev 1)
 
 - CRC32: `0xcd2604dd`
