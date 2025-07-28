@@ -456,6 +456,13 @@
   },
   {
     "system": 2,
+    "name": "Lilo \u0026 Stitch 2: Haemsterviel Havoc",
+    "crc": "0x021a5755",
+    "signature": "0xee14019c",
+    "magic": "0x11af"
+  },
+  {
+    "system": 2,
     "name": "Lufia: The Ruins of Lore",
     "crc": "0xde5ffcbc",
     "signature": "0x17c753ab",

@@ -390,6 +390,12 @@
 - Signature: `0x1507fc7b`
 - Magic Number: `0x1191`
 
+## Lilo & Stitch 2: Haemsterviel Havoc
+
+- CRC32: `0x021a5755`
+- Signature: `0xee14019c`
+- Magic Number: `0x11af`
+
 ## Lufia: The Ruins of Lore
 
 - CRC32: `0xde5ffcbc`
