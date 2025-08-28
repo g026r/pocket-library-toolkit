@@ -267,6 +267,13 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 15 - Dr. Mario",
+    "crc": "0xc836f2e2",
+    "signature": "0xe22e86a8",
+    "magic": "0x0f4c"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 16 - Dig Dug",
     "crc": "0xee4c3504",
     "signature": "0x4a57126b",
@@ -551,6 +558,13 @@
     "crc": "0x2784f3f2",
     "signature": "0xb43025e7",
     "magic": "0x125e"
+  },
+  {
+    "system": 2,
+    "name": "Mega Man Zero 4",
+    "crc": "0x7ee24793",
+    "signature": "0x1517d996",
+    "magic": "0x1260"
   },
   {
     "system": 2,
