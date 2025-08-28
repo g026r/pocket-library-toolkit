@@ -228,6 +228,12 @@
 - Signature: `0x63b53a12`
 - Magic Number: `0x0f4b`
 
+## Famicom Mini 15 - Dr. Mario
+
+- CRC32: `0xc836f2e2`
+- Signature: `0xe22e86a8`
+- Magic Number: `0x0f4c`
+
 ## Famicom Mini 16 - Dig Dug
 
 - CRC32: `0xee4c3504`
@@ -390,6 +396,12 @@
 - Signature: `0x1507fc7b`
 - Magic Number: `0x1191`
 
+## Lilo & Stitch 2: Haemsterviel Havoc
+
+- CRC32: `0x021a5755`
+- Signature: `0xee14019c`
+- Magic Number: `0x11af`
+
 ## Lufia: The Ruins of Lore
 
 - CRC32: `0xde5ffcbc`
@@ -467,6 +479,12 @@
 - CRC32: `0x2784f3f2`
 - Signature: `0xb43025e7`
 - Magic Number: `0x125e`
+
+## Mega Man Zero 4
+
+- CRC32: `0x7ee24793`
+- Signature: `0x1517d996`
+- Magic Number: `0x1260`
 
 ## Metal Slug Advance
 
