@@ -29,6 +29,27 @@
   },
   {
     "system": 4,
+    "name": "Kung Fu Kid",
+    "crc": "0x4762e022",
+    "signature": "0x97563012",
+    "magic": "0x1a23"
+  },
+  {
+    "system": 4,
+    "name": "Ninja, The",
+    "crc": "0x66a15bd9",
+    "signature": "0x5063f24c",
+    "magic": "0x1a53"
+  },
+  {
+    "system": 4,
+    "name": "Shinobi",
+    "crc": "0xe1fff1bb",
+    "signature": "0x515c54f5",
+    "magic": "0x1aa9"
+  },
+  {
+    "system": 4,
     "name": "Sonic Chaos",
     "crc": "0xaedf3bdf",
     "signature": "0x72433d43",

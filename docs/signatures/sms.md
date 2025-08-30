@@ -24,6 +24,24 @@
 - Signature: `0x4ae1fcb5`
 - Magic Number: `0x1a01`
 
+## Kung Fu Kid
+
+- CRC32: `0x4762e022`
+- Signature: `0x97563012`
+- Magic Number: `0x1a23`
+
+## Ninja, The
+
+- CRC32: `0x66a15bd9`
+- Signature: `0x5063f24c`
+- Magic Number: `0x1a53`
+
+## Shinobi
+
+- CRC32: `0xe1fff1bb`
+- Signature: `0x515c54f5`
+- Magic Number: `0x1aa9`
+
 ## Sonic Chaos
 
 - CRC32: `0xaedf3bdf`
