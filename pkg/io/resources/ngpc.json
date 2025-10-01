@@ -36,6 +36,13 @@
   },
   {
     "system": 6,
+    "name": "King of Fighters R-2: Pocket Fighting Series",
+    "crc": "0x47e490a2",
+    "signature": "0x3c5f1121",
+    "magic": "0x1b48"
+  },
+  {
+    "system": 6,
     "name": "Metal Slug: 1st Mission",
     "crc": "0x4ff91807",
     "signature": "0x1725730d",
