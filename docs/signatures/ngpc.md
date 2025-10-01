@@ -30,6 +30,12 @@
 - Signature: `0x3c5f1121`
 - Magic Number: `0x1b47`
 
+## King of Fighters R-2: Pocket Fighting Series
+
+- CRC32: `0x47e490a2`
+- Signature: `0x3c5f1121`
+- Magic Number: `0x1b48`
+
 ## Metal Slug: 1st Mission
 
 - CRC32: `0x4ff91807`
