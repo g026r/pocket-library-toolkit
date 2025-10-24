@@ -24,7 +24,7 @@
 - Signature: `0x6fc3aa2c`
 - Magic Number: `0x0d4b`
 
-## Boktai 2: Solar Boy Django
+## Boktai 2: Solar Boy Django (USA)
 
 - CRC32: `0xe1ffb2d1`
 - Signature: `0xbd6fea9d`
