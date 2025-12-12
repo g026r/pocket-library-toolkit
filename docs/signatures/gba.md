@@ -504,6 +504,12 @@
 - Signature: `0x028eeb93`
 - Magic Number: `0x1274`
 
+## Namco Museum (USA)
+
+- CRC32: `0xc58a04c1`
+- Signature: `0x967350a1`
+- Magic Number: `0x12f3`
+
 ## Zoku Bokura no Taiyou: Taiyou Shounen Django
 
 - CRC32: `0x71e2cd01`
@@ -575,6 +581,12 @@
 - CRC32: `0x63f70fd8`
 - Signature: `0x20564563`
 - Magic Number: `0x152b`
+
+## Star Wars: Episode III: Revenge of the Sith (Europe)
+
+- CRC32: `0xfd49236b`
+- Signature: `0x5a5e997b`
+- Magic Number: `0x1582`
 
 ## Super Mario Advance
 

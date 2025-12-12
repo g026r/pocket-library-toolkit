@@ -589,6 +589,13 @@
   },
   {
     "system": 2,
+    "name": "Namco Museum (USA)",
+    "crc": "0xc58a04c1",
+    "signature": "0x967350a1",
+    "magic": "0x12f3"
+  },
+  {
+    "system": 2,
     "name": "Zoku Bokura no Taiyou: Taiyou Shounen Django",
     "crc": "0x71e2cd01",
     "signature": "0xfb12d528",
@@ -670,6 +677,13 @@
     "crc": "0x63f70fd8",
     "signature": "0x20564563",
     "magic": "0x152b"
+  },
+  {
+    "system": 2,
+    "name": "Star Wars: Episode III: Revenge of the Sith (Europe)",
+    "crc": "0xfd49236b",
+    "signature": "0x5a5e997b",
+    "magic": "0x1582"
   },
   {
     "system": 2,
