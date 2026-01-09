@@ -43,6 +43,13 @@
   },
   {
     "system": 4,
+    "name": "Penguin Land",
+    "crc": "0xf97e9875",
+    "signature": "0x00035412",
+    "magic": "0x1a63"
+  },
+  {
+    "system": 4,
     "name": "Shinobi",
     "crc": "0xe1fff1bb",
     "signature": "0x515c54f5",

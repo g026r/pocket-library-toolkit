@@ -36,6 +36,12 @@
 - Signature: `0x5063f24c`
 - Magic Number: `0x1a53`
 
+## Penguin Land
+
+- CRC32: `0xf97e9875`
+- Signature: `0x00035412`
+- Magic Number: `0x1a63`
+
 ## Shinobi
 
 - CRC32: `0xe1fff1bb`
