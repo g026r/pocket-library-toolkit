@@ -29,6 +29,13 @@
   },
   {
     "system": 2,
+    "name": "Boktai 2: Solar Boy Django (USA)",
+    "crc": "0xe1ffb2d1",
+    "signature": "0xbd6fea9d",
+    "magic": "0x0d4e"
+  },
+  {
+    "system": 2,
     "name": "Bomber Man Jetters: Densetsu no Bomber Man",
     "crc": "0x70c423b8",
     "signature": "0x857018fd",
