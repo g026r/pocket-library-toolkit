@@ -72,6 +72,18 @@
 - Signature: `0x7d82cf65`
 - Magic Number: `0x17df`
 
+## Shinobi II: The Silent Fury
+
+- CRC32: `0x6201c694`
+- Signature: `0x7d82cf65`
+- Magic Number: `0x17e0`
+
+## The GG Shinobi
+
+- CRC32: `0x83926bd1`
+- Signature: `0x1ecc7ca8`
+- Magic Number: `0x17e1`
+
 ## Gunstar Heroes
 
 - CRC32: `0xc3c52767`
@@ -125,6 +137,12 @@
 - CRC32: `0x07a7815a`
 - Signature: `0x42da3fd6`
 - Magic Number: `0x1825`
+
+## Mappy
+
+- CRC32: `0x01d2dd2a`
+- Signature: `0x6a1f771e`
+- Magic Number: `0x1835`
 
 ## Psychic World (USA, Europe, Brazil)
 

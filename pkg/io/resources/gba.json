@@ -29,6 +29,34 @@
   },
   {
     "system": 2,
+    "name": "Boktai 2: Solar Boy Django (USA)",
+    "crc": "0xe1ffb2d1",
+    "signature": "0xbd6fea9d",
+    "magic": "0x0d4e"
+  },
+  {
+    "system": 2,
+    "name": "Bomber Man Jetters: Densetsu no Bomber Man",
+    "crc": "0x70c423b8",
+    "signature": "0x857018fd",
+    "magic": "0x0d53"
+  },
+  {
+    "system": 2,
+    "name": "Bomberman Max 2: Blue Advance",
+    "crc": "0x94c620f3",
+    "signature": "0xd3627abb",
+    "magic": "0x0d56"
+  },
+  {
+    "system": 2,
+    "name": "Bomberman Tournament",
+    "crc": "0x240282e6",
+    "signature": "0xaa3373c7",
+    "magic": "0x0d5c"
+  },
+  {
+    "system": 2,
     "name": "Castlevania: Aria of Sorrow",
     "crc": "0x35536183",
     "signature": "0x1495b6ce",
@@ -120,6 +148,13 @@
   },
   {
     "system": 2,
+    "name": "DK: King of Swing",
+    "crc": "0xd610b239",
+    "signature": "0x75dccd19",
+    "magic": "0x0e8b"
+  },
+  {
+    "system": 2,
     "name": "Donkey Kong Country",
     "crc": "0x12f7a968",
     "signature": "0xc5d23096",
@@ -145,6 +180,20 @@
     "crc": "0x58c641b3",
     "signature": "0xf6b366e0",
     "magic": "0x0ea7"
+  },
+  {
+    "system": 2,
+    "name": "Drill Dozer",
+    "crc": "0xe60ec183",
+    "signature": "0x5126afad",
+    "magic": "0x0ede"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 01 - Super Mario Bros. (Rev 1)",
+    "crc": "0xcd2604dd",
+    "signature": "0xad3bf77e",
+    "magic": "0x0f3e"
   },
   {
     "system": 2,
@@ -183,6 +232,13 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 09 - Bomberman",
+    "crc": "0xc1116e40",
+    "signature": "0xffdf70c1",
+    "magic": "0x0f46"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 10 - Star Soldier",
     "crc": "0x1e23bad4",
     "signature": "0x4a6aa234",
@@ -211,6 +267,20 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 14 - Wrecking Crew",
+    "crc": "0xadac99bd",
+    "signature": "0x63b53a12",
+    "magic": "0x0f4b"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 15 - Dr. Mario",
+    "crc": "0xc836f2e2",
+    "signature": "0xe22e86a8",
+    "magic": "0x0f4c"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 16 - Dig Dug",
     "crc": "0xee4c3504",
     "signature": "0x4a57126b",
@@ -222,6 +292,13 @@
     "crc": "0x53286f51",
     "signature": "0x79e91751",
     "magic": "0x0f4d"
+  },
+  {
+    "system": 2,
+    "name": "Famicom Mini 18 - Makaimura",
+    "crc": "0x8a7964ca",
+    "signature": "0x821f8452",
+    "magic": "0x0f4f"
   },
   {
     "system": 2,
@@ -393,6 +470,13 @@
   },
   {
     "system": 2,
+    "name": "Lilo \u0026 Stitch 2: Haemsterviel Havoc",
+    "crc": "0x021a5755",
+    "signature": "0xee14019c",
+    "magic": "0x11af"
+  },
+  {
+    "system": 2,
     "name": "Lufia: The Ruins of Lore",
     "crc": "0xde5ffcbc",
     "signature": "0x17c753ab",
@@ -404,6 +488,27 @@
     "crc": "0x87a0eea0",
     "signature": "0x5f59fbdd",
     "magic": "0x11e3"
+  },
+  {
+    "system": 2,
+    "name": "Magical Quest 2 Starring Mickey \u0026 Minnie (USA)",
+    "crc": "0x69f1117d",
+    "signature": "0x1cd597ef",
+    "magic": "0x11e9"
+  },
+  {
+    "system": 2,
+    "name": "Magical Quest 3 Starring Mickey \u0026 Donald (Europe)",
+    "crc": "0xaad912f9",
+    "signature": "0xbfe12754",
+    "magic": "0x11ea"
+  },
+  {
+    "system": 2,
+    "name": "Magical Quest Starring Mickey \u0026 Minnie (USA)",
+    "crc": "0xb4294fa7",
+    "signature": "0x57a0a676",
+    "magic": "0x11ed"
   },
   {
     "system": 2,
@@ -456,6 +561,20 @@
   },
   {
     "system": 2,
+    "name": "Mega Man Zero 3",
+    "crc": "0x2784f3f2",
+    "signature": "0xb43025e7",
+    "magic": "0x125e"
+  },
+  {
+    "system": 2,
+    "name": "Mega Man Zero 4",
+    "crc": "0x7ee24793",
+    "signature": "0x1517d996",
+    "magic": "0x1260"
+  },
+  {
+    "system": 2,
     "name": "Metal Slug Advance",
     "crc": "0x3806f4ae",
     "signature": "0xd7a286f7",
@@ -474,6 +593,13 @@
     "crc": "0x6c75479c",
     "signature": "0x028eeb93",
     "magic": "0x1274"
+  },
+  {
+    "system": 2,
+    "name": "Namco Museum (USA)",
+    "crc": "0xc58a04c1",
+    "signature": "0x967350a1",
+    "magic": "0x12f3"
   },
   {
     "system": 2,
@@ -519,6 +645,13 @@
   },
   {
     "system": 2,
+    "name": "Rhythm Tengoku",
+    "crc": "0xa6cd88e1",
+    "signature": "0x991adafc",
+    "magic": "0x1447"
+  },
+  {
+    "system": 2,
     "name": "River City Ransom EX",
     "crc": "0x8686436e",
     "signature": "0x74c9940c",
@@ -540,10 +673,24 @@
   },
   {
     "system": 2,
+    "name": "Shaman King: Master of Spirits 2",
+    "crc": "0x201e3412",
+    "signature": "0xcab92e24",
+    "magic": "0x14c0"
+  },
+  {
+    "system": 2,
     "name": "Sonic Advance",
     "crc": "0x63f70fd8",
     "signature": "0x20564563",
     "magic": "0x152b"
+  },
+  {
+    "system": 2,
+    "name": "Star Wars: Episode III: Revenge of the Sith (Europe)",
+    "crc": "0xfd49236b",
+    "signature": "0x5a5e997b",
+    "magic": "0x1582"
   },
   {
     "system": 2,

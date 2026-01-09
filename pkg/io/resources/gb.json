@@ -638,6 +638,13 @@
   },
   {
     "system": 0,
+    "name": "Bubble Bobble Junior",
+    "crc": "0x39e261b9",
+    "signature": "0x23428ca9",
+    "magic": "0x0256"
+  },
+  {
+    "system": 0,
     "name": "Burai Senshi Deluxe",
     "crc": "0x5a1a20f3",
     "signature": "0xe2eb4e33",
@@ -974,6 +981,13 @@
   },
   {
     "system": 0,
+    "name": "Pitman",
+    "crc": "0xa0b68136",
+    "signature": "0x4fc85da6",
+    "magic": "0x04b2"
+  },
+  {
+    "system": 0,
     "name": "Pocket Bomberman (Europe)",
     "crc": "0x0fd1ae54",
     "signature": "0xcd6930e4",
@@ -1006,6 +1020,13 @@
     "crc": "0x40e5adc9",
     "signature": "0xb9c0b830",
     "magic": "0x0502"
+  },
+  {
+    "system": 0,
+    "name": "Quiz Sekai wa Show by Shoubai!!",
+    "crc": "0xd8c33dcd",
+    "signature": "0xbbcbc86b",
+    "magic": "0x0504"
   },
   {
     "system": 0,
@@ -1079,6 +1100,13 @@
   },
   {
     "system": 0,
+    "name": "Snow Bros. Jr.",
+    "crc": "0xe5a22f5a",
+    "signature": "0x13ac2f8f",
+    "magic": "0x0561"
+  },
+  {
+    "system": 0,
     "name": "SolarStriker",
     "crc": "0x11817103",
     "signature": "0x9d6225d9",
@@ -1111,6 +1139,13 @@
     "crc": "0x7dd9d7d6",
     "signature": "0xfd31028d",
     "magic": "0x059e"
+  },
+  {
+    "system": 0,
+    "name": "Takahashi Meijin no Bouken-jima II",
+    "crc": "0xf1071e08",
+    "signature": "0xe7472386",
+    "magic": "0x05ac"
   },
   {
     "system": 0,

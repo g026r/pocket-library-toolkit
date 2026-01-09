@@ -18,6 +18,36 @@
 - Signature: `0xfa3b0e9b`
 - Magic Number: `0x19a7`
 
+## Hang-On
+
+- CRC32: `0x5c01adf9`
+- Signature: `0x4ae1fcb5`
+- Magic Number: `0x1a01`
+
+## Kung Fu Kid
+
+- CRC32: `0x4762e022`
+- Signature: `0x97563012`
+- Magic Number: `0x1a23`
+
+## Ninja, The
+
+- CRC32: `0x66a15bd9`
+- Signature: `0x5063f24c`
+- Magic Number: `0x1a53`
+
+## Penguin Land
+
+- CRC32: `0xf97e9875`
+- Signature: `0x00035412`
+- Magic Number: `0x1a63`
+
+## Shinobi
+
+- CRC32: `0xe1fff1bb`
+- Signature: `0x515c54f5`
+- Magic Number: `0x1aa9`
+
 ## Sonic Chaos
 
 - CRC32: `0xaedf3bdf`
@@ -35,6 +65,12 @@
 - CRC32: `0x5b3b922c`
 - Signature: `0xf6a1d62e`
 - Magic Number: `0x1abb`
+
+## Space Harrier
+
+- CRC32: `0xbeddf80e`
+- Signature: `0x0d9ff937`
+- Magic Number: `0x1abf`
 
 ## Turma da Monica em O Resgate
 

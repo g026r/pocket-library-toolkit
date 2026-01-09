@@ -24,6 +24,30 @@
 - Signature: `0x6fc3aa2c`
 - Magic Number: `0x0d4b`
 
+## Boktai 2: Solar Boy Django (USA)
+
+- CRC32: `0xe1ffb2d1`
+- Signature: `0xbd6fea9d`
+- Magic Number: `0x0d4e`
+
+## Bomber Man Jetters: Densetsu no Bomber Man
+
+- CRC32: `0x70c423b8`
+- Signature: `0x857018fd`
+- Magic Number: `0x0d53`
+
+## Bomberman Max 2: Blue Advance
+
+- CRC32: `0x94c620f3`
+- Signature: `0xd3627abb`
+- Magic Number: `0x0d56`
+
+## Bomberman Tournament
+
+- CRC32: `0x240282e6`
+- Signature: `0xaa3373c7`
+- Magic Number: `0x0d5c`
+
 ## Castlevania: Aria of Sorrow
 
 - CRC32: `0x35536183`
@@ -102,6 +126,12 @@
 - Signature: `0x33f4f1b0`
 - Magic Number: `0x0e5b`
 
+## DK: King of Swing
+
+- CRC32: `0xd610b239`
+- Signature: `0x75dccd19`
+- Magic Number: `0x0e8b`
+
 ## Donkey Kong Country
 
 - CRC32: `0x12f7a968`
@@ -125,6 +155,18 @@
 - CRC32: `0x58c641b3`
 - Signature: `0xf6b366e0`
 - Magic Number: `0x0ea7`
+
+## Drill Dozer
+
+- CRC32: `0xe60ec183`
+- Signature: `0x5126afad`
+- Magic Number: `0x0ede`
+
+## Famicom Mini 01 - Super Mario Bros. (Rev 1)
+
+- CRC32: `0xcd2604dd`
+- Signature: `0xad3bf77e`
+- Magic Number: `0x0f3e`
 
 ## Famicom Mini 02 - Donkey Kong
 
@@ -156,6 +198,12 @@
 - Signature: `0x977d319d`
 - Magic Number: `0x0f44`
 
+## Famicom Mini 09 - Bomberman
+
+- CRC32: `0xc1116e40`
+- Signature: `0xffdf70c1`
+- Magic Number: `0x0f46`
+
 ## Famicom Mini 10 - Star Soldier
 
 - CRC32: `0x1e23bad4`
@@ -180,6 +228,18 @@
 - Signature: `0x59723945`
 - Magic Number: `0x0f49`
 
+## Famicom Mini 14 - Wrecking Crew
+
+- CRC32: `0xadac99bd`
+- Signature: `0x63b53a12`
+- Magic Number: `0x0f4b`
+
+## Famicom Mini 15 - Dr. Mario
+
+- CRC32: `0xc836f2e2`
+- Signature: `0xe22e86a8`
+- Magic Number: `0x0f4c`
+
 ## Famicom Mini 16 - Dig Dug
 
 - CRC32: `0xee4c3504`
@@ -191,6 +251,12 @@
 - CRC32: `0x53286f51`
 - Signature: `0x79e91751`
 - Magic Number: `0x0f4d`
+
+## Famicom Mini 18 - Makaimura
+
+- CRC32: `0x8a7964ca`
+- Signature: `0x821f8452`
+- Magic Number: `0x0f4f`
 
 ## Famicom Mini 19 - Twin Bee
 
@@ -336,6 +402,12 @@
 - Signature: `0x1507fc7b`
 - Magic Number: `0x1191`
 
+## Lilo & Stitch 2: Haemsterviel Havoc
+
+- CRC32: `0x021a5755`
+- Signature: `0xee14019c`
+- Magic Number: `0x11af`
+
 ## Lufia: The Ruins of Lore
 
 - CRC32: `0xde5ffcbc`
@@ -347,6 +419,24 @@
 - CRC32: `0x87a0eea0`
 - Signature: `0x5f59fbdd`
 - Magic Number: `0x11e3`
+
+## Magical Quest 2 Starring Mickey & Minnie (USA)
+
+- CRC32: `0x69f1117d`
+- Signature: `0x1cd597ef`
+- Magic Number: `0x11e9`
+
+## Magical Quest 3 Starring Mickey & Donald (Europe)
+
+- CRC32: `0xaad912f9`
+- Signature: `0xbfe12754`
+- Magic Number: `0x11ea`
+
+## Magical Quest Starring Mickey & Minnie (USA)
+
+- CRC32: `0xb4294fa7`
+- Signature: `0x57a0a676`
+- Magic Number: `0x11ed`
 
 ## Mario & Luigi: Superstar Saga
 
@@ -390,6 +480,18 @@
 - Signature: `0x3758e58c`
 - Magic Number: `0x125b`
 
+## Mega Man Zero 3
+
+- CRC32: `0x2784f3f2`
+- Signature: `0xb43025e7`
+- Magic Number: `0x125e`
+
+## Mega Man Zero 4
+
+- CRC32: `0x7ee24793`
+- Signature: `0x1517d996`
+- Magic Number: `0x1260`
+
 ## Metal Slug Advance
 
 - CRC32: `0x3806f4ae`
@@ -407,6 +509,12 @@
 - CRC32: `0x6c75479c`
 - Signature: `0x028eeb93`
 - Magic Number: `0x1274`
+
+## Namco Museum (USA)
+
+- CRC32: `0xc58a04c1`
+- Signature: `0x967350a1`
+- Magic Number: `0x12f3`
 
 ## Zoku Bokura no Taiyou: Taiyou Shounen Django
 
@@ -444,6 +552,12 @@
 - Signature: `0xdca26458`
 - Magic Number: `0x13c2`
 
+## Rhythm Tengoku
+
+- CRC32: `0xa6cd88e1`
+- Signature: `0x991adafc`
+- Magic Number: `0x1447`
+
 ## River City Ransom EX
 
 - CRC32: `0x8686436e`
@@ -462,11 +576,23 @@
 - Signature: `0xfa8f28f2`
 - Magic Number: `0x14a4`
 
+## Shaman King: Master of Spirits 2
+
+- CRC32: `0x201e3412`
+- Signature: `0xcab92e24`
+- Magic Number: `0x14c0`
+
 ## Sonic Advance
 
 - CRC32: `0x63f70fd8`
 - Signature: `0x20564563`
 - Magic Number: `0x152b`
+
+## Star Wars: Episode III: Revenge of the Sith (Europe)
+
+- CRC32: `0xfd49236b`
+- Signature: `0x5a5e997b`
+- Magic Number: `0x1582`
 
 ## Super Mario Advance
 

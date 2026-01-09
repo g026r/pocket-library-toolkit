@@ -546,6 +546,12 @@
 - Signature: `0x54e862c1`
 - Magic Number: `0x0255`
 
+## Bubble Bobble Junior
+
+- CRC32: `0x39e261b9`
+- Signature: `0x23428ca9`
+- Magic Number: `0x0256`
+
 ## Burai Senshi Deluxe
 
 - CRC32: `0x5a1a20f3`
@@ -834,6 +840,12 @@
 - Signature: `0x514d3f2c`
 - Magic Number: `0x04b1`
 
+## Pitman
+
+- CRC32: `0xa0b68136`
+- Signature: `0x4fc85da6`
+- Magic Number: `0x04b2`
+
 ## Pocket Bomberman (Europe)
 
 - CRC32: `0x0fd1ae54`
@@ -863,6 +875,12 @@
 - CRC32: `0x40e5adc9`
 - Signature: `0xb9c0b830`
 - Magic Number: `0x0502`
+
+## Quiz Sekai wa Show by Shoubai!!
+
+- CRC32: `0xd8c33dcd`
+- Signature: `0xbbcbc86b`
+- Magic Number: `0x0504`
 
 ## Red Arremer: Makai Mura Gaiden
 
@@ -924,6 +942,12 @@
 - Signature: `0xa21327fb`
 - Magic Number: `0x0550`
 
+## Snow Bros. Jr.
+
+- CRC32: `0xe5a22f5a`
+- Signature: `0x13ac2f8f`
+- Magic Number: `0x0561`
+
 ## SolarStriker
 
 - CRC32: `0x11817103`
@@ -953,6 +977,12 @@
 - CRC32: `0x7dd9d7d6`
 - Signature: `0xfd31028d`
 - Magic Number: `0x059e`
+
+## Takahashi Meijin no Bouken-jima II
+
+- CRC32: `0xf1071e08`
+- Signature: `0xe7472386`
+- Magic Number: `0x05ac`
 
 ## Tetris (Minuet)
 

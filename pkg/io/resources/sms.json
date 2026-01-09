@@ -22,6 +22,41 @@
   },
   {
     "system": 4,
+    "name": "Hang-On",
+    "crc": "0x5c01adf9",
+    "signature": "0x4ae1fcb5",
+    "magic": "0x1a01"
+  },
+  {
+    "system": 4,
+    "name": "Kung Fu Kid",
+    "crc": "0x4762e022",
+    "signature": "0x97563012",
+    "magic": "0x1a23"
+  },
+  {
+    "system": 4,
+    "name": "Ninja, The",
+    "crc": "0x66a15bd9",
+    "signature": "0x5063f24c",
+    "magic": "0x1a53"
+  },
+  {
+    "system": 4,
+    "name": "Penguin Land",
+    "crc": "0xf97e9875",
+    "signature": "0x00035412",
+    "magic": "0x1a63"
+  },
+  {
+    "system": 4,
+    "name": "Shinobi",
+    "crc": "0xe1fff1bb",
+    "signature": "0x515c54f5",
+    "magic": "0x1aa9"
+  },
+  {
+    "system": 4,
     "name": "Sonic Chaos",
     "crc": "0xaedf3bdf",
     "signature": "0x72433d43",
@@ -40,6 +75,13 @@
     "crc": "0x5b3b922c",
     "signature": "0xf6a1d62e",
     "magic": "0x1abb"
+  },
+  {
+    "system": 4,
+    "name": "Space Harrier",
+    "crc": "0xbeddf80e",
+    "signature": "0x0d9ff937",
+    "magic": "0x1abf"
   },
   {
     "system": 4,

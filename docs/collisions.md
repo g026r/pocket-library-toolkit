@@ -17,9 +17,10 @@ another's. Though in a few cases it will confuse different games built on the sa
 TurboGrafx-16 & Lynx signatures do not appear to match with values I've been able to generate. Either the ROM is read
 differently by the Pocket or there is some extra data being added to it by the system.
 
-Collisions listed below are grouped under the signature that the Pocket generates for them. The games are listed in
-alphabetical order, which appears to be the order the Pocket stores its database of signatures in. As such, the first
-entry in each grouping is the game that all cartridges with that signature will map to.
+Collisions listed below are grouped under the signature that the Pocket generates for them. The games are mostly listed
+in alphabetical order, which appears to be the order the Pocket usually stores its database of signatures in. As such,
+the first entry in each grouping is usually the game that all cartridges with that signature will map to. In those cases
+where I know the collision is not in alphabetical order, I've updated the ordering accordingly.
 
 Also provided is the actual CRC32 of the cart. Useful if e.g. you have both Shining Force Gaiden & Shining Force Gaiden
 II and want different thumbnails for each in your library.
@@ -155,8 +156,8 @@ are a mess. 59 Game Gear games share a cart signature with another game, or 12.6
     * Super Monaco GP _(Japan, Korea)_  `[0x4f686c4a]`
     * Super Monaco GP _(Brazil, Europe, USA)_  `[0xfcf12547]`
 * `0x1ecc7ca8`:
-    * Shinobi  `[0x30f1c984]`
     * The GG Shinobi  `[0x83926bd1]`
+    * Shinobi  `[0x30f1c984]`
 * `0xa0af1447`:
     * The Jungle Book _(Europe)_  `[0x90100884]`
     * The Jungle Book _(USA)_  `[0x30c09f31]`
@@ -179,8 +180,12 @@ are a mess. 59 Game Gear games share a cart signature with another game, or 12.6
 ### Sega Master System
 
 The Master System/Mark III has a lot more unlicensed Taiwanese & Korean games in the Pocket's internal library. Without
-them the total collisions would probably be lower than the Game Gear's. But as it stands, 81 games have signature
-collisions, amounting to 15.7% of the system's library.
+them the total collisions would probably be lower than the Game Gear's. But as it stands, 109 games have signature
+collisions, amounting to roughly 20% of the system's library.
+
+Because of the way that the original Game Gear treated Master System games, some of the unlicensed Taiwanese games in
+this list were simply Master System ROMs sold in Game Gear carts. Since the Pocket detects them as Master System,
+they're on this list.
 
 * `0xa5ba870c`:
     * 3 in 1 - The Best Game Collection (A) `[0x98af0236]`
@@ -197,18 +202,24 @@ collisions, amounting to 15.7% of the system's library.
     * Action Fighter _(Japan, Europe)_ `[0xd91b340d]`
     * Action Fighter _(Taiwan)_ `[0x8418f438]`
     * Action Fighter _(USA, Europe, Brazil) (Rev 1)_ `[0x3658f3e0]`
+* `0x48a10e97`:
+    * Aerial Assault _(Europe, Brazil)_ [`0xecf491cf`]
+    * Aerial Assault _(Taiwan)_ [`0x6630e5fd`]
 * `0x35c2093a`:
-    * Alex Kidd in Miracle World _(Taiwan)_ `[0x6f8e46cf]` // TODO: Is this the "World" entry? Is this "Alex Kido"?
     * Alex Kidd no Miracle World _(Japan)_ `[0x08c9ec91]`
+    * Alex Kido _(Taiwan)_ `[0x6f8e46cf]`
 * `0xb9408fad`:
     * Alex Kidd in Miracle World _(USA, Europe, Brazil) (Rev 1)_ `[0xaed9aac4]`
-    * Alex Kidd in Miracle World 2 _(World)_ `[0x7de172ff]` // TODO: Is this the "World" entry? Is this "Alex Kido"?
+    * Alex Kidd in Miracle World _(World)_ `[0x7de172ff]`
 * `0x915dec44`:
     * Alibaba and 40 Thieves `[0x08bf3de3]`
     * Galaxian `[0x577ec227]`
 * `0x449df5b3`:
     * Asterix _(Europe, Brazil) (Rev 1)_ `[0x8c9d5be8]`
     * Asterix _(Europe, Brazil)_ `[0x147e02fa]`
+* `0x6f8eec92`:
+    * Black Belt _(Taiwan)_ [`0x98f64975`]
+    * Black Belt _(USA, Europe, Brazil)_ [`0xda3a2f57`]
 * `0xf9205dc8`:
     * Bubble Bobble _(Europe, Brazil)_ `[0xe843ba7e]`
     * Final Bubble Bobble `[0x3ebb7457]`
@@ -219,6 +230,12 @@ collisions, amounting to 15.7% of the system's library.
     * Comical Machine Gun Joe _(Japan)_ `[0x9d549e08]`
     * Comical Machine Gun Joe _(Korea)_ `[0x643f6bfc]`
     * Comical Machine Gun Joe _(Taiwan)_ `[0x84ad5ae4]`
+* `0x997f806a`:
+    * Cyber Shinobi, The _(Europe, Brazil)_ [`0x1350e4f8`]
+    * Cyber Shinobi, The _(Taiwan)_ [`0xad9ff469`]
+* `0xfa3b0e9b`:
+    * Double Dragon _(Taiwan)_ [`0xf4f848c2`]
+    * Double Dragon _(World)_ [`0xa55d89f3`]
 * `0x29a56fe5`:
     * E.I. - Exa Innova `[0xdd74bcf1]`
     * Mopiranger `[0xb49aa6fc]`
@@ -238,6 +255,9 @@ collisions, amounting to 15.7% of the system's library.
 * `0x49aabe28`:
     * Fantasy Zone _(Taiwan)_ `[0x5fd48352]`
     * Fantasy Zone _(World)_ `[0x65d7e4e0]`
+* `0x6a877c0e`:
+    * Forgotten Worlds _(Europe, Brazil)_ [`0x38c53916`]
+    * Forgotten Worlds _(Taiwan)_ [`0x44136a72`]
 * `0x36377097`:
     * Ghost House `[0xc0f3ce7e]`
     * Yuyryeong-ui Jip - Ghost House `[0x1203afc9]`
@@ -250,6 +270,12 @@ collisions, amounting to 15.7% of the system's library.
 * `0x8cf2a757`:
     * Hokuto no Ken _(Japan)_ `[0x24f5fe8c]`
     * Hokuto no Ken _(Taiwan)_ `[0xc4ab363d]`
+* `0x97563012`:
+    * Kung Fu Kid _(Taiwan)_ [`0x4762e022`]
+    * Kung Fu Kid _(USA, Europe, Brazil)_ [`0x1e949d1f`]
+* `0x21b4f993`:
+    * Lord of Sword _(Japan)_ [`0xaa7d6f45`]
+    * Lord of Sword _(Taiwan)_ [`0x7eaed675`]
 * `0xd9f2a9b6`:
     * Monica no Castelo do Dragao `[0x01d67c0b]`
     * Wonder Boy in Monster Land `[0x8cbef0c1]`
@@ -260,12 +286,27 @@ collisions, amounting to 15.7% of the system's library.
 * `0x3f9b5473`:
     * Psycho Fox `[0x97993479]`
     * Sapo Xule vs. Os Invasores do Brejo `[0x9a608327]`
+* `0xbaaafb7c`:
+    * Quartet _(Taiwan)_ [`0xcacdf759`]
+    * Quartet _(USA, Europe)_ [`0xe0f34fa6`]
+* `0x479675f5`:
+    * R-Type _(Taiwan)_ [`0xe532716f`]
+    * R-Type _(World)_ [`0xbb54b6b0`]
 * `0x62537afa`:
     * Rainbow Islands: Story of Bubble Bobble 2 _(Europe)_ `[0xc172a22c]`
     * Rainbow Islands: The Story of Bubble Bobble 2 _(Brazil)_ `[0x00ec173a]`
+* `0x08702c91`:
+    * Scramble Spirits _(Europe, Brazil)_ [`0x9a8b28ec`]
+    * Scramble Spirits _(Taiwan)_ [`0x7d59283b`]
 * `0xd7b8dbd4`:
     * Seishun Scandal `[0xf0ba2bc6]`
     * Ttoriui Moheom `[0x178801d2]`
+* `0xe31f5e52`:
+    * Shadow Dancer _(Europe, Brazil)_ [`0x3793c01a`]
+    * Shadow Dancer _(Taiwan)_ [`0xab67c6bd`]
+* `0x700e7627`:
+    * Shadow of the Beast _(Europe, Brazil)_ [`0x1575581d`]
+    * Shadow of the Beast _(Taiwan)_ [`0xac2ea669`]
 * `0x515c54f5`:
     * Shinobi _(Japan, Brazil)_ `[0xe1fff1bb]`
     * Shinobi _(USA, Europe, Brazil) (Rev 1)_ `[0x0c6fac4e]`
@@ -281,6 +322,12 @@ collisions, amounting to 15.7% of the system's library.
 * `0xca555d47`:
     * Spy vs Spy _(Japan)_ `[0xd41b9a08]`
     * Spy vs Spy _(Taiwan)_ `[0x689f58a2]`
+* `0x8d815c9e`:
+    * Strider _(Taiwan)_ [`0x63a7f906`]
+    * Strider _(USA, Europe, Brazil)_ [`0x9802ed31`]
+* `0xf55b44d2`:
+    * Submarine Attack _(Europe, Brazil)_ [`0xd8f2f1b9`]
+    * Submarine Attack _(Taiwan)_ [`0xd282ef71`]
 * `0x9b5db90b`:
     * Super Arkanoid `[0xc9dd4e5f]`
     * Woody Pop: Shinjinrui no Block Kuzushi `[0x315917d4]`

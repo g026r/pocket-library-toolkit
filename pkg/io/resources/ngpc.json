@@ -1,6 +1,13 @@
 [
   {
     "system": 6,
+    "name": "Dynamite Slugger",
+    "crc": "0x7f1779cd",
+    "signature": "0xbed36ceb",
+    "magic": "0x1b3e"
+  },
+  {
+    "system": 6,
     "name": "Fantastic Night Dreams Cotton (Japan)",
     "crc": "0xb8a12409",
     "signature": "0x74e36925",
@@ -26,6 +33,13 @@
     "crc": "0x47e490a2",
     "signature": "0x3c5f1121",
     "magic": "0x1b47"
+  },
+  {
+    "system": 6,
+    "name": "King of Fighters R-2: Pocket Fighting Series",
+    "crc": "0x47e490a2",
+    "signature": "0x3c5f1121",
+    "magic": "0x1b48"
   },
   {
     "system": 6,
