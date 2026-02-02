@@ -361,8 +361,8 @@ func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32, thumbRule Thu
 	case NoCropNoPad:
 		img = imaging.Fit(img, maxWidth, maxHeight, imaging.Lanczos)
 	case NoCropPad:
-		// Resize the image to the no-crop dimensions. And then paste it onto an empty black image of max dimensions
-		empty := imaging.New(maxWidth, maxHeight, color.Black)
+		// Resize the image to the no-crop dimensions. And then paste it onto an empty image of max dimensions
+		empty := imaging.New(maxWidth, maxHeight, color.Black) // Possibly color.Transparent is usable here instead.
 		img = imaging.Fit(img, maxWidth, maxHeight, imaging.Lanczos)
 		img = imaging.PasteCenter(empty, img)
 	default:
