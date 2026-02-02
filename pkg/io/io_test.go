@@ -313,7 +313,7 @@ func TestGenerateThumbnail(t *testing.T) {
 
 	t.Run("valid", func(t *testing.T) {
 		t.Parallel()
-		f, err := os.Open("../../testdata/thumbnail_output.bin")
+		f, err := os.Open("../../testdata/thumbnail_output.bin") // TODO: Test the other thumbnail options as well
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -327,7 +327,7 @@ func TestGenerateThumbnail(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		img, err := GenerateThumbnail(os.DirFS("../../testdata/valid"), models.NGPC, crc)
+		img, err := GenerateThumbnail(os.DirFS("../../testdata/valid"), models.NGPC, crc, CropCentre)
 		if err != nil {
 			t.Fatalf("Expected nil but got %v", err)
 		}
@@ -348,7 +348,7 @@ func TestGenerateThumbnail(t *testing.T) {
 
 	t.Run("invalid header", func(t *testing.T) {
 		t.Parallel()
-		_, err := GenerateThumbnail(os.DirFS("testdata/invalid_header"), models.NGPC, crc)
+		_, err := GenerateThumbnail(os.DirFS("testdata/invalid_header"), models.NGPC, crc, CropCentre)
 		if err == nil {
 			t.Error("Expected err but got nil")
 		}

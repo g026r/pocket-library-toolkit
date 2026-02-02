@@ -43,6 +43,8 @@ const (
 	cfgUnmodified
 	cfgBackup
 	cfgPlaytimeCheck
+	cfgCrop
+	cfgCentre
 )
 
 var (
@@ -98,6 +100,8 @@ var (
 		menuItem{"Generate new thumbnail when editing game", cfgGenNew},
 		menuItem{"Backup previous files before saving", cfgBackup},
 		menuItem{"Always save _thumbs.bin files, even if unmodified", cfgUnmodified},
+		menuItem{"Crop thumbnail if too large", cfgCrop},
+		menuItem{"Centred thumbnail", cfgCentre},
 		// menuItem{"Show advanced library editing fields " + italic.Render("(Experimental)"), cfgAdvEdit},
 		// menuItem{"Show 'Add to Library' " + italic.Render("(Experimental)"), cfgShowAdd},
 		menuItem{"Back", back}}
@@ -336,6 +340,10 @@ func (d configDelegate) Render(w goio.Writer, m list.Model, index int, listItem 
 			b = d.Backup
 		case cfgPlaytimeCheck:
 			b = d.CheckPlaytimes
+		case cfgCentre:
+			b = d.ThumbnailHandling.Centred()
+		case cfgCrop:
+			b = d.ThumbnailHandling.Cropped()
 		default:
 			// If we don't know what this value is, return
 			return

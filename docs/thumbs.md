@@ -51,8 +51,8 @@ a game from the library via the Pocket's UI does not remove its image from the t
 See Analogue's [developer docs](https://www.analogue.co/developer/docs/library#image-format) for details on their image
 format, which this duplicates.
 
-Two notes:
+Two things are noteworthy about these entries:
 
 1. The images appear to have been transformed into a 121 [`0x0079`] x 109 [`0x006D`] image, with the image being
-   resized so that the short edge matches the desired dimensions and then long edge cropped equally on both sides.
+   resized so that the short edge matches the desired dimensions and then long edge cropped equally on both sides. 
 2. Thanks to these consistent dimensions, each library thumbnail requires 52764 bytes in the file.
