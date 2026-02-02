@@ -35,19 +35,54 @@ const (
 
 	firstLibraryAddr uint32 = 0x4010
 	firstThumbsAddr  uint32 = 0x1000C
+
+	maxHeight int = 121
+	maxWidth  int = 109
 )
 
 var ErrUnrecognizedFileFormat = errors.New("not a pocket binary file")
 var ErrSixteenBitImage = errors.New("16-bit image files unsupported")
 
+type ThumbnailRules int
+
+const (
+	CropCentre ThumbnailRules = iota // The default
+	CropTopLeft
+	NoCropNoPad
+	NoCropPad
+)
+
+func (r ThumbnailRules) Cropped() bool {
+	switch r {
+	case CropCentre, CropTopLeft:
+		return true
+	case NoCropNoPad, NoCropPad:
+		return false
+	default:
+		panic("invalid thumbnail rules") // This is just so I don't forget to handle them
+	}
+}
+
+func (r ThumbnailRules) Centred() bool {
+	switch r {
+	case CropCentre, NoCropPad:
+		return true
+	case CropTopLeft, NoCropNoPad:
+		return false
+	default:
+		panic("invalid thumbnail rules") // This is just so I don't forget to handle them
+	}
+}
+
 type Config struct {
-	RemoveImages    bool `json:"remove_images"`
-	AdvancedEditing bool `json:"advanced_editing"`
-	ShowAdd         bool `json:"show_add"`
-	GenerateNew     bool `json:"generate_new"`
-	SaveUnmodified  bool `json:"save_unmodified"`
-	Backup          bool `json:"backup"`
-	CheckPlaytimes  bool `json:"check_playtimes"`
+	RemoveImages      bool           `json:"remove_images"`
+	AdvancedEditing   bool           `json:"advanced_editing"`
+	ShowAdd           bool           `json:"show_add"`
+	GenerateNew       bool           `json:"generate_new"`
+	SaveUnmodified    bool           `json:"save_unmodified"`
+	Backup            bool           `json:"backup"`
+	CheckPlaytimes    bool           `json:"check_playtimes"`
+	ThumbnailHandling ThumbnailRules `json:"thumbnail_handling"`
 }
 
 func (c Config) SaveConfig() error {
@@ -69,7 +104,7 @@ type jsonEntry struct {
 	Name          string `json:"name"`
 	Crc32         string `json:"crc"`
 	Sig           string `json:"signature"`
-	Magic         string `json:"magic"` // TODO: Work out all possible mappings for this?
+	Magic         string `json:"magic"` // Doesn't seem to actually matter
 }
 
 func (j jsonEntry) Entry() models.Entry {
@@ -274,7 +309,7 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 	return thumbs, nil
 }
 
-func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32) (models.Image, error) {
+func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32, thumbRule ThumbnailRules) (models.Image, error) {
 	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
 
 	f, err := dir.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", strings.ToLower(sys.String()), crc32))
@@ -318,11 +353,29 @@ func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32) (models.Image
 		}
 	}
 
-	// If the image is too square, we need to resize to the longest of the new dimensions
-	// Otherwise, resize the shorter side to the new max dimensions
-	newWidth, newHeight := util.DetermineResizing(img)
-	img = imaging.Resize(img, newWidth, newHeight, imaging.Lanczos)
-	img = imaging.CropCenter(img, util.MaxWidth, util.MaxHeight)
+	switch thumbRule {
+	case CropCentre:
+		img = imaging.Fill(img, maxWidth, maxHeight, imaging.Center, imaging.Lanczos)
+	case CropTopLeft:
+		img = imaging.Fill(img, maxWidth, maxHeight, imaging.BottomLeft, imaging.Lanczos) // Because the image is rotated 90deg CCW, BottomLeft corresponds to the top left
+	case NoCropNoPad:
+		img = imaging.Fit(img, maxWidth, maxHeight, imaging.Lanczos)
+	case NoCropPad:
+		// Resize the image to the no-crop dimensions. And then paste it onto an empty black image of max dimensions
+		empty := imaging.New(maxWidth, maxHeight, color.Black)
+		img = imaging.Fit(img, maxWidth, maxHeight, imaging.Lanczos)
+		img = imaging.PasteCenter(empty, img)
+	default:
+		return models.Image{}, fmt.Errorf("invalid thumbnail rule: %d", thumbRule) // Could fall back to default, I suppose
+	}
+
+	// I should probably do something else here. But this is to keep from generating gigantic thumbnail files
+	if img.Bounds().Dx() > maxWidth {
+		return models.Image{}, fmt.Errorf("width too large: %d", img.Bounds().Dx())
+	}
+	if img.Bounds().Dy() > maxHeight {
+		return models.Image{}, fmt.Errorf("height too large: %d", img.Bounds().Dx())
+	}
 
 	pkt := make([]byte, 0)
 	pkt, err = binary.Append(pkt, binary.LittleEndian, header)
@@ -355,13 +408,14 @@ func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32) (models.Image
 
 func LoadConfig() (Config, error) {
 	c := Config{ // Sensible defaults
-		RemoveImages:    true,
-		AdvancedEditing: false,
-		ShowAdd:         false,
-		GenerateNew:     true,
-		SaveUnmodified:  false,
-		Backup:          true,
-		CheckPlaytimes:  true,
+		RemoveImages:      true,
+		AdvancedEditing:   false,
+		ShowAdd:           false,
+		GenerateNew:       true,
+		SaveUnmodified:    false,
+		Backup:            true,
+		CheckPlaytimes:    true,
+		ThumbnailHandling: CropCentre,
 	}
 	dir, err := getConfigDir()
 	if err != nil {
@@ -375,7 +429,15 @@ func LoadConfig() (Config, error) {
 		return c, err
 	}
 	err = json.Unmarshal(b, &c)
-	return c, err
+	if err != nil {
+		return c, err
+	}
+
+	// Invalid thumbnail handling rule, default to centre-cropped
+	if c.ThumbnailHandling < CropCentre || c.ThumbnailHandling > NoCropPad {
+		c.ThumbnailHandling = CropCentre
+	}
+	return c, nil
 }
 
 func LoadInternal() (map[models.System][]models.Entry, error) {

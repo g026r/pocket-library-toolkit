@@ -31,8 +31,8 @@ bytes. This means it duplicates the address of the first library entry.
 4096 * 32 bits (Little Endian)
 
 No matter how many entries you have, this section will be 16kiB in length —
-from byte 0x10 to byte 0x400F (inclusive). Unused entries are normally represented as 0s but any data can be present
-here as entries beyond the number specified in bytes 0x4-0x7 will be ignored.
+from byte 0010 to byte 400F (inclusive). Unused entries are normally represented as 0s but any data can be present
+here as entries beyond the number specified in [bytes 0004&ndash;0007](#number-of-entries-4-bytes) will be ignored.
 
 Each entry consists of a single 32bit Little Endian entry representing the byte position in the file where the library
 entry resides. As the Pocket simply displays these sequentially they should be sorted in alphabetical order by the
@@ -107,9 +107,10 @@ the adapter, but I've been unable to determine what.
 32 bits (Little Endian), Though could also be 16 bits plus another 16 bits of padding.
 
 I've been unable to determine what this word is used for. Changing its value didn't stop the library from loading
-a game entry or change any of the information displayed.
+a game entry or change any of the information displayed, and the values for a large number of games appear to have
+changed with one of the firmware updates without having any effect on games already in the user library.
 
-It appeaars to be a simple sequential mapping of games to an integer, mostly arranged alphabetically in system
+It appears to be a simple sequential mapping of games to an integer, mostly arranged alphabetically in system
 order, but not entirely.
 
 e.g. Power Strike II on the Game Gear comes immediately after GG Aleste, likely as its Japanese name is "GG Aleste II."
@@ -121,9 +122,9 @@ Big Endian zero-terminated string.
 
 // TODO: Unknown whether this can be a blank string.
 
-### Padding (0-7 bytes)
+### Padding (0&ndash;7 bytes)
 
 Each library entry must align with a word boundary. If the size of the game's name plus zero-terminator in bits is not
-evenly divisible by 32, then up to 7 bytes of padding are added. These can be any data as the system ignores it.
+evenly divisible by 32, then up to 7 bytes of padding are added. This can be any data as the system ignores it.
 
 // TODO: Does the final entry also need this padding?

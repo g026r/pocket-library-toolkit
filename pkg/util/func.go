@@ -4,17 +4,11 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"image"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/g026r/pocket-library-toolkit/pkg/root"
-)
-
-const (
-	MaxHeight int = 121
-	MaxWidth  int = 109
 )
 
 // HexStringTransform takes a string, validates that it is a 32 bit hex string, and returns the uint32 representation of it
@@ -77,11 +71,4 @@ func GetRoot() (*root.Root, error) {
 	}
 
 	return root.OpenRoot(d)
-}
-
-func DetermineResizing(i image.Image) (int, int) {
-	if float32(i.Bounds().Dx())/float32(i.Bounds().Dy()) < float32(MaxWidth)/float32(MaxHeight) {
-		return MaxWidth, 0
-	}
-	return 0, MaxHeight
 }
