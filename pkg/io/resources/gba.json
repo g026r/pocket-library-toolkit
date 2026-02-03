@@ -407,6 +407,13 @@
   },
   {
     "system": 2,
+    "name": "Harvest Moon: Friends of Mineral Town",
+    "crc": "0x8e923168",
+    "signature": "0x9eaf8a95",
+    "magic": "0x1082"
+  },
+  {
+    "system": 2,
     "name": "Hoshi no Kirby: Kagami no Daimeikyuu",
     "crc": "0x683d772c",
     "signature": "0x9ee74053",
