@@ -379,6 +379,20 @@
   },
   {
     "system": 1,
+    "name": "Pocket Monsters Gin",
+    "crc": "0x0aea5383",
+    "signature": "0x0056ba05",
+    "magic": "0x09e6"
+  },
+  {
+    "system": 1,
+    "name": "Pocket Monsters Kin",
+    "crc": "0x4ef7f2a5",
+    "signature": "0x0ce3bb2b",
+    "magic": "0x09e8"
+  },
+  {
+    "system": 1,
     "name": "Pokemon: Crystal Version (USA, Europe) (Rev 1)",
     "crc": "0x3358e30a",
     "signature": "0xd2024312",

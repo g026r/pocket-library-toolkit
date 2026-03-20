@@ -264,6 +264,12 @@
 - Signature: `0xe79cbcd5`
 - Magic Number: `0x1c26`
 
+## Hana Taaka Daka!
+
+- CRC32: `0xba4d0dd4`
+- Signature: `0xd8383809`
+- Magic Number: `0x1c26`
+
 ## Hanii on the Road
 
 - CRC32: `0x9897fa86`
@@ -593,6 +599,12 @@
 - CRC32: `0xa3303978`
 - Signature: `0x90336ae9`
 - Magic Number: `0x1d0a`
+
+## Violent Soldier
+
+- CRC32: `0x1bc36b36`
+- Signature: `0xe140adaa`
+- Magic Number: `0x1d12`
 
 ## W-Ring - The Double Rings
 

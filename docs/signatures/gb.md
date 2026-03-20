@@ -486,6 +486,12 @@
 - Signature: `0x23eb892e`
 - Magic Number: `0x022f`
 
+## Battle Unit Zeoth
+
+- CRC32: `0xa1a1fe77`
+- Signature: `0x13c2dc0d`
+- Magic Number: `0x0232`
+
 ## BattleCity
 
 - CRC32: `0xa37a814a`

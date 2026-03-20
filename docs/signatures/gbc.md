@@ -324,6 +324,18 @@
 - Signature: `0x68980a59`
 - Magic Number: `0x09d4`
 
+## Pocket Monsters Gin
+
+- CRC32: `0x0aea5383`
+- Signature: `0x0056ba05`
+- Magic Number: `0x09e6`
+
+## Pocket Monsters Kin
+
+- CRC32: `0x4ef7f2a5`
+- Signature: `0x0ce3bb2b`
+- Magic Number: `0x09e8`
+
 ## Pokemon: Crystal Version (USA, Europe) (Rev 1)
 
 - CRC32: `0x3358e30a`
