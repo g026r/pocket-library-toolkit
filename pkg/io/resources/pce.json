@@ -302,16 +302,16 @@
   },
   {
     "system": 7,
-    "name": "Hanii in the Sky",
-    "crc": "0xbf3e2cc7",
-    "signature": "0xe79cbcd5",
+    "name": "Hana Taaka Daka!",
+    "crc": "0xba4d0dd4",
+    "signature": "0xd8383809",
     "magic": "0x1c26"
   },
   {
     "system": 7,
-    "name": "Hana Taaka Daka!",
-    "crc": "0xba4d0dd4",
-    "signature": "0xd8383809",
+    "name": "Hanii in the Sky",
+    "crc": "0xbf3e2cc7",
+    "signature": "0xe79cbcd5",
     "magic": "0x1c26"
   },
   {

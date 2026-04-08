@@ -890,6 +890,13 @@
   },
   {
     "system": 0,
+    "name": "Lock'n Chase",
+    "crc": "0xdab91c7a",
+    "signature": "0x38b85b8c",
+    "magic": "0x03d4"
+  },
+  {
+    "system": 0,
     "name": "Mani 4 in 1 - Taito",
     "crc": "0x5bfc3ef5",
     "signature": "0x4b80fe56",

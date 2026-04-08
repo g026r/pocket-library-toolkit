@@ -258,16 +258,16 @@
 - Signature: `0x1e93df4e`
 - Magic Number: `0x1c23`
 
-## Hanii in the Sky
-
-- CRC32: `0xbf3e2cc7`
-- Signature: `0xe79cbcd5`
-- Magic Number: `0x1c26`
-
 ## Hana Taaka Daka!
 
 - CRC32: `0xba4d0dd4`
 - Signature: `0xd8383809`
+- Magic Number: `0x1c26`
+
+## Hanii in the Sky
+
+- CRC32: `0xbf3e2cc7`
+- Signature: `0xe79cbcd5`
 - Magic Number: `0x1c26`
 
 ## Hanii on the Road

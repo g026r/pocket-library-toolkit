@@ -762,6 +762,12 @@
 - Signature: `0xb64c97f0`
 - Magic Number: `0x03aa`
 
+## Lock'n Chase
+
+- CRC32: `0xdab91c7a`
+- Signature: `0x38b85b8c`
+- Magic Number: `0x03d4`
+
 ## Mani 4 in 1 - Taito
 
 - CRC32: `0x5bfc3ef5`
