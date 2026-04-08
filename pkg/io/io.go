@@ -10,6 +10,7 @@ import (
 	"image/color"
 	"io"
 	"io/fs"
+	"log"
 	"os"
 	"path/filepath"
 	"slices"
@@ -18,6 +19,7 @@ import (
 	"github.com/disintegration/imaging"
 
 	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/root"
 	"github.com/g026r/pocket-library-toolkit/pkg/util"
 )
 
@@ -309,10 +311,17 @@ func LoadThumbs(root fs.FS) (map[models.System]models.Thumbnails, error) {
 	return thumbs, nil
 }
 
-func GenerateThumbnail(dir fs.FS, sys models.System, crc32 uint32, thumbRule ThumbnailRules) (models.Image, error) {
+func GenerateThumbnail(r *root.Root, sys models.System, crc32 uint32, thumbRule ThumbnailRules) (models.Image, error) {
 	sys = sys.ThumbFile() // Just in case I forgot to determine the correct system
 
-	f, err := dir.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", strings.ToLower(sys.String()), crc32))
+	f, err := r.Open(fmt.Sprintf("System/Library/Images/%s/%08x.bin", strings.ToLower(sys.String()), crc32))
+	if errors.Is(err, fs.ErrNotExist) { // Check to see if it exists in the other location
+		f, err = r.Open(fmt.Sprintf("System/Library/Images/%s/%s/%08x.bin", strings.ToLower(sys.String()), backupDir, crc32))
+		e := r.Rename(fmt.Sprintf("System/Library/Images/%s/%s/%08x.bin", strings.ToLower(sys.String()), backupDir, crc32), fmt.Sprintf("System/Library/Images/%s/%08x.bin", strings.ToLower(sys.String()), crc32))
+		if e != nil {
+			log.Fatal(e)
+		}
+	}
 	if err != nil {
 		return models.Image{}, err
 	}
@@ -448,7 +457,7 @@ func LoadInternal() (map[models.System][]models.Entry, error) {
 
 	library := make(map[models.System][]models.Entry)
 	for _, d := range dir {
-		f, err := jsons.ReadFile(fmt.Sprintf("resources/%s", d.Name()))
+		f, err := jsons.ReadFile(filepath.Join("resources", d.Name()))
 		if err != nil {
 			return nil, err
 		}

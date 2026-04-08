@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/g026r/pocket-library-toolkit/pkg/models"
+	"github.com/g026r/pocket-library-toolkit/pkg/root"
 )
 
 func TestSaveInternal(t *testing.T) {
@@ -310,10 +312,14 @@ func TestSaveLibrary(t *testing.T) {
 func TestGenerateThumbnail(t *testing.T) {
 	t.Parallel()
 	crc := uint32(0xb8a12409)
+	td, err := filepath.Abs("../../testdata/")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	t.Run("valid", func(t *testing.T) {
 		t.Parallel()
-		f, err := os.Open("../../testdata/thumbnail_output.bin") // TODO: Test the other thumbnail options as well
+		f, err := os.Open(filepath.Join(td, "thumbnail_output.bin"))  // TODO: Test the other thumbnail options as well
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -327,7 +333,11 @@ func TestGenerateThumbnail(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		img, err := GenerateThumbnail(os.DirFS("../../testdata/valid"), models.NGPC, crc, CropCentre)
+		r, err := root.OpenRoot(filepath.Join(td, "valid"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		img, err := GenerateThumbnail(r, models.NGPC, crc, CropCentre)
 		if err != nil {
 			t.Fatalf("Expected nil but got %v", err)
 		}
@@ -348,7 +358,11 @@ func TestGenerateThumbnail(t *testing.T) {
 
 	t.Run("invalid header", func(t *testing.T) {
 		t.Parallel()
-		_, err := GenerateThumbnail(os.DirFS("testdata/invalid_header"), models.NGPC, crc, CropCentre)
+		r, err := root.OpenRoot(filepath.Join(td, "invalid_header"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		_, err = GenerateThumbnail(r, models.NGPC, crc, CropCentre)
 		if err == nil {
 			t.Error("Expected err but got nil")
 		}
