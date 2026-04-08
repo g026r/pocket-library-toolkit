@@ -348,6 +348,12 @@
 - Signature: `0xb2323b7f`
 - Magic Number: `0x1051`
 
+## Harvest Moon: Friends of Mineral Town
+
+- CRC32: `0x8e923168`
+- Signature: `0x9eaf8a95`
+- Magic Number: `0x1082`
+
 ## Hoshi no Kirby: Kagami no Daimeikyuu
 
 - CRC32: `0x683d772c`

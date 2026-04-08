@@ -274,6 +274,13 @@
   },
   {
     "system": 2,
+    "name": "Famicom Mini 16 - Dig Dug",
+    "crc": "0xee4c3504",
+    "signature": "0x4a57126b",
+    "magic": "0x0f4c"
+  },
+  {
+    "system": 2,
     "name": "Famicom Mini 15 - Dr. Mario",
     "crc": "0xc836f2e2",
     "signature": "0xe22e86a8",
@@ -404,6 +411,13 @@
     "crc": "0x7cd86b02",
     "signature": "0xb2323b7f",
     "magic": "0x1051"
+  },
+  {
+    "system": 2,
+    "name": "Harvest Moon: Friends of Mineral Town",
+    "crc": "0x8e923168",
+    "signature": "0x9eaf8a95",
+    "magic": "0x1082"
   },
   {
     "system": 2,

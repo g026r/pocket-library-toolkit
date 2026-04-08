@@ -302,6 +302,13 @@
   },
   {
     "system": 7,
+    "name": "Hana Taaka Daka!",
+    "crc": "0xba4d0dd4",
+    "signature": "0xd8383809",
+    "magic": "0x1c26"
+  },
+  {
+    "system": 7,
     "name": "Hanii in the Sky",
     "crc": "0xbf3e2cc7",
     "signature": "0xe79cbcd5",
@@ -691,6 +698,13 @@
     "crc": "0xa3303978",
     "signature": "0x90336ae9",
     "magic": "0x1d0a"
+  },
+  {
+    "system": 7,
+    "name": "Violent Soldier",
+    "crc": "0x1bc36b36",
+    "signature": "0xe140adaa",
+    "magic": "0x1d12"
   },
   {
     "system": 7,

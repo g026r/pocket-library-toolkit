@@ -568,6 +568,13 @@
   },
   {
     "system": 0,
+    "name": "Battle Unit Zeoth",
+    "crc": "0xa1a1fe77",
+    "signature": "0x13c2dc0d",
+    "magic": "0x0232"
+  },
+  {
+    "system": 0,
     "name": "BattleCity",
     "crc": "0xa37a814a",
     "signature": "0x02c7dac3",
@@ -880,6 +887,13 @@
     "crc": "0x8b44fb7d",
     "signature": "0xb64c97f0",
     "magic": "0x03aa"
+  },
+  {
+    "system": 0,
+    "name": "Lock'n Chase",
+    "crc": "0xdab91c7a",
+    "signature": "0x38b85b8c",
+    "magic": "0x03d4"
   },
   {
     "system": 0,

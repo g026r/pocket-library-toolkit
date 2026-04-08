@@ -486,6 +486,12 @@
 - Signature: `0x23eb892e`
 - Magic Number: `0x022f`
 
+## Battle Unit Zeoth
+
+- CRC32: `0xa1a1fe77`
+- Signature: `0x13c2dc0d`
+- Magic Number: `0x0232`
+
 ## BattleCity
 
 - CRC32: `0xa37a814a`
@@ -755,6 +761,12 @@
 - CRC32: `0x8b44fb7d`
 - Signature: `0xb64c97f0`
 - Magic Number: `0x03aa`
+
+## Lock'n Chase
+
+- CRC32: `0xdab91c7a`
+- Signature: `0x38b85b8c`
+- Magic Number: `0x03d4`
 
 ## Mani 4 in 1 - Taito
 
