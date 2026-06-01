@@ -474,6 +474,12 @@
 - Signature: `0xa39a4d6b`
 - Magic Number: `0x021f`
 
+## Banishing Racer
+
+- CRC32: `0x3d13ec6a`
+- Signature: `0x1f792def`
+- Magic Number: `0x0221`
+
 ## Batman: The Video Game
 
 - CRC32: `0x6c41d3cd`
@@ -1019,6 +1025,12 @@
 - CRC32: `0x85d910b9`
 - Signature: `0x70a95859`
 - Magic Number: `0x05dc`
+
+## Trip World (Japan)
+
+- CRC32: `0x11568e64`
+- Signature: `0x3c89ea71`
+- Magic Number: `0x05dd`
 
 ## TwinBee da!!
 

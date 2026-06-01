@@ -554,6 +554,13 @@
   },
   {
     "system": 0,
+    "name": "Banishing Racer",
+    "crc": "0x3d13ec6a",
+    "signature": "0x1f792def",
+    "magic": "0x0221"
+  },
+  {
+    "system": 0,
     "name": "Batman: The Video Game",
     "crc": "0x6c41d3cd",
     "signature": "0xeaa1f4dc",
@@ -1188,6 +1195,13 @@
     "crc": "0x85d910b9",
     "signature": "0x70a95859",
     "magic": "0x05dc"
+  },
+  {
+    "system": 0,
+    "name": "Trip World (Japan)",
+    "crc": "0x11568e64",
+    "signature": "0x3c89ea71",
+    "magic": "0x05dd"
   },
   {
     "system": 0,
