@@ -673,6 +673,13 @@
   },
   {
     "system": 7,
+    "name": "Takahashi Meijin no Shin Bouken-jima",
+    "crc": "0xe415ea19",
+    "signature": "0x5ca23939",
+    "magic": "0x1ceb"
+  },
+  {
+    "system": 7,
     "name": "Thunder Blade",
     "crc": "0xddc3e809",
     "signature": "0x99e5921a",

@@ -576,6 +576,12 @@
 - Signature: `0x5ca23939`
 - Magic Number: `0x1cea`
 
+## Takahashi Meijin no Shin Bouken-jima
+
+- CRC32: `0xe415ea19`
+- Signature: `0x5ca23939`
+- Magic Number: `0x1ceb`
+
 ## Thunder Blade
 
 - CRC32: `0xddc3e809`
