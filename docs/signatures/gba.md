@@ -408,6 +408,12 @@
 - Signature: `0x1507fc7b`
 - Magic Number: `0x1191`
 
+## Lilo & Stitch
+
+- CRC32: `0x542aa4ac`
+- Signature: `0xaef9793f`
+- Magic Number: `0x11ae`
+
 ## Lilo & Stitch 2: Haemsterviel Havoc
 
 - CRC32: `0x021a5755`
