@@ -22,13 +22,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	root, err := root.OpenRoot(dir)
+	r, err := root.OpenRoot(dir)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer root.Close()
+	defer r.Close()
 
-	entries, err := io.LoadEntries(root.FS())
+	entries, err := io.LoadEntries(r.FS())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,25 +51,24 @@ func main() {
 }
 
 func writeNewFiles(internal map[models.System][]models.Entry) error {
+	d, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	r, err := root.OpenRoot(d)
+	if err != nil {
+		return err
+	}
+	defer r.Close()
+
 	for k, v := range internal {
 		slices.SortFunc(v, func(a, b models.Entry) int {
 			return cmp.Compare(a.Magic, b.Magic) // Sort now before we turn the magic number into a string
 		})
 
 		// Create the json files
-		d, err := os.Getwd()
-		if err != nil {
-			return err
-		}
-
-		root, err := root.OpenRoot(d)
-		if err != nil {
-			return err
-		}
-		defer root.Close()
-
-
-		j, err := root.Create(filepath.Join("pkg/io/resources", fmt.Sprintf("%s.json", strings.ToLower(k.String()))))
+		j, err := r.Create(filepath.Join("pkg/io/resources", fmt.Sprintf("%s.json", strings.ToLower(k.String()))))
 		if err != nil {
 			return err
 		}
@@ -80,7 +79,7 @@ func writeNewFiles(internal map[models.System][]models.Entry) error {
 		_ = j.Close()
 
 		// Create the .md files
-		m, err := root.Create(filepath.Join("docs/signatures", fmt.Sprintf("%s.md", strings.ToLower(k.String()))))
+		m, err := r.Create(filepath.Join("docs/signatures", fmt.Sprintf("%s.md", strings.ToLower(k.String()))))
 		if err != nil {
 			return err
 		}
