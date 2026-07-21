@@ -484,6 +484,13 @@
   },
   {
     "system": 2,
+    "name": "Lilo \u0026 Stitch",
+    "crc": "0x542aa4ac",
+    "signature": "0xaef9793f",
+    "magic": "0x11ae"
+  },
+  {
+    "system": 2,
     "name": "Lilo \u0026 Stitch 2: Haemsterviel Havoc",
     "crc": "0x021a5755",
     "signature": "0xee14019c",
