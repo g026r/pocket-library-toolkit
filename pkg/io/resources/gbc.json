@@ -491,6 +491,13 @@
   },
   {
     "system": 1,
+    "name": "Space Invaders",
+    "crc": "0xdab7460c",
+    "signature": "0x511f5ab8",
+    "magic": "0x0add"
+  },
+  {
+    "system": 1,
     "name": "Space Marauder",
     "crc": "0x4f83b35e",
     "signature": "0xdcdbef82",

@@ -420,6 +420,12 @@
 - Signature: `0xa64c02f5`
 - Magic Number: `0x0abf`
 
+## Space Invaders
+
+- CRC32: `0xdab7460c`
+- Signature: `0x511f5ab8`
+- Magic Number: `0x0add`
+
 ## Space Marauder
 
 - CRC32: `0x4f83b35e`
