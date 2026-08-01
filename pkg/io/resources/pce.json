@@ -733,5 +733,12 @@
     "crc": "0x2cb92290",
     "signature": "0x47a93d4c",
     "magic": "0x1d27"
+  },
+  {
+    "system": 7,
+    "name": "Ten no Koe Bank",
+    "crc": "0x3b3808bd",
+    "signature": "0x22930b1d",
+    "magic": "0x1d29"
   }
 ]
