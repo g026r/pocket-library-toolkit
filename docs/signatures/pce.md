@@ -629,3 +629,9 @@
 - CRC32: `0x2cb92290`
 - Signature: `0x47a93d4c`
 - Magic Number: `0x1d27`
+
+## Ten no Koe Bank
+
+- CRC32: `0x3b3808bd`
+- Signature: `0x22930b1d`
+- Magic Number: `0x1d29`
