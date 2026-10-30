@@ -28,4 +28,4 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - run: node pocket-binary.test.js
+    - run: node web/pocket-binary.test.js
