@@ -241,7 +241,7 @@ class PocketBinary {
                 return system;
             }
         }
-        return 8; // Default to Lynx
+        return 0; // Default to Game Boy
     }
 
     /**
