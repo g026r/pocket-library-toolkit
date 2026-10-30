@@ -302,6 +302,13 @@
   },
   {
     "system": 7,
+    "name": "Hana Taaka Daka!",
+    "crc": "0xba4d0dd4",
+    "signature": "0xd8383809",
+    "magic": "0x1c26"
+  },
+  {
+    "system": 7,
     "name": "Hanii in the Sky",
     "crc": "0xbf3e2cc7",
     "signature": "0xe79cbcd5",
@@ -666,6 +673,13 @@
   },
   {
     "system": 7,
+    "name": "Takahashi Meijin no Shin Bouken-jima",
+    "crc": "0xe415ea19",
+    "signature": "0x5ca23939",
+    "magic": "0x1ceb"
+  },
+  {
+    "system": 7,
     "name": "Thunder Blade",
     "crc": "0xddc3e809",
     "signature": "0x99e5921a",
@@ -694,6 +708,13 @@
   },
   {
     "system": 7,
+    "name": "Violent Soldier",
+    "crc": "0x1bc36b36",
+    "signature": "0xe140adaa",
+    "magic": "0x1d12"
+  },
+  {
+    "system": 7,
     "name": "W-Ring - The Double Rings",
     "crc": "0xbe990010",
     "signature": "0x347d37fb",
@@ -712,5 +733,12 @@
     "crc": "0x2cb92290",
     "signature": "0x47a93d4c",
     "magic": "0x1d27"
+  },
+  {
+    "system": 7,
+    "name": "Ten no Koe Bank",
+    "crc": "0x3b3808bd",
+    "signature": "0x22930b1d",
+    "magic": "0x1d29"
   }
 ]

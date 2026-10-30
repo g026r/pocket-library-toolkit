@@ -258,6 +258,12 @@
 - Signature: `0x1e93df4e`
 - Magic Number: `0x1c23`
 
+## Hana Taaka Daka!
+
+- CRC32: `0xba4d0dd4`
+- Signature: `0xd8383809`
+- Magic Number: `0x1c26`
+
 ## Hanii in the Sky
 
 - CRC32: `0xbf3e2cc7`
@@ -570,6 +576,12 @@
 - Signature: `0x5ca23939`
 - Magic Number: `0x1cea`
 
+## Takahashi Meijin no Shin Bouken-jima
+
+- CRC32: `0xe415ea19`
+- Signature: `0x5ca23939`
+- Magic Number: `0x1ceb`
+
 ## Thunder Blade
 
 - CRC32: `0xddc3e809`
@@ -594,6 +606,12 @@
 - Signature: `0x90336ae9`
 - Magic Number: `0x1d0a`
 
+## Violent Soldier
+
+- CRC32: `0x1bc36b36`
+- Signature: `0xe140adaa`
+- Magic Number: `0x1d12`
+
 ## W-Ring - The Double Rings
 
 - CRC32: `0xbe990010`
@@ -611,3 +629,9 @@
 - CRC32: `0x2cb92290`
 - Signature: `0x47a93d4c`
 - Magic Number: `0x1d27`
+
+## Ten no Koe Bank
+
+- CRC32: `0x3b3808bd`
+- Signature: `0x22930b1d`
+- Magic Number: `0x1d29`

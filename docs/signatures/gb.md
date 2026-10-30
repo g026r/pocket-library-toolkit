@@ -474,6 +474,12 @@
 - Signature: `0xa39a4d6b`
 - Magic Number: `0x021f`
 
+## Banishing Racer
+
+- CRC32: `0x3d13ec6a`
+- Signature: `0x1f792def`
+- Magic Number: `0x0221`
+
 ## Batman: The Video Game
 
 - CRC32: `0x6c41d3cd`
@@ -485,6 +491,12 @@
 - CRC32: `0xca450e93`
 - Signature: `0x23eb892e`
 - Magic Number: `0x022f`
+
+## Battle Unit Zeoth
+
+- CRC32: `0xa1a1fe77`
+- Signature: `0x13c2dc0d`
+- Magic Number: `0x0232`
 
 ## BattleCity
 
@@ -756,6 +768,12 @@
 - Signature: `0xb64c97f0`
 - Magic Number: `0x03aa`
 
+## Lock'n Chase
+
+- CRC32: `0xdab91c7a`
+- Signature: `0x38b85b8c`
+- Magic Number: `0x03d4`
+
 ## Mani 4 in 1 - Taito
 
 - CRC32: `0x5bfc3ef5`
@@ -1007,6 +1025,12 @@
 - CRC32: `0x85d910b9`
 - Signature: `0x70a95859`
 - Magic Number: `0x05dc`
+
+## Trip World (Japan)
+
+- CRC32: `0x11568e64`
+- Signature: `0x3c89ea71`
+- Magic Number: `0x05dd`
 
 ## TwinBee da!!
 
