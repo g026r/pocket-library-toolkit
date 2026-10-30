@@ -29,4 +29,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Test
-      run: node web/pocket-binary.test.js
+      run: node ./web/pocket-binary.test.js
