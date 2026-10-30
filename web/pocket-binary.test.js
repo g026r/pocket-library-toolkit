@@ -11,12 +11,6 @@ const path = require('path');
 // Import the PocketBinary class from pocket-binary.js
 const { PocketBinary } = require('./pocket-binary.js');
 
-const validListBinPath = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games', 'list.bin');
-const validPlaytimesBinPath = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games', 'playtimes.bin');
-
-const invalidListBinPath = path.join(__dirname, '..', 'testdata', 'invalid_header', 'System', 'Played Games', 'list.bin');
-const invalidPlaytimesBinPath = path.join(__dirname, '..', 'testdata', 'invalid_header', 'System', 'Played Games', 'playtimes.bin');
-
 /**
  * Test loading and validating binary files (AC.1 & AC.2)
  * Confirms invalid headers are specifically caught.
@@ -28,8 +22,10 @@ async function test_load_and_validate() {
     
     // Test 1: Load valid files
     try {
-        const listBinBuffer = Uint8Array.from(fs.readFileSync(validListBinPath)).buffer;
-        const playtimesBinBuffer = Uint8Array.from(fs.readFileSync(validPlaytimesBinPath)).buffer;
+        const validDir = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games');
+
+        const listBinBuffer = Uint8Array.from(fs.readFileSync(path.join(validDir, 'list.bin'))).buffer;
+        const playtimesBinBuffer = Uint8Array.from(fs.readFileSync(path.join(validDir, 'playtimes.bin'))).buffer;
         
         const listResult = parser.parseListBin(listBinBuffer);
         const playtimesResult = parser.parsePlaytimesBin(playtimesBinBuffer);
@@ -53,7 +49,9 @@ async function test_load_and_validate() {
     
     // Test 2: Handle invalid headers with specific error assertion
     try {
-        const invalidListBinBuffer = Uint8Array.from(fs.readFileSync(invalidListBinPath)).buffer;
+        const invalidHeaderDir = path.join(__dirname, '..', 'testdata', 'invalid_header', 'System', 'Played Games');
+
+        const invalidListBinBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidHeaderDir, 'list.bin'))).buffer;
         try {
             parser.parseListBin(invalidListBinBuffer);
             console.log('✗ Expected error for invalid list.bin header');
@@ -67,7 +65,7 @@ async function test_load_and_validate() {
             }
         }
 
-        const invalidPlaytimesBinBuffer = Uint8Array.from(fs.readFileSync(invalidPlaytimesBinPath)).buffer;
+        const invalidPlaytimesBinBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidHeaderDir, 'playtimes.bin'))).buffer;
         try {
             parser.parsePlaytimesBin(invalidPlaytimesBinBuffer);
             console.log('✗ Expected error for invalid playtimes.bin header');
@@ -158,11 +156,10 @@ async function test_count_mismatch() {
 async function test_synchronization_mismatch() {
     console.log('Running test_synchronization_mismatch...');
     const parser = new PocketBinary();
-    const mismatchDir = path.join(__dirname, '..', 'testdata', 'count_mismatch', 'System', 'Played Games');
-    const validDir = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games');
+    const mismatchDir = path.join(__dirname, '..', 'testdata', 'mismatched_files/', 'System', 'Played Games');
     
     const listBuffer = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'list.bin'))).buffer;
-    const playtimesBuffer = Uint8Array.from(fs.readFileSync(path.join(validDir, 'playtimes.bin'))).buffer;
+    const playtimesBuffer = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'playtimes.bin'))).buffer;
     
     const listResult = parser.parseListBin(listBuffer);
     const playtimesResult = parser.parsePlaytimesBin(playtimesBuffer);
@@ -210,8 +207,10 @@ async function test_edit_and_sort() {
     
     const parser = new PocketBinary();
     
-    const listBinBuffer = Uint8Array.from(fs.readFileSync(validListBinPath)).buffer;
-    const playtimesBinBuffer = Uint8Array.from(fs.readFileSync(validPlaytimesBinPath)).buffer;
+    const validDir = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games');
+
+    const listBinBuffer = Uint8Array.from(fs.readFileSync(path.join(validDir, 'list.bin'))).buffer;
+    const playtimesBinBuffer = Uint8Array.from(fs.readFileSync(path.join(validDir, 'playtimes.bin'))).buffer;
     
     const listResult = parser.parseListBin(listBinBuffer);
     const playtimesResult = parser.parsePlaytimesBin(playtimesBinBuffer);
@@ -262,8 +261,10 @@ async function test_serialize_roundtrip() {
     
     const parser = new PocketBinary();
     
-    const listBinBuffer = Uint8Array.from(fs.readFileSync(validListBinPath)).buffer;
-    const playtimesBinBuffer = Uint8Array.from(fs.readFileSync(validPlaytimesBinPath)).buffer;
+    const validDir = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games');
+
+    const listBinBuffer = Uint8Array.from(fs.readFileSync(path.join(validDir, 'list.bin'))).buffer;
+    const playtimesBinBuffer = Uint8Array.from(fs.readFileSync(path.join(validDir, 'playtimes.bin'))).buffer;
     
     const listResult = parser.parseListBin(listBinBuffer);
     const playtimesResult = parser.parsePlaytimesBin(playtimesBinBuffer);
@@ -403,9 +404,11 @@ async function test_combined_filtering() {
 async function test_library_reloading() {
     console.log('Running test_library_reloading...');
     const parser = new PocketBinary();
-    
-    const list1 = Uint8Array.from(fs.readFileSync(validListBinPath)).buffer;
-    const play1 = Uint8Array.from(fs.readFileSync(validPlaytimesBinPath)).buffer;
+
+    const validDir = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games');
+
+    const list1 = Uint8Array.from(fs.readFileSync(path.join(validDir, 'list.bin'))).buffer;
+    const play1 = Uint8Array.from(fs.readFileSync(path.join(validDir, 'playtimes.bin'))).buffer;
     
     const res1List = parser.parseListBin(list1);
     const res1Play = parser.parsePlaytimesBin(play1);
@@ -433,6 +436,40 @@ async function test_library_reloading() {
 }
 
 /**
+ * Test fromPlayedTime error handling on invalid playtime/system values
+ */
+async function test_from_played_time() {
+    console.log('Running test_from_played_time...');
+    const parser = new PocketBinary();
+    
+    // Test valid systems
+    for (let sys = 0; sys <= 8; sys++) {
+        const val = 100 + parser.getPlayOffset(sys);
+        const resolvedSys = parser.fromPlayedTime(val);
+        if (resolvedSys !== sys) {
+            console.log(`✗ Expected system ${sys}, got ${resolvedSys}`);
+            return false;
+        }
+    }
+    
+    // Test invalid playtime value throwing error
+    let threwError = false;
+    try {
+        parser.fromPlayedTime(0x30000000); // Beyond Lynx range
+    } catch (e) {
+        threwError = true;
+        console.log('✓ Invalid playtime correctly threw error:', e.message);
+    }
+    
+    if (!threwError) {
+        console.log('✗ Expected fromPlayedTime to throw error on invalid playtime/system value');
+        return false;
+    }
+    
+    return true;
+}
+
+/**
  * Run all tests
  */
 async function runTests() {
@@ -449,7 +486,8 @@ async function runTests() {
         { name: 'test_system_synonyms', func: test_system_synonyms },
         { name: 'test_playtime_offsets_all_systems', func: test_playtime_offsets_all_systems },
         { name: 'test_combined_filtering', func: test_combined_filtering },
-        { name: 'test_library_reloading', func: test_library_reloading }
+        { name: 'test_library_reloading', func: test_library_reloading },
+        { name: 'test_from_played_time', func: test_from_played_time }
     ];
     
     let passed = 0;

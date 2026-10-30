@@ -241,7 +241,7 @@ class PocketBinary {
                 return system;
             }
         }
-        return 0; // Default to Game Boy
+        throw new Error(`Invalid playtime and system value: 0x${playedAndSystem.toString(16)} (unable to determine system)`);
     }
 
     /**
