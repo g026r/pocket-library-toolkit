@@ -299,10 +299,21 @@ class PocketLibraryApp {
         this.systems.clear();
         this.ui.systemFilters.innerHTML = '';
         
+        const allActive = this.selectedSystem === null;
+        const allColor = '#000000';
+        
         // Add "All" filter
         const allBadge = document.createElement('div');
-        allBadge.className = 'system-badge active';
+        allBadge.className = allActive ? 'system-badge active' : 'system-badge';
         allBadge.textContent = 'All';
+        allBadge.style.borderColor = allColor;
+        if (allActive) {
+            allBadge.style.backgroundColor = '#ffffff';
+            allBadge.style.color = allColor;
+        } else {
+            allBadge.style.backgroundColor = allColor;
+            allBadge.style.color = '#ffffff';
+        }
         allBadge.onclick = () => this.filterBySystem(null);
         this.ui.systemFilters.appendChild(allBadge);
         
@@ -312,10 +323,20 @@ class PocketLibraryApp {
             if (!this.systems.has(systemName)) {
                 this.systems.add(systemName);
                 
+                const isActive = this.selectedSystem === systemName;
+                const sysColor = this.getSystemColor(entry.system);
+                
                 const badge = document.createElement('div');
-                badge.className = 'system-badge';
+                badge.className = isActive ? 'system-badge active' : 'system-badge';
                 badge.textContent = systemName;
-                badge.style.backgroundColor = this.getSystemColor(entry.system);
+                badge.style.borderColor = sysColor;
+                if (isActive) {
+                    badge.style.backgroundColor = '#ffffff';
+                    badge.style.color = sysColor;
+                } else {
+                    badge.style.backgroundColor = sysColor;
+                    badge.style.color = '#ffffff';
+                }
                 badge.onclick = () => this.filterBySystem(systemName);
                 this.ui.systemFilters.appendChild(badge);
             }
@@ -346,16 +367,8 @@ class PocketLibraryApp {
     filterBySystem(systemName) {
         this.selectedSystem = systemName;
         
-        // Update active badge
-        document.querySelectorAll('.system-badge').forEach(badge => {
-            if (systemName === null && badge.textContent === 'All') {
-                badge.classList.add('active');
-            } else if (badge.textContent === systemName) {
-                badge.classList.add('active');
-            } else {
-                badge.classList.remove('active');
-            }
-        });
+        // Re-build system filters to update active/inactive styling
+        this.buildSystemFilters();
         
         this.applyFilters();
     }
