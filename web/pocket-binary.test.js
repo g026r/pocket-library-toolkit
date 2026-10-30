@@ -337,6 +337,7 @@ async function test_playtime_offsets_all_systems() {
     const entries = [];
     for (let sys = 0; sys <= 8; sys++) {
         entries.push({
+            name: "",
             sig: 0x1000 + sys,
             added: 1700000000 + sys,
             played: 1234 + sys * 10,
@@ -467,6 +468,7 @@ async function runTests() {
             }
         } catch (error) {
             console.log(`✗ ${test.name} ERROR: ${error.message}`);
+            console.log(error.stack);
             failed++;
         }
     }
