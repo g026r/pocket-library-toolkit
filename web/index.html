@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Library Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pocket Library Editor</h1>
+            <p>Load your list.bin and playtimes.bin files to edit game entries</p>
+        </header>
+
+        <div class="upload-section" id="uploadSection">
+            <div class="file-upload-area" id="fileUploadArea">
+                <div class="upload-icon">📁</div>
+                <p>Drag & drop list.bin and playtimes.bin files here or</p>
+                <div class="file-inputs">
+                    <label class="file-input-label">
+                        <input type="file" id="listBinInput" accept=".bin" class="file-input">
+                        <span>Select list.bin</span>
+                    </label>
+                    <label class="file-input-label">
+                        <input type="file" id="playtimesBinInput" accept=".bin" class="file-input">
+                        <span>Select playtimes.bin</span>
+                    </label>
+                </div>
+                <div class="status" id="uploadStatus">Waiting for files...</div>
+            </div>
+
+            <div class="validation-errors" id="validationErrors">
+                <!-- Validation errors will be displayed here -->
+            </div>
+        </div>
+
+        <div class="library-container" id="libraryContainer" style="display: none;">
+            <div class="library-header">
+                <h2>Library Entries <span class="entry-count" id="entryCount">(0 entries)</span></h2>
+                <div class="library-header-actions">
+                    <button id="loadOtherFilesBtn" class="action-btn secondary">Load Different Files</button>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search by name or system...">
+                        <span class="search-icon">🔍</span>
+                        <button id="clearSearchBtn" class="clear-search-btn" title="Clear search">×</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-filters" id="systemFilters">
+                <!-- System filter badges will be added dynamically -->
+            </div>
+
+            <div class="table-container">
+                <table class="library-table">
+                    <thead>
+                        <tr>
+                            <th>Game Name</th>
+                            <th>System</th>
+                            <th>Signature</th>
+                            <th>CRC32</th>
+                            <th>Playtime</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="libraryBody">
+                        <!-- Library entries will be displayed here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                No matching entries found.
+            </div>
+
+            <div class="export-section" id="exportSection" style="display: none;">
+                <h3>Export Updated Files</h3>
+                <div class="export-buttons">
+                    <button id="downloadListBin" class="export-btn primary">Download list.bin</button>
+                    <button id="downloadPlaytimesBin" class="export-btn primary">Download playtimes.bin</button>
+                    <button id="downloadBoth" class="export-btn secondary">Download Both</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="edit-modal" id="editModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Game Name</h3>
+                    <button class="close-modal" id="closeModal">×</button>
+                </div>
+                <div class="modal-body">
+                    <label for="editGameName">Game Name:</label>
+                    <input type="text" id="editGameName" maxlength="255">
+                    <label for="editPlaytime" style="margin-top: 1rem;">Playtime (seconds):</label>
+                    <input type="number" id="editPlaytime" min="0" max="67108863">
+                    <small style="color: #64748b; display: block; margin-top: 0.25rem;">Max storable playtime is ~1863 hours (67108863 seconds).</small>
+                </div>
+                <div class="modal-footer">
+                    <button class="cancel-btn" id="cancelEdit">Cancel</button>
+                    <button class="save-btn" id="saveEdit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="pocket-binary.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
