@@ -7,6 +7,8 @@ A rough-and-ready way to edit your Pocket's library.
 This product is provided as-is. While the chance that it breaks your Pocket is extremely low, it is very much
 experimental software that is doing something Analogue was not expecting users to do. Use at your own risk.
 
+If all you want is to adjust the names on some cartridges or fix the played times, I recommend checking out [the web frontend](https://g026r.github.io/pocket-library-toolkit/) instead.
+
 ## How to Install
 
 Download the appropriate version for your operating system
