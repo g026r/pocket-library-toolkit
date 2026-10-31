@@ -317,29 +317,36 @@ class PocketLibraryApp {
         allBadge.onclick = () => this.filterBySystem(null);
         this.ui.systemFilters.appendChild(allBadge);
         
-        // Add system-specific filters
+        // Collect unique system IDs present in entries
+        const presentSystemIds = new Set();
         for (const entry of this.listEntries) {
-            const systemName = this.binaryParser.getSystemName(entry.system);
-            if (!this.systems.has(systemName)) {
-                this.systems.add(systemName);
-                
-                const isActive = this.selectedSystem === systemName;
-                const sysColor = this.getSystemColor(entry.system);
-                
-                const badge = document.createElement('div');
-                badge.className = isActive ? 'system-badge active' : 'system-badge';
-                badge.textContent = systemName;
-                badge.style.borderColor = sysColor;
-                if (isActive) {
-                    badge.style.backgroundColor = '#ffffff';
-                    badge.style.color = sysColor;
-                } else {
-                    badge.style.backgroundColor = sysColor;
-                    badge.style.color = '#ffffff';
-                }
-                badge.onclick = () => this.filterBySystem(systemName);
-                this.ui.systemFilters.appendChild(badge);
+            presentSystemIds.add(entry.system);
+        }
+        
+        // Sort system IDs numerically (0 to 8)
+        const sortedSystemIds = Array.from(presentSystemIds).sort((a, b) => a - b);
+        
+        // Add system-specific filters in order of their system ID
+        for (const sysId of sortedSystemIds) {
+            const systemName = this.binaryParser.getSystemName(sysId);
+            this.systems.add(systemName);
+            
+            const isActive = this.selectedSystem === systemName;
+            const sysColor = this.getSystemColor(sysId);
+            
+            const badge = document.createElement('div');
+            badge.className = isActive ? 'system-badge active' : 'system-badge';
+            badge.textContent = systemName;
+            badge.style.borderColor = sysColor;
+            if (isActive) {
+                badge.style.backgroundColor = '#ffffff';
+                badge.style.color = sysColor;
+            } else {
+                badge.style.backgroundColor = sysColor;
+                badge.style.color = '#ffffff';
             }
+            badge.onclick = () => this.filterBySystem(systemName);
+            this.ui.systemFilters.appendChild(badge);
         }
     }
 
