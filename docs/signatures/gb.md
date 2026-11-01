@@ -6,8 +6,7 @@
 - Signature: `0x3738e6f5`
 - Magic Number: `0x0010`
 
-## Super Mario Land 2: 6 Golden Coins 
-[// Which rev?]
+## Super Mario Land 2: 6 Golden Coins (Rev 0) 
 
 - CRC32: `0xd5ec24e4`
 - Signature: `0x1632f121`
