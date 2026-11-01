@@ -6,11 +6,24 @@
 - Signature: `0x3738e6f5`
 - Magic Number: `0x0010`
 
+## Super Mario Land 2: 6 Golden Coins 
+[// Which rev?]
+
+- CRC32: `0xd5ec24e4`
+- Signature: `0x1632f121`
+- Magic Number: `0x0011`
+
 ## Super R.C. Pro-Am
 
 - CRC32: `0x7960f33f`
 - Signature: `0x4c453436`
 - Magic Number: `0x0013`
+
+## Taz-Mania 2
+
+- CRC32: `0x4ccb65e0`
+- Signature: `0x5c02dcd4`
+- Magic Number: `0x0020`
 
 ## Teenage Mutant Ninja Turtles: Fall of the Foot Clan
 
@@ -71,6 +84,12 @@
 - CRC32: `0xa6595506`
 - Signature: `0x5379a582`
 - Magic Number: `0x004b`
+
+## Yoshi's Cookie
+
+- CRC32: `0x75336712`
+- Signature: `0x219708f1`
+- Magic Number: `0x0063`
 
 ## Adventure Island
 
@@ -156,6 +175,12 @@
 - Signature: `0x33e68487`
 - Magic Number: `0x009d`
 
+## Bo Jackson: Two Games in One
+
+- CRC32: `0x7edb78ab`
+- Signature: `0x5975ee85`
+- Magic Number: `0x009f`
+
 ## Bomberman GB (USA, Europe)
 
 - CRC32: `0xf372d175`
@@ -185,6 +210,12 @@
 - CRC32: `0x843068fd`
 - Signature: `0x1d858e3c`
 - Magic Number: `0x00ae`
+
+## Casper
+
+- CRC32: `0xe67a10e1`
+- Signature: `0xf7d10c3b`
+- Magic Number: `0x00b9`
 
 ## Castlevania Legends
 
@@ -281,6 +312,12 @@
 - CRC32: `0x8046148f`
 - Signature: `0xb41976ae`
 - Magic Number: `0x0101`
+
+## Game & Watch Gallery
+
+- CRC32: `0x99b2fe79`
+- Signature: `0xd19e7360`
+- Magic Number: `0x010d`
 
 ## Game Boy Camera
 
@@ -384,6 +421,12 @@
 - Signature: `0xa974ddb4`
 - Magic Number: `0x0176`
 
+## Mickey Mouse: Magic Wand
+
+- CRC32: `0xf0482567`
+- Signature: `0x7a7fb053`
+- Magic Number: `0x0178`
+
 ## Milon's Secret Castle
 
 - CRC32: `0x62b4cc8c`
@@ -396,11 +439,23 @@
 - Signature: `0x0024e03a`
 - Magic Number: `0x0182`
 
+## Monopoly
+
+- CRC32: `0xfd90f0d6`
+- Signature: `0x4fa4b7cf`
+- Magic Number: `0x0183`
+
 ## Mystical Ninja Starring Goemon (USA)
 
 - CRC32: `0xfafb343c`
 - Signature: `0xd73b7c1b`
 - Magic Number: `0x0191`
+
+## NFL Football
+
+- CRC32: `0x4c3d1508`
+- Signature: `0x70dd2a60`
+- Magic Number: `0x019b`
 
 ## Ninja Gaiden Shadow
 
@@ -413,6 +468,12 @@
 - CRC32: `0x96c24e13`
 - Signature: `0x30149bab`
 - Magic Number: `0x01a6`
+
+## Pac-Man
+
+- CRC32: `0xb681e243`
+- Signature: `0xe1c8f751`
+- Magic Number: `0x01b0`
 
 ## Pokemon: Blue Version
 

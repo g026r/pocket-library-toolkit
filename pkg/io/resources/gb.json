@@ -8,10 +8,24 @@
   },
   {
     "system": 0,
+    "name": "Super Mario Land 2: 6 Golden Coins",
+    "crc": "0xd5ec24e4",
+    "signature": "0x1632f121",
+    "magic": "0x0011"
+  },
+  {
+    "system": 0,
     "name": "Super R.C. Pro-Am",
     "crc": "0x7960f33f",
     "signature": "0x4c453436",
     "magic": "0x0013"
+  },
+  {
+    "system": 0,
+    "name": "Taz-Mania 2",
+    "crc": "0x4ccb65e0",
+    "signature": "0x5c02dcd4",
+    "magic": "0x0020"
   },
   {
     "system": 0,
@@ -82,6 +96,13 @@
     "crc": "0xa6595506",
     "signature": "0x5379a582",
     "magic": "0x004b"
+  },
+  {
+    "system": 0,
+    "name": "Yoshi's Cookie",
+    "crc": "0x75336712",
+    "signature": "0x219708f1",
+    "magic": "0x0063"
   },
   {
     "system": 0,
@@ -183,6 +204,13 @@
   },
   {
     "system": 0,
+    "name": "Bo Jackson: Two Games in One",
+    "crc": "0x7edb78ab",
+    "signature": "0x5975ee85",
+    "magic": "0x009f"
+  },
+  {
+    "system": 0,
     "name": "Bomberman GB (USA, Europe)",
     "crc": "0xf372d175",
     "signature": "0x4b4c8fcc",
@@ -215,6 +243,13 @@
     "crc": "0x843068fd",
     "signature": "0x1d858e3c",
     "magic": "0x00ae"
+  },
+  {
+    "system": 0,
+    "name": "Casper",
+    "crc": "0xe67a10e1",
+    "signature": "0xf7d10c3b",
+    "magic": "0x00b9"
   },
   {
     "system": 0,
@@ -327,6 +362,13 @@
     "crc": "0x8046148f",
     "signature": "0xb41976ae",
     "magic": "0x0101"
+  },
+  {
+    "system": 0,
+    "name": "Game \u0026 Watch Gallery",
+    "crc": "0x99b2fe79",
+    "signature": "0xd19e7360",
+    "magic": "0x010d"
   },
   {
     "system": 0,
@@ -449,6 +491,13 @@
   },
   {
     "system": 0,
+    "name": "Mickey Mouse: Magic Wand",
+    "crc": "0xf0482567",
+    "signature": "0x7a7fb053",
+    "magic": "0x0178"
+  },
+  {
+    "system": 0,
     "name": "Milon's Secret Castle",
     "crc": "0x62b4cc8c",
     "signature": "0xfdf3bc33",
@@ -463,10 +512,24 @@
   },
   {
     "system": 0,
+    "name": "Monopoly",
+    "crc": "0xfd90f0d6",
+    "signature": "0x4fa4b7cf",
+    "magic": "0x0183"
+  },
+  {
+    "system": 0,
     "name": "Mystical Ninja Starring Goemon (USA)",
     "crc": "0xfafb343c",
     "signature": "0xd73b7c1b",
     "magic": "0x0191"
+  },
+  {
+    "system": 0,
+    "name": "NFL Football",
+    "crc": "0x4c3d1508",
+    "signature": "0x70dd2a60",
+    "magic": "0x019b"
   },
   {
     "system": 0,
@@ -481,6 +544,13 @@
     "crc": "0x96c24e13",
     "signature": "0x30149bab",
     "magic": "0x01a6"
+  },
+  {
+    "system": 0,
+    "name": "Pac-Man",
+    "crc": "0xb681e243",
+    "signature": "0xe1c8f751",
+    "magic": "0x01b0"
   },
   {
     "system": 0,
