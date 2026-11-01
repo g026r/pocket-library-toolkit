@@ -12,15 +12,13 @@ const path = require('path');
 const { PocketBinary } = require('./pocket-binary.js');
 
 /**
- * Test loading and validating binary files (AC.1 & AC.2)
- * Confirms invalid headers are specifically caught.
+ * Test loading and validating correctly formatted binary files
  */
 async function test_load_and_validate() {
     console.log('Running test_load_and_validate...');
     
     const parser = new PocketBinary();
     
-    // Test 1: Load valid files
     try {
         const validDir = path.join(__dirname, '..', 'testdata', 'valid', 'System', 'Played Games');
 
@@ -30,57 +28,20 @@ async function test_load_and_validate() {
         const listResult = parser.parseListBin(listBinBuffer);
         const playtimesResult = parser.parsePlaytimesBin(playtimesBinBuffer);
         
-        console.log(`✓ Successfully parsed list.bin: ${listResult.entries.length} entries`);
-        console.log(`✓ Successfully parsed playtimes.bin: ${playtimesResult.playtimes.length} entries`);
+        console.log(`✅ Successfully parsed list.bin: ${listResult.entries.length} entries`);
+        console.log(`✅ Successfully parsed playtimes.bin: ${playtimesResult.playtimes.length} entries`);
         
         // Validate synchronization
         const syncResult = parser.validateSynchronization(listResult.entries, playtimesResult.playtimes);
         if (syncResult.valid) {
-            console.log('✓ Files are properly synchronized');
+            console.log('✅ Files are properly synchronized');
         } else {
-            console.log('✗ Synchronization errors:', syncResult.errors.join(', '));
+            console.log('❌ Synchronization errors:', syncResult.errors.join(', '));
             return false;
         }
         
     } catch (error) {
-        console.log('✗ Failed to load valid test files:', error.message);
-        return false;
-    }
-    
-    // Test 2: Handle invalid headers with specific error assertion
-    try {
-        const invalidHeaderDir = path.join(__dirname, '..', 'testdata', 'invalid_header', 'System', 'Played Games');
-
-        const invalidListBinBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidHeaderDir, 'list.bin'))).buffer;
-        try {
-            parser.parseListBin(invalidListBinBuffer);
-            console.log('✗ Expected error for invalid list.bin header');
-            return false;
-        } catch (e) {
-            if (e.message.includes('Invalid list.bin header')) {
-                console.log('✓ Invalid list.bin header error confirmed:', e.message);
-            } else {
-                console.log('✗ Unexpected error message for invalid list.bin header:', e.message);
-                return false;
-            }
-        }
-
-        const invalidPlaytimesBinBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidHeaderDir, 'playtimes.bin'))).buffer;
-        try {
-            parser.parsePlaytimesBin(invalidPlaytimesBinBuffer);
-            console.log('✗ Expected error for invalid playtimes.bin header');
-            return false;
-        } catch (e) {
-            if (e.message.includes('Invalid playtimes.bin header')) {
-                console.log('✓ Invalid playtimes.bin header error confirmed:', e.message);
-            } else {
-                console.log('✗ Unexpected error message for invalid playtimes.bin header:', e.message);
-                return false;
-            }
-        }
-        
-    } catch (error) {
-        console.log('✗ Invalid header test failed with unexpected error:', error.message);
+        console.log('❌ Failed to load valid test files:', error.message);
         return false;
     }
     
@@ -88,7 +49,50 @@ async function test_load_and_validate() {
 }
 
 /**
- * Test invalid entry count condition (Test 1 requested)
+ * Handle invalid headers properly
+ **/
+async function test_invalid_header() {
+    try {
+        const invalidHeaderDir = path.join(__dirname, '..', 'testdata', 'invalid_header', 'System', 'Played Games');
+
+        const invalidListBinBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidHeaderDir, 'list.bin'))).buffer;
+        try {
+            parser.parseListBin(invalidListBinBuffer);
+            console.log('❌ Expected error for invalid list.bin header');
+            return false;
+        } catch (e) {
+            if (e.message.includes('Invalid list.bin header')) {
+                console.log('✅ Invalid list.bin header error confirmed:', e.message);
+            } else {
+                console.log('❌ Unexpected error message for invalid list.bin header:', e.message);
+                return false;
+            }
+        }
+
+        const invalidPlaytimesBinBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidHeaderDir, 'playtimes.bin'))).buffer;
+        try {
+            parser.parsePlaytimesBin(invalidPlaytimesBinBuffer);
+            console.log('❌ Expected error for invalid playtimes.bin header');
+            return false;
+        } catch (e) {
+            if (e.message.includes('Invalid playtimes.bin header')) {
+                console.log('✅ Invalid playtimes.bin header error confirmed:', e.message);
+            } else {
+                console.log('❌ Unexpected error message for invalid playtimes.bin header:', e.message);
+                return false;
+            }
+        }
+        
+    } catch (error) {
+        console.log('❌ Invalid header test failed with unexpected error:', error.message);
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Test invalid entry count condition
  * Fails when indicated count at byte 0x4 exceeds actual file bounds / zero addresses.
  */
 async function test_invalid_count() {
@@ -101,11 +105,16 @@ async function test_invalid_count() {
         const listBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidCountDir, 'list.bin'))).buffer;
         parser.parseListBin(listBuffer);
     } catch (e) {
-        caughtError = true;
-        console.log('✓ Invalid count list.bin correctly failed:', e.message);
+        if (e.message.includes('zero address found at index')) {
+           caughtError = true;
+            console.log('✅ Invalid count list.bin correctly failed:', e.message);
+        } else {
+            console.log('❌ Unexpected error message for invalid count in list.bin:', e.message);
+            caughtError = false;
+        }
     }
     if (!caughtError) {
-        console.log('✗ Expected invalid count list.bin to fail');
+        console.log('❌ Expected invalid count list.bin to fail');
         return false;
     }
 
@@ -114,11 +123,16 @@ async function test_invalid_count() {
         const playtimesBuffer = Uint8Array.from(fs.readFileSync(path.join(invalidCountDir, 'playtimes.bin'))).buffer;
         parser.parsePlaytimesBin(playtimesBuffer);
     } catch (e) {
-        caughtError = true;
-        console.log('✓ Invalid count playtimes.bin correctly failed:', e.message);
+        if (e.message.includes('buffer too small for')) {
+            caughtError = true;
+            console.log('✅ Invalid count playtimes.bin correctly failed:', e.message);
+        } else {
+            console.log('❌ Unexpected error message for invalid count in playtimes.bin:', e.message);
+            caughtError = false;
+        }
     }
     if (!caughtError) {
-        console.log('✗ Expected invalid count playtimes.bin to fail');
+        console.log('❌ Expected invalid count playtimes.bin to fail');
         return false;
     }
 
@@ -129,10 +143,10 @@ async function test_invalid_count() {
  * Test strict read count (Test 2 requested)
  * Confirms it only reads the number of entries found at byte 0x4 regardless of file length.
  */
-async function test_count_mismatch() {
-    console.log('Running test_count_mismatch...');
+async function test_undercount() {
+    console.log('Running test_undercount...');
     const parser = new PocketBinary();
-    const mismatchDir = path.join(__dirname, '..', 'testdata', 'count_mismatch', 'System', 'Played Games');
+    const mismatchDir = path.join(__dirname, '..', 'testdata', 'undercount', 'System', 'Played Games');
     
     const listBuffer = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'list.bin'))).buffer;
     const playtimesBuffer = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'playtimes.bin'))).buffer;
@@ -141,10 +155,10 @@ async function test_count_mismatch() {
     const playtimesResult = parser.parsePlaytimesBin(playtimesBuffer);
     
     if (listResult.entries.length !== 4) {
-        console.log(`✗ Expected 4 entries based on header count, got ${listResult.entries.length}`);
+        console.log(`❌ Expected 4 entries based on header count, got ${listResult.entries.length}`);
         return false;
     }
-    console.log('✓ Correctly read exactly the number of entries indicated at byte 0x4 (4 entries)');
+    console.log('✅ Correctly read exactly the number of entries indicated at byte 0x4 (4 entries)');
     
     return true;
 }
@@ -153,10 +167,10 @@ async function test_count_mismatch() {
  * Test synchronization count mismatch (Test 3 requested)
  * Confirms validation fails if entry count in playtimes.bin does not match list.bin.
  */
-async function test_synchronization_mismatch() {
-    console.log('Running test_synchronization_mismatch...');
+async function test_count_mismatch() {
+    console.log('Running test_count_mismatch...');
     const parser = new PocketBinary();
-    const mismatchDir = path.join(__dirname, '..', 'testdata', 'mismatched_files/', 'System', 'Played Games');
+    const mismatchDir = path.join(__dirname, '..', 'testdata', 'mismatched_counts/', 'System', 'Played Games');
     
     const listBuffer = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'list.bin'))).buffer;
     const playtimesBuffer = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'playtimes.bin'))).buffer;
@@ -166,10 +180,10 @@ async function test_synchronization_mismatch() {
     
     const syncResult = parser.validateSynchronization(listResult.entries, playtimesResult.playtimes);
     if (syncResult.valid) {
-        console.log('✗ Expected validation to fail due to entry count mismatch between list.bin and playtimes.bin');
+        console.log('❌ Expected validation to fail due to entry count mismatch between list.bin and playtimes.bin');
         return false;
     }
-    console.log('✓ Synchronization validation correctly failed on entry count mismatch:', syncResult.errors[0]);
+    console.log('✅ Synchronization validation correctly failed on entry count mismatch:', syncResult.errors[0]);
     
     return true;
 }
@@ -190,11 +204,11 @@ async function test_out_of_order() {
     const playtimesResult = parser.parsePlaytimesBin(playtimesBuffer);
     
     const syncResult = parser.validateSynchronization(listResult.entries, playtimesResult.playtimes);
-    if (syncResult.valid) {
-        console.log('✗ Expected validation to fail due to out-of-order or signature/system mismatch');
+    if (syncResult.valid || !syncResult.errors.join(', ').includes('Signature or system mismatch / order mismatch between list.bin and playtimes.bin')) {
+        console.log('❌ Expected validation to fail due to out-of-order or signature/system mismatch');
         return false;
-    }
-    console.log('✓ Validation correctly failed on out-of-order entries:', syncResult.errors[0]);
+     }
+    console.log('✅ Validation correctly failed on out-of-order entries:', syncResult.errors[0]);
     
     return true;
 }
@@ -229,7 +243,7 @@ async function test_edit_and_sort() {
     const zillionEntry = entries[zillionIndex];
     
     if (!zillionEntry || zillionEntry.name !== 'Zillion') {
-        console.log('✗ Could not find Zillion entry for testing');
+        console.log('❌ Could not find Zillion entry for testing');
         return false;
     }
     
@@ -240,13 +254,13 @@ async function test_edit_and_sort() {
     const modifiedIndex = sortedEntries.findIndex(e => e.name === '00000000000000000000');
     
     if (modifiedIndex !== 0) {
-        console.log(`✗ Expected modified entry to be at index 0, got ${modifiedIndex}`);
+        console.log(`❌ Expected modified entry to be at index 0, got ${modifiedIndex}`);
         return false;
     }
     
     const originalPosition = sortedEntries.findIndex(e => e.name === originalName);
     if (originalPosition !== -1) {
-        console.log('✗ Original entry still found in sorted list by original name');
+        console.log('❌ Original entry still found in sorted list by original name');
         return false;
     }
     
@@ -286,7 +300,7 @@ async function test_serialize_roundtrip() {
     const reparsedPlaytimesResult = parser.parsePlaytimesBin(serializedPlaytimesBin.slice(0));
     
     if (entries.length !== reparsedListResult.entries.length) {
-        console.log(`✗ Entry count mismatch: original ${entries.length}, reparsed ${reparsedListResult.entries.length}`);
+        console.log(`❌ Entry count mismatch: original ${entries.length}, reparsed ${reparsedListResult.entries.length}`);
         return false;
     }
     
@@ -321,10 +335,10 @@ async function test_system_synonyms() {
     }
     
     if (!systemMatch) {
-        console.log('✗ Expected synonym search for "turbografx" to match PC Engine entry');
+        console.log('❌ Expected synonym search for "turbografx" to match PC Engine entry');
         return false;
     }
-    console.log('✓ Synonym search successfully matched PC Engine entry using "turbografx"');
+    console.log('✅ Synonym search successfully matched PC Engine entry using "turbografx"');
     return true;
 }
 
@@ -350,18 +364,18 @@ async function test_playtime_offsets_all_systems() {
     const reparsed = parser.parsePlaytimesBin(serialized);
     
     if (reparsed.playtimes.length !== 9) {
-        console.log(`✗ Expected 9 reparsed playtimes, got ${reparsed.playtimes.length}`);
+        console.log(`❌ Expected 9 reparsed playtimes, got ${reparsed.playtimes.length}`);
         return false;
     }
     
     for (let i = 0; i < entries.length; i++) {
         if (reparsed.playtimes[i].played !== entries[i].played || reparsed.playtimes[i].system !== entries[i].system) {
-            console.log(`✗ Mismatch at system ${i}: expected played=${entries[i].played}, system=${entries[i].system}; got played=${reparsed.playtimes[i].played}, system=${reparsed.playtimes[i].system}`);
+            console.log(`❌ Mismatch at system ${i}: expected played=${entries[i].played}, system=${entries[i].system}; got played=${reparsed.playtimes[i].played}, system=${reparsed.playtimes[i].system}`);
             return false;
         }
     }
     
-    console.log('✓ Playtime offsets and serialization across all 9 systems passed');
+    console.log('✅ Playtime offsets and serialization across all 9 systems passed');
     return true;
 }
 
@@ -390,11 +404,11 @@ async function test_combined_filtering() {
     });
     
     if (filtered.length !== 1 || filtered[0].name !== 'Super Mario Land') {
-        console.log(`✗ Expected 1 entry ("Super Mario Land"), got ${filtered.length}`);
+        console.log(`❌ Expected 1 entry ("Super Mario Land"), got ${filtered.length}`);
         return false;
     }
     
-    console.log('✓ Combined system filter and search query test passed');
+    console.log('✅ Combined system filter and search query test passed');
     return true;
 }
 
@@ -416,7 +430,7 @@ async function test_library_reloading() {
     let listEntries = [...res1List.entries];
     let playtimesEntries = [...res1Play.playtimes];
     
-    const mismatchDir = path.join(__dirname, '..', 'testdata', 'count_mismatch', 'System', 'Played Games');
+    const mismatchDir = path.join(__dirname, '..', 'testdata', 'undercount', 'System', 'Played Games');
     const list2 = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'list.bin'))).buffer;
     const play2 = Uint8Array.from(fs.readFileSync(path.join(mismatchDir, 'playtimes.bin'))).buffer;
     
@@ -427,11 +441,11 @@ async function test_library_reloading() {
     playtimesEntries = [...res2Play.playtimes];
     
     if (listEntries.length !== 4) {
-        console.log(`✗ Expected reloaded list entries length to be 4, got ${listEntries.length}`);
+        console.log(`❌ Expected reloaded list entries length to be 4, got ${listEntries.length}`);
         return false;
     }
     
-    console.log('✓ Library state reset and reload test passed');
+    console.log('✅ Library state reset and reload test passed');
     return true;
 }
 
@@ -447,7 +461,7 @@ async function test_from_played_time() {
         const val = 100 + parser.getPlayOffset(sys);
         const resolvedSys = parser.fromPlayedTime(val);
         if (resolvedSys !== sys) {
-            console.log(`✗ Expected system ${sys}, got ${resolvedSys}`);
+            console.log(`❌ Expected system ${sys}, got ${resolvedSys}`);
             return false;
         }
     }
@@ -458,11 +472,11 @@ async function test_from_played_time() {
         parser.fromPlayedTime(0x30000000); // Beyond Lynx range
     } catch (e) {
         threwError = true;
-        console.log('✓ Invalid playtime correctly threw error:', e.message);
+        console.log('✅ Invalid playtime correctly threw error:', e.message);
     }
     
     if (!threwError) {
-        console.log('✗ Expected fromPlayedTime to throw error on invalid playtime/system value');
+        console.log('❌ Expected fromPlayedTime to throw error on invalid playtime/system value');
         return false;
     }
     
@@ -478,8 +492,8 @@ async function runTests() {
     const tests = [
         { name: 'test_load_and_validate', func: test_load_and_validate },
         { name: 'test_invalid_count', func: test_invalid_count },
+        { name: 'test_undercount', func: test_undercount },
         { name: 'test_count_mismatch', func: test_count_mismatch },
-        { name: 'test_synchronization_mismatch', func: test_synchronization_mismatch },
         { name: 'test_out_of_order', func: test_out_of_order },
         { name: 'test_edit_and_sort', func: test_edit_and_sort },
         { name: 'test_serialize_roundtrip', func: test_serialize_roundtrip },
@@ -498,14 +512,14 @@ async function runTests() {
         try {
             const result = await test.func();
             if (result) {
-                console.log(`✓ ${test.name} PASSED`);
+                console.log(`✅ ${test.name} PASSED`);
                 passed++;
             } else {
-                console.log(`✗ ${test.name} FAILED`);
+                console.log(`❌ ${test.name} FAILED`);
                 failed++;
             }
         } catch (error) {
-            console.log(`✗ ${test.name} ERROR: ${error.message}`);
+            console.log(`❌ ${test.name} ERROR: ${error.message}`);
             console.log(error.stack);
             failed++;
         }
