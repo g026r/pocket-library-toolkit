@@ -1,6 +1,6 @@
 module github.com/g026r/pocket-library-toolkit
 
-go 1.26
+go 1.27.3
 
 require (
 	github.com/charmbracelet/bubbles v1.0.0
@@ -30,7 +30,7 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/sahilm/fuzzy v0.1.3 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
-	golang.org/x/image v0.44.0 // indirect
-	golang.org/x/sys v0.47.0 // indirect
-	golang.org/x/text v0.40.0 // indirect
+	golang.org/x/image v0.47.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 )
