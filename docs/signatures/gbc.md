@@ -582,7 +582,7 @@
 - Signature: `0x67cc9064`
 - Magic Number: `0x0b0b`
 
-## Super Mario Bros. Deluxe
+## Super Mario Bros. Deluxe (Europe) (Rev 2)
 
 - CRC32: `0x62bbae83`
 - Signature: `0xbb85a400`
