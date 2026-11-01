@@ -25,7 +25,7 @@ func TestLoadThumbs(t *testing.T) {
 		count int
 		err   bool
 	}{
-		"testdata/count_mismatch": {
+		"testdata/undercount": {
 			count: 2,
 		},
 		"testdata/invalid_header": {
@@ -71,7 +71,7 @@ func TestLoadPlaytimes(t *testing.T) {
 		count int
 		err   bool
 	}{
-		"testdata/count_mismatch": {
+		"testdata/undercount": {
 			count: 4,
 		},
 		"testdata/invalid_header": {
@@ -215,7 +215,7 @@ func TestLoadEntries(t *testing.T) {
 
 	t.Run("count mismatch", func(t *testing.T) {
 		t.Parallel()
-		e, err := LoadEntries(os.DirFS("../../testdata/count_mismatch"))
+		e, err := LoadEntries(os.DirFS("../../testdata/undercount"))
 		if err != nil {
 			t.Errorf("Expected nil got %v", err)
 		}

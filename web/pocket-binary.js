@@ -527,7 +527,6 @@ class PocketBinary {
         const results = {
             valid: true,
             errors: [],
-            warnings: []
         };
 
         if (listEntries.length !== playtimeEntries.length) {
