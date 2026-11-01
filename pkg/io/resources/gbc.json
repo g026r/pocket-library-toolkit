@@ -1,10 +1,24 @@
 [
   {
     "system": 1,
+    "name": "007: The World Is Not Enough",
+    "crc": "0xe038e666",
+    "signature": "0x70f0d253",
+    "magic": "0x065d"
+  },
+  {
+    "system": 1,
     "name": "31 in 1",
     "crc": "0x0eb8ddfb",
     "signature": "0xacaad162",
     "magic": "0x0660"
+  },
+  {
+    "system": 1,
+    "name": "102 Dalmatians: Puppies to the Rescue",
+    "crc": "0x56b83539",
+    "signature": "0x0c16d7fa",
+    "magic": "0x0663"
   },
   {
     "system": 1,
@@ -19,6 +33,20 @@
     "crc": "0x04c8c858",
     "signature": "0x4c08f8e7",
     "magic": "0x0669"
+  },
+  {
+    "system": 1,
+    "name": "All-Star Baseball 2000",
+    "crc": "0xe17f59a5",
+    "signature": "0xd26ffd35",
+    "magic": "0x0674"
+  },
+  {
+    "system": 1,
+    "name": "Armorines: Project S.W.A.R.M.",
+    "crc": "0xea3b9c73",
+    "signature": "0xfcf76e78",
+    "magic": "0x0686"
   },
   {
     "system": 1,
@@ -40,6 +68,13 @@
     "crc": "0xd2af64ce",
     "signature": "0x80fa3cda",
     "magic": "0x06aa"
+  },
+  {
+    "system": 1,
+    "name": "Beauty and the Beast: A Board Game Adventure",
+    "crc": "0x6de1d581",
+    "signature": "0xb1e087c0",
+    "magic": "0x06cb"
   },
   {
     "system": 1,
@@ -127,6 +162,20 @@
   },
   {
     "system": 1,
+    "name": "Croc",
+    "crc": "0x4664a167",
+    "signature": "0xdea4ceee",
+    "magic": "0x0728"
+  },
+  {
+    "system": 1,
+    "name": "Croc 2",
+    "crc": "0xc1d60129",
+    "signature": "0xcbb77723",
+    "magic": "0x0729"
+  },
+  {
+    "system": 1,
     "name": "Crystalis",
     "crc": "0x909bb02d",
     "signature": "0x3e16f9de",
@@ -138,6 +187,13 @@
     "crc": "0xe2071293",
     "signature": "0x97350783",
     "magic": "0x073b"
+  },
+  {
+    "system": 1,
+    "name": "Dinosaur",
+    "crc": "0x276ecaae",
+    "signature": "0xa8594b73",
+    "magic": "0x0755"
   },
   {
     "system": 1,
@@ -246,6 +302,20 @@
   },
   {
     "system": 1,
+    "name": "Heroes of Might and Magic",
+    "crc": "0xbb0672a6",
+    "signature": "0x70a74a6b",
+    "magic": "0x083a"
+  },
+  {
+    "system": 1,
+    "name": "Indiana Jones and the Infernal Machine",
+    "crc": "0x7fff1142",
+    "signature": "0xa0a1b8a4",
+    "magic": "0x0854"
+  },
+  {
+    "system": 1,
     "name": "Korokoro Kirby",
     "crc": "0xc0face3d",
     "signature": "0xbb5e9bee",
@@ -288,6 +358,20 @@
   },
   {
     "system": 1,
+    "name": "LEGO Alpha Team",
+    "crc": "0x6d7ec41b",
+    "signature": "0x2c6ef0c7",
+    "magic": "0x08cc"
+  },
+  {
+    "system": 1,
+    "name": "Madden NFL 2002",
+    "crc": "0xde1338d2",
+    "signature": "0xc48a20b4",
+    "magic": "0x0905"
+  },
+  {
+    "system": 1,
     "name": "Magical Drop (USA)",
     "crc": "0xe4188a79",
     "signature": "0xd487a918",
@@ -299,6 +383,20 @@
     "crc": "0x905ad0cb",
     "signature": "0xd7eaeecc",
     "magic": "0x0916"
+  },
+  {
+    "system": 1,
+    "name": "Mary-Kate \u0026 Ashley: Get a Clue!",
+    "crc": "0x46faa730",
+    "signature": "0x294c72af",
+    "magic": "0x091c"
+  },
+  {
+    "system": 1,
+    "name": "Mary-Kate and Ashley: Pocket Planner",
+    "crc": "0x84a880b9",
+    "signature": "0x31344860",
+    "magic": "0x091e"
   },
   {
     "system": 1,
@@ -341,6 +439,27 @@
     "crc": "0x04b0c5d6",
     "signature": "0x7212c8f5",
     "magic": "0x0943"
+  },
+  {
+    "system": 1,
+    "name": "Mia Hamm Soccer Shootout",
+    "crc": "0xd77971c0",
+    "signature": "0x66ceb483",
+    "magic": "0x0946"
+  },
+  {
+    "system": 1,
+    "name": "Missile Command",
+    "crc": "0x47543c51",
+    "signature": "0x8730976c",
+    "magic": "0x0959"
+  },
+  {
+    "system": 1,
+    "name": "Mortal Kombat 4",
+    "crc": "0x4eb71448",
+    "signature": "0x14cea1ba",
+    "magic": "0x0974"
   },
   {
     "system": 1,
@@ -428,6 +547,13 @@
   },
   {
     "system": 1,
+    "name": "Polaris SnoCross",
+    "crc": "0xdd8b189e",
+    "signature": "0x70760aaa",
+    "magic": "0x0a13"
+  },
+  {
+    "system": 1,
     "name": "Prince of Persia",
     "crc": "0xe6bec6d1",
     "signature": "0x6448e616",
@@ -442,10 +568,24 @@
   },
   {
     "system": 1,
+    "name": "Quest for Camelot",
+    "crc": "0xd903db7d",
+    "signature": "0x47575bda",
+    "magic": "0x0a4d"
+  },
+  {
+    "system": 1,
     "name": "Rainbow Islands",
     "crc": "0x6decc6b3",
     "signature": "0xad1344f3",
     "magic": "0x0a51"
+  },
+  {
+    "system": 1,
+    "name": "Rampage: World Tour",
+    "crc": "0xb029017f",
+    "signature": "0x78627b0a",
+    "magic": "0x0a55"
   },
   {
     "system": 1,
@@ -467,6 +607,20 @@
     "crc": "0xfc1d4089",
     "signature": "0x2573fb55",
     "magic": "0x0a8c"
+  },
+  {
+    "system": 1,
+    "name": "Power Rangers: Lightspeed Rescue",
+    "crc": "0x99869172",
+    "signature": "0x0492d994",
+    "magic": "0x0a94"
+  },
+  {
+    "system": 1,
+    "name": "Scooby-Doo!: Classic Creep Capers",
+    "crc": "0xe3704755",
+    "signature": "0x560f32cf",
+    "magic": "0x0aa5"
   },
   {
     "system": 1,
@@ -526,6 +680,13 @@
   },
   {
     "system": 1,
+    "name": "Super Mario Bros. Deluxe",
+    "crc": "0x62bbae83",
+    "signature": "0xbb85a400",
+    "magic": "0x0b0c"
+  },
+  {
+    "system": 1,
     "name": "Super Mario Bros. Deluxe (USA, Europe) (Rev 0)",
     "crc": "0xa4cd26ff",
     "signature": "0x1e1c5834",
@@ -551,6 +712,27 @@
     "crc": "0x0a0f9289",
     "signature": "0x9ea0c519",
     "magic": "0x0b4d"
+  },
+  {
+    "system": 1,
+    "name": "Tom Clancy's Rainbow Six",
+    "crc": "0xe72f2683",
+    "signature": "0x7f9e053b",
+    "magic": "0x0b58"
+  },
+  {
+    "system": 1,
+    "name": "Tony Hawk's Pro Skater 2",
+    "crc": "0x2c27c61f",
+    "signature": "0xdd4b448c",
+    "magic": "0x0b60"
+  },
+  {
+    "system": 1,
+    "name": "Toy Story 2",
+    "crc": "0x47aecb95",
+    "signature": "0xe7f158b7",
+    "magic": "0x0b73"
   },
   {
     "system": 1,

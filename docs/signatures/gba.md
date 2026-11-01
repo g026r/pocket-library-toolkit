@@ -78,6 +78,12 @@
 - Signature: `0x697980f4`
 - Magic Number: `0x0ddd`
 
+## Classic NES Series - Excitebike
+
+- CRC32: `0x67d9a2a6`
+- Signature: `0x451ec8be`
+- Magic Number: `0x0dea`
+
 ## Classic NES Series - Metroid
 
 - CRC32: `0x9a243b9b`
@@ -94,6 +100,12 @@
 
 - CRC32: `0x6d49cabf`
 - Signature: `0x7ec67f29`
+- Magic Number: `0x0dee`
+
+## Classic NES Series - Super Mario Bros.
+
+- CRC32: `0xf7129225`
+- Signature: `0x0353c27a`
 - Magic Number: `0x0dee`
 
 ## Classic NES Series - Zelda II - The Adventure of Link
@@ -161,6 +173,12 @@
 - CRC32: `0xe60ec183`
 - Signature: `0x5126afad`
 - Magic Number: `0x0ede`
+
+## E.T.: The Extra-Terrestrial
+
+- CRC32: `0x8b082cce`
+- Signature: `0xed116076`
+- Magic Number: `0x0efc`
 
 ## Famicom Mini 01 - Super Mario Bros. (Rev 1)
 
@@ -347,6 +365,12 @@
 - CRC32: `0x7cd86b02`
 - Signature: `0xb2323b7f`
 - Magic Number: `0x1051`
+
+## Harry Potter: Quidditch World Cup
+
+- CRC32: `0x486041a4`
+- Signature: `0xb134f1c9`
+- Magic Number: `0x1076`
 
 ## Harvest Moon: Friends of Mineral Town
 
@@ -581,6 +605,12 @@
 - CRC32: `0x41bb7f8a`
 - Signature: `0x137d6fb3`
 - Magic Number: `0x1473`
+
+## The Scorpion King: Sword of Osiris
+
+- CRC32: `0x6e0a8585`
+- Signature: `0xeb92a383`
+- Magic Number: `0x14a0`
 
 ## Screw Breaker: Goushin DoriRureRo
 

@@ -1,10 +1,22 @@
 # Game Boy Color CRC32s, cartridge signatures, and magic numbers
 
+## 007: The World Is Not Enough
+
+- CRC32: `0xe038e666`
+- Signature: `0x70f0d253`
+- Magic Number: `0x065d`
+
 ## 31 in 1
 
 - CRC32: `0x0eb8ddfb`
 - Signature: `0xacaad162`
 - Magic Number: `0x0660`
+
+## 102 Dalmatians: Puppies to the Rescue
+
+- CRC32: `0x56b83539`
+- Signature: `0x0c16d7fa`
+- Magic Number: `0x0663`
 
 ## 1942
 
@@ -17,6 +29,18 @@
 - CRC32: `0x04c8c858`
 - Signature: `0x4c08f8e7`
 - Magic Number: `0x0669`
+
+## All-Star Baseball 2000
+
+- CRC32: `0xe17f59a5`
+- Signature: `0xd26ffd35`
+- Magic Number: `0x0674`
+
+## Armorines: Project S.W.A.R.M.
+
+- CRC32: `0xea3b9c73`
+- Signature: `0xfcf76e78`
+- Magic Number: `0x0686`
 
 ## ATV Racing & Karate Joe
 
@@ -35,6 +59,12 @@
 - CRC32: `0xd2af64ce`
 - Signature: `0x80fa3cda`
 - Magic Number: `0x06aa`
+
+## Beauty and the Beast: A Board Game Adventure
+
+- CRC32: `0x6de1d581`
+- Signature: `0xb1e087c0`
+- Magic Number: `0x06cb`
 
 ## Bionic Commando: Elite Forces
 
@@ -108,6 +138,18 @@
 - Signature: `0x812a06eb`
 - Magic Number: `0x071f`
 
+## Croc
+
+- CRC32: `0x4664a167`
+- Signature: `0xdea4ceee`
+- Magic Number: `0x0728`
+
+## Croc 2
+
+- CRC32: `0xc1d60129`
+- Signature: `0xcbb77723`
+- Magic Number: `0x0729`
+
 ## Crystalis
 
 - CRC32: `0x909bb02d`
@@ -119,6 +161,12 @@
 - CRC32: `0xe2071293`
 - Signature: `0x97350783`
 - Magic Number: `0x073b`
+
+## Dinosaur
+
+- CRC32: `0x276ecaae`
+- Signature: `0xa8594b73`
+- Magic Number: `0x0755`
 
 ## Donkey Kong 2001
 
@@ -210,6 +258,18 @@
 - Signature: `0xaf3f157c`
 - Magic Number: `0x0830`
 
+## Heroes of Might and Magic
+
+- CRC32: `0xbb0672a6`
+- Signature: `0x70a74a6b`
+- Magic Number: `0x083a`
+
+## Indiana Jones and the Infernal Machine
+
+- CRC32: `0x7fff1142`
+- Signature: `0xa0a1b8a4`
+- Magic Number: `0x0854`
+
 ## Korokoro Kirby
 
 - CRC32: `0xc0face3d`
@@ -246,6 +306,18 @@
 - Signature: `0x5355f407`
 - Magic Number: `0x08ca`
 
+## LEGO Alpha Team
+
+- CRC32: `0x6d7ec41b`
+- Signature: `0x2c6ef0c7`
+- Magic Number: `0x08cc`
+
+## Madden NFL 2002
+
+- CRC32: `0xde1338d2`
+- Signature: `0xc48a20b4`
+- Magic Number: `0x0905`
+
 ## Magical Drop (USA)
 
 - CRC32: `0xe4188a79`
@@ -257,6 +329,18 @@
 - CRC32: `0x905ad0cb`
 - Signature: `0xd7eaeecc`
 - Magic Number: `0x0916`
+
+## Mary-Kate & Ashley: Get a Clue!
+
+- CRC32: `0x46faa730`
+- Signature: `0x294c72af`
+- Magic Number: `0x091c`
+
+## Mary-Kate and Ashley: Pocket Planner
+
+- CRC32: `0x84a880b9`
+- Signature: `0x31344860`
+- Magic Number: `0x091e`
 
 ## Medarot 4: Kuwagata Version
 
@@ -293,6 +377,24 @@
 - CRC32: `0x04b0c5d6`
 - Signature: `0x7212c8f5`
 - Magic Number: `0x0943`
+
+## Mia Hamm Soccer Shootout
+
+- CRC32: `0xd77971c0`
+- Signature: `0x66ceb483`
+- Magic Number: `0x0946`
+
+## Missile Command
+
+- CRC32: `0x47543c51`
+- Signature: `0x8730976c`
+- Magic Number: `0x0959`
+
+## Mortal Kombat 4
+
+- CRC32: `0x4eb71448`
+- Signature: `0x14cea1ba`
+- Magic Number: `0x0974`
 
 ## Mr. Driller (USA)
 
@@ -366,6 +468,12 @@
 - Signature: `0x8d570590`
 - Magic Number: `0x0a12`
 
+## Polaris SnoCross
+
+- CRC32: `0xdd8b189e`
+- Signature: `0x70760aaa`
+- Magic Number: `0x0a13`
+
 ## Prince of Persia
 
 - CRC32: `0xe6bec6d1`
@@ -378,11 +486,23 @@
 - Signature: `0x3055b212`
 - Magic Number: `0x0a3a`
 
+## Quest for Camelot
+
+- CRC32: `0xd903db7d`
+- Signature: `0x47575bda`
+- Magic Number: `0x0a4d`
+
 ## Rainbow Islands
 
 - CRC32: `0x6decc6b3`
 - Signature: `0xad1344f3`
 - Magic Number: `0x0a51`
+
+## Rampage: World Tour
+
+- CRC32: `0xb029017f`
+- Signature: `0x78627b0a`
+- Magic Number: `0x0a55`
 
 ## Resident Evil Gaiden (USA)
 
@@ -401,6 +521,18 @@
 - CRC32: `0xfc1d4089`
 - Signature: `0x2573fb55`
 - Magic Number: `0x0a8c`
+
+## Power Rangers: Lightspeed Rescue
+
+- CRC32: `0x99869172`
+- Signature: `0x0492d994`
+- Magic Number: `0x0a94`
+
+## Scooby-Doo!: Classic Creep Capers
+
+- CRC32: `0xe3704755`
+- Signature: `0x560f32cf`
+- Magic Number: `0x0aa5`
 
 ## Sgt. Rock: On the Frontline
 
@@ -450,6 +582,12 @@
 - Signature: `0x67cc9064`
 - Magic Number: `0x0b0b`
 
+## Super Mario Bros. Deluxe
+
+- CRC32: `0x62bbae83`
+- Signature: `0xbb85a400`
+- Magic Number: `0x0b0c`
+
 ## Super Mario Bros. Deluxe (USA, Europe) (Rev 0)
 
 - CRC32: `0xa4cd26ff`
@@ -473,6 +611,24 @@
 - CRC32: `0x0a0f9289`
 - Signature: `0x9ea0c519`
 - Magic Number: `0x0b4d`
+
+## Tom Clancy's Rainbow Six
+
+- CRC32: `0xe72f2683`
+- Signature: `0x7f9e053b`
+- Magic Number: `0x0b58`
+
+## Tony Hawk's Pro Skater 2
+
+- CRC32: `0x2c27c61f`
+- Signature: `0xdd4b448c`
+- Magic Number: `0x0b60`
+
+## Toy Story 2
+
+- CRC32: `0x47aecb95`
+- Signature: `0xe7f158b7`
+- Magic Number: `0x0b73`
 
 ## Tyrannosaurus Tex
 

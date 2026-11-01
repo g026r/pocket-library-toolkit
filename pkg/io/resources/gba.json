@@ -92,6 +92,13 @@
   },
   {
     "system": 2,
+    "name": "Classic NES Series - Excitebike",
+    "crc": "0x67d9a2a6",
+    "signature": "0x451ec8be",
+    "magic": "0x0dea"
+  },
+  {
+    "system": 2,
     "name": "Classic NES Series - Metroid",
     "crc": "0x9a243b9b",
     "signature": "0x00a4ae05",
@@ -109,6 +116,13 @@
     "name": "Classic NES Series - The Legend of Zelda",
     "crc": "0x6d49cabf",
     "signature": "0x7ec67f29",
+    "magic": "0x0dee"
+  },
+  {
+    "system": 2,
+    "name": "Classic NES Series - Super Mario Bros.",
+    "crc": "0xf7129225",
+    "signature": "0x0353c27a",
     "magic": "0x0dee"
   },
   {
@@ -187,6 +201,13 @@
     "crc": "0xe60ec183",
     "signature": "0x5126afad",
     "magic": "0x0ede"
+  },
+  {
+    "system": 2,
+    "name": "E.T.: The Extra-Terrestrial",
+    "crc": "0x8b082cce",
+    "signature": "0xed116076",
+    "magic": "0x0efc"
   },
   {
     "system": 2,
@@ -271,13 +292,6 @@
     "crc": "0xadac99bd",
     "signature": "0x63b53a12",
     "magic": "0x0f4b"
-  },
-  {
-    "system": 2,
-    "name": "Famicom Mini 16 - Dig Dug",
-    "crc": "0xee4c3504",
-    "signature": "0x4a57126b",
-    "magic": "0x0f4c"
   },
   {
     "system": 2,
@@ -411,6 +425,13 @@
     "crc": "0x7cd86b02",
     "signature": "0xb2323b7f",
     "magic": "0x1051"
+  },
+  {
+    "system": 2,
+    "name": "Harry Potter: Quidditch World Cup",
+    "crc": "0x486041a4",
+    "signature": "0xb134f1c9",
+    "magic": "0x1076"
   },
   {
     "system": 2,
@@ -684,6 +705,13 @@
     "crc": "0x41bb7f8a",
     "signature": "0x137d6fb3",
     "magic": "0x1473"
+  },
+  {
+    "system": 2,
+    "name": "The Scorpion King: Sword of Osiris",
+    "crc": "0x6e0a8585",
+    "signature": "0xeb92a383",
+    "magic": "0x14a0"
   },
   {
     "system": 2,
