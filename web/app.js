@@ -33,8 +33,8 @@ class PocketLibraryApp {
             systemFilters: document.getElementById('systemFilters'),
             noResults: document.getElementById('noResults'),
             exportSection: document.getElementById('exportSection'),
-            downloadListBin: document.getElementById('downloadListBin'),
-            downloadPlaytimesBin: document.getElementById('downloadPlaytimesBin'),
+            // downloadListBin: document.getElementById('downloadListBin'),
+            // downloadPlaytimesBin: document.getElementById('downloadPlaytimesBin'),
             downloadBoth: document.getElementById('downloadBoth'),
             editModal: document.getElementById('editModal'),
             editGameName: document.getElementById('editGameName'),
@@ -75,8 +75,8 @@ class PocketLibraryApp {
         });
         
         // Export buttons
-        this.ui.downloadListBin.addEventListener('click', () => this.downloadFile('list'));
-        this.ui.downloadPlaytimesBin.addEventListener('click', () => this.downloadFile('playtimes'));
+        // this.ui.downloadListBin.addEventListener('click', () => this.downloadFile('list'));
+        // this.ui.downloadPlaytimesBin.addEventListener('click', () => this.downloadFile('playtimes'));
         this.ui.downloadBoth.addEventListener('click', () => this.downloadFile('both'));
         
         // Modal events
