@@ -36,6 +36,7 @@ var (
 	errorStyle   = lipgloss.NewStyle().Foreground(red).PaddingLeft(6)
 
 	playRegex = regexp.MustCompile(`^((?P<hours>\d+)[hH])?((?P<minutes>\d+)[mM])?((?P<seconds>\d+)[sS])?$`)
+	asciiRegex = regexp.MustCompile(`^[\x20-\x7E]*$`)
 )
 
 // FocusBlurViewer really exists so that Button & textinput.Model instances can be mostly treated the same
@@ -133,7 +134,7 @@ func NewInputs() []FocusBlurViewer {
 
 	n := Input{textinput.New()}
 	n.Prompt = "Name: "
-	n.Validate = notBlank
+	n.Validate = nameValidate
 	n.PromptStyle = itemStyle
 	n.Cursor.Style = selectedItemStyle.PaddingLeft(0)
 	n.TextStyle = itemStyle.PaddingLeft(2)
@@ -208,9 +209,28 @@ func sysValidate(s string) error {
 	return nil
 }
 
+func nameValidate(s string) error {
+	if err := notBlank(s); err != nil {
+		return err
+	}
+
+	if err := ascii(s); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func notBlank(s string) error {
 	if len(strings.TrimSpace(s)) == 0 {
 		return fmt.Errorf("Value cannot be blank")
+	}
+	return nil
+}
+
+func ascii(s string) error {
+	if !asciiRegex.MatchString(s) {
+		return fmt.Errorf("Only numbers, letters, spaces and basic punctuaction is permitted")
 	}
 	return nil
 }
