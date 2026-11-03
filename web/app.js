@@ -84,13 +84,24 @@ class PocketLibraryApp {
         this.ui.cancelEdit.addEventListener('click', () => this.closeEditModal());
         this.ui.saveEdit.addEventListener('click', () => this.saveEntryEdit());
         
-        this.ui.editGameName.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                this.saveEntryEdit();
-            } else if (e.key === 'Escape') {
-                this.closeEditModal();
-            }
-        });
+        if (this.ui.editGameName) {
+            this.ui.editGameName.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    this.saveEntryEdit();
+                } else if (e.key === 'Escape') {
+                    this.closeEditModal();
+                }
+            });
+            this.ui.editGameName.addEventListener('input', () => {
+                const val = this.ui.editGameName.value;
+                const asciiRegex = /^[\x20-\x7E]*$/;
+                if (!asciiRegex.test(val)) {
+                    this.ui.editGameName.classList.add('error-input');
+                } else {
+                    this.ui.editGameName.classList.remove('error-input');
+                }
+            });
+        }
 
         this.ui.editPlaytime.addEventListener('keyup', (e) => {
             if (e.key === 'Enter') {
@@ -517,6 +528,7 @@ class PocketLibraryApp {
         this.selectedEntry = entry;
         this.ui.editGameName.value = entry.name;
         this.ui.editPlaytime.value = entry.played;
+        this.ui.editGameName.classList.remove('error-input');
         this.ui.editPlaytime.classList.remove('error-input');
         this.ui.editModal.classList.add('show');
         this.ui.editGameName.focus();
@@ -531,6 +543,7 @@ class PocketLibraryApp {
         this.selectedEntry = null;
         this.ui.editGameName.value = '';
         this.ui.editPlaytime.value = '';
+        this.ui.editGameName.classList.remove('error-input');
         this.ui.editPlaytime.classList.remove('error-input');
     }
 
@@ -542,9 +555,18 @@ class PocketLibraryApp {
         
         const newName = this.ui.editGameName.value.trim();
         if (!newName) {
+            this.ui.editGameName.classList.add('error-input');
             this.showError('Game name cannot be empty');
             return;
         }
+        
+        const asciiRegex = /^[\x20-\x7E]+$/;
+        if (!asciiRegex.test(newName)) {
+            this.ui.editGameName.classList.add('error-input');
+            this.showError('Game name must contain only basic ASCII characters (letters, numbers, and punctuation)');
+            return;
+        }
+        this.ui.editGameName.classList.remove('error-input');
         
         const newPlaytime = parseInt(this.ui.editPlaytime.value, 10);
         if (isNaN(newPlaytime) || newPlaytime < 0 || newPlaytime > 0x03FFFFFF) {
