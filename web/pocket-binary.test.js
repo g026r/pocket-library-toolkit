@@ -484,6 +484,29 @@ async function test_from_played_time() {
 }
 
 /**
+ * Test basic ASCII character set validation for game titles
+ */
+async function test_ascii_title_validation() {
+    console.log('Running test_ascii_title_validation...');
+    const asciiRegex = /^[\x20-\x7E]+$/;
+    
+    const validTitle = 'Super Mario Land (World) [ ! ]';
+    const invalidTitle = 'Super Mario 🎮'; // contains emoji / non-ASCII
+    
+    if (!asciiRegex.test(validTitle)) {
+        console.log('❌ Expected valid title to pass ASCII validation');
+        return false;
+    }
+    if (asciiRegex.test(invalidTitle)) {
+        console.log('❌ Expected invalid title with non-ASCII to fail ASCII validation');
+        return false;
+    }
+    
+    console.log('✅ ASCII title validation test passed');
+    return true;
+}
+
+/**
  * Run all tests
  */
 async function runTests() {
@@ -501,7 +524,8 @@ async function runTests() {
         { name: 'test_playtime_offsets_all_systems', func: test_playtime_offsets_all_systems },
         { name: 'test_combined_filtering', func: test_combined_filtering },
         { name: 'test_library_reloading', func: test_library_reloading },
-        { name: 'test_from_played_time', func: test_from_played_time }
+        { name: 'test_from_played_time', func: test_from_played_time },
+        { name: 'test_ascii_title_validation', func: test_ascii_title_validation }
     ];
     
     let passed = 0;
