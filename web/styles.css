@@ -68,6 +68,21 @@ header p {
     opacity: 0.9;
 }
 
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: white;
+}
+
+footer p {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+footer a {
+    color: white;
+}
+
 /* Upload Section */
 .upload-section {
     background: var(--surface);
