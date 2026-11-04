@@ -36,7 +36,7 @@ var (
 	errorStyle   = lipgloss.NewStyle().Foreground(red).PaddingLeft(6)
 
 	playRegex = regexp.MustCompile(`^((?P<hours>\d+)[hH])?((?P<minutes>\d+)[mM])?((?P<seconds>\d+)[sS])?$`)
-	asciiRegex = regexp.MustCompile(`^[\x20-\x7E]*$`)
+	asciiRegex = regexp.MustCompile(`^[\x20-\x7E]+$`)
 )
 
 // FocusBlurViewer really exists so that Button & textinput.Model instances can be mostly treated the same
@@ -213,7 +213,6 @@ func nameValidate(s string) error {
 	if err := notBlank(s); err != nil {
 		return err
 	}
-
 	if err := ascii(s); err != nil {
 		return err
 	}
