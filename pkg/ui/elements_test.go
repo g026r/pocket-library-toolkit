@@ -243,16 +243,45 @@ func Test_parsePlayTimes(t *testing.T) {
 	}
 }
 
-func Test_notBlank(t *testing.T) {
+func Test_nameValidate(t *testing.T) {
 	t.Parallel()
 
-	if err := notBlank(""); err == nil {
+	// Blank strings
+	if err := nameValidate(""); err == nil {
 		t.Errorf("Expected err but got nil")
 	}
-	if err := notBlank("  "); err == nil {
+	if err := nameValidate("  "); err == nil {
 		t.Errorf("Expected err but got nil")
 	}
-	if err := notBlank(" . "); err != nil {
+	if err := nameValidate(" . "); err != nil {
 		t.Errorf("Expected nil but got %v", err)
+	}
+
+	// Strings with all possible characters
+	if err := nameValidate("`1234567890-=~!@#$%^&*()_+"); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
+	if err := nameValidate("qwertyuiop[]\\QWERTYUIOP{}|"); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
+	if err := nameValidate("asdfghjkl;'ASDFGHJKL:\""); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
+	if err := nameValidate("zxcvbnm,./ZXCVBNM<>?"); err != nil {
+		t.Errorf("Expected nil but got %v", err)
+	}
+
+	// Non-ASCII characters
+	if err := nameValidate("Pokémon"); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+	if err := nameValidate("\x19"); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+	if err := nameValidate("\xFF"); err == nil {
+		t.Errorf("Expected err but got nil")
+	}
+	if err := nameValidate("🇹🇼"); err == nil {
+		t.Errorf("Expected err but got nil")
 	}
 }
