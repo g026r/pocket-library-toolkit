@@ -16,7 +16,7 @@
         <div class="upload-section" id="uploadSection">
             <div class="file-upload-area" id="fileUploadArea">
                 <div class="upload-icon">📁</div>
-                <p>Drag & drop list.bin and playtimes.bin files here or</p>
+                <p>Drag & drop the <strong>System</strong> directory (or list.bin, playtimes.bin, and *_thumbs.bin files) here or</p>
                 <div class="file-inputs">
                     <label class="file-input-label">
                         <input type="file" id="listBinInput" accept=".bin" class="file-input">
@@ -25,6 +25,10 @@
                     <label class="file-input-label">
                         <input type="file" id="playtimesBinInput" accept=".bin" class="file-input">
                         <span>Select playtimes.bin</span>
+                    </label>
+                    <label class="file-input-label">
+                        <input type="file" id="thumbsBinInput" accept=".bin" multiple class="file-input">
+                        <span>Select thumbs.bin</span>
                     </label>
                 </div>
                 <div class="status" id="uploadStatus">Waiting for files...</div>
@@ -56,6 +60,7 @@
                 <table class="library-table">
                     <thead>
                         <tr>
+                            <th>Thumbnail</th>
                             <th>Game Name</th>
                             <th>System</th>
                             <th>Signature</th>
@@ -109,6 +114,7 @@
             <p>You can check out the source code <a href="https://github.com/g026r/pocket-library-toolkit">here.</a></p>
         </footer>
     </div>
+    <script src="pocket-thumbnail.js"></script>
     <script src="pocket-binary.js"></script>
     <script src="app.js"></script>
 </body>

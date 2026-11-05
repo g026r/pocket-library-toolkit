@@ -2,16 +2,18 @@
 
 /**
  * Application logic for Pocket Library Toolkit web interface
- * Handles file loading, UI updates, entry editing, and binary generation
+ * Handles file loading, UI updates, entry editing, thumbnails, and binary generation
  */
 
 class PocketLibraryApp {
     constructor() {
         // Core state
         this.binaryParser = new PocketBinary();
+        this.thumbnailParser = new PocketThumbnail();
         this.listEntries = [];
         this.playtimesEntries = [];
         this.filteredEntries = [];
+        this.thumbnails = {}; // map of filename -> Map(crc32 -> thumbObj)
         this.selectedEntry = null;
         this.selectedSystem = null;
         this.systems = new Set();
@@ -22,6 +24,7 @@ class PocketLibraryApp {
             fileUploadArea: document.getElementById('fileUploadArea'),
             listBinInput: document.getElementById('listBinInput'),
             playtimesBinInput: document.getElementById('playtimesBinInput'),
+            thumbsBinInput: document.getElementById('thumbsBinInput'),
             uploadStatus: document.getElementById('uploadStatus'),
             validationErrors: document.getElementById('validationErrors'),
             libraryContainer: document.getElementById('libraryContainer'),
@@ -33,8 +36,6 @@ class PocketLibraryApp {
             systemFilters: document.getElementById('systemFilters'),
             noResults: document.getElementById('noResults'),
             exportSection: document.getElementById('exportSection'),
-            // downloadListBin: document.getElementById('downloadListBin'),
-            // downloadPlaytimesBin: document.getElementById('downloadPlaytimesBin'),
             downloadBoth: document.getElementById('downloadBoth'),
             editModal: document.getElementById('editModal'),
             editGameName: document.getElementById('editGameName'),
@@ -52,38 +53,50 @@ class PocketLibraryApp {
      * Initialize all event listeners
      */
     initEventListeners() {
-        // File input events
-        this.ui.listBinInput.addEventListener('change', (e) => this.handleFileInput(e, 'list'));
-        this.ui.playtimesBinInput.addEventListener('change', (e) => this.handleFileInput(e, 'playtimes'));
-        
-        // Load other files button
+        if (this.ui.listBinInput) {
+            this.ui.listBinInput.addEventListener('change', (e) => this.handleFileInput(e, 'list'));
+        }
+        if (this.ui.playtimesBinInput) {
+            this.ui.playtimesBinInput.addEventListener('change', (e) => this.handleFileInput(e, 'playtimes'));
+        }
+        if (this.ui.thumbsBinInput) {
+            this.ui.thumbsBinInput.addEventListener('change', (e) => {
+                const files = e.target.files;
+                for (let i = 0; i < files.length; i++) {
+                    this.readThumbsFile(files[i], files[i].name);
+                }
+            });
+        }
         if (this.ui.loadOtherFilesBtn) {
             this.ui.loadOtherFilesBtn.addEventListener('click', () => this.resetToUploadState());
         }
-        
-        // Drag and drop events
-        this.ui.fileUploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
-        this.ui.fileUploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
-        this.ui.fileUploadArea.addEventListener('drop', (e) => this.handleDrop(e));
-        
-        // Search functionality
-        this.ui.searchInput.addEventListener('input', () => this.applyFilters());
-        this.ui.clearSearchBtn.addEventListener('click', () => {
-            this.ui.searchInput.value = '';
-            this.applyFilters();
-            this.ui.searchInput.focus();
-        });
-        
-        // Export buttons
-        // this.ui.downloadListBin.addEventListener('click', () => this.downloadFile('list'));
-        // this.ui.downloadPlaytimesBin.addEventListener('click', () => this.downloadFile('playtimes'));
-        this.ui.downloadBoth.addEventListener('click', () => this.downloadFile('both'));
-        
-        // Modal events
-        this.ui.closeModal.addEventListener('click', () => this.closeEditModal());
-        this.ui.cancelEdit.addEventListener('click', () => this.closeEditModal());
-        this.ui.saveEdit.addEventListener('click', () => this.saveEntryEdit());
-        
+        if (this.ui.fileUploadArea) {
+            this.ui.fileUploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
+            this.ui.fileUploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
+            this.ui.fileUploadArea.addEventListener('drop', (e) => this.handleDrop(e));
+        }
+        if (this.ui.searchInput) {
+            this.ui.searchInput.addEventListener('input', () => this.applyFilters());
+        }
+        if (this.ui.clearSearchBtn) {
+            this.ui.clearSearchBtn.addEventListener('click', () => {
+                this.ui.searchInput.value = '';
+                this.applyFilters();
+                this.ui.searchInput.focus();
+            });
+        }
+        if (this.ui.downloadBoth) {
+            this.ui.downloadBoth.addEventListener('click', () => this.downloadFile('both'));
+        }
+        if (this.ui.closeModal) {
+            this.ui.closeModal.addEventListener('click', () => this.closeEditModal());
+        }
+        if (this.ui.cancelEdit) {
+            this.ui.cancelEdit.addEventListener('click', () => this.closeEditModal());
+        }
+        if (this.ui.saveEdit) {
+            this.ui.saveEdit.addEventListener('click', () => this.saveEntryEdit());
+        }
         if (this.ui.editGameName) {
             this.ui.editGameName.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') {
@@ -102,30 +115,30 @@ class PocketLibraryApp {
                 }
             });
         }
-
-        this.ui.editPlaytime.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                this.saveEntryEdit();
-            } else if (e.key === 'Escape') {
-                this.closeEditModal();
-            }
-        });
-
-        this.ui.editPlaytime.addEventListener('input', () => {
-            const val = parseInt(this.ui.editPlaytime.value, 10);
-            if (isNaN(val) || val < 0 || val > 67108863) {
-                this.ui.editPlaytime.classList.add('error-input');
-            } else {
-                this.ui.editPlaytime.classList.remove('error-input');
-            }
-        });
-        
-        // Modal click outside to close
-        this.ui.editModal.addEventListener('click', (e) => {
-            if (e.target === this.ui.editModal) {
-                this.closeEditModal();
-            }
-        });
+        if (this.ui.editPlaytime) {
+            this.ui.editPlaytime.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    this.saveEntryEdit();
+                } else if (e.key === 'Escape') {
+                    this.closeEditModal();
+                }
+            });
+            this.ui.editPlaytime.addEventListener('input', () => {
+                const val = parseInt(this.ui.editPlaytime.value, 10);
+                if (isNaN(val) || val < 0 || val > 67108863) {
+                    this.ui.editPlaytime.classList.add('error-input');
+                } else {
+                    this.ui.editPlaytime.classList.remove('error-input');
+                }
+            });
+        }
+        if (this.ui.editModal) {
+            this.ui.editModal.addEventListener('click', (e) => {
+                if (e.target === this.ui.editModal) {
+                    this.closeEditModal();
+                }
+            });
+        }
     }
 
     /**
@@ -135,14 +148,16 @@ class PocketLibraryApp {
         this.listEntries = [];
         this.playtimesEntries = [];
         this.filteredEntries = [];
+        this.thumbnails = {};
         this.selectedSystem = null;
         this.ui.listBinInput.value = '';
         this.ui.playtimesBinInput.value = '';
+        if (this.ui.thumbsBinInput) this.ui.thumbsBinInput.value = '';
         this.ui.searchInput.value = '';
         this.ui.uploadSection.style.display = 'block';
         this.ui.libraryContainer.style.display = 'none';
         this.ui.exportSection.style.display = 'none';
-        this.showStatus('Ready to load list.bin and playtimes.bin files');
+        this.showStatus('Ready to load System directory or list.bin, playtimes.bin, and thumbs.bin files');
     }
 
     /**
@@ -172,24 +187,72 @@ class PocketLibraryApp {
     }
 
     /**
-     * Handle file drop event
+     * Handle file drop event (supports directory traversal / System folder drop)
      */
-    handleDrop(event) {
+    async handleDrop(event) {
         event.preventDefault();
         this.ui.fileUploadArea.classList.remove('drag-over');
         
+        const items = event.dataTransfer.items;
         const files = event.dataTransfer.files;
-        if (files.length === 0) return;
         
-        // Look for list.bin and playtimes.bin files
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fname = file.name.toLowerCase();
-            if (fname === 'list.bin') {
-                this.readBinaryFile(file, 'list');
-            } else if (fname === 'playtimes.bin') {
-                this.readBinaryFile(file, 'playtimes');
+        if (items && items.length > 0 && items[0].webkitGetAsEntry) {
+            for (let i = 0; i < items.length; i++) {
+                const entry = items[i].webkitGetAsEntry();
+                if (entry) {
+                    await this.traverseFileTree(entry, '');
+                }
             }
+        } else if (files && files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                await this.handleLoadedFile(file, file.name.toLowerCase(), file.name);
+            }
+        }
+        
+        // If list and playtimes are loaded, validate and load
+        if (this.listEntries.length > 0 && this.playtimesEntries.length > 0) {
+            await this.validateAndLoad();
+        }
+    }
+
+    /**
+     * Recursively traverse dropped directory items (e.g. System folder)
+     */
+    async traverseFileTree(entry, path) {
+        const fullPath = path ? `${path}/${entry.name}` : entry.name;
+        if (entry.isFile) {
+            return new Promise((resolve) => {
+                entry.file(async (file) => {
+                    const fname = entry.name.toLowerCase();
+                    await this.handleLoadedFile(file, fname);
+                    resolve();
+                }, () => resolve());
+            });
+        } else if (entry.isDirectory) {
+            const reader = entry.createReader();
+            return new Promise((resolve) => {
+                reader.readEntries(async (entries) => {
+                    for (const childEntry of entries) {
+                        await this.traverseFileTree(childEntry, fullPath);
+                    }
+                    resolve();
+                }, () => resolve());
+            });
+        }
+    }
+
+    /**
+     * Handle individual loaded file during traversal or drop
+     */
+    async handleLoadedFile(file, filename) {
+        const fname = filename.toLowerCase();
+        if (fname === 'list.bin') {
+            await this.readBinaryFile(file, 'list');
+        } else if (fname === 'playtimes.bin') {
+            await this.readBinaryFile(file, 'playtimes');
+        } else if (fname.endsWith('_thumbs.bin')) {
+            await this.readThumbsFile(file, fname);
         }
     }
 
@@ -222,6 +285,26 @@ class PocketLibraryApp {
         } catch (error) {
             console.error(`Error loading ${file.name}:`, error);
             this.showError(`Failed to load ${file.name}: ${error.message}`);
+        }
+    }
+
+    /**
+     * Read thumbnail binary file (*_thumbs.bin)
+     */
+    async readThumbsFile(file, filename) {
+        try {
+            this.showStatus(`Loading thumbnail file ${filename}...`);
+            const arrayBuffer = await this.readFileAsArrayBuffer(file);
+            const thumbsMap = this.thumbnailParser.parseThumbsBin(arrayBuffer);
+            this.thumbnails[filename.toLowerCase()] = thumbsMap;
+            this.showStatus(`Loaded ${filename} (${thumbsMap.size} thumbnails).`);
+            
+            if (this.listEntries.length > 0 && this.playtimesEntries.length > 0) {
+                this.applyFilters();
+            }
+        } catch (error) {
+            console.error(`Error loading thumbnail file ${filename}:`, error);
+            this.showError(`Failed to load ${filename}: ${error.message}`);
         }
     }
 
@@ -468,6 +551,26 @@ class PocketLibraryApp {
             row.classList.add('modified');
         }
         
+        // Thumbnail cell
+        const thumbCell = document.createElement('td');
+        const thumbFilename = this.thumbnailParser.getThumbFilename(entry.system);
+        const sysThumbMap = this.thumbnails[thumbFilename];
+        const thumb = sysThumbMap ? sysThumbMap.get(entry.crc32) : null;
+        
+        if (thumb && thumb.dataUrl) {
+            const img = document.createElement('img');
+            img.src = thumb.dataUrl;
+            img.className = 'game-thumb';
+            img.alt = entry.name;
+            thumbCell.appendChild(img);
+        } else {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'game-thumb-placeholder';
+            placeholder.textContent = '❓';
+            placeholder.title = 'No thumbnail available';
+            thumbCell.appendChild(placeholder);
+        }
+        
         // Game Name cell
         const nameCell = document.createElement('td');
         nameCell.textContent = entry.name;
@@ -500,6 +603,7 @@ class PocketLibraryApp {
         editBtn.onclick = () => this.openEditModal(entry);
         actionCell.appendChild(editBtn);
         
+        row.appendChild(thumbCell);
         row.appendChild(nameCell);
         row.appendChild(systemCell);
         row.appendChild(sigCell);
@@ -595,7 +699,7 @@ class PocketLibraryApp {
     }
 
     /**
-     * Download generated binary file
+     * Download generated binary file (excludes thumbnails as required)
      */
     downloadFile(type) {
         if (this.listEntries.length === 0) {
@@ -679,8 +783,8 @@ class PocketLibraryApp {
      * Initialize the application
      */
     init() {
-        console.log('Pocket Library Toolkit initialized');
-        this.showStatus('Ready to load list.bin and playtimes.bin files');
+        console.log('Pocket Library Toolkit initialized with Thumbnails');
+        this.showStatus('Ready to load System directory or list.bin, playtimes.bin, and thumbs.bin files');
     }
 }
 
