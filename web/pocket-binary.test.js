@@ -10,6 +10,7 @@ const path = require('path');
 
 // Import the PocketBinary class from pocket-binary.js
 const { PocketBinary } = require('./pocket-binary.js');
+const { PocketThumbnail } = require('./pocket-thumbnail.js');
 
 /**
  * Test loading and validating correctly formatted binary files
