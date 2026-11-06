@@ -1,5 +1,7 @@
 # Pocket Library Toolkit Web Application
 
+<img width="1357" height="1285" alt="Screenshot 2026-11-06 at 15 07 00" src="https://github.com/user-attachments/assets/c4b5a0ae-ce2a-4564-aa84-b84f8b2b15d7" />
+
 A lightweight client-side web application for editing Analogue Pocket library entry names &  playtimes in `list.bin` and `playtimes.bin` files.
 
 Supports drag-and-drop of individual files or of the `System` directory.
