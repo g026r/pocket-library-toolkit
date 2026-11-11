@@ -146,30 +146,18 @@ class PocketThumbnail {
         const imgData = ctx.createImageData(height, width);  
         const data = imgData.data;
 
-        // TODO: optimize this down to a single loop instead of using two of them
-        let src = 0;
-        const cols = new Array(height);
-        for (let i = height - 1; i >= 0; i--) {
-            cols[i] = new Uint8Array(width * 4);
-            for (let j = 0; j < width; j++) {
-                const dst = j * 4;
-                cols[i][dst]     = bgraBytes[src + 2]; // R
-                cols[i][dst + 1] = bgraBytes[src + 1]; // G
-                cols[i][dst + 2] = bgraBytes[src];     // B
-                cols[i][dst + 3] = bgraBytes[src + 3]; // A
-                src = src + 4;
-            }
-        }
+        // rotates entire image 90 degrees & changes Pocket's BGRA image data to more conventional RGBA
+        const total = width * height;
+        for (let p = 0; p < total; p++) {
+            const row = Math.floor(p / width);                   // source row
+            const col = p % width;                               // source column
+            const src = p * 4;                                   // index start of BGRA pixel data in source
+            const dst = (col * height + (height - 1 - row)) * 4; // index start of RGBA pixel data in destination
 
-        let dst = 0;
-        for (let i = 0; i < width; i++) {
-            for (let j = 0; j < height; j++) {
-                const src = i * 4;
-                for (let c = 0; c < 4; c++) {
-                    data[dst + c] = cols[j][src + c];
-                }
-                dst = dst + 4;
-            }
+            data[dst]     = bgraBytes[src + 2]; // R
+            data[dst + 1] = bgraBytes[src + 1]; // G
+            data[dst + 2] = bgraBytes[src];     // B
+            data[dst + 3] = bgraBytes[src + 3]; // A
         }
 
         ctx.putImageData(imgData, 0, 0);
