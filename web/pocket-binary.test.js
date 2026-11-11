@@ -10,7 +10,6 @@ const path = require('path');
 
 // Import the PocketBinary class from pocket-binary.js
 const { PocketBinary } = require('./pocket-binary.js');
-const { PocketThumbnail } = require('./pocket-thumbnail.js');
 
 /**
  * Test loading and validating correctly formatted binary files
@@ -526,7 +525,7 @@ async function runTests() {
         { name: 'test_combined_filtering', func: test_combined_filtering },
         { name: 'test_library_reloading', func: test_library_reloading },
         { name: 'test_from_played_time', func: test_from_played_time },
-        { name: 'test_ascii_title_validation', func: test_ascii_title_validation }
+        { name: 'test_ascii_title_validation', func: test_ascii_title_validation },
     ];
     
     let passed = 0;

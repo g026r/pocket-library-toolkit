@@ -28,6 +28,9 @@ jobs:
       uses: actions/setup-node@v7
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Test
+    - name: Test Binary Parsing
       working-directory: ./web
       run: node pocket-binary.test.js
+    - name: Test Thumbnail Parsing
+      working-directory: ./web
+      run: node pocket-thumbnail.test.js
